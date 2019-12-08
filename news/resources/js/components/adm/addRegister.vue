@@ -5,36 +5,58 @@
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Agregar evaluación</h4>
+                                    <h4 class="card-title">Agregar articulo</h4>
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    <form enctype="multipart/form-data" @submit.prevent="agregar()">
                                         <div class="row">
                                             <div class="col-md-3 pr-1">
                                                 <div class="form-group">
                                                     <label>Fecha</label>
-                                                    <input type="text" class="form-control" placeholder="Company" value="">
+                                                    <input type="text" class="form-control" placeholder="Company" v-model="registro.fecha">
                                                 </div>
                                             </div>
                                             <div class="col-md-3 px-1">
                                                 <div class="form-group">
                                                     <label>Importancia</label>
-                                                    <input type="text" class="form-control" placeholder="Username" value="">
+                                                    <input type="text" class="form-control" placeholder="Username" v-model="registro.importancia">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 pl-1">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nombre de publicación</label>
-                                                    <input type="email" class="form-control" placeholder="">
+                                                    <input type="text" class="form-control" placeholder="" v-model="registro.titulo">
                                                 </div>
                                             </div>
                                         </div>
+
+                                       <div class="row">
+                                            <div class="col-md-3 pr-1">
+                                                <div class="form-group">
+                                                    <label>Autor</label>
+                                                    <input type="text" class="form-control" placeholder="Company" v-model="registro.autor">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 px-1">
+                                                <div class="form-group">
+                                                    <label>Categoria</label>
+                                                    <input type="text" class="form-control" placeholder="Username" v-model="registro.idcategoria">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 pl-1">
+                                                <!-- <div class="form-group">
+                                                    <label for="exampleInputEmail1">Nombre de publicación</label>
+                                                    <input type="text" class="form-control" placeholder="" v-model="registro.titulo">
+                                                </div> -->
+                                            </div>
+                                        </div>
+
                                     
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Agregar imagen PERRO</label><br>
-                                                    <input type="file"  accept="image/*">
+                                                    <input type="file"  accept="image/*" @change="obtenerImagen">
                                                 <!-- @change="previewImage" 
                                                     <input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
                                                 -->
@@ -44,7 +66,7 @@
 
                                         <div class="row">
                                             <div class="col-md-12">
-                    <editor
+                    <editor v-model="registro.informacionArt"
        api-key="no-api-key"
        initialValue="<p>This is the initial content of the editor</p>"
        :init="{
@@ -113,8 +135,38 @@
 <script>
     import Editor from '@tinymce/tinymce-vue'
     export default {
+
+        data(){
+        return {
+            registros: [],
+            registro: {titulo:'',fecha:'', autor:'', importancia:'' ,idcategoria:'',informacionArt:'',imgdesmostrativa:''}
+        }
+        },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+
+             axios.get('/notas').then(res=>{
+               console.log(res);
+            })
+
+        },
+        methods:{
+        agregar(){
+            axios.post('/notas', this.registro)
+                .then(resp => {
+                    console.log(resp);
+                }).catch(error => {
+                    console.log(error);
+            });
+        },
+
+        obtenerImagen(e){
+          let fileReader = new FileReader();
+          fileReader.readAsDataURL(e.target.files[0]);
+          fileReader.onload = (e)=>{
+              this.registro.imgdesmostrativa = e.target.result
+          }
+        }
         },
         components: {
      'editor': Editor

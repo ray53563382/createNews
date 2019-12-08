@@ -2723,10 +2723,68 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      registros: [],
+      registro: {
+        titulo: '',
+        fecha: '',
+        autor: '',
+        importancia: '',
+        idcategoria: '',
+        informacionArt: '',
+        imgdesmostrativa: ''
+      }
+    };
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
+    axios.get('/notas').then(function (res) {
+      console.log(res);
+    });
+  },
+  methods: {
+    agregar: function agregar() {
+      axios.post('/notas', this.registro).then(function (resp) {
+        console.log(resp);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    obtenerImagen: function obtenerImagen(e) {
+      var _this = this;
+
+      var fileReader = new FileReader();
+      fileReader.readAsDataURL(e.target.files[0]);
+
+      fileReader.onload = function (e) {
+        _this.registro.imgdesmostrativa = e.target.result;
+      };
+    }
   },
   components: {
     'editor': _tinymce_tinymce_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -38710,57 +38768,246 @@ var render = function() {
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _c("form", [
-              _vm._m(1),
-              _vm._v(" "),
-              _vm._m(2),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c(
-                  "div",
-                  { staticClass: "col-md-12" },
-                  [
-                    _c("editor", {
-                      attrs: {
-                        "api-key": "no-api-key",
-                        initialValue:
-                          "<p>This is the initial content of the editor</p>",
-                        init: {
-                          height: 500,
-                          menubar: false,
-                          plugins: [
-                            "advlist autolink lists link image charmap print preview anchor",
-                            "searchreplace visualblocks code fullscreen",
-                            "insertdatetime media table paste code help wordcount"
-                          ],
-                          toolbar:
-                            "undo redo | formatselect | bold italic backcolor | \
+            _c(
+              "form",
+              {
+                attrs: { enctype: "multipart/form-data" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.agregar()
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-3 pr-1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Fecha")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.registro.fecha,
+                            expression: "registro.fecha"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Company" },
+                        domProps: { value: _vm.registro.fecha },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.registro, "fecha", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-3 px-1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Importancia")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.registro.importancia,
+                            expression: "registro.importancia"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Username" },
+                        domProps: { value: _vm.registro.importancia },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.registro,
+                              "importancia",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6 pl-1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                        _vm._v("Nombre de publicación")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.registro.titulo,
+                            expression: "registro.titulo"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "" },
+                        domProps: { value: _vm.registro.titulo },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.registro,
+                              "titulo",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-3 pr-1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Autor")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.registro.autor,
+                            expression: "registro.autor"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Company" },
+                        domProps: { value: _vm.registro.autor },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.registro, "autor", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-3 px-1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Categoria")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.registro.idcategoria,
+                            expression: "registro.idcategoria"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Username" },
+                        domProps: { value: _vm.registro.idcategoria },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.registro,
+                              "idcategoria",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6 pl-1" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Agregar imagen PERRO")]),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "file", accept: "image/*" },
+                        on: { change: _vm.obtenerImagen }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c(
+                    "div",
+                    { staticClass: "col-md-12" },
+                    [
+                      _c("editor", {
+                        attrs: {
+                          "api-key": "no-api-key",
+                          initialValue:
+                            "<p>This is the initial content of the editor</p>",
+                          init: {
+                            height: 500,
+                            menubar: false,
+                            plugins: [
+                              "advlist autolink lists link image charmap print preview anchor",
+                              "searchreplace visualblocks code fullscreen",
+                              "insertdatetime media table paste code help wordcount"
+                            ],
+                            toolbar:
+                              "undo redo | formatselect | bold italic backcolor | \
           alignleft aligncenter alignright alignjustify | \
           bullist numlist outdent indent | removeformat | help"
+                          }
+                        },
+                        model: {
+                          value: _vm.registro.informacionArt,
+                          callback: function($$v) {
+                            _vm.$set(_vm.registro, "informacionArt", $$v)
+                          },
+                          expression: "registro.informacionArt"
                         }
-                      }
-                    })
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-info btn-fill pull-right",
-                  attrs: { type: "submit" }
-                },
-                [_vm._v("Agregar evaluación")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "clearfix" })
-            ])
+                      })
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info btn-fill pull-right",
+                    attrs: { type: "submit" }
+                  },
+                  [_vm._v("Agregar evaluación")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" })
+              ]
+            )
           ])
         ])
       ]),
       _vm._v(" "),
-      _vm._m(3)
+      _vm._m(1)
     ])
   ])
 }
@@ -38770,63 +39017,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("h4", { staticClass: "card-title" }, [_vm._v("Agregar evaluación")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-3 pr-1" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", [_vm._v("Fecha")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Company", value: "" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3 px-1" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", [_vm._v("Importancia")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Username", value: "" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6 pl-1" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-            _vm._v("Nombre de publicación")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "email", placeholder: "" }
-          })
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", [_vm._v("Agregar imagen PERRO")]),
-          _c("br"),
-          _vm._v(" "),
-          _c("input", { attrs: { type: "file", accept: "image/*" } })
-        ])
-      ])
+      _c("h4", { staticClass: "card-title" }, [_vm._v("Agregar articulo")])
     ])
   },
   function() {

@@ -15,17 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', function () {
-    return view('admin');
-});
 
 Auth::routes();
+Route::resource('/notas', 'NotaController')->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-
-Route::resource('/admin', 'NotaController')->middleware('auth');

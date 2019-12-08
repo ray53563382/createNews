@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="{{ asset('js/app.js') }}" defer></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-<!--     
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.ico"> -->
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <!-- <script src="https://cdn.tiny.cloud/1/dygqu45qbjzegwpdezwtvkvhmz4xm0n9hd9386waucoanzjr/tinymce/5/plugins.min.js" referrerpolicy="origin"></script> -->
 
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />

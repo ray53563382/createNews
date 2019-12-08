@@ -14,14 +14,15 @@ class CreateNotasTable extends Migration
     public function up()
     {
         Schema::create('notas', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->text('titulo');
-            $table->string('fecha');
-            $table->string('autor');
-            $table->string('importancia');
-            $table->string('idcategoria');
-            $table->text('informacionArt');
-            $table->text('imgdesmostrativa');
+                $table->bigIncrements('id');
+                $table->text('titulo');
+                $table->string('fecha');
+                $table->string('autor');
+                $table->string('importancia');
+                $table->string('idcategoria');
+                $table->text('informacionArt');
+                $table->text('imgdesmostrativa');
+                $table->timestamps();
         });
     }
 
