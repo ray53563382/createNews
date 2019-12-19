@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 });
 
+Route::get('documentView/{id}', 'DocumentsViewController@index' );
+
 // Route::get('/documentView/{id}', ['uses' => 'DocumentViewController@index']);
 
 Auth::routes();

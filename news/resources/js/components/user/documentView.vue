@@ -10,7 +10,8 @@
         <div class="container">
           <div class="row">
             <div class="col-12 my-5">
-              <p class="h1 text-muted">{{docTitle}}</p>
+              <p class="h1 text-muted">{{dataID}}</p>
+              <!-- <p class="h1 text-muted">{{docTitle}}</p> -->
             </div>
           </div>
           <div class="row">
@@ -83,6 +84,11 @@ import Footer from "./footer";
 
 export default {
   name: "documentview",
+  props: {
+    myid: {
+      required: true
+    }
+  },
   components: {
     Header,
     Footer
@@ -96,8 +102,16 @@ export default {
       docDownloadURL: "http://someurl.com",
       docTheme: "CrisisClimaticaTema",
       docImages: ["url1", "url2", "url3", "url4"],
-      logito: logito
+      logito: logito,
+      dataID: "hey"
     };
+  },
+
+  methods: {},
+
+  created() {
+    this.dataID = this.myid;
+    // console.log(this.myid);
   }
 };
 </script>
