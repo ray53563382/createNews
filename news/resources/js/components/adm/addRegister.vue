@@ -10,44 +10,53 @@
                                 <div class="card-body">
                                     <form enctype="multipart/form-data" @submit.prevent="agregar()">
                                         <div class="row">
-                                            <div class="col-md-3 pr-1">
+                                            <div class="col-md-4 pr-1">
                                                 <div class="form-group">
                                                     <label>Fecha</label>
-                                                    <input type="text" class="form-control" placeholder="Company" v-model="registro.fecha">
+                                                    <input type="date" style="font-size: 14px;" class="form-control" placeholder="Company" v-model="registro.fecha">
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 px-1">
+                                            <div class="col-md-4 pr-1">
                                                 <div class="form-group">
                                                     <label>Importancia</label>
-                                                    <input type="text" class="form-control" placeholder="Username" v-model="registro.importancia">
+                                                    <select class="form-control" v-model="registro.importancia">
+                                                        <!-- <option selected>Selecciona</option> -->
+                                                        <option value="1">Alta importancia</option>
+                                                        <option value="2">Media importancia</option>
+                                                        <option value="3">Baja importancia</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 pl-1">
+                                            <div class="col-md-4 pr-1">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Nombre de publicación</label>
-                                                    <input type="text" class="form-control" placeholder="" v-model="registro.titulo">
+                                                    <label>Categoria</label>
+                                                     <select class="form-control" v-model="registro.idcategoria">
+                                                        <option value="1">Cat 1</option>
+                                                        <option value="2">Cat 2</option>
+                                                        <option value="3">Cat 3</option>
+                                                        <option value="4">Cat 4</option>
+                                                        <option value="5">Cat 5</option>
+                                                        <option value="6">Cat 6</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
 
                                        <div class="row">
-                                            <div class="col-md-3 pr-1">
+                                            <div class="col-md-6 pr-1">
                                                 <div class="form-group">
                                                     <label>Autor</label>
-                                                    <input type="text" class="form-control" placeholder="Company" v-model="registro.autor">
+                                                    <input type="text" class="form-control"  v-model="registro.autor">
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 px-1">
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 pr-1">
                                                 <div class="form-group">
-                                                    <label>Categoria</label>
-                                                    <input type="text" class="form-control" placeholder="Username" v-model="registro.idcategoria">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 pl-1">
-                                                <!-- <div class="form-group">
                                                     <label for="exampleInputEmail1">Nombre de publicación</label>
                                                     <input type="text" class="form-control" placeholder="" v-model="registro.titulo">
-                                                </div> -->
+                                                </div>
                                             </div>
                                         </div>
 
@@ -55,11 +64,8 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label>Agregar imagen PERRO</label><br>
+                                                    <label>Agregar imagen </label><br>
                                                     <input type="file"  accept="image/*" @change="obtenerImagen">
-                                                <!-- @change="previewImage" 
-                                                    <input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
-                                                -->
                                                 </div>
                                             </div>
                                         </div>
@@ -108,9 +114,9 @@
                                         </p>
                                     </div>
                                     <p class="description text-center">
-                                        "Lamborghini Mercy
-                                        <br> Your chick she so thirsty
-                                        <br> I'm in that two seat Lambo"
+                                        Registra articulos y novedades de tu página web 
+                                        <br> Valida que tus datos esten correctos para el correcto guardado
+                                        <br> Despues de guardar valida tus cambios en tu página web
                                     </p>
                                 </div>
                                 <hr>
@@ -134,6 +140,13 @@
 
 <script>
     import Editor from '@tinymce/tinymce-vue'
+    import Datepicker from 'vuejs-datepicker';
+    import Vue from 'vue';
+    import VueSweetalert2 from 'vue-sweetalert2';
+    import 'sweetalert2/dist/sweetalert2.min.css';
+    Vue.use(VueSweetalert2);
+
+ 
     export default {
 
         data(){
@@ -144,7 +157,6 @@
         },
         mounted() {
             console.log('Component mounted.');
-
              axios.get('/notas').then(res=>{
                console.log(res);
             })
@@ -155,6 +167,11 @@
             axios.post('/notas', this.registro)
                 .then(resp => {
                     console.log(resp);
+                    this.$swal(
+                        'Articulo guardado!',
+                        'Ahora ya puedo visualizarlo en su página web!',
+                        'success'
+                    )
                 }).catch(error => {
                     console.log(error);
             });
@@ -169,7 +186,8 @@
         }
         },
         components: {
-     'editor': Editor
+        'editor': Editor,
+         Datepicker
    }
     }
 </script>
