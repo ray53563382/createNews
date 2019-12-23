@@ -7,7 +7,7 @@
         Tip 2: you can also add an image using data-image tag
       -->
       <div class="sidebar-wrapper">
-        <div class="logo">
+        <div class="logo" style="height: 70px;">
           <a href="http://www.creative-tim.com" class="simple-text">
             <p>Crisis Climatica</p>
           </a>
@@ -29,7 +29,13 @@
           <li>
             <a class="nav-link" v-on:click="changeData('informacion')">
               <i class="far fa-share-square"></i>
-              <p>Ver información</p>
+              <p>Ver publicaciones</p>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" v-on:click="changeData('pdf')">
+              <i class="far fa-share-square"></i>
+              <p>Ver registros de pdf</p>
             </a>
           </li>
         </ul>
@@ -39,28 +45,10 @@
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg" color-on-scroll="500">
         <div class="container-fluid">
-          <a class="navbar-brand">Administrador</a>
-          <button
-            href
-            class="navbar-toggler navbar-toggler-right"
-            type="button"
-            data-toggle="collapse"
-            aria-controls="navigation-index"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <!-- <span class="navbar-toggler-bar burger-lines"></span>
-                        <span class="navbar-toggler-bar burger-lines"></span>
-            <span class="navbar-toggler-bar burger-lines"></span>-->
-          </button>
+          <a class="navbar-brand">Registro de artculos</a>
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <ul class="nav navbar-nav mr-auto">
               <li class="dropdown nav-item">
-                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                  <i class="nc-icon nc-planet"></i>
-                  <span class="notification">5</span>
-                  <span class="d-lg-none">Notification</span>
-                </a>
                 <ul class="dropdown-menu">
                   <a class="dropdown-item" href="#">Notification 1</a>
                   <a class="dropdown-item" href="#">Notification 2</a>
@@ -71,11 +59,11 @@
               </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" href="#pablo">
                   <span class="no-icon">Registra</span>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
@@ -110,7 +98,7 @@
         <component :is="dynamicComponent"></component>
         <!-- <addRegister></addRegister> -->
       </div>
-      <footer class="footer">
+      <!-- <footer class="footer">
         <div class="container-fluid">
           <nav>
             <ul class="footer-menu">
@@ -129,13 +117,14 @@
             </ul>
           </nav>
         </div>
-      </footer>
+      </footer> -->
     </div>
   </div>
 </template>
 
 <script>
 import Editor from "@tinymce/tinymce-vue";
+
 export default {
   data() {
     return {
@@ -156,6 +145,8 @@ export default {
         this.dynamicComponent = "addDocument";
       } else if (msg == "informacion") {
         this.dynamicComponent = "addInformation";
+      } else if (msg == "pdf") {
+        this.dynamicComponent = "addpdf";
       }
     }
   },
