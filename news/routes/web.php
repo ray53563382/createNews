@@ -12,12 +12,20 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('layouts.app');
+    return view('layouts.app');
+
 });
 
+Route::get('documentView/{id}', 'DocumentsViewController@index' );
+
+// Route::get('/documentView/{id}', ['uses' => 'DocumentViewController@index']);
 
 Auth::routes();
+// Route::resource('/notas', 'NotaController')->middleware('auth');
 Route::resource('/notas', 'NotaController')->middleware('auth');
 
+
 Route::get('/home', 'HomeController@index')->name('home');
+
 
