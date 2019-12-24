@@ -24,10 +24,19 @@ Vue.component(
     require("./components/adm/ExampleComponent.vue").default
 );
 
-Vue.component('addInformation', require('./components/adm/addInformation.vue').default);
-Vue.component('addDocument', require('./components/adm/addDocument.vue').default);
-Vue.component('addRegister', require('./components/adm/addRegister.vue').default);
-Vue.component('addpdf', require('./components/adm/addpdf.vue').default);
+Vue.component(
+    "addInformation",
+    require("./components/adm/addInformation.vue").default
+);
+Vue.component(
+    "addDocument",
+    require("./components/adm/addDocument.vue").default
+);
+Vue.component(
+    "addRegister",
+    require("./components/adm/addRegister.vue").default
+);
+Vue.component("addpdf", require("./components/adm/addpdf.vue").default);
 
 Vue.component("app-component", require("./components/user/app.vue").default);
 Vue.component(

@@ -2,5 +2,5 @@
 
 @section('content')
     <app-component></app-component>
-    <div class="container"></div>
+    {{-- <div class="container"></div> --}}
 @endsection
