@@ -8363,7 +8363,7 @@ vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
         console.log(this.errors);
       }
 
-      if (!this.registro.titulo != undefined && this.registro.fecha != undefined && this.registro.autor != undefined && this.registro.importancia != undefined && this.registro.idcategoria != undefined && this.registro.informacionArt != undefined && this.registro.imgdesmostrativa != undefined) {
+      if (!this.registro.titulo && this.registro.fecha && this.registro.autor && this.registro.importancia && this.registro.idcategoria && this.registro.informacionArt && this.registro.imgdesmostrativa) {
         axios.post('/notas', this.registro).then(function (resp) {
           _this.errors = [];
           _this.registro = [];
@@ -60065,10 +60065,10 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component("example-component", __webpack_require__(/*! ./components/adm/ExampleComponent.vue */ "./resources/js/components/adm/ExampleComponent.vue")["default"]);
-Vue.component('addInformation', __webpack_require__(/*! ./components/adm/addInformation.vue */ "./resources/js/components/adm/addInformation.vue")["default"]);
-Vue.component('addDocument', __webpack_require__(/*! ./components/adm/addDocument.vue */ "./resources/js/components/adm/addDocument.vue")["default"]);
-Vue.component('addRegister', __webpack_require__(/*! ./components/adm/addRegister.vue */ "./resources/js/components/adm/addRegister.vue")["default"]);
-Vue.component('addpdf', __webpack_require__(/*! ./components/adm/addpdf.vue */ "./resources/js/components/adm/addpdf.vue")["default"]);
+Vue.component("addInformation", __webpack_require__(/*! ./components/adm/addInformation.vue */ "./resources/js/components/adm/addInformation.vue")["default"]);
+Vue.component("addDocument", __webpack_require__(/*! ./components/adm/addDocument.vue */ "./resources/js/components/adm/addDocument.vue")["default"]);
+Vue.component("addRegister", __webpack_require__(/*! ./components/adm/addRegister.vue */ "./resources/js/components/adm/addRegister.vue")["default"]);
+Vue.component("addpdf", __webpack_require__(/*! ./components/adm/addpdf.vue */ "./resources/js/components/adm/addpdf.vue")["default"]);
 Vue.component("app-component", __webpack_require__(/*! ./components/user/app.vue */ "./resources/js/components/user/app.vue")["default"]);
 Vue.component("viewdoc-component", __webpack_require__(/*! ./components/user/documentView.vue */ "./resources/js/components/user/documentView.vue")["default"]);
 /**

@@ -206,8 +206,8 @@
             console.log(this.errors);
         }
 
-        if(!this.registro.titulo != undefined && this.registro.fecha  != undefined && this.registro.autor != undefined && this.registro.importancia  != undefined && this.registro.idcategoria  != undefined
-        && this.registro.informacionArt  != undefined && this.registro.imgdesmostrativa != undefined ){
+        if(!this.registro.titulo && this.registro.fecha && this.registro.autor && this.registro.importancia && this.registro.idcategoria 
+        && this.registro.informacionArt && this.registro.imgdesmostrativa  ){
               axios.post('/notas', this.registro)
                 .then(resp => {
                     this.errors = [];
