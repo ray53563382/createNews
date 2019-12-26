@@ -7811,6 +7811,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -7958,24 +7959,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       registros: [],
+      document: [],
+      errors: [],
       registro: {
-        titulo: '',
         fecha: '',
-        autor: '',
+        nombre: '',
         importancia: '',
-        idcategoria: '',
-        informacionArt: '',
-        imgdesmostrativa: ''
+        imgdesmostrativa: '',
+        pdf: '',
+        informacion: ''
       }
     };
-  },
-  mounted: function mounted() {
-    console.log('Component mounted.');
   },
   methods: {
     obtenerImagen: function obtenerImagen(e) {
@@ -7986,6 +7991,56 @@ __webpack_require__.r(__webpack_exports__);
 
       fileReader.onload = function (e) {
         _this.registro.imgdesmostrativa = e.target.result;
+      };
+    },
+    agregar: function agregar(e) {
+      var _this2 = this;
+
+      this.errors = [];
+
+      if (!this.registro.fecha) {
+        this.errors.push("La fecha es obligatoria.");
+      }
+
+      if (!this.registro.nombre) {
+        this.errors.push("El nombre es obligatorio.");
+      }
+
+      if (!this.registro.importancia) {
+        this.errors.push("El campo de importancia es obligatorio.");
+      }
+
+      if (!this.registro.imgdesmostrativa) {
+        this.errors.push("La imagen es obligatoria.");
+      }
+
+      if (!this.registro.pdf) {
+        this.errors.push("El pdf es obligatorio.");
+      }
+
+      if (!this.registro.informacion) {
+        this.errors.push("La información es obligatoria.");
+      }
+
+      if (this.registro.nombre && this.registro.fecha && this.registro.importancia && this.registro.imgdesmostrativa && this.registro.pdf && this.registro.informacion) {
+        axios.post('/document', this.registro).then(function (resp) {
+          _this2.registro = [];
+          e.preventDefault();
+
+          _this2.$swal('Pdf registrado!', 'Ahora ya puedo visualizarlo en su página web!', 'success');
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    obtenerPdf: function obtenerPdf(e) {
+      var _this3 = this;
+
+      var fileReader = new FileReader();
+      fileReader.readAsDataURL(e.target.files[0]);
+
+      fileReader.onload = function (e) {
+        _this3.registro.pdf = e.target.result;
       };
     }
   },
@@ -8053,84 +8108,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  }
+  data: function data() {
+    return {
+      notas: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get('/notas').then(function (res) {
+      _this.notas = res.data;
+      console.log(_this.notas);
+    });
+  },
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -8291,6 +8283,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8301,6 +8304,7 @@ vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
   data: function data() {
     return {
       registros: [],
+      errors: [],
       registro: {
         titulo: '',
         fecha: '',
@@ -8319,16 +8323,57 @@ vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
     });
   },
   methods: {
-    agregar: function agregar() {
+    agregar: function agregar(e) {
       var _this = this;
 
-      axios.post('/notas', this.registro).then(function (resp) {
-        console.log(resp);
+      this.errors = [];
 
-        _this.$swal('Articulo guardado!', 'Ahora ya puedo visualizarlo en su página web!', 'success');
-      })["catch"](function (error) {
-        console.log(error);
-      });
+      if (!this.registro.titulo) {
+        this.errors.push("El nombre es obligatorio.");
+        console.log(this.errors);
+      }
+
+      if (!this.registro.fecha) {
+        this.errors.push("La fecha es obligatorio.");
+        console.log(this.errors);
+      }
+
+      if (!this.registro.autor) {
+        this.errors.push("El autor es obligatorio.");
+        console.log(this.errors);
+      }
+
+      if (!this.registro.importancia) {
+        this.errors.push("El autor es obligatorio.");
+        console.log(this.errors);
+      }
+
+      if (!this.registro.idcategoria) {
+        this.errors.push("La categoria es obligatoria.");
+        console.log(this.errors);
+      }
+
+      if (!this.registro.informacionArt) {
+        this.errors.push("La información del articulo es obligatoria.");
+        console.log(this.errors);
+      }
+
+      if (!this.registro.imgdesmostrativa) {
+        this.errors.push("La imagen es obligatoria.");
+        console.log(this.errors);
+      }
+
+      if (!this.registro.titulo != undefined && this.registro.fecha != undefined && this.registro.autor != undefined && this.registro.importancia != undefined && this.registro.idcategoria != undefined && this.registro.informacionArt != undefined && this.registro.imgdesmostrativa != undefined) {
+        axios.post('/notas', this.registro).then(function (resp) {
+          _this.errors = [];
+          _this.registro = [];
+          console.log(resp);
+
+          _this.$swal('Articulo guardado!', 'Ahora ya puedo visualizarlo en su página web!', 'success');
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
     },
     obtenerImagen: function obtenerImagen(e) {
       var _this2 = this;
@@ -8404,58 +8449,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      document: []
+    };
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get('/document').then(function (res) {
+      _this.document = res.data;
+      console.log(_this.document);
+    });
   }
 });
 
@@ -45580,7 +45589,7 @@ var render = function() {
       "div",
       {
         staticClass: "sidebar",
-        attrs: { "data-image": "../assets/img/sidebar-5.jpg" }
+        attrs: { "data-image": "/images/sidebar-5.jpg" }
       },
       [
         _c("div", { staticClass: "sidebar-wrapper" }, [
@@ -45860,127 +45869,237 @@ var render = function() {
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _c("form", [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-3 pr-1" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Fecha")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.registro.fecha,
-                          expression: "registro.fecha"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      staticStyle: { "font-size": "14px" },
-                      attrs: { type: "date", placeholder: "Company" },
-                      domProps: { value: _vm.registro.fecha },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.registro, "fecha", $event.target.value)
-                        }
-                      }
-                    })
-                  ])
-                ]),
+            _c(
+              "form",
+              {
+                attrs: { enctype: "multipart/form-data" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.agregar()
+                  }
+                }
+              },
+              [
+                _vm.errors.length
+                  ? _c("p", [
+                      _c("b", [
+                        _vm._v(
+                          "Por favor, corrija el(los) siguiente(s) error(es):"
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        _vm._l(_vm.errors, function(error) {
+                          return _c(
+                            "li",
+                            { key: error, staticStyle: { color: "red" } },
+                            [_vm._v(_vm._s(error))]
+                          )
+                        }),
+                        0
+                      )
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-3 px-1" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Importancia")]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-3 pr-1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Fecha")]),
+                      _vm._v(" "),
+                      _c("input", {
                         directives: [
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.registro.importancia,
-                            expression: "registro.importancia"
+                            value: _vm.registro.fecha,
+                            expression: "registro.fecha"
                           }
                         ],
                         staticClass: "form-control",
+                        staticStyle: { "font-size": "14px" },
+                        attrs: { type: "date", placeholder: "Company" },
+                        domProps: { value: _vm.registro.fecha },
                         on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.registro, "fecha", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-3 px-1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Importancia")]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.registro.importancia,
+                              expression: "registro.importancia"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.registro,
+                                "importancia",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "1" } }, [
+                            _vm._v("Alta importancia")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "2" } }, [
+                            _vm._v("Media importancia")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "3" } }, [
+                            _vm._v("Baja importancia")
+                          ])
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6 pl-1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                        _vm._v("Nombre documento")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.registro.nombre,
+                            expression: "registro.nombre"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "" },
+                        domProps: { value: _vm.registro.nombre },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
                             _vm.$set(
                               _vm.registro,
-                              "importancia",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
+                              "nombre",
+                              $event.target.value
                             )
                           }
                         }
-                      },
-                      [
-                        _c("option", { attrs: { value: "1" } }, [
-                          _vm._v("Alta importancia")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "2" } }, [
-                          _vm._v("Media importancia")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "3" } }, [
-                          _vm._v("Baja importancia")
-                        ])
-                      ]
-                    )
+                      })
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(1)
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Agregar imagen de pdf ")]),
-                    _c("br"),
-                    _vm._v(" "),
-                    _c("input", {
-                      attrs: { type: "file", accept: "image/*" },
-                      on: { change: _vm.obtenerImagen }
-                    })
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Agregar imagen de pdf ")]),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "file", accept: "image/*" },
+                        on: { change: _vm.obtenerImagen }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Agregar Docuemento")]),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "file", accept: "pdf/*" },
+                        on: { change: _vm.obtenerPdf }
+                      })
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(2)
-              ]),
-              _vm._v(" "),
-              _vm._m(3),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-info btn-fill pull-right",
-                  attrs: { type: "submit" }
-                },
-                [_vm._v("Agregar pdf")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "clearfix" })
-            ])
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "comment" } }, [
+                        _vm._v("Información:")
+                      ]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.registro.informacion,
+                            expression: "registro.informacion"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { rows: "5", id: "comment" },
+                        domProps: { value: _vm.registro.informacion },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.registro,
+                              "informacion",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info btn-fill pull-right",
+                    attrs: { type: "submit" }
+                  },
+                  [_vm._v("Agregar pdf")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" })
+              ]
+            )
           ])
         ])
       ]),
       _vm._v(" "),
-      _vm._m(4)
+      _vm._m(1)
     ])
   ])
 }
@@ -45991,53 +46110,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "card-title" }, [_vm._v("Agregar documento")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 pl-1" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-          _vm._v("Nombre documento")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", [_vm._v("Agregar Docuemento")]),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", { attrs: { type: "file", accept: "image/*" } })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "comment" } }, [_vm._v("Información:")]),
-          _vm._v(" "),
-          _c("textarea", {
-            staticClass: "form-control",
-            attrs: { rows: "5", id: "comment" }
-          })
-        ])
-      ])
     ])
   },
   function() {
@@ -46139,371 +46211,135 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card strpied-tabled-with-hover" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "card-body table-full-width table-responsive" },
+            [
+              _c("table", { staticClass: "table table-hover table-striped" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.notas, function(item, index) {
+                    return _c("tr", { key: index }, [
+                      _c("td", [_vm._v(_vm._s(index + 1))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.titulo))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.importancia))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.autor))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "div",
+                          {
+                            staticStyle: {
+                              height: "60px",
+                              "overflow-y": "auto"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                                   " +
+                                _vm._s(item.informacionArt) +
+                                "\n                                                "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(2, true)
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ]
+          )
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container-fluid" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "card strpied-tabled-with-hover" }, [
-            _c("div", { staticClass: "card-header " }, [
-              _c("h4", { staticClass: "card-title" }, [
-                _vm._v("Registro de artículos")
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "card-category" }, [
-                _vm._v("Si no encuentra su información recargue la página web")
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card-body table-full-width table-responsive" },
-              [
-                _c(
-                  "table",
-                  { staticClass: "table table-hover table-striped" },
-                  [
-                    _c("thead", [
-                      _c("th", [_vm._v("No.")]),
-                      _vm._v(" "),
-                      _c("th", { staticStyle: { width: "20%" } }, [
-                        _vm._v("Nombre de publicación")
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Importancia")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Autor")]),
-                      _vm._v(" "),
-                      _c("th", { staticStyle: { width: "29%" } }, [
-                        _vm._v("Información")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "th",
-                        {
-                          staticStyle: {
-                            width: "100%",
-                            "border-bottom": "0px solid #dee2e6"
-                          }
-                        },
-                        [_vm._v("Editar")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("tbody", [
-                      _c("tr", [
-                        _c("td", [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Dakota Rice")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("$36,738")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Niger")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Oud-Turnhout")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-success",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", {
-                                  staticClass: "fa fa-pencil-square-o"
-                                })
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-danger",
-                              staticStyle: { "margin-left": "4%" },
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", { staticClass: "fa fa-remove" })
-                              ])
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Dakota Rice")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("$36,738")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Niger")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Oud-Turnhout")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-success",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", {
-                                  staticClass: "fa fa-pencil-square-o"
-                                })
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-danger",
-                              staticStyle: { "margin-left": "4%" },
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", { staticClass: "fa fa-remove" })
-                              ])
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Dakota Rice")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("$36,738")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Niger")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Oud-Turnhout")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-success",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", {
-                                  staticClass: "fa fa-pencil-square-o"
-                                })
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-danger",
-                              staticStyle: { "margin-left": "4%" },
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", { staticClass: "fa fa-remove" })
-                              ])
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Dakota Rice")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("$36,738")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Niger")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Oud-Turnhout")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-success",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", {
-                                  staticClass: "fa fa-pencil-square-o"
-                                })
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-danger",
-                              staticStyle: { "margin-left": "4%" },
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", { staticClass: "fa fa-remove" })
-                              ])
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Dakota Rice")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("$36,738")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Niger")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Oud-Turnhout")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-success",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", {
-                                  staticClass: "fa fa-pencil-square-o"
-                                })
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-danger",
-                              staticStyle: { "margin-left": "4%" },
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", { staticClass: "fa fa-remove" })
-                              ])
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Dakota Rice")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("$36,738")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Niger")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Oud-Turnhout")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-success",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", {
-                                  staticClass: "fa fa-pencil-square-o"
-                                })
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-danger",
-                              staticStyle: { "margin-left": "4%" },
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", { staticClass: "fa fa-remove" })
-                              ])
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Dakota Rice")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("$36,738")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Niger")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Oud-Turnhout")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-success",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", {
-                                  staticClass: "fa fa-pencil-square-o"
-                                })
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-danger",
-                              staticStyle: { "margin-left": "4%" },
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", { staticClass: "fa fa-remove" })
-                              ])
-                            ]
-                          )
-                        ])
-                      ])
-                    ])
-                  ]
-                )
-              ]
-            )
-          ])
-        ])
+    return _c("div", { staticClass: "card-header " }, [
+      _c("h4", { staticClass: "card-title" }, [
+        _vm._v("Registro de artículos")
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "card-category" }, [
+        _vm._v("Si no encuentra su información recargue la página web")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("th", [_vm._v("No.")]),
+      _vm._v(" "),
+      _c("th", { staticStyle: { width: "20%" } }, [
+        _vm._v("Nombre de publicación")
+      ]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Importancia")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Autor")]),
+      _vm._v(" "),
+      _c("th", { staticStyle: { width: "29%" } }, [_vm._v("Información")]),
+      _vm._v(" "),
+      _c(
+        "th",
+        {
+          staticStyle: { width: "100%", "border-bottom": "0px solid #dee2e6" }
+        },
+        [_vm._v("Editar")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-labeled btn-success",
+          attrs: { type: "button" }
+        },
+        [
+          _c("span", { staticClass: "btn-label" }, [
+            _c("i", { staticClass: "fa fa-pencil-square-o" })
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-labeled btn-danger",
+          staticStyle: { "margin-left": "4%" },
+          attrs: { type: "button" }
+        },
+        [
+          _c("span", { staticClass: "btn-label" }, [
+            _c("i", { staticClass: "fa fa-remove" })
+          ])
+        ]
+      )
     ])
   }
 ]
@@ -46538,7 +46374,7 @@ var render = function() {
             _c(
               "form",
               {
-                attrs: { enctype: "multipart/form-data" },
+                attrs: { novalidate: "true", enctype: "multipart/form-data" },
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
@@ -46547,6 +46383,28 @@ var render = function() {
                 }
               },
               [
+                _vm.errors.length
+                  ? _c("p", [
+                      _c("b", [
+                        _vm._v(
+                          "Por favor, corrija el(los) siguiente(s) error(es):"
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        _vm._l(_vm.errors, function(error) {
+                          return _c(
+                            "li",
+                            { key: error, staticStyle: { color: "red" } },
+                            [_vm._v(_vm._s(error))]
+                          )
+                        }),
+                        0
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-4 pr-1" }, [
                     _c("div", { staticClass: "form-group" }, [
@@ -46668,27 +46526,39 @@ var render = function() {
                         },
                         [
                           _c("option", { attrs: { value: "1" } }, [
-                            _vm._v("Cat 1")
+                            _vm._v("Crisis climática y conservación")
                           ]),
                           _vm._v(" "),
                           _c("option", { attrs: { value: "2" } }, [
-                            _vm._v("Cat 2")
+                            _vm._v("Minería")
                           ]),
                           _vm._v(" "),
                           _c("option", { attrs: { value: "3" } }, [
-                            _vm._v("Cat 3")
+                            _vm._v("Hidroeléctricas y eólicas")
                           ]),
                           _vm._v(" "),
                           _c("option", { attrs: { value: "4" } }, [
-                            _vm._v("Cat 4")
+                            _vm._v("Petróleo fracking y gasoductos")
                           ]),
                           _vm._v(" "),
                           _c("option", { attrs: { value: "5" } }, [
-                            _vm._v("Cat 5")
+                            _vm._v("Derechos indígenas")
                           ]),
                           _vm._v(" "),
                           _c("option", { attrs: { value: "6" } }, [
-                            _vm._v("Cat 6")
+                            _vm._v("Tierra y territorio")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "7" } }, [
+                            _vm._v("Agua")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "8" } }, [
+                            _vm._v("Bosques y deforestación")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "9" } }, [
+                            _vm._v("Megaproyectos")
                           ])
                         ]
                       )
@@ -46784,11 +46654,10 @@ var render = function() {
                       _c("editor", {
                         attrs: {
                           "api-key": "no-api-key",
-                          initialValue:
-                            "<p>This is the initial content of the editor</p>",
+                          initialValue: "",
                           init: {
                             height: 500,
-                            menubar: false,
+                            menubar: true,
                             plugins: [
                               "advlist autolink lists link image charmap print preview anchor",
                               "searchreplace visualblocks code fullscreen",
@@ -46941,273 +46810,118 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card strpied-tabled-with-hover" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "card-body table-full-width table-responsive" },
+            [
+              _c("table", { staticClass: "table table-hover table-striped" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.document, function(item, index) {
+                    return _c("tr", { key: index }, [
+                      _c("td", [_vm._v(_vm._s(index + 1))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.nombre) + " ")]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.fecha) + " ")]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.importancia))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.descarga))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.informacion))]),
+                      _vm._v(" "),
+                      _vm._m(2, true)
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ]
+          )
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container-fluid" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "card strpied-tabled-with-hover" }, [
-            _c("div", { staticClass: "card-header " }, [
-              _c("h4", { staticClass: "card-title" }, [
-                _vm._v("Registro de pdf")
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "card-category" }, [
-                _vm._v("Si no encuentra su información recargue la página web")
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card-body table-full-width table-responsive" },
-              [
-                _c(
-                  "table",
-                  { staticClass: "table table-hover table-striped" },
-                  [
-                    _c("thead", [
-                      _c("th", [_vm._v("No.")]),
-                      _vm._v(" "),
-                      _c("th", { staticStyle: { width: "30%" } }, [
-                        _vm._v("Nombre")
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Importancia")]),
-                      _vm._v(" "),
-                      _c("th", { staticStyle: { width: "35%" } }, [
-                        _vm._v("Información")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "th",
-                        {
-                          staticStyle: {
-                            width: "100%",
-                            "border-bottom": "0px solid #dee2e6"
-                          }
-                        },
-                        [_vm._v("Editar")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("tbody", [
-                      _c("tr", [
-                        _c("td", [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Dakota Rice")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("$36,738")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Niger")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-success",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", {
-                                  staticClass: "fa fa-pencil-square-o"
-                                })
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-danger",
-                              staticStyle: { "margin-left": "4%" },
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", { staticClass: "fa fa-remove" })
-                              ])
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Dakota Rice")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("$36,738")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Niger")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-success",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", {
-                                  staticClass: "fa fa-pencil-square-o"
-                                })
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-danger",
-                              staticStyle: { "margin-left": "4%" },
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", { staticClass: "fa fa-remove" })
-                              ])
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Dakota Rice")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("$36,738")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Niger")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-success",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", {
-                                  staticClass: "fa fa-pencil-square-o"
-                                })
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-danger",
-                              staticStyle: { "margin-left": "4%" },
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", { staticClass: "fa fa-remove" })
-                              ])
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Dakota Rice")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("$36,738")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Niger")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-success",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", {
-                                  staticClass: "fa fa-pencil-square-o"
-                                })
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-danger",
-                              staticStyle: { "margin-left": "4%" },
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", { staticClass: "fa fa-remove" })
-                              ])
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Dakota Rice")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("$36,738")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Niger")]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-success",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", {
-                                  staticClass: "fa fa-pencil-square-o"
-                                })
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-labeled btn-danger",
-                              staticStyle: { "margin-left": "4%" },
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _c("span", { staticClass: "btn-label" }, [
-                                _c("i", { staticClass: "fa fa-remove" })
-                              ])
-                            ]
-                          )
-                        ])
-                      ])
-                    ])
-                  ]
-                )
-              ]
-            )
-          ])
-        ])
+    return _c("div", { staticClass: "card-header " }, [
+      _c("h4", { staticClass: "card-title" }, [_vm._v("Registro de pdf")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "card-category" }, [
+        _vm._v("Si no encuentra su información recargue la página web")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("th", [_vm._v("No.")]),
+      _vm._v(" "),
+      _c("th", { staticStyle: { width: "20%" } }, [_vm._v("Nombre")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Fecha")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Importancia")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Descargas")]),
+      _vm._v(" "),
+      _c("th", { staticStyle: { width: "35%" } }, [_vm._v("Información")]),
+      _vm._v(" "),
+      _c(
+        "th",
+        {
+          staticStyle: { width: "100%", "border-bottom": "0px solid #dee2e6" }
+        },
+        [_vm._v("Editar")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-labeled btn-success",
+          attrs: { type: "button" }
+        },
+        [
+          _c("span", { staticClass: "btn-label" }, [
+            _c("i", { staticClass: "fa fa-pencil-square-o" })
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-labeled btn-danger",
+          staticStyle: { "margin-left": "4%" },
+          attrs: { type: "button" }
+        },
+        [
+          _c("span", { staticClass: "btn-label" }, [
+            _c("i", { staticClass: "fa fa-remove" })
+          ])
+        ]
+      )
     ])
   }
 ]
