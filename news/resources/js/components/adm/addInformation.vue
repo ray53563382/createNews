@@ -19,90 +19,16 @@
                                             <th style=" width:100%; border-bottom: 0px solid #dee2e6;">Editar</th>
                                         </thead>
                                         <tbody>
-                                             <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>Oud-Turnhout</td>
-                                                  <td>
-                                                    <button type="button" class="btn btn-labeled btn-success">
-                                                     <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
-                                                    <button type="button" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
-                                                    <span class="btn-label"><i class="fa fa-remove"></i></span></button>
+                                             <tr  v-for="(item, index) in notas" :key="index" >
+                                                <td>{{index + 1}}</td>
+                                                <td>{{item.titulo}}</td>
+                                                <td>{{item.importancia}}</td>
+                                                <td>{{item.autor}}</td>
+                                                <td>
+                                                  <div style="height: 60px; overflow-y: auto;">
+                                                     {{item.informacionArt}}
+                                                  </div>
                                                 </td>
-                                            </tr>
-                                              <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>Oud-Turnhout</td>
-                                                  <td>
-                                                    <button type="button" class="btn btn-labeled btn-success">
-                                                     <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
-                                                    <button type="button" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
-                                                    <span class="btn-label"><i class="fa fa-remove"></i></span></button>
-                                                </td>
-                                            </tr>
-                                              <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>Oud-Turnhout</td>
-                                                  <td>
-                                                    <button type="button" class="btn btn-labeled btn-success">
-                                                     <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
-                                                    <button type="button" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
-                                                    <span class="btn-label"><i class="fa fa-remove"></i></span></button>
-                                                </td>
-                                            </tr>
-                                              <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>Oud-Turnhout</td>
-                                                  <td>
-                                                    <button type="button" class="btn btn-labeled btn-success">
-                                                     <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
-                                                    <button type="button" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
-                                                    <span class="btn-label"><i class="fa fa-remove"></i></span></button>
-                                                </td>
-                                            </tr>
-                                              <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>Oud-Turnhout</td>
-                                                  <td>
-                                                    <button type="button" class="btn btn-labeled btn-success">
-                                                     <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
-                                                    <button type="button" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
-                                                    <span class="btn-label"><i class="fa fa-remove"></i></span></button>
-                                                </td>
-                                            </tr>
-                                              <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>Oud-Turnhout</td>
-                                                  <td>
-                                                    <button type="button" class="btn btn-labeled btn-success">
-                                                     <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
-                                                    <button type="button" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
-                                                    <span class="btn-label"><i class="fa fa-remove"></i></span></button>
-                                                </td>
-                                            </tr>
-                                             <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>Oud-Turnhout</td>
                                                   <td>
                                                     <button type="button" class="btn btn-labeled btn-success">
                                                      <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
@@ -122,8 +48,18 @@
 </template>
 <script>
     export default {
+        data() {
+          return {
+            notas: [],
+          }
+        },
+        created(){
+          axios.get('/notas').then(res=>{
+            this.notas = res.data;
+            console.log(this.notas);
+          })
+        },
         mounted() {
-            console.log('Component mounted.')
         }
     }
 </script>

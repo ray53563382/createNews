@@ -12,76 +12,27 @@
                                     <table class="table table-hover table-striped">
                                         <thead>
                                             <th>No.</th>
-                                            <th style="width: 30%;">Nombre</th>
+                                            <th style="width: 20%;">Nombre</th>
+                                            <th>Fecha</th>
                                             <th>Importancia</th>
+                                            <th>Descargas</th>
                                             <th style="width: 35%;">Información</th>
                                             <th style="width: 100%; border-bottom: 0px solid #dee2e6;">Editar</th>
                                         </thead>
                                         <tbody>
-                                             <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
+                                             <tr v-for="(item, index) in document" :key="index">
+                                                <td>{{index + 1}}</td>
+                                                <td>{{item.nombre}} </td>
+                                                <td>{{item.fecha}} </td>
+                                                <td>{{item.importancia}}</td>
+                                                <td>{{item.descarga}}</td>
+                                                <td>{{item.informacion}}</td>
                                                 <td>
                                                     <button type="button" class="btn btn-labeled btn-success">
                                                      <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
                                                     <button type="button" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
                                                     <span class="btn-label"><i class="fa fa-remove"></i></span></button>
                                                 </td>
-
-                                            </tr>
-                                              <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-labeled btn-success">
-                                                     <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
-                                                    <button type="button" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
-                                                    <span class="btn-label"><i class="fa fa-remove"></i></span></button>
-                                                </td>
-
-                                            </tr>
-                                              <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-labeled btn-success">
-                                                     <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
-                                                    <button type="button" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
-                                                    <span class="btn-label"><i class="fa fa-remove"></i></span></button>
-                                                </td>
-
-                                            </tr>
-                                              <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-labeled btn-success">
-                                                     <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
-                                                    <button type="button" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
-                                                    <span class="btn-label"><i class="fa fa-remove"></i></span></button>
-                                                </td>
-
-                                            </tr>
-                                              <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-labeled btn-success">
-                                                     <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
-                                                    <button type="button" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
-                                                    <span class="btn-label"><i class="fa fa-remove"></i></span></button>
-                                                </td>
-
                                             </tr>
                                         </tbody>
                                     </table>
@@ -95,8 +46,19 @@
 </template>
 <script>
     export default {
+        data() {
+          return {
+            document: [],
+          }
+        },
         mounted() {
             console.log('Component mounted.')
-        }
+        },
+        created(){
+          axios.get('/document').then(res=>{
+            this.document = res.data;
+            console.log(this.document);
+          })
+        },
     }
 </script>

@@ -7,8 +7,16 @@
                                 <div class="card-header">
                                     <h4 class="card-title">Agregar articulo</h4>
                                 </div>
+
+                               
                                 <div class="card-body">
-                                    <form enctype="multipart/form-data" @submit.prevent="agregar()">
+                                    <form novalidate="true" enctype="multipart/form-data" @submit.prevent="agregar()">
+                                     <p v-if="errors.length">
+                                        <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
+                                        <ul>
+                                        <li v-for="error in errors" v-bind:key="error" style="color:red">{{ error }}</li>
+                                        </ul>
+                                    </p>
                                         <div class="row">
                                             <div class="col-md-4 pr-1">
                                                 <div class="form-group">
@@ -31,12 +39,15 @@
                                                 <div class="form-group">
                                                     <label>Categoria</label>
                                                      <select class="form-control" v-model="registro.idcategoria">
-                                                        <option value="1">Cat 1</option>
-                                                        <option value="2">Cat 2</option>
-                                                        <option value="3">Cat 3</option>
-                                                        <option value="4">Cat 4</option>
-                                                        <option value="5">Cat 5</option>
-                                                        <option value="6">Cat 6</option>
+                                                        <option value="1">Crisis climática y conservación</option>
+                                                        <option value="2">Minería</option>
+                                                        <option value="3">Hidroeléctricas y eólicas</option>
+                                                        <option value="4">Petróleo fracking y gasoductos</option>
+                                                        <option value="5">Derechos indígenas</option>
+                                                        <option value="6">Tierra y territorio</option>
+                                                        <option value="7">Agua</option>
+                                                        <option value="8">Bosques y deforestación</option>
+                                                        <option value="9">Megaproyectos</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -74,10 +85,10 @@
                                             <div class="col-md-12">
                     <editor v-model="registro.informacionArt"
        api-key="no-api-key"
-       initialValue="<p>This is the initial content of the editor</p>"
+       initialValue=""
        :init="{
          height: 500,
-         menubar: false,
+         menubar: true,
          plugins: [
            'advlist autolink lists link image charmap print preview anchor',
            'searchreplace visualblocks code fullscreen',
@@ -152,6 +163,7 @@
         data(){
         return {
             registros: [],
+            errors: [],
             registro: {titulo:'',fecha:'', autor:'', importancia:'' ,idcategoria:'',informacionArt:'',imgdesmostrativa:''}
         }
         },
@@ -163,9 +175,43 @@
 
         },
         methods:{
-        agregar(){
-            axios.post('/notas', this.registro)
+        agregar: function (e){
+        this.errors = [];
+        if (!this.registro.titulo) {
+           this.errors.push("El nombre es obligatorio.");
+            console.log(this.errors);
+        }
+        if (!this.registro.fecha) {
+           this.errors.push("La fecha es obligatorio.");
+            console.log(this.errors);
+        }
+        if (!this.registro.autor) {
+           this.errors.push("El autor es obligatorio.");
+            console.log(this.errors);
+        }
+        if (!this.registro.importancia) {
+           this.errors.push("El autor es obligatorio.");
+            console.log(this.errors);
+        }
+         if (!this.registro.idcategoria) {
+           this.errors.push("La categoria es obligatoria.");
+            console.log(this.errors);
+        }
+         if (!this.registro.informacionArt) {
+           this.errors.push("La información del articulo es obligatoria.");
+            console.log(this.errors);
+        }
+         if (!this.registro.imgdesmostrativa) {
+           this.errors.push("La imagen es obligatoria.");
+            console.log(this.errors);
+        }
+
+        if(!this.registro.titulo != undefined && this.registro.fecha  != undefined && this.registro.autor != undefined && this.registro.importancia  != undefined && this.registro.idcategoria  != undefined
+        && this.registro.informacionArt  != undefined && this.registro.imgdesmostrativa != undefined ){
+              axios.post('/notas', this.registro)
                 .then(resp => {
+                    this.errors = [];
+                    this.registro = [];
                     console.log(resp);
                     this.$swal(
                         'Articulo guardado!',
@@ -175,6 +221,7 @@
                 }).catch(error => {
                     console.log(error);
             });
+        }
         },
 
         obtenerImagen(e){

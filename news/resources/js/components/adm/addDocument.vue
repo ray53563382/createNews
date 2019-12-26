@@ -8,7 +8,13 @@
                                     <h4 class="card-title">Agregar documento</h4>
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    <form enctype="multipart/form-data" @submit.prevent="agregar()">
+                                       <p v-if="errors.length">
+                                        <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
+                                        <ul>
+                                        <li v-for="error in errors" v-bind:key="error" style="color:red">{{ error }}</li>
+                                        </ul>
+                                      </p>
                                         <div class="row">
                                             <div class="col-md-3 pr-1">
                                                 <div class="form-group">
@@ -30,7 +36,7 @@
                                             <div class="col-md-6 pl-1">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nombre documento</label>
-                                                    <input type="text" class="form-control" placeholder="">
+                                                    <input type="text" class="form-control" placeholder="" v-model="registro.nombre">
                                                 </div>
                                             </div>
                                         </div>
@@ -45,7 +51,7 @@
                                              <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Agregar Docuemento</label><br>
-                                                    <input type="file"  accept="image/*">
+                                                    <input type="file"  accept="pdf/*" @change="obtenerPdf">
                                                 </div>
                                             </div>
                                         </div>
@@ -54,7 +60,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="comment">Información:</label>
-                                                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                                                    <textarea class="form-control" rows="5" id="comment" v-model="registro.informacion"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -111,15 +117,13 @@
         data(){
         return {
             registros: [],
-            registro: {titulo:'',fecha:'', autor:'', importancia:'' ,idcategoria:'',informacionArt:'',imgdesmostrativa:''}
+            document: [],
+            errors: [],
+            registro: {fecha:'',nombre:'', importancia:'' ,imgdesmostrativa:'', pdf:'', informacion:''}
         }
 
         },
-        mounted() {
-            console.log('Component mounted.')
-        },
-
-
+      
           methods:{
             obtenerImagen(e){
             let fileReader = new FileReader();
@@ -127,9 +131,52 @@
             fileReader.onload = (e)=>{
                 this.registro.imgdesmostrativa = e.target.result
             }
+            },
+            agregar: function (e){
+            this.errors= [];
+            if (!this.registro.fecha) {
+            this.errors.push("La fecha es obligatoria.");
+            }
+            if (!this.registro.nombre) {
+            this.errors.push("El nombre es obligatorio.");
+            }
+            if (!this.registro.importancia) {
+            this.errors.push("El campo de importancia es obligatorio.");
+            }
+            if (!this.registro.imgdesmostrativa) {
+            this.errors.push("La imagen es obligatoria.");
+            }
+            if (!this.registro.pdf) {
+            this.errors.push("El pdf es obligatorio.");
+            }
+            if (!this.registro.informacion) {
+            this.errors.push("La información es obligatoria.");
+            }
+
+            if(this.registro.nombre && this.registro.fecha && this.registro.importancia && this.registro.imgdesmostrativa &&
+             this.registro.pdf && this.registro.informacion ){
+                axios.post('/document', this.registro).then(resp => {
+                    this.registro = [];
+                     e.preventDefault();
+                    this.$swal(
+                        'Pdf registrado!',
+                        'Ahora ya puedo visualizarlo en su página web!',
+                        'success'
+                    )
+                }).catch(error => {
+                    console.log(error);
+                });
+            } 
+
+            },
+            obtenerPdf(e){
+                let fileReader = new FileReader();
+                fileReader.readAsDataURL(e.target.files[0]);
+                fileReader.onload = (e)=>{
+                this.registro.pdf = e.target.result
+            }
             }
         },
-
         components: {
      'editor': Editor
    }

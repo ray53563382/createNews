@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
-    <div class="sidebar" data-image="../assets/img/sidebar-5.jpg">
+    <!-- <img :src="'/images/sidebar-5.jpg'" alt="image" /> -->
+    <div class="sidebar"  data-image="/images/sidebar-5.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
