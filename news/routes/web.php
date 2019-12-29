@@ -18,6 +18,7 @@ Route::get('/', function () {
 
 
 Route::get('documentView/{id}', 'DocumentsViewController@index' );
+Route::get('search/{querystring}', 'DocumentsViewController@search');
 //Route::get('/documentView/{id}', ['uses' => 'DocumentViewController@index']);
 Auth::routes();
 Route::resource('/notas', 'NotaController')->middleware('auth');

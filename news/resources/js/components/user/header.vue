@@ -64,17 +64,21 @@
                     </li>
                 </ul>
             </div>
-            <form class="form-inline my-3">
+            <div class="form-inline my-3">
                 <input
+                    v-model="searchString"
                     class="form-control mx-3"
                     type="search"
                     placeholder="Busca en nuestras publicaciones."
                     aria-label="Search"
                 />
-                <button class="btn btn-outline-success mx-3 my-2 my-sm-0">
+                <button
+                    @click="search"
+                    class="btn btn-outline-success mx-3 my-2 my-sm-0"
+                >
                     Buscar
                 </button>
-            </form>
+            </div>
         </div>
     </div>
 </template>
@@ -89,8 +93,16 @@ export default {
     data() {
         return {
             logo: logo,
-            home: home
+            home: home,
+            searchString: null
         };
+    },
+
+    methods: {
+        search() {
+            console.log(this.searchString);
+            location.replace("/search/" + this.searchString);
+        }
     }
 };
 </script>

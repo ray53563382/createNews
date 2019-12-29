@@ -20,6 +20,11 @@ window.Vue = require("vue");
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component(
+    "searchview-component",
+    require("./components/user/searchComponent.vue").default
+);
+
+Vue.component(
     "example-component",
     require("./components/adm/ExampleComponent.vue").default
 );
