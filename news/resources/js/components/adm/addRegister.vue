@@ -151,11 +151,11 @@
 
 <script>
     import Editor from '@tinymce/tinymce-vue'
-    import Datepicker from 'vuejs-datepicker';
+    // import Datepicker from 'vuejs-datepicker';
     import Vue from 'vue';
-    import VueSweetalert2 from 'vue-sweetalert2';
-    import 'sweetalert2/dist/sweetalert2.min.css';
-    Vue.use(VueSweetalert2);
+    // import VueSweetalert2 from 'vue-sweetalert2';
+    // import 'sweetalert2/dist/sweetalert2.min.css';
+    // Vue.use(VueSweetalert2);
 
  
     export default {
@@ -234,7 +234,7 @@
         },
         components: {
         'editor': Editor,
-         Datepicker
+        //  Datepicker
    }
     }
 </script>

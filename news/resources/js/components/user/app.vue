@@ -1,51 +1,36 @@
 <template>
     <div class="container">
-        <div class="row">
+        <div class="row  ">
             <div class="col-12">
                 <Header />
             </div>
         </div>
 
-        <div class="row mt-3">
-            <div class="col-4">
-                <div class="relevant px-3 py-2">
-                    <p>
-                        <a href="#">LO MÁS RELEVANTE DE LA SEMANA.</a>
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-4"></div>
-        </div>
-
-        <div class="row mt-3">
-            <div class="col-12 py-3 relevant-container">
-                <div class="col-6">
-                    <Card />
-                </div>
-
-                <div class="col-6">
-                    <Card />
+        <div class="row mt-3 mx-3">
+            <div class="col-12">
+                <div class="relevant mx-3 my-2 text-center">
+                    <!-- <p> -->
+                    <a class="" href="#">LO MÁS RELEVANTE DE LA SEMANA.</a>
+                    <!-- </p> -->
                 </div>
             </div>
         </div>
 
-        <!-- <div class="row rel">
-      <div class="col-9 fix">
-        
-          <div class="side-bar">
-            hello
-          </div>
-     
-      </div>
-    </div>-->
+        <div class="row mx-md-0 mx-3 ">
+            <div class="col-md p-0 my-2 mx-md-2">
+                <Card />
+            </div>
+            <div class="col-md p-0 my-2 mx-md-2">
+                <Card />
+            </div>
+        </div>
 
-        <div class="row mt-4">
-            <div class="col-8">
+        <div class="row mx-2 mt-4">
+            <div class="col-md-8">
                 <Body />
             </div>
 
-            <div class="col-4">
+            <div class=" col-md-4">
                 <Sidebar />
             </div>
         </div>
@@ -83,13 +68,11 @@ export default {
 .relevant {
     background-color: rgba(21, 21, 21, 0.808);
     border: 1px solid rgba(255, 255, 255, 0.89);
-    height: fit-content;
-    width: fit-content;
-    // background-color: aliceblue;
+
     -webkit-box-shadow: 2px 3px 10px -1px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 3px 10px -1px rgba(0, 0, 0, 0.75);
     box-shadow: 2px 3px 10px -1px rgba(0, 0, 0, 0.75);
-    justify-content: center;
+    // justify-content: center;
     a {
         font-weight: bolder;
         font-size: 1.2em;
@@ -116,9 +99,9 @@ export default {
 }
 
 .relevant-container {
-    display: flex;
-    width: fit-content;
-    height: fit-content;
+    // display: flex;
+    width: 100%;
+    // height: fit-content;
     background-color: #fff;
     -webkit-box-shadow: 2px 3px 10px -1px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 3px 10px -1px rgba(0, 0, 0, 0.75);
