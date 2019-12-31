@@ -21,7 +21,7 @@ class CreateNotasTable extends Migration
                 $table->string('importancia');
                 $table->string('idcategoria');
                 $table->text('informacionArt');
-                $table->binary('imgdesmostrativa');
+                $table->text('imgdesmostrativa');
                 $table->timestamps();
         });
     }

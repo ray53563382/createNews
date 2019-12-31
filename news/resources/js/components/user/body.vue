@@ -72,6 +72,7 @@
 
 <script>
 import Minicard from "./miniCard";
+import { bus } from "../media/bus";
 
 export default {
     name: "body",
@@ -86,6 +87,12 @@ export default {
         Minicard
         // Sidebar
     }
+
+    // created() {
+    //     axios.get("/recent").then(resp => {
+    //         console.log(resp.data);
+    //     });
+    // }
 };
 </script>
 

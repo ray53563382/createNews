@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import { bus } from "../media/bus";
+
 export default {
     name: "minicard",
 

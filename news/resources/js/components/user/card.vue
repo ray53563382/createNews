@@ -1,15 +1,15 @@
 <template>
-    <div @click="goToDocumentView" class="card  mt-lg-3 mx-lg-3 ">
+    <div
+        @click="goToDocumentView"
+        :style="{ backgroundImage: 'url(' + card_imagen + ' )' }"
+        class="card  mt-lg-3 mx-lg-3 "
+    >
         <div ref="transElement" class="transition-element">
-            <p class="pl-3 pt-2">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
-                quas minus similique at. Autem expedita, quam reiciendis
-                incidunt soluta blanditiis hic voluptas suscipit deserunt,
-                harum, velit sapiente. Nihil, quidem corporis!Nulla deleniti
-                eaque autem harum corrupti odit labore incidunt voluptates nisi?
-                Fuga ratione hic architecto sit corporis commodi quasi
-                distinctio exercitationem quae molestias et eveniet, neque
-                reprehenderit perferendis magni. Possimus.
+            <p class="pl-3 pt-2  wraptext">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque
+                officiis sed temporibus perferendis, ipsa velit illo, atque
+                eligendi impedit enim libero veritatis praesentium modi minus
+                recusandae inventore. Non, eveniet sunt.
             </p>
         </div>
 
@@ -18,27 +18,51 @@
 
             <div class="tag-box ml-3">
                 <div class="px-2">
-                    <p>Derechos indígenas y territorio</p>
+                    <p>{{ card_category }}</p>
                 </div>
             </div>
 
-            <P class="title-box ml-3 turn-black"
-                >El derecho al territorio, frente a la soya transgénica en
-                Bacalar, Quintana Roo</P
-            >
+            <P v-html="card_title" class="title-box ml-3 turn-black"></P>
 
-            <p class="autor-box ml-3 turn-black">Por Heber Uc Rivero</p>
+            <p class="autor-box ml-3 turn-black">{{ card_autor }}</p>
         </div>
     </div>
 </template>
 
 <script>
+import { bus } from "../media/bus";
+
 export default {
     name: "card",
 
+    props: {
+        arrayindex: {
+            required: true
+        }
+    },
+
     data() {
         return {
-            // image: image
+            card_title: null,
+            card_description: null,
+            card_autor: null,
+            card_imagen: null,
+            card_category: null,
+            categorias: [
+                "null",
+                "Crisis climática y conservación",
+                "Minería",
+                "Hidroeléctricas y eólicas",
+                "Petróleo fracking y gasoductos",
+                "Derechos indígenas",
+                "Tierra y territorio",
+                "Agua",
+                "Bosques y deforestación",
+                "Megaproyectos"
+            ],
+            relevantes: [],
+            index_carousel: 0
+            // arrindex: null
         };
     },
 
@@ -51,7 +75,53 @@ export default {
         goToDocumentView() {
             let docId = 1234;
             location.replace("/documentView/" + docId);
+        },
+
+        carousel() {
+            this.index_carousel >= this.relevantes.length - 1
+                ? (this.index_carousel = 0)
+                : this.index_carousel++;
+
+            this.card_title = this.relevantes[this.index_carousel].titulo;
+            this.card_description = this.relevantes[
+                this.index_carousel
+            ].informacionArt;
+            this.card_autor = this.relevantes[this.index_carousel].autor;
+            this.card_imagen = this.relevantes[
+                this.index_carousel
+            ].imgdesmostrativa;
+            this.card_category = this.categorias[
+                this.relevantes[this.index_carousel].idcategoria
+            ];
+
+            setTimeout(this.carousel, 3000);
+        },
+
+        runCarousel() {
+            this.carousel();
         }
+    },
+
+    created() {
+        bus.$on("bus_relevants", data => {
+            this.card_title = data[this.arrayindex].titulo;
+            this.card_description = data[this.arrayindex].informacionArt;
+            this.card_autor = data[this.arrayindex].autor;
+            this.card_imagen = data[this.arrayindex].imgdesmostrativa;
+            this.card_category = this.categorias[
+                data[this.arrayindex].idcategoria
+            ];
+            this.relevantes = data;
+            this.index_carousel = this.arrayindex;
+            // console.log(this.relevantes);
+        });
+    },
+
+    mounted() {
+        let vm = this;
+        setTimeout(function() {
+            vm.runCarousel();
+        }, 9000);
     }
 };
 </script>
@@ -68,13 +138,17 @@ export default {
 //     }
 // }
 
+.wraptext {
+    text-overflow: hidden;
+}
+
 .card {
     // position: relative;
     height: 15em;
     // width: 38em;
     width: 100%;
     background-color: aliceblue;
-    background-image: url("https://source.unsplash.com/user/wsanter");
+    // background-image: url("https://source.unsplash.com/user/wsanter");
     // z-index: 10;
 
     .transition-element {

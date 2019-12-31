@@ -2901,7 +2901,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(this.errors);
       }
 
-      if (!this.registro.titulo && this.registro.fecha && this.registro.autor && this.registro.importancia && this.registro.idcategoria && this.registro.informacionArt && this.registro.imgdesmostrativa) {
+      if (this.registro.titulo && this.registro.fecha && this.registro.autor && this.registro.importancia && this.registro.idcategoria && this.registro.informacionArt && this.registro.imgdesmostrativa) {
         axios.post('/notas', this.registro).then(function (resp) {
           _this.errors = [];
           _this.registro = [];
@@ -3022,6 +3022,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _body__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./body */ "./resources/js/components/user/body.vue");
 /* harmony import */ var _sidebar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sidebar */ "./resources/js/components/user/sidebar.vue");
 /* harmony import */ var _footer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./footer */ "./resources/js/components/user/footer.vue");
+/* harmony import */ var _media_bus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../media/bus */ "./resources/js/components/media/bus.js");
+//
 //
 //
 //
@@ -3073,6 +3075,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "App",
   components: {
@@ -3081,6 +3084,17 @@ __webpack_require__.r(__webpack_exports__);
     Body: _body__WEBPACK_IMPORTED_MODULE_2__["default"],
     Sidebar: _sidebar__WEBPACK_IMPORTED_MODULE_3__["default"],
     Footer: _footer__WEBPACK_IMPORTED_MODULE_4__["default"]
+  },
+  data: function data() {
+    return {
+      cards: ["1", "2"]
+    };
+  },
+  created: function created() {
+    axios.get("/relevant").then(function (resp) {
+      // console.log(resp.data);
+      _media_bus__WEBPACK_IMPORTED_MODULE_5__["bus"].$emit("bus_relevants", resp.data);
+    });
   }
 });
 
@@ -3096,6 +3110,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _miniCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./miniCard */ "./resources/js/components/user/miniCard.vue");
+/* harmony import */ var _media_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../media/bus */ "./resources/js/components/media/bus.js");
 //
 //
 //
@@ -3168,6 +3183,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "body",
@@ -3179,7 +3195,12 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Minicard: _miniCard__WEBPACK_IMPORTED_MODULE_0__["default"] // Sidebar
 
-  }
+  } // created() {
+  //     axios.get("/recent").then(resp => {
+  //         console.log(resp.data);
+  //     });
+  // }
+
 });
 
 /***/ }),
@@ -3193,6 +3214,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _media_bus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../media/bus */ "./resources/js/components/media/bus.js");
 //
 //
 //
@@ -3224,13 +3246,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "card",
+  props: {
+    arrayindex: {
+      required: true
+    }
+  },
   data: function data() {
-    return {// image: image
+    return {
+      card_title: null,
+      card_description: null,
+      card_autor: null,
+      card_imagen: null,
+      card_category: null,
+      categorias: ["null", "Crisis climática y conservación", "Minería", "Hidroeléctricas y eólicas", "Petróleo fracking y gasoductos", "Derechos indígenas", "Tierra y territorio", "Agua", "Bosques y deforestación", "Megaproyectos"],
+      relevantes: [],
+      index_carousel: 0 // arrindex: null
+
     };
   },
   methods: {
@@ -3241,7 +3275,38 @@ __webpack_require__.r(__webpack_exports__);
     goToDocumentView: function goToDocumentView() {
       var docId = 1234;
       location.replace("/documentView/" + docId);
+    },
+    carousel: function carousel() {
+      this.index_carousel >= this.relevantes.length - 1 ? this.index_carousel = 0 : this.index_carousel++;
+      this.card_title = this.relevantes[this.index_carousel].titulo;
+      this.card_description = this.relevantes[this.index_carousel].informacionArt;
+      this.card_autor = this.relevantes[this.index_carousel].autor;
+      this.card_imagen = this.relevantes[this.index_carousel].imgdesmostrativa;
+      this.card_category = this.categorias[this.relevantes[this.index_carousel].idcategoria];
+      setTimeout(this.carousel, 3000);
+    },
+    runCarousel: function runCarousel() {
+      this.carousel();
     }
+  },
+  created: function created() {
+    var _this = this;
+
+    _media_bus__WEBPACK_IMPORTED_MODULE_0__["bus"].$on("bus_relevants", function (data) {
+      _this.card_title = data[_this.arrayindex].titulo;
+      _this.card_description = data[_this.arrayindex].informacionArt;
+      _this.card_autor = data[_this.arrayindex].autor;
+      _this.card_imagen = data[_this.arrayindex].imgdesmostrativa;
+      _this.card_category = _this.categorias[data[_this.arrayindex].idcategoria];
+      _this.relevantes = data;
+      _this.index_carousel = _this.arrayindex; // console.log(this.relevantes);
+    });
+  },
+  mounted: function mounted() {
+    var vm = this;
+    setTimeout(function () {
+      vm.runCarousel();
+    }, 9000);
   }
 });
 
@@ -3606,6 +3671,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _media_bus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../media/bus */ "./resources/js/components/media/bus.js");
 //
 //
 //
@@ -3641,6 +3707,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "minicard",
   data: function data() {
@@ -8389,7 +8456,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed:100i,400,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, ".card[data-v-33cc7719] {\n  height: 15em;\n  width: 100%;\n  background-color: aliceblue;\n  background-image: url(\"https://source.unsplash.com/user/wsanter\");\n}\n.card .transition-element[data-v-33cc7719] {\n  position: absolute;\n  display: block;\n  height: inherit;\n  width: 0em;\n  -webkit-transition: width 1s;\n  transition: width 1s;\n  background-color: aliceblue;\n  overflow: hidden;\n}\n.card .transition-element p[data-v-33cc7719] {\n  opacity: 0;\n  -webkit-animation: opacity 1s;\n          animation: opacity 1s;\n}\n.card:hover > .transition-element[data-v-33cc7719] {\n  width: 100%;\n}\n.card:hover > .box > .turn-black[data-v-33cc7719] {\n  color: black;\n}\n.card:hover > .transition-element > p[data-v-33cc7719] {\n  opacity: 1;\n}\n.box[data-v-33cc7719] {\n  height: inherit;\n  width: inherit;\n  display: grid;\n  grid-template-columns: 100%;\n  grid-template-rows: 45% 13% 25% 10%;\n  background: black;\n  background: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.7679446779)), color-stop(67%, rgba(0, 0, 0, 0.0760679272)));\n  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7679446779) 0%, rgba(0, 0, 0, 0.0760679272) 67%);\n}\n.box .tag-box[data-v-33cc7719] {\n  font-family: \"Barlow Semi Condensed\", sans-serif;\n  font-weight: 400;\n  z-index: 999;\n  color: #eeeded;\n}\n.box .tag-box div[data-v-33cc7719] {\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  background-color: rgba(21, 21, 21, 0.808);\n  border: 1px solid rgba(255, 255, 255, 0.89);\n}\n.box .tag-box div p[data-v-33cc7719] {\n  margin: 0 0 0 0;\n}\n.box .title-box[data-v-33cc7719] {\n  font-family: \"Barlow Semi Condensed\", sans-serif;\n  font-weight: 700;\n  z-index: 999;\n  color: #eeeded;\n  font-size: 1.2em;\n}\n.box .autor-box[data-v-33cc7719] {\n  font-family: \"Barlow Semi Condensed\", sans-serif;\n  font-weight: 100;\n  font-style: italic;\n  z-index: 999;\n  color: #eeeded;\n}\n.box .display-class[data-v-33cc7719] {\n  display: block;\n  width: 38em;\n  height: 22em;\n}", ""]);
+exports.push([module.i, ".wraptext[data-v-33cc7719] {\n  text-overflow: hidden;\n}\n.card[data-v-33cc7719] {\n  height: 15em;\n  width: 100%;\n  background-color: aliceblue;\n}\n.card .transition-element[data-v-33cc7719] {\n  position: absolute;\n  display: block;\n  height: inherit;\n  width: 0em;\n  -webkit-transition: width 1s;\n  transition: width 1s;\n  background-color: aliceblue;\n  overflow: hidden;\n}\n.card .transition-element p[data-v-33cc7719] {\n  opacity: 0;\n  -webkit-animation: opacity 1s;\n          animation: opacity 1s;\n}\n.card:hover > .transition-element[data-v-33cc7719] {\n  width: 100%;\n}\n.card:hover > .box > .turn-black[data-v-33cc7719] {\n  color: black;\n}\n.card:hover > .transition-element > p[data-v-33cc7719] {\n  opacity: 1;\n}\n.box[data-v-33cc7719] {\n  height: inherit;\n  width: inherit;\n  display: grid;\n  grid-template-columns: 100%;\n  grid-template-rows: 45% 13% 25% 10%;\n  background: black;\n  background: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.7679446779)), color-stop(67%, rgba(0, 0, 0, 0.0760679272)));\n  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7679446779) 0%, rgba(0, 0, 0, 0.0760679272) 67%);\n}\n.box .tag-box[data-v-33cc7719] {\n  font-family: \"Barlow Semi Condensed\", sans-serif;\n  font-weight: 400;\n  z-index: 999;\n  color: #eeeded;\n}\n.box .tag-box div[data-v-33cc7719] {\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  background-color: rgba(21, 21, 21, 0.808);\n  border: 1px solid rgba(255, 255, 255, 0.89);\n}\n.box .tag-box div p[data-v-33cc7719] {\n  margin: 0 0 0 0;\n}\n.box .title-box[data-v-33cc7719] {\n  font-family: \"Barlow Semi Condensed\", sans-serif;\n  font-weight: 700;\n  z-index: 999;\n  color: #eeeded;\n  font-size: 1.2em;\n}\n.box .autor-box[data-v-33cc7719] {\n  font-family: \"Barlow Semi Condensed\", sans-serif;\n  font-weight: 100;\n  font-style: italic;\n  z-index: 999;\n  color: #eeeded;\n}\n.box .display-class[data-v-33cc7719] {\n  display: block;\n  width: 38em;\n  height: 22em;\n}", ""]);
 
 // exports
 
@@ -41704,11 +41771,19 @@ var render = function() {
     _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticClass: "row mx-md-0 mx-3 " }, [
-      _c("div", { staticClass: "col-md p-0 my-2 mx-md-2" }, [_c("Card")], 1),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md p-0 my-2 mx-md-2" }, [_c("Card")], 1)
-    ]),
+    _c(
+      "div",
+      { staticClass: "row mx-md-0 mx-3 " },
+      _vm._l(_vm.cards, function(object, index) {
+        return _c(
+          "div",
+          { key: index, staticClass: "col-md p-0 my-2 mx-md-2" },
+          [_c("Card", { attrs: { arrayindex: index } })],
+          1
+        )
+      }),
+      0
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "row mx-2 mt-4" }, [
       _c("div", { staticClass: "col-md-8" }, [_c("Body")], 1),
@@ -41905,13 +41980,14 @@ var render = function() {
     "div",
     {
       staticClass: "card  mt-lg-3 mx-lg-3 ",
+      style: { backgroundImage: "url(" + _vm.card_imagen + " )" },
       on: { click: _vm.goToDocumentView }
     },
     [
       _c("div", { ref: "transElement", staticClass: "transition-element" }, [
-        _c("p", { staticClass: "pl-3 pt-2" }, [
+        _c("p", { staticClass: "pl-3 pt-2  wraptext" }, [
           _vm._v(
-            "\n            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius\n            quas minus similique at. Autem expedita, quam reiciendis\n            incidunt soluta blanditiis hic voluptas suscipit deserunt,\n            harum, velit sapiente. Nihil, quidem corporis!Nulla deleniti\n            eaque autem harum corrupti odit labore incidunt voluptates nisi?\n            Fuga ratione hic architecto sit corporis commodi quasi\n            distinctio exercitationem quae molestias et eveniet, neque\n            reprehenderit perferendis magni. Possimus.\n        "
+            "\n            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque\n            officiis sed temporibus perferendis, ipsa velit illo, atque\n            eligendi impedit enim libero veritatis praesentium modi minus\n            recusandae inventore. Non, eveniet sunt.\n        "
           )
         ])
       ]),
@@ -41922,16 +41998,19 @@ var render = function() {
         [
           _c("div"),
           _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
-          _c("P", { staticClass: "title-box ml-3 turn-black" }, [
-            _vm._v(
-              "El derecho al territorio, frente a la soya transgénica en\n            Bacalar, Quintana Roo"
-            )
+          _c("div", { staticClass: "tag-box ml-3" }, [
+            _c("div", { staticClass: "px-2" }, [
+              _c("p", [_vm._v(_vm._s(_vm.card_category))])
+            ])
           ]),
           _vm._v(" "),
+          _c("P", {
+            staticClass: "title-box ml-3 turn-black",
+            domProps: { innerHTML: _vm._s(_vm.card_title) }
+          }),
+          _vm._v(" "),
           _c("p", { staticClass: "autor-box ml-3 turn-black" }, [
-            _vm._v("Por Heber Uc Rivero")
+            _vm._v(_vm._s(_vm.card_autor))
           ])
         ],
         1
@@ -41939,18 +42018,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "tag-box ml-3" }, [
-      _c("div", { staticClass: "px-2" }, [
-        _c("p", [_vm._v("Derechos indígenas y territorio")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -55295,6 +55363,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_addpdf_vue_vue_type_template_id_07dbb341___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/media/bus.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/media/bus.js ***!
+  \**********************************************/
+/*! exports provided: bus */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bus", function() { return bus; });
+var bus = new Vue();
 
 /***/ }),
 

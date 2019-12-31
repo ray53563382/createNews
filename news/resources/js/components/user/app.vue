@@ -17,11 +17,12 @@
         </div>
 
         <div class="row mx-md-0 mx-3 ">
-            <div class="col-md p-0 my-2 mx-md-2">
-                <Card />
-            </div>
-            <div class="col-md p-0 my-2 mx-md-2">
-                <Card />
+            <div
+                v-for="(object, index) in cards"
+                class="col-md p-0 my-2 mx-md-2"
+                :key="index"
+            >
+                <Card :arrayindex="index" />
             </div>
         </div>
 
@@ -51,6 +52,8 @@ import Body from "./body";
 import Sidebar from "./sidebar";
 import Footer from "./footer";
 
+import { bus } from "../media/bus";
+
 export default {
     name: "App",
 
@@ -60,6 +63,20 @@ export default {
         Body,
         Sidebar,
         Footer
+    },
+
+    data() {
+        return {
+            cards: ["1", "2"]
+        };
+    },
+
+    created() {
+        axios.get("/relevant").then(resp => {
+            // console.log(resp.data);
+
+            bus.$emit("bus_relevants", resp.data);
+        });
     }
 };
 </script>

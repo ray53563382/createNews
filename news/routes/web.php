@@ -14,12 +14,15 @@
 Route::get('/', function () {
     // return view('layouts.app');
     return view('pages.home');
+
 });
 
 
 Route::get('documentView/{id}', 'DocumentsViewController@index' );
 Route::get('search/{querystring}', 'DocumentsViewController@search');
-//Route::get('/documentView/{id}', ['uses' => 'DocumentViewController@index']);
+Route::get('/relevant', 'publicacionController@relevant');
+Route::get('/recent', 'publicacionController@recent');
+
 Auth::routes();
 Route::resource('/notas', 'NotaController')->middleware('auth');
 

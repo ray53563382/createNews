@@ -206,7 +206,7 @@
             console.log(this.errors);
         }
 
-        if(!this.registro.titulo && this.registro.fecha && this.registro.autor && this.registro.importancia && this.registro.idcategoria 
+        if(this.registro.titulo && this.registro.fecha && this.registro.autor && this.registro.importancia && this.registro.idcategoria 
         && this.registro.informacionArt && this.registro.imgdesmostrativa  ){
               axios.post('/notas', this.registro)
                 .then(resp => {
