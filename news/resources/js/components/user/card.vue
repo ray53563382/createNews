@@ -48,6 +48,7 @@ export default {
             card_autor: null,
             card_imagen: null,
             card_category: null,
+            card_id: null,
             categorias: [
                 "null",
                 "Crisis climática y conservación",
@@ -73,8 +74,7 @@ export default {
             // console.log(transElement);
         },
         goToDocumentView() {
-            let docId = 1234;
-            location.replace("/documentView/" + docId);
+            location.replace("/documentView/" + this.card_id);
         },
 
         carousel() {
@@ -93,8 +93,9 @@ export default {
             this.card_category = this.categorias[
                 this.relevantes[this.index_carousel].idcategoria
             ];
+            this.card_id = this.relevantes[this.index_carousel].id;
 
-            setTimeout(this.carousel, 3000);
+            setTimeout(this.carousel, 6000);
         },
 
         runCarousel() {
@@ -108,6 +109,7 @@ export default {
             this.card_description = data[this.arrayindex].informacionArt;
             this.card_autor = data[this.arrayindex].autor;
             this.card_imagen = data[this.arrayindex].imgdesmostrativa;
+            this.card_id = data[this.arrayindex].id;
             this.card_category = this.categorias[
                 data[this.arrayindex].idcategoria
             ];

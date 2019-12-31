@@ -72,7 +72,7 @@ export default {
     },
 
     created() {
-        axios.get("/relevant").then(resp => {
+        axios.post("/relevant").then(resp => {
             // console.log(resp.data);
 
             bus.$emit("bus_relevants", resp.data);

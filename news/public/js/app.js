@@ -3091,7 +3091,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    axios.get("/relevant").then(function (resp) {
+    axios.post("/relevant").then(function (resp) {
       // console.log(resp.data);
       _media_bus__WEBPACK_IMPORTED_MODULE_5__["bus"].$emit("bus_relevants", resp.data);
     });
@@ -3261,6 +3261,7 @@ __webpack_require__.r(__webpack_exports__);
       card_autor: null,
       card_imagen: null,
       card_category: null,
+      card_id: null,
       categorias: ["null", "Crisis climática y conservación", "Minería", "Hidroeléctricas y eólicas", "Petróleo fracking y gasoductos", "Derechos indígenas", "Tierra y territorio", "Agua", "Bosques y deforestación", "Megaproyectos"],
       relevantes: [],
       index_carousel: 0 // arrindex: null
@@ -3273,8 +3274,7 @@ __webpack_require__.r(__webpack_exports__);
       // console.log(transElement);
     },
     goToDocumentView: function goToDocumentView() {
-      var docId = 1234;
-      location.replace("/documentView/" + docId);
+      location.replace("/documentView/" + this.card_id);
     },
     carousel: function carousel() {
       this.index_carousel >= this.relevantes.length - 1 ? this.index_carousel = 0 : this.index_carousel++;
@@ -3283,7 +3283,8 @@ __webpack_require__.r(__webpack_exports__);
       this.card_autor = this.relevantes[this.index_carousel].autor;
       this.card_imagen = this.relevantes[this.index_carousel].imgdesmostrativa;
       this.card_category = this.categorias[this.relevantes[this.index_carousel].idcategoria];
-      setTimeout(this.carousel, 3000);
+      this.card_id = this.relevantes[this.index_carousel].id;
+      setTimeout(this.carousel, 6000);
     },
     runCarousel: function runCarousel() {
       this.carousel();
@@ -3297,6 +3298,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.card_description = data[_this.arrayindex].informacionArt;
       _this.card_autor = data[_this.arrayindex].autor;
       _this.card_imagen = data[_this.arrayindex].imgdesmostrativa;
+      _this.card_id = data[_this.arrayindex].id;
       _this.card_category = _this.categorias[data[_this.arrayindex].idcategoria];
       _this.relevantes = data;
       _this.index_carousel = _this.arrayindex; // console.log(this.relevantes);
@@ -3391,19 +3393,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3420,20 +3409,43 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      docTitle: "¿Agua o Minería? Resistencias comunitarias en América Latina",
-      docDate: "11.02.2019",
-      docAutor: "Daniel DRNTS",
+      docTitle: null,
+      docDate: null,
+      docAutor: null,
       docTags: ["America", "Asia", "Mexico"],
       docDownloadURL: "http://someurl.com",
-      docTheme: "CrisisClimaticaTema",
-      docImages: ["url1", "url2", "url3", "url4"],
+      docTheme: null,
+      docImage: null,
+      docTextBody: null,
       logito: _media_home_png__WEBPACK_IMPORTED_MODULE_0___default.a,
-      dataID: "hey"
+      dataID: "hey",
+      categorias: ["null", "Crisis climática y conservación", "Minería", "Hidroeléctricas y eólicas", "Petróleo fracking y gasoductos", "Derechos indígenas", "Tierra y territorio", "Agua", "Bosques y deforestación", "Megaproyectos"]
     };
   },
   methods: {},
   created: function created() {
-    this.dataID = this.myid; // console.log(this.myid);
+    var _this = this;
+
+    // this.dataID = this.myid;
+    // console.log(this.myid);
+    console.log(this.myid);
+    axios({
+      method: "post",
+      url: "/getDocument",
+      data: {
+        id: this.myid
+      }
+    }).then(function (resp) {
+      console.log(resp.data[0].titulo);
+      _this.docTitle = resp.data[0].titulo;
+      _this.docDate = resp.data[0].fecha;
+      _this.docAutor = resp.data[0].autor;
+      _this.docTheme = _this.categorias[resp.data[0].idcategoria];
+      _this.docImage = resp.data[0].imgdesmostrativa;
+      _this.docTextBody = resp.data[0].informacionArt;
+    })["catch"](function (Error) {
+      return console.log(error);
+    });
   }
 });
 
@@ -42051,7 +42063,7 @@ var render = function() {
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-12 my-5" }, [
               _c("p", { staticClass: "h1 text-muted" }, [
-                _vm._v(_vm._s(_vm.dataID))
+                _vm._v(_vm._s(_vm.docTitle))
               ])
             ])
           ]),
@@ -42064,7 +42076,9 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-4" }, [
-                  _c("p", [_vm._v("Etiquetas: " + _vm._s(_vm.docTags))])
+                  _c("p", { staticClass: "h5" }, [
+                    _vm._v("Tema: " + _vm._s(_vm.docTheme))
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -42078,18 +42092,23 @@ var render = function() {
                 _c("div", { staticClass: "col-12" }, [
                   _c("img", {
                     staticClass: "img-fluid img-thumbnail",
-                    attrs: { src: _vm.logito, alt: "" }
+                    attrs: { src: _vm.docImage, alt: "" }
                   })
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(0),
+              _c("div", { staticClass: "row my-5" }, [
+                _c("div", { staticClass: "container" }, [
+                  _c("div", {
+                    staticClass: "col-12",
+                    domProps: { innerHTML: _vm._s(_vm.docTextBody) }
+                  })
+                ])
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "row my-5" }, [
                 _c("div", { staticClass: "col-4" }, [
-                  _c("p", { staticClass: "h5" }, [
-                    _vm._v("Tema: " + _vm._s(_vm.docTheme))
-                  ])
+                  _c("p", [_vm._v("Etiquetas: " + _vm._s(_vm.docTags))])
                 ])
               ])
             ])
@@ -42103,22 +42122,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row my-5" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "col-12" }, [
-          _vm._v(
-            "\n                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni molestiae praesentium quisquam asperiores aliquid consequatur quos minima, est voluptas similique voluptates nostrum quam velit neque earum quas quae quasi cum.\n                  Asperiores ipsum deleniti molestias nobis qui aut ad sint, pariatur molestiae dolores, ullam nesciunt perspiciatis voluptate iste architecto ut magni corporis ea dignissimos recusandae doloremque, mollitia omnis! Dicta, suscipit porro?\n                  Officiis, voluptatum? Quo perspiciatis quidem sed nobis facere adipisci harum, quod architecto libero culpa temporibus nemo! Beatae, ea veritatis. Ut, provident perspiciatis doloremque sint officia id. Numquam exercitationem odio quisquam.\n                  Impedit, obcaecati! Quo, corrupti inventore alias dolores deserunt excepturi quas ullam! Eum repellendus a magni cumque quidem esse blanditiis! Obcaecati numquam asperiores animi eveniet esse fugiat, voluptatem quisquam quos beatae!\n                  Debitis saepe porro possimus eveniet culpa commodi beatae ut similique, praesentium magnam molestiae blanditiis temporibus sed enim suscipit quibusdam magni optio cumque deleniti? Quo, minima veritatis voluptas pariatur maiores praesentium.\n                  Amet animi ex nostrum aliquam, accusantium cum ipsa et magni eligendi perspiciatis similique commodi quod, nesciunt veritatis culpa blanditiis unde, fuga quo. Ipsum excepturi architecto illum nulla illo corrupti. Aperiam?\n                  Ex, sequi ut. Maxime odit quo, atque quas assumenda eligendi praesentium esse iste pariatur accusamus alias autem natus labore culpa hic debitis eaque veniam nam aliquid sit necessitatibus tempore quod.\n                  Quo quos dicta eaque velit commodi culpa eos iste, illo doloribus minima nam laboriosam doloremque quidem consectetur deleniti pariatur, nostrum, in accusantium dignissimos asperiores repudiandae. Voluptates modi accusamus ea! Molestiae?\n                  Obcaecati suscipit praesentium quasi nulla similique rerum, nobis cupiditate repellat accusamus consectetur quibusdam explicabo doloribus exercitationem animi cumque? Quaerat harum vero recusandae esse magnam labore vel cupiditate nostrum, earum sunt!\n                  Beatae et vitae rerum quos porro inventore magni architecto voluptate in facere, eos perspiciatis? Quod animi aliquam provident beatae commodi harum nostrum, quasi eum laboriosam quaerat et, iure nam ipsum! Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis at esse tempora vel nisi amet asperiores pariatur error. Rerum autem ea animi iste aliquid magnam non sit voluptatem harum odio!\n                  Facere ex eius nam eveniet hic dignissimos eligendi recusandae totam debitis natus, quia sint labore illum perspiciatis iusto iste optio soluta quibusdam reprehenderit voluptas nemo adipisci. Rem doloremque a exercitationem.\n                  Dolores dicta soluta minus? Illo cum quis molestiae ipsa iure repellat perferendis cupiditate accusantium odit fugiat error et natus quia autem eveniet non, nemo labore quasi provident. Optio, iste enim.\n                  Repudiandae ex officia sint deleniti praesentium laborum dolore maiores similique nobis nulla illum, aspernatur voluptatum iusto repellat dolorem iure, neque officiis in tenetur aut! Neque harum enim illo labore nam!\n                  Labore quasi quam magni, commodi recusandae impedit eligendi aliquid porro corporis modi quis deleniti odit fugiat maiores fuga aut quos sed dolor necessitatibus. Cumque minus aperiam labore, consectetur facilis illum.\n                  Ex beatae, culpa laborum neque repellat blanditiis cumque architecto sit eaque esse, ipsa est quia tempora corrupti. Tempora incidunt atque laboriosam eos accusantium id iste quia nam amet delectus. Hic?\n                  Deleniti adipisci ut quis eligendi voluptatum totam provident consequuntur eveniet placeat et, distinctio quia odio modi repellat magni itaque numquam soluta esse? Aspernatur magni, assumenda nemo ex recusandae reprehenderit ad?\n                  Laudantium suscipit maxime, aliquid enim molestias velit eius neque, blanditiis quod deserunt iste? Dolor quia eaque facilis aliquid placeat dignissimos quo repellendus at temporibus id voluptate unde autem, laboriosam sunt.\n                  Minus dignissimos incidunt asperiores nisi harum. Commodi ad corrupti perspiciatis? Distinctio rerum perferendis hic nulla deserunt eius voluptate, quisquam eaque asperiores officia quidem, quod libero non est iusto dolore doloremque.\n                  Et fugiat hic molestiae odio excepturi? Ipsa libero aliquid molestias atque eius! Illum ipsam odio illo dicta cupiditate. Debitis suscipit explicabo incidunt facere repudiandae ducimus unde dolores nesciunt minima recusandae.\n                "
-          )
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

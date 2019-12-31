@@ -20,8 +20,11 @@ Route::get('/', function () {
 
 Route::get('documentView/{id}', 'DocumentsViewController@index' );
 Route::get('search/{querystring}', 'DocumentsViewController@search');
-Route::get('/relevant', 'publicacionController@relevant');
-Route::get('/recent', 'publicacionController@recent');
+
+Route::post('/relevant', 'publicacionController@relevant');
+Route::post('/recent', 'publicacionController@recent');
+Route::post('/getDocument', 'publicacionController@getdoc');
+
 
 Auth::routes();
 Route::resource('/notas', 'NotaController')->middleware('auth');

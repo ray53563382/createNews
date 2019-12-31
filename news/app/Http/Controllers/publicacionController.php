@@ -27,4 +27,10 @@ class publicacionController extends Controller
                             ->get();
         return $most_recent;
     }
+
+    public function getdoc( Request $request)
+    {
+        $document = DB::table('notas')->where('id', $request->id )->get();
+        return $document;
+    }
 }
