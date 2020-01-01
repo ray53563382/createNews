@@ -23,7 +23,10 @@
         <div v-for="(object, index) in resultados" :key="index">
             <div class="row my-4">
                 <div class="col-lg-12">
-                    <Searchcard />
+                    <Searchcard
+                        :queries_array="resultados"
+                        :index_queries="index"
+                    />
                 </div>
             </div>
         </div>
@@ -41,6 +44,8 @@ import Header from "./header";
 import Footer from "./footer";
 import Searchcard from "./searchcard";
 
+// import { bus } from "../media/bus";
+
 export default {
     name: "searchview",
     props: {
@@ -57,13 +62,29 @@ export default {
         return {
             myString: null,
             notFound: false,
-            resultados: [1, 2]
+            resultados: []
         };
     },
 
     created() {
-        this.myString = this.querystring;
-        // console.log(this.myid);
+        axios({
+            method: "post",
+            url: "/getsearch",
+            data: {
+                q_string: this.querystring
+            }
+        })
+            .then(resp => {
+                this.resultados = resp.data;
+                console.log(resp.data.lenght);
+
+                resp.data.lenght == 0 || resp.data.lenght == undefined
+                    ? (this.notFound = true)
+                    : (this.notFound = 0);
+
+                // EventBus.$emit("bus_queries", resp.data);
+            })
+            .catch(Error => console.log(error));
     }
 };
 </script>

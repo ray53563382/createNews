@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { bus } from "../media/bus";
+// import { bus } from "../media/bus";
 
 export default {
     name: "card",
@@ -104,7 +104,7 @@ export default {
     },
 
     created() {
-        bus.$on("bus_relevants", data => {
+        EventBus.$on("bus_relevants", data => {
             this.card_title = data[this.arrayindex].titulo;
             this.card_description = data[this.arrayindex].informacionArt;
             this.card_autor = data[this.arrayindex].autor;

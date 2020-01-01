@@ -7,6 +7,11 @@
 require("./bootstrap");
 
 window.Vue = require("vue");
+// window.Vue = require("vue");
+window.EventBus = new Vue();
+
+// window.EventBus = new Vue();
+// export const EventBus = new Vue();
 
 /**
  * The following block of code may be used to automatically register your

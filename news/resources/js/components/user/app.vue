@@ -52,7 +52,7 @@ import Body from "./body";
 import Sidebar from "./sidebar";
 import Footer from "./footer";
 
-import { bus } from "../media/bus";
+// import { bus } from "../media/bus";
 
 export default {
     name: "App",
@@ -75,7 +75,7 @@ export default {
         axios.post("/relevant").then(resp => {
             // console.log(resp.data);
 
-            bus.$emit("bus_relevants", resp.data);
+            EventBus.$emit("bus_relevants", resp.data);
         });
     }
 };

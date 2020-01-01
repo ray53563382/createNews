@@ -3022,7 +3022,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _body__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./body */ "./resources/js/components/user/body.vue");
 /* harmony import */ var _sidebar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sidebar */ "./resources/js/components/user/sidebar.vue");
 /* harmony import */ var _footer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./footer */ "./resources/js/components/user/footer.vue");
-/* harmony import */ var _media_bus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../media/bus */ "./resources/js/components/media/bus.js");
 //
 //
 //
@@ -3074,7 +3073,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+ // import { bus } from "../media/bus";
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "App",
@@ -3093,7 +3092,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     axios.post("/relevant").then(function (resp) {
       // console.log(resp.data);
-      _media_bus__WEBPACK_IMPORTED_MODULE_5__["bus"].$emit("bus_relevants", resp.data);
+      EventBus.$emit("bus_relevants", resp.data);
     });
   }
 });
@@ -3111,6 +3110,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _miniCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./miniCard */ "./resources/js/components/user/miniCard.vue");
 /* harmony import */ var _media_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../media/bus */ "./resources/js/components/media/bus.js");
+/* harmony import */ var _media_bus__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_media_bus__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -3214,7 +3214,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _media_bus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../media/bus */ "./resources/js/components/media/bus.js");
 //
 //
 //
@@ -3246,7 +3245,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+// import { bus } from "../media/bus";
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "card",
   props: {
@@ -3293,7 +3292,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    _media_bus__WEBPACK_IMPORTED_MODULE_0__["bus"].$on("bus_relevants", function (data) {
+    EventBus.$on("bus_relevants", function (data) {
       _this.card_title = data[_this.arrayindex].titulo;
       _this.card_description = data[_this.arrayindex].informacionArt;
       _this.card_autor = data[_this.arrayindex].autor;
@@ -3653,6 +3652,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3666,7 +3666,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     search: function search() {
-      console.log(this.searchString);
+      // console.log(this.searchString);
       location.replace("/search/" + this.searchString);
     }
   }
@@ -3684,6 +3684,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _media_bus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../media/bus */ "./resources/js/components/media/bus.js");
+/* harmony import */ var _media_bus__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_media_bus__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -3831,9 +3832,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
+ // import { bus } from "../media/bus";
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "searchview",
@@ -3851,11 +3856,25 @@ __webpack_require__.r(__webpack_exports__);
     return {
       myString: null,
       notFound: false,
-      resultados: [1, 2]
+      resultados: []
     };
   },
   created: function created() {
-    this.myString = this.querystring; // console.log(this.myid);
+    var _this = this;
+
+    axios({
+      method: "post",
+      url: "/getsearch",
+      data: {
+        q_string: this.querystring
+      }
+    }).then(function (resp) {
+      _this.resultados = resp.data;
+      console.log(resp.data.lenght);
+      resp.data.lenght == 0 || resp.data.lenght == undefined ? _this.notFound = true : _this.notFound = 0; // EventBus.$emit("bus_queries", resp.data);
+    })["catch"](function (Error) {
+      return console.log(error);
+    });
   }
 });
 
@@ -3870,8 +3889,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _media_home_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../media/home.png */ "./resources/js/components/media/home.png");
-/* harmony import */ var _media_home_png__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_media_home_png__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -3903,13 +3920,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// import { bus } from "../media/bus";
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "searchcard",
+  props: {
+    index_queries: {
+      required: true
+    },
+    queries_array: {
+      required: true
+    }
+  },
   data: function data() {
     return {
-      logito: _media_home_png__WEBPACK_IMPORTED_MODULE_0___default.a
+      s_card_title: null,
+      s_card_description: null,
+      s_card_date: null,
+      s_card_autor: null,
+      s_card_image: null,
+      s_card_id: null
     };
+  },
+  methods: {
+    goToDocumentView: function goToDocumentView() {
+      location.replace("/documentView/" + this.s_card_id);
+    }
+  },
+  created: function created() {
+    // console.log(this.index_queries);
+    // console.log(this.queries_array);
+    this.s_card_title = this.queries_array[this.index_queries].titulo;
+    this.s_card_id = this.queries_array[this.index_queries].id;
+    this.s_card_description = this.queries_array[this.index_queries].informacionArt;
+    this.s_card_date = this.queries_array[this.index_queries].fecha;
+    this.s_card_autor = this.queries_array[this.index_queries].autor;
+    this.s_card_image = this.queries_array[this.index_queries].imgdesmostrativa; // EventBus.$on("bus_queries", data => {
+    //     console.log(data);
+    //     console.log("gracious");
+    //     this.s_card_title = data[index_queries].titulo;
+    //     this.s_card_description = data[index_queries].informacionArt;
+    //     this.s_card_date = data[index_queries].fecha;
+    //     this.s_card_autor = data[index_queries].autor;
+    //     this.s_card_image = data[index_queries].imgdesmostrativa;
+    // });
+    // console.log("fuck");
   }
 });
 
@@ -8620,7 +8683,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.searchcard {\r\n    height: 10em;\r\n    /* width: 100%; */\r\n    /* background-color: violet; */\n}\n.myimg {\r\n    /* height: 100%; */\r\n    height: 10em;\r\n    width: 100%;\r\n    background-position: center;\r\n    background-size: cover;\n}\n.description-container {\r\n    height: 5em;\r\n    /* background-color: #151515; */\n}\r\n", ""]);
+exports.push([module.i, "\n.searchcard {\r\n    height: 10em;\r\n    /* width: 100%; */\r\n    /* background-color: violet; */\n}\n.myimg {\r\n    /* height: 100%; */\r\n    height: 10em;\r\n    width: 100%;\r\n    background-position: center;\r\n    background-size: cover;\n}\n.description-container {\r\n    height: 4em;\r\n    /* background-color: #151515; */\n}\r\n", ""]);
 
 // exports
 
@@ -42293,6 +42356,15 @@ var render = function() {
             },
             domProps: { value: _vm.searchString },
             on: {
+              keyup: function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.search($event)
+              },
               input: function($event) {
                 if ($event.target.composing) {
                   return
@@ -42616,7 +42688,16 @@ var render = function() {
       _vm._l(_vm.resultados, function(object, index) {
         return _c("div", { key: index }, [
           _c("div", { staticClass: "row my-4" }, [
-            _c("div", { staticClass: "col-lg-12" }, [_c("Searchcard")], 1)
+            _c(
+              "div",
+              { staticClass: "col-lg-12" },
+              [
+                _c("Searchcard", {
+                  attrs: { queries_array: _vm.resultados, index_queries: index }
+                })
+              ],
+              1
+            )
           ])
         ])
       }),
@@ -42663,47 +42744,59 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row searchcard " }, [
-      _c("div", { staticClass: "col-4 " }, [
-        _c("img", {
-          staticClass: "myimg img-thumbnail",
-          attrs: { src: _vm.logito, alt: "" }
-        })
-      ]),
-      _vm._v(" "),
-      _vm._m(0)
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-8" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12" }, [
-            _c("p", { staticClass: "h4" }, [
-              _vm._v("Lorem ipsum loret ago entus")
-            ])
-          ])
+  return _c(
+    "div",
+    { staticClass: "container", on: { click: _vm.goToDocumentView } },
+    [
+      _c("div", { staticClass: "row searchcard " }, [
+        _c("div", { staticClass: "col-3 " }, [
+          _c("img", {
+            staticClass: "myimg img-thumbnail",
+            attrs: { src: _vm.s_card_image, alt: "" }
+          })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12 description-container" }, [
-            _c("p", { staticClass: "text-truncate text-justify" }, [
-              _vm._v(
-                "\n                            Lorem ipsum dolor sit amet consectetur\n                            adipisicing elit. Doloribus eaque facilis autem\n                            magni ipsa amet sunt\n                        "
-              )
+        _c("div", { staticClass: "col-8" }, [
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-12" }, [
+                _c("p", { staticClass: "h4" }, [
+                  _vm._v(_vm._s(_vm.s_card_title))
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-12 description-container" }, [
+                _c("p", {
+                  staticClass: "text-truncate text-justify",
+                  domProps: { innerHTML: _vm._s(_vm.s_card_description) }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-12" }, [
+                _c("p", [_vm._v(_vm._s(_vm.s_card_date))])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-12" }, [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.s_card_autor) +
+                    "\n                    "
+                )
+              ])
             ])
           ])
         ])
       ])
-    ])
-  }
-]
+    ]
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -54949,7 +55042,11 @@ module.exports = function(module) {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); // window.Vue = require("vue");
+
+window.EventBus = new Vue(); // window.EventBus = new Vue();
+// export const EventBus = new Vue();
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -55374,13 +55471,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************!*\
   !*** ./resources/js/components/media/bus.js ***!
   \**********************************************/
-/*! exports provided: bus */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bus", function() { return bus; });
-var bus = new Vue();
+
 
 /***/ }),
 

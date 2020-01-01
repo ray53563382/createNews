@@ -24,6 +24,8 @@ Route::get('search/{querystring}', 'DocumentsViewController@search');
 Route::post('/relevant', 'publicacionController@relevant');
 Route::post('/recent', 'publicacionController@recent');
 Route::post('/getDocument', 'publicacionController@getdoc');
+Route::post('/getsearch', 'publicacionController@getsearch');
+
 
 
 Auth::routes();

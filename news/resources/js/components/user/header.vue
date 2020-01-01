@@ -66,6 +66,7 @@
             </div>
             <div class="form-inline my-3">
                 <input
+                    v-on:keyup.enter="search"
                     v-model="searchString"
                     class="form-control mx-3"
                     type="search"
@@ -100,7 +101,7 @@ export default {
 
     methods: {
         search() {
-            console.log(this.searchString);
+            // console.log(this.searchString);
             location.replace("/search/" + this.searchString);
         }
     }
