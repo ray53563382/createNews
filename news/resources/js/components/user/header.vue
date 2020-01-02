@@ -29,11 +29,14 @@
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
+                            @mouseenter="display_menu"
                             >Temas</a
                         >
                         <div
                             class="dropdown-menu"
                             aria-labelledby="navbarDropdown"
+                            ref="menubtn"
+                            @mouseleave="hide_menu"
                         >
                             <a href="" class="dropdown-item"
                                 >Crisis Climática y Conservación</a
@@ -108,6 +111,13 @@ export default {
         all_authors() {
             this.searchString = "all";
             location.replace("/search/" + this.searchString);
+        },
+        display_menu() {
+            this.$refs.menubtn.classList.add("show");
+        },
+
+        hide_menu() {
+            this.$refs.menubtn.classList.remove("show");
         }
     }
 };

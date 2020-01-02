@@ -3653,6 +3653,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3672,6 +3675,12 @@ __webpack_require__.r(__webpack_exports__);
     all_authors: function all_authors() {
       this.searchString = "all";
       location.replace("/search/" + this.searchString);
+    },
+    display_menu: function display_menu() {
+      this.$refs.menubtn.classList.add("show");
+    },
+    hide_menu: function hide_menu() {
+      this.$refs.menubtn.classList.remove("show");
     }
   }
 });
@@ -42410,11 +42419,87 @@ var render = function() {
           },
           [
             _c("ul", { staticClass: "navbar-nav mr-auto" }, [
+              _c("li", { staticClass: "nav-item dropdown" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link dropdown-toggle",
+                    attrs: {
+                      href: "",
+                      id: "navbarDropdown",
+                      role: "button",
+                      "data-toggle": "dropdown",
+                      "aria-haspopup": "true",
+                      "aria-expanded": "false"
+                    },
+                    on: { mouseenter: _vm.display_menu }
+                  },
+                  [_vm._v("Temas")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    ref: "menubtn",
+                    staticClass: "dropdown-menu",
+                    attrs: { "aria-labelledby": "navbarDropdown" },
+                    on: { mouseleave: _vm.hide_menu }
+                  },
+                  [
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "" } },
+                      [_vm._v("Crisis Climática y Conservación")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "" } },
+                      [_vm._v("Minería")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "" } },
+                      [_vm._v("Petróleo, Fracking y Gasoductos")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "" } },
+                      [_vm._v("Hidroeléctricas y Eólicas")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "" } },
+                      [_vm._v("Agua")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "" } },
+                      [_vm._v("Bosques")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "" } },
+                      [_vm._v("Tierra, Territorio y Derechos Indígenas")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "" } },
+                      [_vm._v("Megaproyectos ")]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
               _vm._m(1),
               _vm._v(" "),
               _vm._m(2),
-              _vm._v(" "),
-              _vm._m(3),
               _vm._v(" "),
               _c(
                 "li",
@@ -42494,69 +42579,6 @@ var staticRenderFns = [
       },
       [_c("span", { staticClass: "navbar-toggler-icon" })]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item dropdown" }, [
-      _c(
-        "a",
-        {
-          staticClass: "nav-link dropdown-toggle",
-          attrs: {
-            href: "",
-            id: "navbarDropdown",
-            role: "button",
-            "data-toggle": "dropdown",
-            "aria-haspopup": "true",
-            "aria-expanded": "false"
-          }
-        },
-        [_vm._v("Temas")]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "dropdown-menu",
-          attrs: { "aria-labelledby": "navbarDropdown" }
-        },
-        [
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-            _vm._v("Crisis Climática y Conservación")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-            _vm._v("Minería")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-            _vm._v("Petróleo, Fracking y Gasoductos")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-            _vm._v("Hidroeléctricas y Eólicas")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-            _vm._v("Agua")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-            _vm._v("Bosques")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-            _vm._v("Tierra, Territorio y Derechos Indígenas")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-            _vm._v("Megaproyectos ")
-          ])
-        ]
-      )
-    ])
   },
   function() {
     var _vm = this
