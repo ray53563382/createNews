@@ -3668,6 +3668,10 @@ __webpack_require__.r(__webpack_exports__);
     search: function search() {
       // console.log(this.searchString);
       location.replace("/search/" + this.searchString);
+    },
+    all_authors: function all_authors() {
+      this.searchString = "all";
+      location.replace("/search/" + this.searchString);
     }
   }
 });
@@ -3835,6 +3839,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3845,6 +3872,9 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     querystring: {
       required: true
+    },
+    author: {
+      requiered: false
     }
   },
   components: {
@@ -3856,25 +3886,60 @@ __webpack_require__.r(__webpack_exports__);
     return {
       myString: null,
       notFound: false,
-      resultados: []
+      resultados: [],
+      searchFlag: false,
+      all_authors_flag: false
     };
   },
   created: function created() {
     var _this = this;
 
-    axios({
-      method: "post",
-      url: "/getsearch",
-      data: {
-        q_string: this.querystring
+    if (this.author) {
+      this.searchFlag = true;
+      axios({
+        method: "post",
+        url: "/allfromAuthor",
+        data: {
+          author: this.author
+        }
+      }).then(function (resp) {
+        _this.resultados = resp.data;
+        console.log(resp.data);
+        _this.resultados.length == undefined || _this.resultados.length <= 0 ? _this.notFound = true : _this.notFound = false;
+        console.log(_this.resultados.length);
+      })["catch"](function (Error) {
+        return console.log(error);
+      });
+    } else {
+      if (this.querystring == "all") {
+        this.all_authors_flag = true;
+        axios({
+          method: "post",
+          url: "/allAuthors"
+        }).then(function (resp) {
+          console.log(resp.data);
+          _this.resultados = resp.data;
+        })["catch"](function (Error) {
+          return console.log(Error);
+        });
+      } else {
+        this.searchFlag = true;
+        axios({
+          method: "post",
+          url: "/getsearch",
+          data: {
+            q_string: this.querystring
+          }
+        }).then(function (resp) {
+          _this.resultados = resp.data;
+          console.log(resp.data);
+          _this.resultados.length == undefined || _this.resultados.length <= 0 ? _this.notFound = true : _this.notFound = false;
+          console.log(_this.resultados.length); // EventBus.$emit("bus_queries", resp.data);
+        })["catch"](function (Error) {
+          return console.log(error);
+        });
       }
-    }).then(function (resp) {
-      _this.resultados = resp.data;
-      console.log(resp.data.lenght);
-      resp.data.lenght == 0 || resp.data.lenght == undefined ? _this.notFound = true : _this.notFound = 0; // EventBus.$emit("bus_queries", resp.data);
-    })["catch"](function (Error) {
-      return console.log(error);
-    });
+    }
   }
 });
 
@@ -8588,7 +8653,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".container[data-v-009a3fd6] {\n  background-color: rgba(228, 225, 225, 0.897);\n  box-shadow: 2px 3px 10px -1px rgba(0, 0, 0, 0.75);\n}\n.logo-class[data-v-009a3fd6] {\n  height: 2em;\n}", ""]);
+exports.push([module.i, ".container[data-v-009a3fd6] {\n  background-color: rgba(228, 225, 225, 0.897);\n  box-shadow: 2px 3px 10px -1px rgba(0, 0, 0, 0.75);\n}\n.nav-item[data-v-009a3fd6] {\n  cursor: pointer !important;\n}\n.logo-class[data-v-009a3fd6] {\n  height: 2em;\n}", ""]);
 
 // exports
 
@@ -8664,7 +8729,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.query-container {\r\n    height: 100vh !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.query-container {\r\n    height: 100vh !important;\n}\n.author-card {\r\n    height: 5em;\r\n    width: 100%;\r\n    border: 2px solid #151515;\n}\r\n", ""]);
 
 // exports
 
@@ -42336,7 +42401,29 @@ var render = function() {
         _vm._v(" "),
         _vm._m(0),
         _vm._v(" "),
-        _vm._m(1),
+        _c(
+          "div",
+          {
+            staticClass:
+              "justify-content-center collapse navbar-collapse mx-3 my-3",
+            attrs: { id: "mostrarTemasToggle" }
+          },
+          [
+            _c("ul", { staticClass: "navbar-nav mr-auto" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _vm._m(3),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item", on: { click: _vm.all_authors } },
+                [_c("a", { staticClass: "nav-link" }, [_vm._v("Autores")])]
+              )
+            ])
+          ]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "form-inline my-3" }, [
           _c("input", {
@@ -42412,94 +42499,84 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "justify-content-center collapse navbar-collapse mx-3 my-3",
-        attrs: { id: "mostrarTemasToggle" }
-      },
-      [
-        _c("ul", { staticClass: "navbar-nav mr-auto" }, [
-          _c("li", { staticClass: "nav-item dropdown" }, [
-            _c(
-              "a",
-              {
-                staticClass: "nav-link dropdown-toggle",
-                attrs: {
-                  href: "",
-                  id: "navbarDropdown",
-                  role: "button",
-                  "data-toggle": "dropdown",
-                  "aria-haspopup": "true",
-                  "aria-expanded": "false"
-                }
-              },
-              [_vm._v("Temas")]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "dropdown-menu",
-                attrs: { "aria-labelledby": "navbarDropdown" }
-              },
-              [
-                _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-                  _vm._v("Crisis Climática y Conservación")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-                  _vm._v("Minería")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-                  _vm._v("Petróleo, Fracking y Gasoductos")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-                  _vm._v("Hidroeléctricas y Eólicas")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-                  _vm._v("Agua")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-                  _vm._v("Bosques")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-                  _vm._v("Tierra, Territorio y Derechos Indígenas")
-                ]),
-                _vm._v(" "),
-                _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-                  _vm._v("Megaproyectos ")
-                ])
-              ]
-            )
+    return _c("li", { staticClass: "nav-item dropdown" }, [
+      _c(
+        "a",
+        {
+          staticClass: "nav-link dropdown-toggle",
+          attrs: {
+            href: "",
+            id: "navbarDropdown",
+            role: "button",
+            "data-toggle": "dropdown",
+            "aria-haspopup": "true",
+            "aria-expanded": "false"
+          }
+        },
+        [_vm._v("Temas")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "dropdown-menu",
+          attrs: { "aria-labelledby": "navbarDropdown" }
+        },
+        [
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
+            _vm._v("Crisis Climática y Conservación")
           ]),
           _vm._v(" "),
-          _c("li", { staticClass: "nav-item" }, [
-            _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
-              _vm._v("Publicaciones")
-            ])
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
+            _vm._v("Minería")
           ]),
           _vm._v(" "),
-          _c("li", { staticClass: "nav-item" }, [
-            _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
-              _vm._v("Acciones y Eventos")
-            ])
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
+            _vm._v("Petróleo, Fracking y Gasoductos")
           ]),
           _vm._v(" "),
-          _c("li", { staticClass: "nav-item" }, [
-            _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
-              _vm._v("Autores")
-            ])
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
+            _vm._v("Hidroeléctricas y Eólicas")
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
+            _vm._v("Agua")
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
+            _vm._v("Bosques")
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
+            _vm._v("Tierra, Territorio y Derechos Indígenas")
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
+            _vm._v("Megaproyectos ")
           ])
-        ])
-      ]
-    )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "nav-item" }, [
+      _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
+        _vm._v("Publicaciones")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "nav-item" }, [
+      _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
+        _vm._v("Acciones y Eventos")
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -42652,62 +42729,94 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container query-container" },
-    [
-      _c("div", { staticClass: "row my-4" }, [
-        _c("div", { staticClass: "col-lg-12" }, [_c("Header")], 1)
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row my-lg-3" }, [
-        _c("div", { staticClass: "col-lg-12" }, [
-          _c("h2", [
-            _vm._v("\n                Resultados para: "),
-            _c("b", [_vm._v(_vm._s(this.querystring))])
-          ])
+  return _c("div", { staticClass: "container query-container" }, [
+    _c("div", { staticClass: "row my-4" }, [
+      _c("div", { staticClass: "col-lg-12" }, [_c("Header")], 1)
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row my-lg-3" }, [
+      _c("div", { staticClass: "col-lg-12" }, [
+        _c("h2", [
+          _vm._v("\n                Resultados para: "),
+          _c("b", [_vm._v(_vm._s(this.querystring))])
         ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.notFound,
-              expression: "notFound"
-            }
-          ],
-          staticClass: "row"
-        },
-        [_vm._m(0)]
-      ),
-      _vm._v(" "),
-      _vm._l(_vm.resultados, function(object, index) {
-        return _c("div", { key: index }, [
-          _c("div", { staticClass: "row my-4" }, [
-            _c(
-              "div",
-              { staticClass: "col-lg-12" },
-              [
-                _c("Searchcard", {
-                  attrs: { queries_array: _vm.resultados, index_queries: index }
-                })
-              ],
-              1
-            )
-          ])
-        ])
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "row my-4" }, [
-        _c("div", { staticClass: "col-lg-12" }, [_c("Footer")], 1)
       ])
-    ],
-    2
-  )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.notFound,
+            expression: "notFound"
+          }
+        ],
+        staticClass: "row"
+      },
+      [_vm._m(0)]
+    ),
+    _vm._v(" "),
+    _vm.searchFlag
+      ? _c(
+          "div",
+          _vm._l(_vm.resultados, function(object, index) {
+            return _c("div", { key: index }, [
+              _c("div", { staticClass: "row my-4" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-lg-12" },
+                  [
+                    _c("Searchcard", {
+                      attrs: {
+                        queries_array: _vm.resultados,
+                        index_queries: index
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ])
+          }),
+          0
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.all_authors_flag
+      ? _c(
+          "div",
+          _vm._l(_vm.resultados, function(object, index) {
+            return _c("div", { key: index }, [
+              _c("div", { staticClass: "row my-4" }, [
+                _c("div", { staticClass: "col-lg-12" }, [
+                  _c("div", { staticClass: " container author-card" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("a", { attrs: { href: "/search/all/" + object } }, [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(object) +
+                              "\n                                "
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          }),
+          0
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "row my-4" }, [
+      _c("div", { staticClass: "col-lg-12" }, [_c("Footer")], 1)
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {

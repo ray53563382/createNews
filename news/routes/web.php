@@ -20,11 +20,19 @@ Route::get('/', function () {
 
 Route::get('documentView/{id}', 'DocumentsViewController@index' );
 Route::get('search/{querystring}', 'DocumentsViewController@search');
+// Route::get('search/{querystring}/{author}', 'DocumentsViewController@searchbyauthor');
+Route::get('search/{querystring}/{author}', ['uses' => 'DocumentsViewController@searchbyauthor']);
+
 
 Route::post('/relevant', 'publicacionController@relevant');
 Route::post('/recent', 'publicacionController@recent');
 Route::post('/getDocument', 'publicacionController@getdoc');
 Route::post('/getsearch', 'publicacionController@getsearch');
+Route::post('/allAuthors', 'publicacionController@getAllAuthors');
+Route::post('/allfromAuthor', 'publicacionController@getAllFromAuthor');
+
+
+
 
 
 

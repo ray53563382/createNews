@@ -15,4 +15,12 @@ class DocumentsViewController extends Controller
         // $queryString['querystring'] = $querystring;
         return view('pages.searchview')->with('querystring', $querystring);
     }
+
+    public function searchbyauthor($querystring, $author){
+        // $queryString['querystring'] = $querystring;
+        return view('pages.searchview', ['querystring' => $querystring, 'author' => $author ]);
+        // return view('pages.searchview')->with('querystring', $querystring   );
+        // return view('pages.searchview')->with('author', $author);
+
+    }
 }

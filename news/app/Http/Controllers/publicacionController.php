@@ -46,4 +46,17 @@ class publicacionController extends Controller
 
         return $matches;
     }
+
+    public function getAllAuthors(){
+
+        $authors = DB::table('notas')->pluck('autor');
+        return $authors;
+       
+    }
+
+    public function getAllFromAuthor(Request $request){
+        $all_from_author = DB::table('notas')->where('autor', 'like', $request->author)->get();
+        return $all_from_author;
+    }
+   
 }

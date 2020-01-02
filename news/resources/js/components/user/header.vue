@@ -59,8 +59,8 @@
                     <li class="nav-item">
                         <a href="" class="nav-link">Acciones y Eventos</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link">Autores</a>
+                    <li @click="all_authors" class="nav-item">
+                        <a class="nav-link">Autores</a>
                     </li>
                 </ul>
             </div>
@@ -103,6 +103,11 @@ export default {
         search() {
             // console.log(this.searchString);
             location.replace("/search/" + this.searchString);
+        },
+
+        all_authors() {
+            this.searchString = "all";
+            location.replace("/search/" + this.searchString);
         }
     }
 };
@@ -114,6 +119,10 @@ export default {
     -webkit-box-shadow: 2px 3px 10px -1px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 3px 10px -1px rgba(0, 0, 0, 0.75);
     box-shadow: 2px 3px 10px -1px rgba(0, 0, 0, 0.75);
+}
+
+.nav-item {
+    cursor: pointer !important;
 }
 
 .logo-class {
