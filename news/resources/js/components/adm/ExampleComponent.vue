@@ -16,26 +16,26 @@
         <ul class="nav">
           <li>
             <a class="nav-link" v-on:click="changeData('publicaciones')">
-              <i class="far fa-save"></i>
+              <i class="far fa-save" style="font-size: 25px !important;margin-right: 15px !important;"></i>
               <p style="font-size: 11px !important;">Crear públicaciones</p>
             </a>
           </li>
        <!--   <li class="nav-item active"> -->
              <li>
             <a class="nav-link" v-on:click="changeData('documentos')">
-              <i class="far fa-file-pdf"></i>
+              <i class="far fa-file-pdf" style="font-size: 25px !important;margin-right: 15px !important;"></i>
               <p style="font-size: 11px !important;">Agregar Documentos</p>
             </a>
           </li>
           <li>
             <a class="nav-link" v-on:click="changeData('informacion')">
-              <i class="far fa-share-square"></i>
+              <i class="far fa-share-square" style="font-size: 25px !important;margin-right: 15px !important;"></i>
               <p style="font-size: 11px !important;">Ver publicaciones</p>
             </a>
           </li>
           <li>
             <a class="nav-link" v-on:click="changeData('pdf')">
-              <i class="far fa-share-square"></i>
+              <i class="far fa-share-square" style="font-size: 25px !important;margin-right: 15px !important;"></i>
               <p style="font-size: 11px !important;">Ver registros de pdf</p>
             </a>
           </li>
