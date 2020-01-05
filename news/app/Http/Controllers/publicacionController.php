@@ -57,4 +57,14 @@ class publicacionController extends Controller
         return $all_from_author;
     }
    
+    public function allrecent(Request $request){
+        if($request->type == "importancia"){
+            $documents = DB::table('notas')->orderBy("importancia", "DESC" )->get();
+            return $documents;
+        }else{
+            $documents = DB::table('notas')->orderBy("fecha", $request->type )->get();
+            return $documents;
+        }
+        
+    }
 }
