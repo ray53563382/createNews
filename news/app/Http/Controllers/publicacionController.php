@@ -48,10 +48,8 @@ class publicacionController extends Controller
     }
 
     public function getAllAuthors(){
-
         $authors = DB::table('notas')->pluck('autor');
         return $authors;
-       
     }
 
     public function getAllFromAuthor(Request $request){

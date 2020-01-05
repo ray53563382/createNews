@@ -7,8 +7,6 @@
                                 <div class="card-header">
                                     <h4 class="card-title">Agregar articulo</h4>
                                 </div>
-
-                               
                                 <div class="card-body">
                                     <form novalidate="true" enctype="multipart/form-data" @submit.prevent="agregar()">
                                      <p v-if="errors.length">
@@ -76,30 +74,29 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Agregar imagen </label><br>
-                                                    <input type="file"  accept="image/*" @change="obtenerImagen">
+                                                    <input type="file" accept="image/*" ref="fileInput" @change="obtenerImagen">
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-12">
-                    <editor v-model="registro.informacionArt"
-       api-key="no-api-key"
-       initialValue=""
-       :init="{
-         height: 500,
-         menubar: true,
-         plugins: [
-           'advlist autolink lists link image charmap print preview anchor',
-           'searchreplace visualblocks code fullscreen',
-           'insertdatetime media table paste code help wordcount'
-         ],
-         toolbar:
-           'undo redo | formatselect | bold italic backcolor | \
-           alignleft aligncenter alignright alignjustify | \
-           bullist numlist outdent indent | removeformat | help'
-       }"
-       ></editor>
+                                                <editor v-model="registro.informacionArt"
+                                                    api-key="no-api-key"
+                                                    initialValue=""
+                                                    :init="{
+                                                        height: 500,
+                                                        menubar: true,
+                                                        plugins: [
+                                                        'advlist autolink lists link image charmap print preview anchor',
+                                                        'searchreplace visualblocks code fullscreen',
+                                                        'insertdatetime media table paste imagetools wordcount'
+
+                                                        ],
+                                                        toolbar:
+                                                        'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | paste'
+                                                    }"
+                                                ></editor>
                                             </div>
                                         </div>
                                       
@@ -151,13 +148,11 @@
 
 <script>
     import Editor from '@tinymce/tinymce-vue'
-    // import Datepicker from 'vuejs-datepicker';
     import Vue from 'vue';
-    // import VueSweetalert2 from 'vue-sweetalert2';
-    // import 'sweetalert2/dist/sweetalert2.min.css';
-    // Vue.use(VueSweetalert2);
+    import VueSweetalert2 from 'vue-sweetalert2';
+    import 'sweetalert2/dist/sweetalert2.min.css';
+    Vue.use(VueSweetalert2);
 
- 
     export default {
 
         data(){
@@ -171,7 +166,7 @@
             console.log('Component mounted.');
              axios.get('/notas').then(res=>{
                console.log(res);
-            })
+        })
 
         },
         methods:{
@@ -190,7 +185,7 @@
             console.log(this.errors);
         }
         if (!this.registro.importancia) {
-           this.errors.push("El autor es obligatorio.");
+           this.errors.push("El campo importancia es obligatorio.");
             console.log(this.errors);
         }
          if (!this.registro.idcategoria) {
@@ -234,7 +229,6 @@
         },
         components: {
         'editor': Editor,
-        //  Datepicker
    }
     }
 </script>

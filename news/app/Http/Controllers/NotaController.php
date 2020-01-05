@@ -40,7 +40,6 @@ class NotaController extends Controller
      */
     public function store(Request $request)
     {
-       
         $nota = new Nota();
         $nota->titulo = $request->titulo;
         $nota->fecha = $request->fecha;

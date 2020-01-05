@@ -82,7 +82,15 @@ class DocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $doc = Document::find($id);
+        $doc->fecha = $request->fecha;
+        $doc->nombre = $request->nombre;
+        $doc->importancia = $request->importancia;
+        $doc->imgdesmostrativa = $request->imgdesmostrativa;
+        $doc->pdf = $request->pdf;
+        $doc->informacion = $request->informacion;
+        $doc->save();
+        return $doc;
     }
 
     /**
@@ -93,6 +101,7 @@ class DocumentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $doc = Document::find($id);
+        $doc->delete();
     }
 }

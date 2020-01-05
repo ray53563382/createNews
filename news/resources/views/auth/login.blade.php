@@ -37,7 +37,7 @@
             <form method="POST" action="{{ route('login') }}" class="login100-form validate-form">
                  @csrf
 					<span class="login100-form-title p-b-43">
-						Login to continue
+						Ingresa al portal Ceccam
 					</span>
 					
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">

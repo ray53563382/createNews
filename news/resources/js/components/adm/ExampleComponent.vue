@@ -17,26 +17,26 @@
           <li>
             <a class="nav-link" v-on:click="changeData('publicaciones')">
               <i class="far fa-save"></i>
-              <p>Crear públicaciones</p>
+              <p style="font-size: 11px !important;">Crear públicaciones</p>
             </a>
           </li>
        <!--   <li class="nav-item active"> -->
              <li>
             <a class="nav-link" v-on:click="changeData('documentos')">
               <i class="far fa-file-pdf"></i>
-              <p>Agregar Documentos</p>
+              <p style="font-size: 11px !important;">Agregar Documentos</p>
             </a>
           </li>
           <li>
             <a class="nav-link" v-on:click="changeData('informacion')">
               <i class="far fa-share-square"></i>
-              <p>Ver publicaciones</p>
+              <p style="font-size: 11px !important;">Ver publicaciones</p>
             </a>
           </li>
           <li>
             <a class="nav-link" v-on:click="changeData('pdf')">
               <i class="far fa-share-square"></i>
-              <p>Ver registros de pdf</p>
+              <p style="font-size: 11px !important;">Ver registros de pdf</p>
             </a>
           </li>
         </ul>
@@ -46,7 +46,7 @@
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg" color-on-scroll="500">
         <div class="container-fluid">
-          <a class="navbar-brand">Registro de artculos</a>
+          <a class="navbar-brand">Registro de publicaciones</a>
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <ul class="nav navbar-nav mr-auto">
               <li class="dropdown nav-item">
