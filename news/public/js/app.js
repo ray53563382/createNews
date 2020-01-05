@@ -3183,24 +3183,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "body",
   data: function data() {
     return {
-      publicacionesRecientes: [1, 2, 3, 4, 5, 6, 7, 8]
+      publicacionesRecientes: [],
+      sortBy: null
     };
   },
   components: {
     Minicard: _miniCard__WEBPACK_IMPORTED_MODULE_0__["default"] // Sidebar
 
-  } // created() {
-  //     axios.get("/recent").then(resp => {
-  //         console.log(resp.data);
-  //     });
-  // }
+  },
+  methods: {
+    sort_by: function sort_by(type_sort) {
+      var _this = this;
 
+      this.sortBy = type_sort;
+      axios({
+        method: "post",
+        url: "/allrecent",
+        data: {
+          type: this.sortBy
+        }
+      }).then(function (resp) {
+        _this.publicacionesRecientes = resp.data; // console.log(this.publicacionesRecientes);
+      })["catch"](function (Erorr) {
+        return console.log(Error);
+      });
+    }
+  },
+  created: function created() {
+    var _this2 = this;
+
+    Vue.set(this.publicacionesRecientes, "index", null);
+    axios({
+      method: "post",
+      url: "/allrecent",
+      data: {
+        type: "DESC"
+      }
+    }).then(function (resp) {
+      _this2.publicacionesRecientes = resp.data;
+    })["catch"](function (Error) {
+      console.log(Error);
+    });
+  }
 });
 
 /***/ }),
@@ -3733,18 +3776,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "minicard",
+  props: {
+    documents: {
+      requiered: true
+    },
+    objectArray: {
+      required: true
+    }
+  },
   data: function data() {
-    return {// image: image
+    return {
+      // image: image
+      title: null,
+      category: null,
+      author: null,
+      image: null,
+      id: null,
+      fecha: null,
+      categorias: ["null", "Crisis climática y conservación", "Minería", "Hidroeléctricas y eólicas", "Petróleo fracking y gasoductos", "Derechos indígenas", "Tierra y territorio", "Agua", "Bosques y deforestación", "Megaproyectos"]
     };
   },
   methods: {
     displayElement: function displayElement() {// let transElement = this.$refs['transElement']
       // transElement.classList.add('display-class')
       // console.log(transElement);
+    },
+    goToDocumentView: function goToDocumentView() {
+      location.replace("/documentView/" + this.id);
     }
+  },
+  created: function created() {
+    // console.log(this.documents);
+    this.title = this.documents[this.objectArray].titulo;
+    this.category = this.categorias[this.documents[this.objectArray].idcategoria];
+    this.author = this.documents[this.objectArray].autor;
+    this.id = this.documents[this.objectArray].id;
+    this.fecha = this.documents[this.objectArray].fecha;
+    this.image = this.documents[this.objectArray].imgdesmostrativa;
   }
 });
 
@@ -8681,7 +8758,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed:100i,400,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "@media only screen and (max-width: 600px) {\n.box > p[data-v-2ddf9810] {\n    font-size: 1.5em !important;\n}\n}\n.mini-card[data-v-2ddf9810] {\n  position: relative;\n  height: 30em;\n  width: 100%;\n  background-color: aliceblue;\n  background-image: url(\"http://source.unsplash.com/random/660x600\");\n}\n.mini-card .transition-element[data-v-2ddf9810] {\n  position: absolute;\n  display: block;\n  height: inherit;\n  width: 0em;\n  -webkit-transition: width 1s;\n  transition: width 1s;\n  background-color: aliceblue;\n  overflow: hidden;\n}\n.mini-card .transition-element p[data-v-2ddf9810] {\n  opacity: 0;\n  -webkit-animation: opacity 1s;\n          animation: opacity 1s;\n}\n.mini-card:hover > .transition-element[data-v-2ddf9810] {\n  width: 100%;\n}\n.mini-card:hover > .box > .turn-black[data-v-2ddf9810] {\n  color: black;\n}\n.mini-card:hover > .transition-element > p[data-v-2ddf9810] {\n  opacity: 1;\n}\n.mini-card[data-v-2ddf9810]:hover {\n  box-shadow: 2px 3px 10px -1px rgba(0, 0, 0, 0.75);\n}\n.box[data-v-2ddf9810] {\n  height: inherit;\n  width: 100%;\n  display: grid;\n  grid-template-columns: 100%;\n  grid-template-rows: repeat(2, 50%);\n  background: black;\n  background: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.7679446779)), color-stop(67%, rgba(0, 0, 0, 0.0760679272)));\n  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7679446779) 0%, rgba(0, 0, 0, 0.0760679272) 67%);\n}\n.box .white-bg[data-v-2ddf9810] {\n  z-index: 999;\n  height: 100%;\n  background-color: aliceblue;\n  border: 1px solid rgba(0, 0, 0, 0.4);\n  border-radius: 3px;\n}\n.box .tag-box[data-v-2ddf9810] {\n  font-family: \"Barlow Semi Condensed\", sans-serif;\n  font-weight: 400;\n  z-index: 999;\n  color: #eeeded;\n}\n.box .tag-box div[data-v-2ddf9810] {\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  background-color: rgba(21, 21, 21, 0.808);\n  border: 1px solid rgba(255, 255, 255, 0.89);\n}\n.box .tag-box div p[data-v-2ddf9810] {\n  margin: 0 0 0 0;\n}\n.box .title-box[data-v-2ddf9810] {\n  font-family: \"Barlow Semi Condensed\", sans-serif;\n  font-weight: 700;\n  z-index: 999;\n  color: #151515;\n}\n.box .autor-box[data-v-2ddf9810] {\n  font-family: \"Barlow Semi Condensed\", sans-serif;\n  font-weight: 100;\n  font-style: italic;\n  z-index: 999;\n  color: #151515;\n}\n.box .display-class[data-v-2ddf9810] {\n  display: block;\n  width: 38em;\n  height: 22em;\n}", ""]);
+exports.push([module.i, "@media only screen and (max-width: 600px) {\n.box > p[data-v-2ddf9810] {\n    font-size: 1.5em !important;\n}\n}\n.mini-card[data-v-2ddf9810] {\n  position: relative;\n  height: 30em;\n  width: 100%;\n  background-color: aliceblue;\n}\n.mini-card .transition-element[data-v-2ddf9810] {\n  position: absolute;\n  display: block;\n  height: inherit;\n  width: 0em;\n  -webkit-transition: width 1s;\n  transition: width 1s;\n  background-color: aliceblue;\n  overflow: hidden;\n}\n.mini-card .transition-element p[data-v-2ddf9810] {\n  opacity: 0;\n  -webkit-animation: opacity 1s;\n          animation: opacity 1s;\n}\n.mini-card:hover > .transition-element[data-v-2ddf9810] {\n  width: 100%;\n}\n.mini-card:hover > .box > .turn-black[data-v-2ddf9810] {\n  color: black;\n}\n.mini-card:hover > .transition-element > p[data-v-2ddf9810] {\n  opacity: 1;\n}\n.mini-card[data-v-2ddf9810]:hover {\n  box-shadow: 2px 3px 10px -1px rgba(0, 0, 0, 0.75);\n}\n.box[data-v-2ddf9810] {\n  height: inherit;\n  width: 100%;\n  display: grid;\n  grid-template-columns: 100%;\n  grid-template-rows: repeat(2, 50%);\n  background: black;\n  background: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.7679446779)), color-stop(67%, rgba(0, 0, 0, 0.0760679272)));\n  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7679446779) 0%, rgba(0, 0, 0, 0.0760679272) 67%);\n}\n.box .white-bg[data-v-2ddf9810] {\n  z-index: 999;\n  height: 100%;\n  background-color: aliceblue;\n  border: 1px solid rgba(0, 0, 0, 0.4);\n  border-radius: 3px;\n}\n.box .tag-box[data-v-2ddf9810] {\n  font-family: \"Barlow Semi Condensed\", sans-serif;\n  font-weight: 400;\n  z-index: 999;\n  color: #eeeded;\n}\n.box .tag-box div[data-v-2ddf9810] {\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  background-color: rgba(21, 21, 21, 0.808);\n  border: 1px solid rgba(255, 255, 255, 0.89);\n}\n.box .tag-box div p[data-v-2ddf9810] {\n  margin: 0 0 0 0;\n}\n.box .title-box[data-v-2ddf9810] {\n  font-family: \"Barlow Semi Condensed\", sans-serif;\n  font-weight: 700;\n  z-index: 999;\n  color: #151515;\n}\n.box .autor-box[data-v-2ddf9810] {\n  font-family: \"Barlow Semi Condensed\", sans-serif;\n  font-weight: 100;\n  font-style: italic;\n  z-index: 999;\n  color: #151515;\n}\n.box .display-class[data-v-2ddf9810] {\n  display: block;\n  width: 38em;\n  height: 22em;\n}", ""]);
 
 // exports
 
@@ -41983,34 +42060,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "body-main container" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row m-0 px-2" },
-      _vm._l(_vm.publicacionesRecientes, function(object, index) {
-        return _c(
-          "div",
-          { key: index, staticClass: "col-md-6" },
-          [_c("Minicard")],
-          1
-        )
-      }),
-      0
-    ),
-    _vm._v(" "),
-    _vm._m(1)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row pt-lg-4 pr-lg-5" }, [
-      _c("div", { staticClass: "col-lg-9 pl-lg-5" }, [
-        _c("h1", [_vm._v("Publicaciones recientes")])
-      ]),
+    _c("div", { staticClass: "row pt-lg-4 pr-lg-5" }, [
+      _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "col-3" }, [
         _c("div", { staticClass: "dropdown" }, [
@@ -42036,21 +42087,74 @@ var staticRenderFns = [
               attrs: { "aria-labelledby": "dropdownMenuButton" }
             },
             [
-              _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-                _vm._v("Fecha")
-              ]),
+              _c(
+                "a",
+                {
+                  staticClass: "dropdown-item",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      return _vm.sort_by("DESC")
+                    }
+                  }
+                },
+                [_vm._v("Más recientes")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "dropdown-item",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      return _vm.sort_by("ASC")
+                    }
+                  }
+                },
+                [_vm._v("Más antiguos.")]
+              ),
               _vm._v(" "),
               _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-                _vm._v("Relevancia")
-              ]),
-              _vm._v(" "),
-              _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-                _vm._v("Tema")
+                _vm._v("Los más relevantes")
               ])
             ]
           )
         ])
       ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row m-0 px-2" },
+      _vm._l(_vm.publicacionesRecientes, function(object, index) {
+        return _c(
+          "div",
+          { key: object.id, staticClass: "col-md-6" },
+          [
+            _c("Minicard", {
+              attrs: {
+                documents: _vm.publicacionesRecientes,
+                objectArray: index
+              }
+            })
+          ],
+          1
+        )
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _vm._m(1)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-9 pl-lg-5" }, [
+      _c("h1", [_vm._v("Publicaciones recientes")])
     ])
   },
   function() {
@@ -42622,55 +42726,67 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "mini-card  my-3" }, [
-    _c("div", { ref: "transElement", staticClass: "transition-element" }, [
-      _c("p", { staticClass: "pl-3 pt-2" }, [
-        _vm._v(
-          "\n            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius\n            quas minus similique at. Autem expedita, quam reiciendis\n            incidunt soluta blanditiis hic voluptas suscipit deserunt,\n            harum, velit sapiente. Nihil, quidem corporis!Nulla deleniti\n            eaque autem harum...\n        "
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "box", on: { mouseenter: _vm.displayElement } }, [
-      _c("div"),
+  return _c(
+    "div",
+    {
+      staticClass: "mini-card  my-3",
+      style: { backgroundImage: "url(" + _vm.image + " )" },
+      on: { click: _vm.goToDocumentView }
+    },
+    [
+      _c("div", { ref: "transElement", staticClass: "transition-element" }, [
+        _c("p", { staticClass: "pl-3 pt-2" }, [
+          _vm._v(
+            "\n            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius\n            quas minus similique at. Autem expedita, quam reiciendis\n            incidunt soluta blanditiis hic voluptas suscipit deserunt,\n            harum, velit sapiente. Nihil, quidem corporis!Nulla deleniti\n            eaque autem harum...\n        "
+          )
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "white-bg pt-3" },
+        { staticClass: "box", on: { mouseenter: _vm.displayElement } },
         [
-          _vm._m(0),
+          _c("div"),
           _vm._v(" "),
           _c(
-            "P",
-            {
-              staticClass: "title-box px-3 my-3 h5 ml-sm-2 ml-lg-3 turn-black"
-            },
+            "div",
+            { staticClass: "white-bg pt-3" },
             [
-              _vm._v(
-                "Pronunciamiento:La defensa de los territorios ante el nuevo\n                gobierno"
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c("p", { staticClass: "autor-box h5 px-3 ml-lg-3 turn-black" }, [
-            _vm._v("\n                Por Heber Uc Rivero\n            ")
-          ])
-        ],
-        1
+              _c("div", { staticClass: "tag-box mx-2 ml-lg-3" }, [
+                _c("div", [_c("p", [_vm._v(_vm._s(this.category))])])
+              ]),
+              _vm._v(" "),
+              _c(
+                "P",
+                {
+                  staticClass:
+                    "title-box px-3 my-3 h5 ml-sm-2 ml-lg-3 turn-black"
+                },
+                [_vm._v(_vm._s(this.title))]
+              ),
+              _vm._v(" "),
+              _c("p", { staticClass: "autor-box h5 px-3 ml-lg-3 turn-black" }, [
+                _vm._v(
+                  "\n                POr: " +
+                    _vm._s(this.author) +
+                    "\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "my-3" }, [
+                _vm._v(
+                  "\n                " + _vm._s(this.fecha) + "\n            "
+                )
+              ])
+            ],
+            1
+          )
+        ]
       )
-    ])
-  ])
+    ]
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "tag-box mx-2 ml-lg-3" }, [
-      _c("div", [_c("p", [_vm._v("AMERICA LATINA Y EL CARIBE")])])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

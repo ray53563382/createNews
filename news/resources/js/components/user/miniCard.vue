@@ -1,5 +1,9 @@
 <template>
-    <div class="mini-card  my-3">
+    <div
+        @click="goToDocumentView"
+        :style="{ backgroundImage: 'url(' + image + ' )' }"
+        class="mini-card  my-3"
+    >
         <div ref="transElement" class="transition-element">
             <p class="pl-3 pt-2">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
@@ -16,17 +20,19 @@
             <div class="white-bg pt-3">
                 <div class="tag-box mx-2 ml-lg-3">
                     <div>
-                        <p>AMERICA LATINA Y EL CARIBE</p>
+                        <p>{{ this.category }}</p>
                     </div>
                 </div>
 
-                <P class="title-box px-3 my-3 h5 ml-sm-2 ml-lg-3 turn-black"
-                    >Pronunciamiento:La defensa de los territorios ante el nuevo
-                    gobierno</P
-                >
+                <P class="title-box px-3 my-3 h5 ml-sm-2 ml-lg-3 turn-black">{{
+                    this.title
+                }}</P>
 
                 <p class="autor-box h5 px-3 ml-lg-3 turn-black">
-                    Por Heber Uc Rivero
+                    POr: {{ this.author }}
+                </p>
+                <p class="my-3">
+                    {{ this.fecha }}
                 </p>
             </div>
         </div>
@@ -39,9 +45,37 @@ import { bus } from "../media/bus";
 export default {
     name: "minicard",
 
+    props: {
+        documents: {
+            requiered: true
+        },
+
+        objectArray: {
+            required: true
+        }
+    },
+
     data() {
         return {
             // image: image
+            title: null,
+            category: null,
+            author: null,
+            image: null,
+            id: null,
+            fecha: null,
+            categorias: [
+                "null",
+                "Crisis climática y conservación",
+                "Minería",
+                "Hidroeléctricas y eólicas",
+                "Petróleo fracking y gasoductos",
+                "Derechos indígenas",
+                "Tierra y territorio",
+                "Agua",
+                "Bosques y deforestación",
+                "Megaproyectos"
+            ]
         };
     },
 
@@ -50,7 +84,22 @@ export default {
             // let transElement = this.$refs['transElement']
             // transElement.classList.add('display-class')
             // console.log(transElement);
+        },
+        goToDocumentView() {
+            location.replace("/documentView/" + this.id);
         }
+    },
+
+    created() {
+        // console.log(this.documents);
+        this.title = this.documents[this.objectArray].titulo;
+        this.category = this.categorias[
+            this.documents[this.objectArray].idcategoria
+        ];
+        this.author = this.documents[this.objectArray].autor;
+        this.id = this.documents[this.objectArray].id;
+        this.fecha = this.documents[this.objectArray].fecha;
+        this.image = this.documents[this.objectArray].imgdesmostrativa;
     }
 };
 </script>
@@ -84,7 +133,7 @@ export default {
     // width: 22em;
     width: 100%;
     background-color: aliceblue;
-    background-image: url("http://source.unsplash.com/random/660x600");
+    // background-image: url("http://source.unsplash.com/random/660x600");
 
     // z-index: 10;
 

@@ -21,9 +21,19 @@
                         class="dropdown-menu"
                         aria-labelledby="dropdownMenuButton"
                     >
-                        <a class="dropdown-item" href="#">Fecha</a>
-                        <a class="dropdown-item" href="#">Relevancia</a>
-                        <a class="dropdown-item" href="#">Tema</a>
+                        <a
+                            @click="sort_by('DESC')"
+                            class="dropdown-item"
+                            href="#"
+                            >Más recientes</a
+                        >
+                        <a
+                            @click="sort_by('ASC')"
+                            class="dropdown-item"
+                            href="#"
+                            >Más antiguos.</a
+                        >
+                        <a class="dropdown-item" href="#">Los más relevantes</a>
                     </div>
                 </div>
             </div>
@@ -33,9 +43,12 @@
             <div
                 class="col-md-6"
                 v-for="(object, index) in publicacionesRecientes"
-                :key="index"
+                :key="object.id"
             >
-                <Minicard />
+                <Minicard
+                    :documents="publicacionesRecientes"
+                    :objectArray="index"
+                />
             </div>
         </div>
 
@@ -79,20 +92,50 @@ export default {
 
     data() {
         return {
-            publicacionesRecientes: [1, 2, 3, 4, 5, 6, 7, 8]
+            publicacionesRecientes: [],
+            sortBy: null
         };
     },
 
     components: {
         Minicard
         // Sidebar
-    }
+    },
 
-    // created() {
-    //     axios.get("/recent").then(resp => {
-    //         console.log(resp.data);
-    //     });
-    // }
+    methods: {
+        sort_by(type_sort) {
+            this.sortBy = type_sort;
+            axios({
+                method: "post",
+                url: "/allrecent",
+                data: {
+                    type: this.sortBy
+                }
+            })
+                .then(resp => {
+                    this.publicacionesRecientes = resp.data;
+                    // console.log(this.publicacionesRecientes);
+                })
+                .catch(Erorr => console.log(Error));
+        }
+    },
+
+    created() {
+        Vue.set(this.publicacionesRecientes, "index", null);
+        axios({
+            method: "post",
+            url: "/allrecent",
+            data: {
+                type: "DESC"
+            }
+        })
+            .then(resp => {
+                this.publicacionesRecientes = resp.data;
+            })
+            .catch(Error => {
+                console.log(Error);
+            });
+    }
 };
 </script>
 

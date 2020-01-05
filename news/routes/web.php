@@ -30,6 +30,8 @@ Route::post('/getDocument', 'publicacionController@getdoc');
 Route::post('/getsearch', 'publicacionController@getsearch');
 Route::post('/allAuthors', 'publicacionController@getAllAuthors');
 Route::post('/allfromAuthor', 'publicacionController@getAllFromAuthor');
+Route::post('/allrecent', 'publicacionController@allrecent');
+
 
 
 
