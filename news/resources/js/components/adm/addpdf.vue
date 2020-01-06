@@ -24,7 +24,9 @@
                                                 <td>{{index + 1}}</td>
                                                 <td>{{item.nombre}} </td>
                                                 <td>{{item.fecha}} </td>
-                                                <td>{{item.importancia}}</td>
+                                                <td v-if="item.importancia == 1" style="color:green">Alta</td>
+                                                <td v-else-if="item.importancia == 2" style="color: orange;">Media</td>
+                                                <td v-else-if="item.importancia == 3" style="color: red">Baja</td>
                                                 <td>{{item.descarga}}</td>
                                                 <td>{{item.informacion}}</td>
                                                 <td>

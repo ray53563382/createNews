@@ -24,7 +24,9 @@
                                              <tr  v-for="(item, index) in notas" :key="index" >
                                                 <td>{{index + 1}}</td>
                                                 <td>{{item.titulo}}</td>
-                                                <td>{{item.importancia}}</td>
+                                                <td v-if="item.importancia == 1" style="color:green">Alta</td>
+                                                <td v-else-if="item.importancia == 2" style="color: orange;">Media</td>
+                                                <td v-else-if="item.importancia == 3" style="color: red">Baja</td>
                                                 <td>{{item.autor}}</td>
                                                 <td>
                                                 <div>
