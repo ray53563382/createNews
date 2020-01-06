@@ -51,6 +51,19 @@
 }
 
 /*           Font Smoothing      */
+.colorBack{
+    background-color:  rgba(88, 87, 99, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+.data{
+    background-image: url("/images/sidebar-5.jpg") !important; 
+}
 
 body,
 h1,
@@ -584,16 +597,17 @@ body>.navbar-collapse:before {
 
 .sidebar:after,
 body>.navbar-collapse:after {
-    background: #9368E9;
-    background: -moz-linear-gradient(top, #9368E9 0%, #943bea 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9368E9), color-stop(100%, #943bea));
-    background: -webkit-linear-gradient(top, #9368E9 0%, #943bea 100%);
-    background: -o-linear-gradient(top, #9368E9 0%, #943bea 100%);
+    /* background: #9368E9; */
+    /* background: -moz-linear-gradient(top, #9368E9 0%, #943bea 100%); */
+    /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9368E9), color-stop(100%, #943bea)); */
+    /* background: -webkit-linear-gradient(top, #9368E9 0%, #943bea 100%); */
+    /* background: -o-linear-gradient(top, #9368E9 0%, #943bea 100%);
     background: -ms-linear-gradient(top, #9368E9 0%, #943bea 100%);
-    background: linear-gradient(to bottom, #2d1858 0%, #943bea 100%);
-    background-size: 150% 150%;
-    z-index: 3;
-    opacity: 1;
+    background: linear-gradient(to bottom, #2d1858 0%, #943bea 100%); */
+    /* background-size: 150% 150%; */
+    position: relative;
+    /* z-index: 3; */
+    /* opacity: 1; */
 }
 
 .sidebar[data-image]:after,

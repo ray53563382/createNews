@@ -45,13 +45,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Agregar imagen de pdf </label><br>
-                                                    <input type="file"  accept="image/*" @change="obtenerImagen">
+                                                    <input type="file" id="img" accept="image/*" @change="obtenerImagen">
                                                 </div>
                                             </div>
                                              <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Agregar Docuemento</label><br>
-                                                    <input type="file"  accept="pdf/*" @change="obtenerPdf">
+                                                    <input type="file" id="pdf" accept="pdf/*" @change="obtenerPdf">
                                                 </div>
                                             </div>
                                         </div>
@@ -159,13 +159,19 @@
             if(this.registro.nombre && this.registro.fecha && this.registro.importancia && this.registro.imgdesmostrativa &&
              this.registro.pdf && this.registro.informacion ){
                 axios.post('/document', this.registro).then(resp => {
-                    this.registro = [];
-                     e.preventDefault();
-                    this.$swal(
-                        'Pdf registrado!',
+                    this.registro.fecha = "";
+                    this.registro.nombre = "";
+                    this.registro.importancia = "";
+                    this.registro.informacion = "";
+                      this.$swal(
+                        'Pdf guardado!',
                         'Ahora ya puedo visualizarlo en su página web!',
                         'success'
                     )
+                
+                document.getElementById("pdf").value = "";
+                document.getElementById("img").value = "";
+
                 }).catch(error => {
                     console.log(error);
                 });

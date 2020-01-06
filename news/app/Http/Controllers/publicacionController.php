@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Nota;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 
 class publicacionController extends Controller
@@ -67,4 +69,11 @@ class publicacionController extends Controller
         }
         
     }
+
+    public function cerrar()
+    {
+        Auth::logout();
+        //return redirect('/login');
+    }
+
 }

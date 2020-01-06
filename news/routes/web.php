@@ -32,10 +32,7 @@ Route::post('/allAuthors', 'publicacionController@getAllAuthors');
 Route::post('/allfromAuthor', 'publicacionController@getAllFromAuthor');
 Route::post('/allrecent', 'publicacionController@allrecent');
 
-
-
-
-
+Route::get('/registerClose', 'publicacionController@cerrar');
 
 
 Auth::routes();
@@ -43,6 +40,8 @@ Route::resource('/notas', 'NotaController')->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/document', 'DocumentController')->middleware('auth');
+
+
 
 
 

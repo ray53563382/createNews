@@ -1,12 +1,7 @@
 <template>
   <div class="wrapper">
-    <!-- <img :src="'/images/sidebar-5.jpg'" alt="image" /> -->
-    <div class="sidebar"  data-image="/images/sidebar-5.jpg">
-      <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-
-        Tip 2: you can also add an image using data-image tag
-      -->
+    <div class="sidebar data">
+    <div class="colorBack">
       <div class="sidebar-wrapper">
         <div class="logo" style="height: 70px;">
           <a href="http://www.creative-tim.com" class="simple-text">
@@ -42,6 +37,7 @@
         </ul>
       </div>
     </div>
+     </div>
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg" color-on-scroll="500">
@@ -74,57 +70,36 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <span class="no-icon">Nueva acción</span>
+                  <span class="no-icon">Visitar Página web</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                  <div class="divider"></div>
-                  <a class="dropdown-item" href="#">Separated link</a>
+                  <a class="dropdown-item" href="#">Ir a home</a>
                 </div>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
-                  <span class="no-icon">Salir</span>
+              <li class="nav-item" style="cursor: hand !important">
+                <a class="nav-link" @click="logout()" style="cursor: hand !important">
+                  <span class="no-icon" style="cursor: hand !important">Salir</span>
                 </a>
               </li>
             </ul>
           </div>
         </div>
       </nav>
+
       <!-- End Navbar -->
       <div class="content">
         <component :is="dynamicComponent"></component>
-        <!-- <addRegister></addRegister> -->
       </div>
-      <!-- <footer class="footer">
-        <div class="container-fluid">
-          <nav>
-            <ul class="footer-menu">
-              <li>
-                <a href="#">Home</a>
-              </li>
-              <li>
-                <a href="#">Company</a>
-              </li>
-              <li>
-                <a href="#">Portfolio</a>
-              </li>
-              <li>
-                <a href="#">Blog</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </footer> -->
-    </div>
+
+  </div>
   </div>
 </template>
 
 <script>
 import Editor from "@tinymce/tinymce-vue";
+
+import router from 'router'
+
 
 export default {
   data() {
@@ -135,10 +110,21 @@ export default {
   },
 
   mounted() {
+    let self = this;
     console.log("Component mounted.");
   },
 
   methods: {
+
+    logout(){
+      console.log("salir");
+         axios.get('/registerClose').then(res=>{
+          console.log("adios");
+         // this.$router.push({ path:'login' });
+          window.location.href = 'http://127.0.0.1:8000/login';
+         });
+
+    },
     changeData: function(msg) {
       if (msg == "publicaciones") {
         this.dynamicComponent = "addRegister";

@@ -13,7 +13,7 @@
                                         <thead>
                                             <th>No.</th>
                                             <th style="width: 20%;">Nombre</th>
-                                            <th>Fecha</th>
+                                            <th style="width: 12%;">Fecha</th>
                                             <th>Importancia</th>
                                             <th>Descargas</th>
                                             <th style="width: 35%;">Información</th>
@@ -132,7 +132,6 @@
             registros: [],
             errors: [],
             registro: {fecha:'',nombre:'', importancia:'' ,imgdesmostrativa:'', pdf:'', informacion:'', id:''},
-        
             document: [],
             modoEditar:false
           }
@@ -153,7 +152,7 @@
               confirmButtonText: 'Borrar!'
                 }).then((result) => {
                 axios.delete(`/document/${item.id}`).then(()=>{
-                this.notas.splice(index, 1);
+                this.document.splice(index, 1);
                 })
             })
           },  
@@ -201,7 +200,7 @@
         created(){
           axios.get('/document').then(res=>{
             this.document = res.data;
-            console.log(this.document);
+
           })
         },
         components: {

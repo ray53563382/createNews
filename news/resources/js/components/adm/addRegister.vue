@@ -74,14 +74,15 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Agregar imagen </label><br>
-                                                    <input type="file" accept="image/*" ref="fileInput" @change="obtenerImagen">
+                                                    <input type="file" id="imgdata" accept="image/*" ref="fileInput" @change="obtenerImagen">
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <editor v-model="registro.informacionArt"
+                                                <editor 
+                                                    v-model="registro.informacionArt"
                                                     api-key="no-api-key"
                                                     initialValue=""
                                                     :init="{
@@ -99,9 +100,8 @@
                                                 ></editor>
                                             </div>
                                         </div>
-                                      
-                                      
-                                        <button type="submit" class="btn btn-info btn-fill pull-right">Agregar evaluación</button>
+                                    
+                                        <button type="submit" class="btn btn-info btn-fill pull-right">Agregar publicación</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>
@@ -206,16 +206,23 @@
               axios.post('/notas', this.registro)
                 .then(resp => {
                     this.errors = [];
-                    this.registro = [];
-                    console.log(resp);
+                    this.registro.titulo= "";
+                    this.registro.fecha = "";
+                    this.registro.autor = "";
+                    this.registro.importancia = "";
+                    this.registro.idcategoria= "";
+                    this.registro.imgdesmostrativa ="";
+                    this.registro.informacionArt = "";
                     this.$swal(
                         'Articulo guardado!',
                         'Ahora ya puedo visualizarlo en su página web!',
                         'success'
                     )
+                    document.getElementById("imgdata").value = "";
                 }).catch(error => {
                     console.log(error);
             });
+
         }
         },
 

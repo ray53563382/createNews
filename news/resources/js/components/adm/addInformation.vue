@@ -17,7 +17,7 @@
                                             <th style="width: 20%;">Nombre de publicación</th>
                                             <th>Importancia</th>
                                             <th>Autor</th>
-                                            <th style="width: 29%;">Información</th>
+                                            <th style="max-width: 20%;">Publicación</th>
                                             <th style=" width:100%; border-bottom: 0px solid #dee2e6;">Editar</th>
                                         </thead>
                                         <tbody>
@@ -27,9 +27,11 @@
                                                 <td>{{item.importancia}}</td>
                                                 <td>{{item.autor}}</td>
                                                 <td>
-                                                  <div style="height: 60px; overflow-y: auto;">
-                                                     {{item.informacionArt}}
-                                                  </div>
+                                                <div>
+                                                    Para ver información click en editar
+                                                     <!-- {{item.informacionArt}}  -->
+                                                </div>
+                                                    
                                                 </td>
                                                   <td>
                                                     <button type="button" @click="editar(item)" data-toggle="modal" data-target="#exampleModalLong" class="btn btn-labeled btn-success">
