@@ -11,6 +11,11 @@ class DocumentsViewController extends Controller
         return view('pages.documentview')->with('id', $id);
     }
 
+    public function pdfview($id){
+        // $controller_id['id'] = $id;
+        return view('pages.pdfview')->with('id', $id);
+    }
+
     public function search($querystring){
         // $queryString['querystring'] = $querystring;
         return view('pages.searchview')->with('querystring', $querystring);

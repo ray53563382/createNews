@@ -65,6 +65,9 @@
                     <li @click="all_authors" class="nav-item">
                         <a class="nav-link">Autores</a>
                     </li>
+                    <li class="nav-item" @click="all_documents">
+                        <a class="nav-link">Documentos</a>
+                    </li>
                 </ul>
             </div>
             <div class="form-inline my-3">
@@ -110,6 +113,10 @@ export default {
 
         all_authors() {
             this.searchString = "all";
+            location.replace("/search/" + this.searchString);
+        },
+        all_documents() {
+            this.searchString = "allDocuments";
             location.replace("/search/" + this.searchString);
         },
         display_menu() {

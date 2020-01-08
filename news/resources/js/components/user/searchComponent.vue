@@ -53,6 +53,41 @@
             </div>
         </div>
         <!-- AUTHORS END -->
+        <!-- DOCUMENTS START -->
+        <div v-if="all_documents">
+            <div v-for="(object, index) in resultados" :key="index">
+                <div class="row my-4">
+                    <div class="col-4">
+                        <div class=" container author-card">
+                            <img
+                                style="height: 100%"
+                                :src="object.imgdesmostrativa"
+                                alt=""
+                                class="img-thumbnail"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">
+                                    <p class="h2">
+                                        <a
+                                            :href="
+                                                '/documentViewpdf/' + object.id
+                                            "
+                                        >
+                                            {{ object.nombre }}
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- DOCUMENTS END -->
         <div class="row my-4">
             <div class="col-lg-12">
                 <Footer />
@@ -90,7 +125,8 @@ export default {
             notFound: false,
             resultados: [],
             searchFlag: false,
-            all_authors_flag: false
+            all_authors_flag: false,
+            all_documents: false
         };
     },
 
@@ -117,7 +153,6 @@ export default {
                 .catch(Error => console.log(error));
         } else {
             if (this.querystring == "all") {
-                this.all_authors_flag = true;
                 axios({
                     method: "post",
                     url: "/allAuthors"
@@ -128,7 +163,6 @@ export default {
                     })
                     .catch(Error => console.log(Error));
             } else {
-                this.searchFlag = true;
                 axios({
                     method: "post",
                     url: "/getsearch",
@@ -137,17 +171,25 @@ export default {
                     }
                 })
                     .then(resp => {
-                        this.resultados = resp.data;
-                        console.log(resp.data);
-
-                        this.resultados.length == undefined ||
-                        this.resultados.length <= 0
-                            ? (this.notFound = true)
-                            : (this.notFound = false);
-
-                        console.log(this.resultados.length);
-
-                        // EventBus.$emit("bus_queries", resp.data);
+                        if (this.querystring == "allDocuments") {
+                            this.all_documents = true;
+                            this.resultados = resp.data;
+                            console.log(resp.data);
+                            // this.resultados = resp.data;
+                            // this.resultados.length == undefined ||
+                            // this.resultados.length <= 0
+                            //     ? (this.notFound = true)
+                            //     : (this.notFound = false);
+                        } else {
+                            this.searchFlag = true;
+                            this.resultados = resp.data;
+                            console.log(resp.data);
+                            this.resultados.length == undefined ||
+                            this.resultados.length <= 0
+                                ? (this.notFound = true)
+                                : (this.notFound = false);
+                            console.log(this.resultados.length);
+                        }
                     })
                     .catch(Error => console.log(error));
             }
@@ -162,7 +204,7 @@ export default {
 }
 
 .author-card {
-    height: 5em;
+    height: 15em;
     width: 100%;
     border: 2px solid #151515;
 }

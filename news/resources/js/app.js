@@ -25,6 +25,11 @@ window.EventBus = new Vue();
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component(
+    "pdfview-component",
+    require("./components/user/pdfView.vue").default
+);
+
+Vue.component(
     "searchview-component",
     require("./components/user/searchComponent.vue").default
 );

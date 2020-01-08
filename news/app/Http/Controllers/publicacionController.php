@@ -37,16 +37,20 @@ class publicacionController extends Controller
     }
 
     public function getsearch(Request $request){
-        // split on 1+ whitespace & ignore empty (eg. trailing space)
-        $searchValues = preg_split('/\s+/', $request->q_string, -1, PREG_SPLIT_NO_EMPTY); 
 
-        $matches = DB::table('notas')->where(function ($q) use ($searchValues) {
-        foreach ($searchValues as $value) {
-            $q->orWhere('titulo', 'like', "%{$value}%");
-        }
-        })->get();
-
+        if($request->q_string == 'allDocuments'){
+            $all_documents = DB::table('documents')->get();
+            return $all_documents;
+        }else{
+                // split on 1+ whitespace & ignore empty (eg. trailing space)
+            $searchValues = preg_split('/\s+/', $request->q_string, -1, PREG_SPLIT_NO_EMPTY); 
+            $matches = DB::table('notas')->where(function ($q) use ($searchValues) {
+            foreach ($searchValues as $value) {
+                $q->orWhere('titulo', 'like', "%{$value}%");
+            }
+            })->get();
         return $matches;
+        }
     }
 
     public function getAllAuthors(){
@@ -68,6 +72,11 @@ class publicacionController extends Controller
             return $documents;
         }
         
+    }
+
+    public function getpdf(Request $request){
+        $pdf = DB::table('documents')->where('id', $request->id)->get();
+        return $pdf;
     }
 
     public function cerrar()

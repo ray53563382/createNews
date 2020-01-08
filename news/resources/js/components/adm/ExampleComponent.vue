@@ -98,7 +98,7 @@
 <script>
 import Editor from "@tinymce/tinymce-vue";
 
-import router from 'router'
+// import router from 'router'
 
 
 export default {
