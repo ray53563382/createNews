@@ -49,7 +49,7 @@
                             <div class="row my-5">
                                 <div class="col-4">
                                     <p>
-                                        <a ref="downloadpdf">descarga pdf</a>
+                                        <a ref="downloadpdf"  @click="goToDownload" >descarga pdf</a>
                                     </p>
                                 </div>
                             </div>
@@ -85,8 +85,10 @@ export default {
     data() {
         return {
             docTitle: null,
+            docId:null,
             docDate: null,
             docAutor: null,
+            docDescarga: null,
             docTags: ["America", "Asia", "Mexico"],
             docDownloadURL: "http://someurl.com",
             docTheme: null,
@@ -110,7 +112,14 @@ export default {
         };
     },
 
-    methods: {},
+    methods: {
+        goToDownload(){
+            this.docDescarga = this.docDescarga + 1;
+            const params = {descarga:  this.docDescarga};
+            axios.post(`/download/${this.docId}`, params)
+             .then(res=>{})
+        }
+    },
 
     created() {
         // this.dataID = this.myid;
@@ -128,8 +137,10 @@ export default {
                 console.log(resp.data);
 
                 // console.log(resp.data[0].titulo);
+                this.docId = resp.data[0].id;
                 this.docTitle = resp.data[0].nombre;
                 this.docDate = resp.data[0].fecha;
+                this.docDescarga = resp.data[0].descarga;
                 // this.docAutor = resp.data[0].autor;
                 // this.docTheme = this.categorias[resp.data[0].idcategoria];
                 this.docImage = resp.data[0].imgdesmostrativa;

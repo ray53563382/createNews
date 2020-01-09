@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Nota;
+use App\Document;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 
@@ -84,5 +85,14 @@ class publicacionController extends Controller
         Auth::logout();
         //return redirect('/login');
     }
+
+    public function download(Request $request, $id)
+    {
+        $doc = Document::find($id);
+        $doc->descarga = $request->descarga;
+        $doc->save();
+        return $doc;
+    }
+
 
 }

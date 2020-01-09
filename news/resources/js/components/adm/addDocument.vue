@@ -123,7 +123,7 @@
             registros: [],
             document: [],
             errors: [],
-            registro: {fecha:'',nombre:'', importancia:'' ,imgdesmostrativa:'', pdf:'', informacion:''}
+            registro: {fecha:'',nombre:'', importancia:'' ,imgdesmostrativa:'', pdf:'', informacion:'', descarga:''}
         }
         },
       
@@ -136,6 +136,7 @@
             }
             },
             agregar: function (e){
+            this.registro.descarga = 0;
             this.errors= [];
             if (!this.registro.fecha) {
             this.errors.push("La fecha es obligatoria.");

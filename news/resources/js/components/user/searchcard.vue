@@ -72,7 +72,7 @@ export default {
 
     created() {
         // console.log(this.index_queries);
-        // console.log(this.queries_array);
+        console.log(this.queries_array);
         this.s_card_title = this.queries_array[this.index_queries].titulo;
         this.s_card_id = this.queries_array[this.index_queries].id;
         this.s_card_description = this.queries_array[

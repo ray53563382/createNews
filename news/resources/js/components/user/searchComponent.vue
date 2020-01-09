@@ -22,20 +22,49 @@
         </div>
         <!-- ALL SEARCH START -->
         <div v-if="searchFlag">
-            <div v-for="(object, index) in resultados" :key="index">
-                <div class="row my-4">
-                    <div class="col-lg-12">
-                        <Searchcard
-                            :queries_array="resultados"
-                            :index_queries="index"
-                        />
+        <paginate name="result" :list="resultados" :per="9"  tag="div">
+            <div class="row">
+            <div v-for="(person, index) in paginated('result')" :key="index" class="col-4" @click="goToDocumentView(person)">
+             <!-- Card -->
+                <div class="card promoting-card">
+                <!-- Card content -->
+                <div class="card-body d-flex flex-row">
+                    <!-- Avatar -->
+                    <img :src="person.imgdesmostrativa" class="rounded-circle mr-3" height="50px" width="50px" alt="avatar" />
+                    <!-- Content -->
+                    <div>
+                    <!-- Title -->
+                    <h4 class="card-title font-weight-bold mb-2" style="font-size: 18px;">{{ person.titulo }}</h4>
+                    <!-- Subtitle -->
+                    <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
+                    </div>
+                </div>
+                <!-- Card image -->
+                <div class="view overlay">
+                    <img :src="person.imgdesmostrativa" style="height: 240px !important;" class="card-img-top rounded-0" alt="Card image cap"/>
+                    <a href="#!">
+                    <!-- <div class="mask rgba-white-slight"></div> -->
+                    </a>
+                </div>
+                    <!-- Card content -->
+                    <div class="card-body">
+                        <div class="collapse-content">
+                            <!-- <p
+                                v-html="person.informacionArt"
+                                class="text-truncate text-justify"
+                            ></p> -->
+                        </div>
                     </div>
                 </div>
             </div>
+          </div>
+        </paginate> 
+ 
+        <paginate-links for="result" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
         </div>
         <!-- ALL SEARCH END -->
         <!-- AUTHORS START -->
-        <div v-if="all_authors_flag">
+         <div v-if="all_authors_flag">
             <div v-for="(object, index) in resultados" :key="index">
                 <div class="row my-4">
                     <div class="col-lg-12">
@@ -51,7 +80,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
         <!-- AUTHORS END -->
         <!-- DOCUMENTS START -->
         <div v-if="all_documents">
@@ -86,7 +115,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
         <!-- DOCUMENTS END -->
         <div class="row my-4">
             <div class="col-lg-12">
@@ -101,6 +130,9 @@ import logito from "../media/home.png";
 import Header from "./header";
 import Footer from "./footer";
 import Searchcard from "./searchcard";
+
+import VuePaginate from 'vue-paginate'
+Vue.use(VuePaginate)
 
 // import { bus } from "../media/bus";
 
@@ -118,12 +150,26 @@ export default {
         Header,
         Footer,
         Searchcard
-    },
+    },methods: {
+  goToSecondPage () {
+    if (this.$refs.paginator) {
+      this.$refs.paginator.goToPage(2)
+    }
+  },
+
+    goToDocumentView(person) {
+        console.log(person);
+        location.replace("/documentView/" + person.id);
+    }
+
+
+},
     data() {
         return {
             myString: null,
             notFound: false,
             resultados: [],
+            paginate: ['result'],
             searchFlag: false,
             all_authors_flag: false,
             all_documents: false

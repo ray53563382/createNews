@@ -47,6 +47,7 @@ class DocumentController extends Controller
         $doc->imgdesmostrativa = $request->imgdesmostrativa;
         $doc->pdf = $request->pdf;
         $doc->informacion = $request->informacion;
+        $doc->descarga = $request->descarga;
         $doc->save();
         return $doc;
     }
@@ -89,10 +90,12 @@ class DocumentController extends Controller
         $doc->imgdesmostrativa = $request->imgdesmostrativa;
         $doc->pdf = $request->pdf;
         $doc->informacion = $request->informacion;
+        $doc->descarga = $request->descarga;
         $doc->save();
         return $doc;
     }
-
+    
+   
     /**
      * Remove the specified resource from storage.
      *
