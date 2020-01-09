@@ -22,7 +22,6 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">
                         <a
-                            href=""
                             class="nav-link dropdown-toggle"
                             id="navbarDropdown"
                             role="button"
@@ -38,29 +37,44 @@
                             ref="menubtn"
                             @mouseleave="hide_menu"
                         >
-                            <a href="" class="dropdown-item"
+                            <a @click="search_theme('1')" class="dropdown-item"
                                 >Crisis Climática y Conservación</a
                             >
-                            <a href="" class="dropdown-item">Minería</a>
-                            <a href="" class="dropdown-item"
+                            <a @click="search_theme('2')" class="dropdown-item"
+                                >Minería</a
+                            >
+                            <a @click="search_theme('3')" class="dropdown-item"
+                                >Hidroeléctricas y eólicas</a
+                            >
+                            <a @click="search_theme('4')" class="dropdown-item"
                                 >Petróleo, Fracking y Gasoductos</a
                             >
-                            <a href="" class="dropdown-item"
-                                >Hidroeléctricas y Eólicas</a
+
+                            <a @click="search_theme('5')" class="dropdown-item"
+                                >Derechos indígenas</a
                             >
-                            <a href="" class="dropdown-item">Agua</a>
-                            <a href="" class="dropdown-item">Bosques</a>
-                            <a href="" class="dropdown-item"
-                                >Tierra, Territorio y Derechos Indígenas</a
+                            <a @click="search_theme('6')" class="dropdown-item"
+                                >Tierra y Territorio</a
                             >
-                            <a href="" class="dropdown-item">Megaproyectos </a>
+                            <a @click="search_theme('7')" class="dropdown-item"
+                                >Agua</a
+                            >
+                            <a @click="search_theme('8')" class="dropdown-item"
+                                >Bosques y deforestación</a
+                            >
+
+                            <a @click="search_theme('9')" class="dropdown-item"
+                                >Megaproyectos
+                            </a>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">Publicaciones</a>
+                        <a @click="fetch_all_docs" class="nav-link"
+                            >Publicaciones</a
+                        >
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">Acciones y Eventos</a>
+                        <a class="nav-link">Acciones y Eventos</a>
                     </li>
                     <li @click="all_authors" class="nav-item">
                         <a class="nav-link">Autores</a>
@@ -111,6 +125,10 @@ export default {
             location.replace("/search/" + this.searchString);
         },
 
+        fetch_all_docs() {
+            location.replace("/search/get_all_docs");
+        },
+
         all_authors() {
             this.searchString = "all";
             location.replace("/search/" + this.searchString);
@@ -125,6 +143,10 @@ export default {
 
         hide_menu() {
             this.$refs.menubtn.classList.remove("show");
+        },
+
+        search_theme(theme) {
+            location.replace("/searchbytheme/" + theme);
         }
     }
 };

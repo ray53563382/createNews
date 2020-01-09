@@ -69,8 +69,15 @@ class publicacionController extends Controller
             $documents = DB::table('notas')->orderBy("importancia", "DESC" )->get();
             return $documents;
         }else{
-            $documents = DB::table('notas')->orderBy("fecha", $request->type )->get();
-            return $documents;
+            if($request->type != "default"){
+                $documents = DB::table('notas')->orderBy("fecha", $request->type )->get();
+                return $documents;
+            }
+            else{
+                $documents = DB::table('notas')->orderBy("fecha", "DESC" )->get();
+                return $documents;
+            }
+            
         }
         
     }
@@ -79,6 +86,22 @@ class publicacionController extends Controller
         $pdf = DB::table('documents')->where('id', $request->id)->get();
         return $pdf;
     }
+
+    public function getheme(Request $request){
+        $allthemes = DB::table('notas')->where('idcategoria', $request->idcategoria)->get();
+        return $allthemes;
+    }
+
+    // public function fetchAllDocs(Request $request){
+
+    //     if($request != null ||$request != undefined ){
+    //         $fetch_all = DB::table('notas')->where($request->order, 'DESC')
+    //          return $fetch_all;
+    //     }
+
+    //     $fetch_all = DB::table('notas')->get();
+    //     return $fetch_all;
+    // }
 
     public function cerrar()
     {

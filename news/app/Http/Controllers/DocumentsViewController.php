@@ -26,6 +26,9 @@ class DocumentsViewController extends Controller
         return view('pages.searchview', ['querystring' => $querystring, 'author' => $author ]);
         // return view('pages.searchview')->with('querystring', $querystring   );
         // return view('pages.searchview')->with('author', $author);
+    }
 
+    public function searchbytheme( $theme){
+        return view( 'pages.searchview')->with('theme', $theme);
     }
 }
