@@ -11,7 +11,6 @@
                     <div class="row">
                         <div class="col-12 my-5">
                             <p class="h1 text-muted">{{ docTitle }}</p>
-                            <!-- <p class="h1 text-muted">{{docTitle}}</p> -->
                         </div>
                     </div>
                     <div class="row">

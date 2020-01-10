@@ -60,7 +60,6 @@
   </div>
 </div>
  
- <
         </div>
         <!-- ALL SEARCH END -->
         <!-- AUTHORS START -->
@@ -96,16 +95,12 @@
                             />
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-8">
                         <div class="container">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-12">
                                     <p class="h2">
-                                        <a
-                                            :href="
-                                                '/documentViewpdf/' + object.id
-                                            "
-                                        >
+                                        <a :href="'/documentViewpdf/' + object.id">
                                             {{ object.nombre }}
                                         </a>
                                     </p>
@@ -295,7 +290,7 @@ export default {
 
 .author-card {
     height: 15em;
-    width: 100%;
+    width: 55%;
     border: 2px solid #151515;
 }
 
