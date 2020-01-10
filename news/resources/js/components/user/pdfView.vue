@@ -49,7 +49,11 @@
                             <div class="row my-5">
                                 <div class="col-4">
                                     <p>
-                                        <a ref="downloadpdf"  @click="goToDownload" >descarga pdf</a>
+                                        <a
+                                            ref="downloadpdf"
+                                            @click="goToDownload"
+                                            >descarga pdf</a
+                                        >
                                     </p>
                                 </div>
                             </div>
@@ -85,7 +89,7 @@ export default {
     data() {
         return {
             docTitle: null,
-            docId:null,
+            docId: null,
             docDate: null,
             docAutor: null,
             docDescarga: null,
@@ -113,11 +117,10 @@ export default {
     },
 
     methods: {
-        goToDownload(){
+        goToDownload() {
             this.docDescarga = this.docDescarga + 1;
-            const params = {descarga:  this.docDescarga};
-            axios.post(`/download/${this.docId}`, params)
-             .then(res=>{})
+            const params = { descarga: this.docDescarga };
+            axios.post(`/download/${this.docId}`, params).then(res => {});
         }
     },
 
@@ -145,10 +148,8 @@ export default {
                 // this.docTheme = this.categorias[resp.data[0].idcategoria];
                 this.docImage = resp.data[0].imgdesmostrativa;
                 this.docTextBody = resp.data[0].informacion;
-
                 // this.pdfdown = URL.createObjectURL(resp.data[0].pdf);
-                console.log(this.$refs.downloadpdf);
-
+                // console.log(this.$refs.downloadpdf);
                 // this.binaryConversion = atob(resp.data[0].pdf);
                 this.$refs.downloadpdf.download = "documento.pdf";
                 this.$refs.downloadpdf.href = resp.data[0].pdf;

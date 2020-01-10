@@ -4108,6 +4108,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4124,6 +4138,9 @@ __webpack_require__.r(__webpack_exports__);
       // console.log(this.searchString);
       location.replace("/search/" + this.searchString);
     },
+    fetch_all_docs: function fetch_all_docs() {
+      location.replace("/search/get_all_docs");
+    },
     all_authors: function all_authors() {
       this.searchString = "all";
       location.replace("/search/" + this.searchString);
@@ -4137,6 +4154,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     hide_menu: function hide_menu() {
       this.$refs.menubtn.classList.remove("show");
+    },
+    search_theme: function search_theme(theme) {
+      location.replace("/searchbytheme/" + theme);
     }
   }
 });
@@ -4407,16 +4427,15 @@ __webpack_require__.r(__webpack_exports__);
         id: this.myid
       }
     }).then(function (resp) {
-      console.log(resp.data); // console.log(resp.data[0].titulo);
-
+      // console.log(resp.data);
       _this.docTitle = resp.data[0].nombre;
       _this.docDate = resp.data[0].fecha; // this.docAutor = resp.data[0].autor;
       // this.docTheme = this.categorias[resp.data[0].idcategoria];
 
       _this.docImage = resp.data[0].imgdesmostrativa;
       _this.docTextBody = resp.data[0].informacion; // this.pdfdown = URL.createObjectURL(resp.data[0].pdf);
-
-      console.log(_this.$refs.downloadpdf); // this.binaryConversion = atob(resp.data[0].pdf);
+      // console.log(this.$refs.downloadpdf);
+      // this.binaryConversion = atob(resp.data[0].pdf);
 
       _this.$refs.downloadpdf.download = "documento.pdf";
       _this.$refs.downloadpdf.href = resp.data[0].pdf;
@@ -4549,9 +4568,12 @@ __webpack_require__.r(__webpack_exports__);
   name: "searchview",
   props: {
     querystring: {
-      required: true
+      required: false
     },
     author: {
+      requiered: false
+    },
+    theme: {
       requiered: false
     }
   },
@@ -4567,65 +4589,98 @@ __webpack_require__.r(__webpack_exports__);
       resultados: [],
       searchFlag: false,
       all_authors_flag: false,
-      all_documents: false
+      all_documents: false,
+      order: "default"
     };
   },
   created: function created() {
     var _this = this;
 
-    if (this.author) {
-      this.searchFlag = true;
+    // console.log(this.author);
+    // console.log(this.theme);
+    // console.log(this.querystring);
+    if (this.querystring == "get_all_docs") {
       axios({
         method: "post",
-        url: "/allfromAuthor",
+        url: "/allrecent",
         data: {
-          author: this.author
+          type: this.order
         }
       }).then(function (resp) {
+        _this.searchFlag = true;
         _this.resultados = resp.data;
-        console.log(resp.data);
-        _this.resultados.length == undefined || _this.resultados.length <= 0 ? _this.notFound = true : _this.notFound = false;
-        console.log(_this.resultados.length);
       })["catch"](function (Error) {
-        return console.log(error);
+        return console.log(Error);
       });
     } else {
-      if (this.querystring == "all") {
+      if (this.author != undefined) {
+        this.searchFlag = true;
         axios({
           method: "post",
-          url: "/allAuthors"
+          url: "/allfromAuthor",
+          data: {
+            author: this.author
+          }
         }).then(function (resp) {
-          console.log(resp.data);
+          _this.resultados = resp.data; // console.log(resp.data);
+
+          _this.resultados.length == undefined || _this.resultados.length <= 0 ? _this.notFound = true : _this.notFound = false; // console.log(this.resultados.length);
+        })["catch"](function (Error) {
+          return console.log(error);
+        });
+      } else if (this.theme) {
+        axios({
+          method: "post",
+          url: "/gettheme",
+          data: {
+            idcategoria: this.theme
+          }
+        }).then(function (resp) {
+          _this.searchFlag = true;
           _this.resultados = resp.data;
+          console.log(resp.data);
+          _this.resultados.length == undefined || _this.resultados.length <= 0 ? _this.notFound = true : _this.notFound = false;
         })["catch"](function (Error) {
           return console.log(Error);
         });
       } else {
-        axios({
-          method: "post",
-          url: "/getsearch",
-          data: {
-            q_string: this.querystring
-          }
-        }).then(function (resp) {
-          if (_this.querystring == "allDocuments") {
-            _this.all_documents = true;
-            _this.resultados = resp.data;
-            console.log(resp.data); // this.resultados = resp.data;
-            // this.resultados.length == undefined ||
-            // this.resultados.length <= 0
-            //     ? (this.notFound = true)
-            //     : (this.notFound = false);
-          } else {
-            _this.searchFlag = true;
-            _this.resultados = resp.data;
+        if (this.querystring == "all") {
+          this.all_authors_flag = true;
+          axios({
+            method: "post",
+            url: "/allAuthors"
+          }).then(function (resp) {
             console.log(resp.data);
-            _this.resultados.length == undefined || _this.resultados.length <= 0 ? _this.notFound = true : _this.notFound = false;
-            console.log(_this.resultados.length);
-          }
-        })["catch"](function (Error) {
-          return console.log(error);
-        });
+            _this.resultados = resp.data;
+          })["catch"](function (Error) {
+            return console.log(Error);
+          });
+        } else {
+          axios({
+            method: "post",
+            url: "/getsearch",
+            data: {
+              q_string: this.querystring
+            }
+          }).then(function (resp) {
+            if (_this.querystring == "allDocuments") {
+              _this.all_documents = true;
+              _this.resultados = resp.data; // console.log(resp.data);
+              // this.resultados = resp.data;
+              // this.resultados.length == undefined ||
+              // this.resultados.length <= 0
+              //     ? (this.notFound = true)
+              //     : (this.notFound = false);
+            } else {
+              _this.searchFlag = true;
+              _this.resultados = resp.data; // console.log(resp.data);
+
+              _this.resultados.length == undefined || _this.resultados.length <= 0 ? _this.notFound = true : _this.notFound = false; // console.log(this.resultados.length);
+            }
+          })["catch"](function (Error) {
+            return console.log(error);
+          });
+        }
       }
     }
   }
@@ -47034,7 +47089,6 @@ var render = function() {
                   {
                     staticClass: "nav-link dropdown-toggle",
                     attrs: {
-                      href: "",
                       id: "navbarDropdown",
                       role: "button",
                       "data-toggle": "dropdown",
@@ -47057,58 +47111,136 @@ var render = function() {
                   [
                     _c(
                       "a",
-                      { staticClass: "dropdown-item", attrs: { href: "" } },
+                      {
+                        staticClass: "dropdown-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.search_theme("1")
+                          }
+                        }
+                      },
                       [_vm._v("Crisis Climática y Conservación")]
                     ),
                     _vm._v(" "),
                     _c(
                       "a",
-                      { staticClass: "dropdown-item", attrs: { href: "" } },
+                      {
+                        staticClass: "dropdown-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.search_theme("2")
+                          }
+                        }
+                      },
                       [_vm._v("Minería")]
                     ),
                     _vm._v(" "),
                     _c(
                       "a",
-                      { staticClass: "dropdown-item", attrs: { href: "" } },
+                      {
+                        staticClass: "dropdown-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.search_theme("3")
+                          }
+                        }
+                      },
+                      [_vm._v("Hidroeléctricas y eólicas")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.search_theme("4")
+                          }
+                        }
+                      },
                       [_vm._v("Petróleo, Fracking y Gasoductos")]
                     ),
                     _vm._v(" "),
                     _c(
                       "a",
-                      { staticClass: "dropdown-item", attrs: { href: "" } },
-                      [_vm._v("Hidroeléctricas y Eólicas")]
+                      {
+                        staticClass: "dropdown-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.search_theme("5")
+                          }
+                        }
+                      },
+                      [_vm._v("Derechos indígenas")]
                     ),
                     _vm._v(" "),
                     _c(
                       "a",
-                      { staticClass: "dropdown-item", attrs: { href: "" } },
+                      {
+                        staticClass: "dropdown-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.search_theme("6")
+                          }
+                        }
+                      },
+                      [_vm._v("Tierra y Territorio")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.search_theme("7")
+                          }
+                        }
+                      },
                       [_vm._v("Agua")]
                     ),
                     _vm._v(" "),
                     _c(
                       "a",
-                      { staticClass: "dropdown-item", attrs: { href: "" } },
-                      [_vm._v("Bosques")]
+                      {
+                        staticClass: "dropdown-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.search_theme("8")
+                          }
+                        }
+                      },
+                      [_vm._v("Bosques y deforestación")]
                     ),
                     _vm._v(" "),
                     _c(
                       "a",
-                      { staticClass: "dropdown-item", attrs: { href: "" } },
-                      [_vm._v("Tierra, Territorio y Derechos Indígenas")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "" } },
-                      [_vm._v("Megaproyectos ")]
+                      {
+                        staticClass: "dropdown-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.search_theme("9")
+                          }
+                        }
+                      },
+                      [_vm._v("Megaproyectos\n                        ")]
                     )
                   ]
                 )
               ]),
               _vm._v(" "),
-              _vm._m(1),
+              _c("li", { staticClass: "nav-item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    on: { click: _vm.fetch_all_docs }
+                  },
+                  [_vm._v("Publicaciones")]
+                )
+              ]),
               _vm._v(" "),
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
               _c(
                 "li",
@@ -47200,19 +47332,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
-        _vm._v("Publicaciones")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
-        _vm._v("Acciones y Eventos")
-      ])
+      _c("a", { staticClass: "nav-link" }, [_vm._v("Acciones y Eventos")])
     ])
   }
 ]

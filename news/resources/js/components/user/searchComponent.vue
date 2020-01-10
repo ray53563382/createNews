@@ -140,9 +140,14 @@ export default {
     name: "searchview",
     props: {
         querystring: {
-            required: true
+            required: false
         },
+
         author: {
+            requiered: false
+        },
+
+        theme: {
             requiered: false
         }
     },
@@ -172,72 +177,111 @@ export default {
             paginate: ['result'],
             searchFlag: false,
             all_authors_flag: false,
-            all_documents: false
+            all_documents: false,
+            order: "default"
         };
     },
 
     created() {
-        if (this.author) {
-            this.searchFlag = true;
+        // console.log(this.author);
+        // console.log(this.theme);
+        // console.log(this.querystring);
+
+        if (this.querystring == "get_all_docs") {
             axios({
                 method: "post",
-                url: "/allfromAuthor",
+                url: "/allrecent",
                 data: {
-                    author: this.author
+                    type: this.order
                 }
             })
                 .then(resp => {
+                    this.searchFlag = true;
                     this.resultados = resp.data;
-                    console.log(resp.data);
-                    this.resultados.length == undefined ||
-                    this.resultados.length <= 0
-                        ? (this.notFound = true)
-                        : (this.notFound = false);
-
-                    console.log(this.resultados.length);
                 })
-                .catch(Error => console.log(error));
+                .catch(Error => console.log(Error));
         } else {
-            if (this.querystring == "all") {
+            if (this.author != undefined) {
+                this.searchFlag = true;
                 axios({
                     method: "post",
-                    url: "/allAuthors"
-                })
-                    .then(resp => {
-                        console.log(resp.data);
-                        this.resultados = resp.data;
-                    })
-                    .catch(Error => console.log(Error));
-            } else {
-                axios({
-                    method: "post",
-                    url: "/getsearch",
+                    url: "/allfromAuthor",
                     data: {
-                        q_string: this.querystring
+                        author: this.author
                     }
                 })
                     .then(resp => {
-                        if (this.querystring == "allDocuments") {
-                            this.all_documents = true;
-                            this.resultados = resp.data;
-                            console.log(resp.data);
-                            // this.resultados = resp.data;
-                            // this.resultados.length == undefined ||
-                            // this.resultados.length <= 0
-                            //     ? (this.notFound = true)
-                            //     : (this.notFound = false);
-                        } else {
-                            this.searchFlag = true;
-                            this.resultados = resp.data;
-                            console.log(resp.data);
-                            this.resultados.length == undefined ||
-                            this.resultados.length <= 0
-                                ? (this.notFound = true)
-                                : (this.notFound = false);
-                            console.log(this.resultados.length);
-                        }
+                        this.resultados = resp.data;
+                        // console.log(resp.data);
+                        this.resultados.length == undefined ||
+                        this.resultados.length <= 0
+                            ? (this.notFound = true)
+                            : (this.notFound = false);
+
+                        // console.log(this.resultados.length);
                     })
                     .catch(Error => console.log(error));
+            } else if (this.theme) {
+                axios({
+                    method: "post",
+                    url: "/gettheme",
+                    data: {
+                        idcategoria: this.theme
+                    }
+                })
+                    .then(resp => {
+                        this.searchFlag = true;
+                        this.resultados = resp.data;
+                        console.log(resp.data);
+                        this.resultados.length == undefined ||
+                        this.resultados.length <= 0
+                            ? (this.notFound = true)
+                            : (this.notFound = false);
+                    })
+                    .catch(Error => console.log(Error));
+            } else {
+                if (this.querystring == "all") {
+                    this.all_authors_flag = true;
+                    axios({
+                        method: "post",
+                        url: "/allAuthors"
+                    })
+                        .then(resp => {
+                            console.log(resp.data);
+                            this.resultados = resp.data;
+                        })
+                        .catch(Error => console.log(Error));
+                } else {
+                    axios({
+                        method: "post",
+                        url: "/getsearch",
+                        data: {
+                            q_string: this.querystring
+                        }
+                    })
+                        .then(resp => {
+                            if (this.querystring == "allDocuments") {
+                                this.all_documents = true;
+                                this.resultados = resp.data;
+                                // console.log(resp.data);
+                                // this.resultados = resp.data;
+                                // this.resultados.length == undefined ||
+                                // this.resultados.length <= 0
+                                //     ? (this.notFound = true)
+                                //     : (this.notFound = false);
+                            } else {
+                                this.searchFlag = true;
+                                this.resultados = resp.data;
+                                // console.log(resp.data);
+                                this.resultados.length == undefined ||
+                                this.resultados.length <= 0
+                                    ? (this.notFound = true)
+                                    : (this.notFound = false);
+                                // console.log(this.resultados.length);
+                            }
+                        })
+                        .catch(Error => console.log(error));
+                }
             }
         }
     }
