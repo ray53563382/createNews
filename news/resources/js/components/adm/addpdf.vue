@@ -28,7 +28,7 @@
                                                 <td v-else-if="item.importancia == 2" style="color: orange;">Media</td>
                                                 <td v-else-if="item.importancia == 3" style="color: red">Baja</td>
                                                 <td>{{item.descarga}}</td>
-                                                <td>{{item.informacion}}</td>
+                                                <td>Para ver información click en editar</td>
                                                 <td>
                                                     <button type="button" @click="editar(item)" class="btn btn-labeled btn-success">
                                                      <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
@@ -202,7 +202,6 @@
         created(){
           axios.get('/document').then(res=>{
             this.document = res.data;
-
           })
         },
         components: {

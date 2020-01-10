@@ -136,7 +136,7 @@
             }
             },
             agregar: function (e){
-            this.registro.descarga = 0;
+           
             this.errors= [];
             if (!this.registro.fecha) {
             this.errors.push("La fecha es obligatoria.");
@@ -156,6 +156,8 @@
             if (!this.registro.informacion) {
             this.errors.push("La información es obligatoria.");
             }
+
+            this.registro.descarga = 0;
 
             if(this.registro.nombre && this.registro.fecha && this.registro.importancia && this.registro.imgdesmostrativa &&
              this.registro.pdf && this.registro.informacion ){

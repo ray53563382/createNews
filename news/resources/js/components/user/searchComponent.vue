@@ -90,7 +90,7 @@
         <!-- AUTHORS END -->
         <!-- DOCUMENTS START -->
         <div v-if="all_documents">
-            <paginate name="result" :list="resultados" :per="10" >
+            <paginate name="result" :list="resultados" :per="5" >
             <div class="row">
                 <ul>
                     <div v-for="(object, index) in paginated('result')" :key="index" class="col-12">
