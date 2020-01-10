@@ -24,7 +24,7 @@
         <div v-if="searchFlag">
         <paginate name="result" :list="resultados" :per="9"  tag="div">
             <div class="row">
-            <div v-for="(person, index) in paginated('result')" :key="index" class="col-4" @click="goToDocumentView(person)">
+            <div v-for="(person, index) in paginated('result')" :key="index" class="col-lg-4 col-md-6 col-sm-12" @click="goToDocumentView(person)">
              <!-- Card -->
                 <div class="card promoting-card">
                 <!-- Card content -->
