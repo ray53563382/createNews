@@ -105,7 +105,10 @@
                 </ul>
             </div> 
             </paginate> 
-            <paginate-links for="result" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+
+            <div class="centrar"  style ="width: 50%; margin: 0 auto;" >
+                <paginate-links for="result" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link', 'center' :'width: 50%; margin: 0 auto;'}"></paginate-links>
+            </div>
 
         </div> 
         <!-- DOCUMENTS END -->
