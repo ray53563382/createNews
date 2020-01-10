@@ -64,7 +64,9 @@
         <!-- ALL SEARCH END -->
         <!-- AUTHORS START -->
          <div v-if="all_authors_flag">
-            <div v-for="(object, index) in resultados" :key="index">
+            <paginate name="result" :list="resultados" :per="1" >
+
+            <div v-for="(object, index) in paginated('result')" :key="index">
                 <div class="row my-4">
                     <div class="col-lg-12">
                         <div class=" container author-card">
@@ -79,37 +81,32 @@
                     </div>
                 </div>
             </div>
+
+            </paginate> 
+
+        <paginate-links for="result" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+
         </div> 
         <!-- AUTHORS END -->
         <!-- DOCUMENTS START -->
         <div v-if="all_documents">
-            <div v-for="(object, index) in resultados" :key="index">
-                <div class="row my-4">
-                    <div class="col-4">
-                        <div class=" container author-card">
-                            <img
-                                style="height: 100%"
-                                :src="object.imgdesmostrativa"
-                                alt=""
-                                class="img-thumbnail"
-                            />
-                        </div>
+            <paginate name="result" :list="resultados" :per="10" >
+            <div class="row">
+                <ul>
+                    <div v-for="(object, index) in paginated('result')" :key="index" class="col-12">
+                        <a :href="'/documentViewpdf/' + object.id" style="color: black !important;">
+                            <li :href="'/documentViewpdf/' + object.id" style="margin-top:2%">
+                                <img :src="object.imgdesmostrativa" :href="'/documentViewpdf/' + object.id" />
+                                <h3>{{ object.nombre }}</h3>
+                                <p>Ver detalle</p>
+                            </li>
+                        </a>            
                     </div>
-                    <div class="col-8">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="h2">
-                                        <a :href="'/documentViewpdf/' + object.id">
-                                            {{ object.nombre }}
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </ul>
+            </div> 
+            </paginate> 
+            <paginate-links for="result" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+
         </div> 
         <!-- DOCUMENTS END -->
         <div class="row my-4">
@@ -441,5 +438,33 @@ border-bottom-right-radius: 12px;
     opacity: 1;
 }
 
+
+ul {
+  list-style-type: none;
+  width: 100%;
+}
+ 
+h3 {
+  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+}
+ 
+li img {
+  float: left;
+  margin: 0 15px 0 0;
+}
+ 
+li p {
+  font: 200 12px/1.5 Georgia, Times New Roman, serif;
+}
+ 
+li {
+  padding: 10px;
+  overflow: auto;
+}
+ 
+li:hover {
+  background: #eee;
+  cursor: pointer;
+}
 
 </style>
