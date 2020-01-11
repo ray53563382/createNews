@@ -19,7 +19,7 @@
                                             <div class="col-md-4 pr-1">
                                                 <div class="form-group">
                                                     <label>Fecha</label>
-                                                    <input type="date" style="font-size: 14px;" class="form-control" placeholder="Company" v-model="registro.fecha">
+                                                    <input type="date" style="font-size: 14px;" data-date-format="DD MMMM YYYY"  class="form-control" placeholder="Company" v-model="registro.fecha">
                                                 </div>
                                             </div>
                                             <div class="col-md-4 pr-1">

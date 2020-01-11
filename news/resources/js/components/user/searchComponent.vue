@@ -115,7 +115,6 @@
 							<a class="oflow-hidden pos-relative mb-20 dplay-block" href="#">
 								<div class="wh-100x abs-tlr"><img src="images/polular-1-100x100.jpg" alt=""></div>
 								<div class="ml-120 min-h-100x">
-
 									<h5 class="color-black "><b>Bitcoin Billionares Hidding in Plain Sight</b></h5>
 									<h6 class="color-lite-black pt-10">by <span class="color-black"><b>Danile Palmer,</b></span> Jan 25, 2018</h6>
 								</div>
@@ -536,4 +535,10 @@ li:hover {
 
 .color-lite-black{ color: #888; }
 .color-black{ color: #111; }
+
+.wh-100x{ height: 100px; width: 100px!important; }
+.abs-tlr{ position: absolute; top: 0; left: 0; right: 0; z-index: 1; }
+.ml-120{ margin-left: 120px!important; }
+
+
 </style>
