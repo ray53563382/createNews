@@ -9,11 +9,8 @@
             <ul class="list-li-mr-20 mtb-15">
                 <li>Por: <b>{{sendData.autor}} </b>{{sendData.fecha}}</li>
             </ul>
-
             <div v-html="sendData.informacionArt" class="col-12" style="margin-bottom:5%"></div>
-
             <div class="brdr-ash-1 opacty-5"></div>
-
         </div><!-- col-md-9 -->
 
         <div class="d-none d-md-block d-lg-none col-md-3"></div>
@@ -28,45 +25,38 @@
 
     <h4 class="p-title mt-50"><b>Te podría interesar</b></h4>
     <div class="row">
-
-        <div class="col-sm-3">
-            <img src="images/crypto-news-2-600x450.jpg" alt="">
-            <h4 class="pt-20"><a href="#"><b>2017 Market Performance: <br />Crypto vs.Stock</b></a></h4>
-            <ul class="list-li-mr-20 pt-10 mb-30">
-                <li class="color-lite-black">by <a href="#" class="color-black"><b>Olivia Capzallo,</b></a>
-                    Jan 25, 2018</li>
-
-            </ul>
-        </div><!-- col-sm-6 -->
-
-        <div class="col-sm-3">
-            <img src="images/crypto-news-1-600x450.jpg" alt="">
-            <h4 class="pt-20"><a href="#"><b>2017 Market Performance: Crypto vs.Stock</b></a></h4>
-            <ul class="list-li-mr-20 pt-10 mb-30">
-                <li class="color-lite-black">by <a href="#" class="color-black"><b>Olivia Capzallo,</b></a>
+        <div class="col-12 col-lg-3 col-md-6 box" @click="goToDocumentView(registros[0])">
+            <img :src="registros[0].imgdesmostrativa" alt="" style="width: 100%; height: 300px;">
+            <h4 class="pt-20"><a href="#"><b style="color: black;">{{registros[0].titulo}}</b></a></h4>
+            <ul style="margin-left: -48px;">
+                <li class="color-lite-black">Autor: <a href="#" class="color-black"><b>{{registros[0].autor}},</b></a> <br>
                     Jan 25, 2018</li>
             </ul>
-        </div><!-- col-sm-6 -->
-
-         <div class="col-sm-3">
-            <img src="images/crypto-news-2-600x450.jpg" alt="">
-            <h4 class="pt-20"><a href="#"><b>2017 Market Performance: <br />Crypto vs.Stock</b></a></h4>
-            <ul class="list-li-mr-20 pt-10 mb-30">
-                <li class="color-lite-black">by <a href="#" class="color-black"><b>Olivia Capzallo,</b></a>
-                    Jan 25, 2018</li>
-
-            </ul>
-        </div><!-- col-sm-6 -->
-
-        <div class="col-sm-3">
-            <img src="images/crypto-news-1-600x450.jpg" alt="">
-            <h4 class="pt-20"><a href="#"><b>2017 Market Performance: Crypto vs.Stock</b></a></h4>
-            <ul class="list-li-mr-20 pt-10 mb-30">
-                <li class="color-lite-black">by <a href="#" class="color-black"><b>Olivia Capzallo,</b></a>
+        </div>
+         <div class="col-12 col-lg-3 col-md-6 box" @click="goToDocumentView(registros[1])">
+            <img :src="registros[1].imgdesmostrativa" alt="" style="width: 100%; height: 300px;">
+            <h4 class="pt-20"><a href="#"><b style="color: black;">{{registros[1].titulo}}</b></a></h4>
+            <ul style="margin-left: -48px;">
+                <li class="color-lite-black">Autor: <a href="#" class="color-black"><b>{{registros[1].autor}},</b></a> <br>
                     Jan 25, 2018</li>
             </ul>
-        </div><!-- col-sm-6 -->
-
+        </div>
+         <div class="col-12 col-lg-3 col-md-6 box" @click="goToDocumentView(registros[2])">
+            <img :src="registros[2].imgdesmostrativa" alt="" style="width: 100%; height: 300px;">
+            <h4 class="pt-20"><a href="#"><b style="color: black;">{{registros[2].titulo}}</b></a></h4>
+            <ul style="margin-left: -48px;">
+                <li class="color-lite-black">Autor: <a href="#" class="color-black"><b>{{registros[2].autor}},</b></a> <br>
+                    Jan 25, 2018</li>
+            </ul>
+        </div>
+         <div class="col-12 col-lg-3 col-md-6 box" @click="goToDocumentView(registros[3])">
+            <img :src="registros[3].imgdesmostrativa" alt="" style="width: 100%; height: 300px;">
+            <h4 class="pt-20"><a href="#"><b style="color: black;">{{registros[3].titulo}}</b></a></h4>
+            <ul style="margin-left: -48px;">
+                <li class="color-lite-black">Autor: <a href="#" class="color-black"><b>{{registros[3].autor}},</b></a> <br>
+                    Jan 25, 2018</li>
+            </ul>
+        </div>
     </div><!-- row -->
 
 </div>
@@ -97,6 +87,7 @@ export default {
             docTextBody: null,
             logito: logito,
             dataID: "hey",
+            registros:[],
             categorias: [
                 "null",
                 "Crisis climática y conservación",
@@ -111,7 +102,23 @@ export default {
             ]
         };
     },
-    methods: {},
+    methods: {
+        goToDocumentView(data){
+            console.log(data);
+        }
+    },
+     created() {
+          axios.post('/popularPostMedium').then(resp => {
+            resp.data.forEach(element => {
+                this.registros.push(element);
+            });
+            console.log(this.registros);
+        }).catch(error => {
+            console.log(error);
+        });
+     }
+
+      
 };
 </script>
 

@@ -123,7 +123,9 @@ class publicacionController extends Controller
         return $notas;
     }
 
-
-
+    public function popularPostMedium(Request $request){
+          $notas = DB::table('notas')->where('importancia', 2)->get();
+          return $notas;
+      }
 
 }

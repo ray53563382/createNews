@@ -40,8 +40,7 @@ Route::post('/gettheme', 'publicacionController@getheme');
 // Route::post('/fetchAllDocs', 'publicacionController@fetchAllDocs');
 
 Route::post('/popularPost', 'publicacionController@popularPost');
-
-
+Route::post('/popularPostMedium', 'publicacionController@popularPostMedium');
 
 Route::post('/download/{id}', 'publicacionController@download');
 
