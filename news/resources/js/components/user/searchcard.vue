@@ -8,7 +8,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <p class="h4">{{ s_card_title }}</p>
+                            <p class="h4">{{ s_card_title }} ijiojiojjiojioji</p>
                         </div>
                     </div>
                     <div class="row">

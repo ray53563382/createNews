@@ -61,6 +61,8 @@ Vue.component(
 
 Vue.component("popularPost", require("./components/adm/popularPost.vue").default);
 
+Vue.component("documentView", require("./components/user/documentView.vue").default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

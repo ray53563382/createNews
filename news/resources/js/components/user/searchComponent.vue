@@ -9,7 +9,6 @@
         <div class="col-lg-12">
             <h2>
                 <!-- Resultados para: <b>{{ this.querystring }}</b> -->
-
             </h2>
         </div>
     </div>
@@ -24,61 +23,37 @@
     <!-- ALL SEARCH START -->
     <div v-if="searchFlag">
         <paginate name="result" :list="resultados" :per="9" tag="div">
+            <h4 class="p-title" style="margin-bottom: 2%"><b>Publicaciones</b></h4>
             <div class="row">
-
                 <div v-for="(person, index) in paginated('result')" :key="index" class="col-12 col-lg-4 col-md-6 box" @click="goToDocumentView(person)">
                     <img :src="person.imgdesmostrativa" alt="" style="width: 100%; height: 300px;">
                     <h4 class="pt-20"><a href="#"><b style="color: black;">{{person.titulo}}</b></a></h4>
-                    <ul class="" style="margin-left: -48px;">
+                    <ul  style="margin-left: -48px;">
                         <li class="color-lite-black">Autor: <a href="#" class="color-black"><b>{{person.autor}},</b></a> <br>
                             Jan 25, 2018</li>
-                        <!-- <li><i class="color-primary mr-5 font-12 ion-ios-bolt"></i>Jan 25, 2018</li> -->
                     </ul>
                 </div>
-
-                <!-- <div v-for="(person, index) in paginated('result')" :key="index" class="col-lg-4 col-md-6 col-sm-12" @click="goToDocumentView(person)" style="margin-bottom: 4%;">
-                    <article class="card card--1" v-bind:style="{ 'background-image': 'url(' + person.imgdesmostrativa + ')' ,'border-color': 'gray' ,'-webkit-box-shadow': '4px 2px 3px 0px rgba(0,0,0,0.84)'}">
-                        <div class="card__info-hover">
-                            <svg class="card__like" viewBox="0 0 24 24">
-                                <path fill="#000000" d="M12.1,18.55L12,18.65L11.89,18.55C7.14,14.24 4,11.39 4,8.5C4,6.5 5.5,5 7.5,5C9.04,5 10.54,6 11.07,7.36H12.93C13.46,6 14.96,5 16.5,5C18.5,5 20,6.5 20,8.5C20,11.39 16.86,14.24 12.1,18.55M16.5,3C14.76,3 13.09,3.81 12,5.08C10.91,3.81 9.24,3 7.5,3C4.42,3 2,5.41 2,8.5C2,12.27 5.4,15.36 10.55,20.03L12,21.35L13.45,20.03C18.6,15.36 22,12.27 22,8.5C22,5.41 19.58,3 16.5,3Z" />
-                            </svg>
-                            <div class="card__clock-info">
-                                <svg class="card__clock" viewBox="0 0 24 24">
-                                    <path d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z" />
-                                </svg><span class="card__time">{{person.fecha}}</span>
-                            </div>
-                        </div>
-                        <div class="card__img"></div>
-                        <a href="#" class="card_link">
-                            <div class="card__img--hover"></div>
-                        </a>
-                        <div class="card__info">
-                            <span class="card__category"> {{person.idcategoria}}</span>
-                            <h3 class="card__title" style="font-size: 19px !important;">{{person.titulo}}</h3>
-                            <span class="card__by">Autor: <a class="card__author" title="author">{{person.autor}}</a></span>
-                        </div>
-                    </article>
-                </div> -->
-
             </div>
-
         </paginate>
 
         <div class="container h-100">
             <div class="row h-100 justify-content-center align-items-center">
                 <div class="col-1">
                     <paginate-links for="result" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
-
                 </div>
             </div>
         </div>
 
     </div>
+
+    <div v-if="publicacionFlag">
+        <documentView :sendData="sendData"></documentView>
+    </div>
+
     <!-- ALL SEARCH END -->
     <!-- AUTHORS START -->
     <div v-if="all_authors_flag">
         <paginate name="result" :list="resultados" :per="1">
-
             <div v-for="(object, index) in paginated('result')" :key="index">
                 <div class="row my-4">
                     <div class="col-lg-12">
@@ -103,9 +78,10 @@
     <!-- AUTHORS END -->
     <!-- DOCUMENTS START -->
     <div v-if="all_documents">
-        <paginate name="result" :list="resultados" :per="5">
-            <div class="row">
-                <div class="col-md-12 col-lg-8">
+        <div class="row">
+            <div class="col-md-12 col-lg-8">
+                <paginate name="result" :list="resultados" :per="5">
+                    <h4 class="p-title"><b>Documentos</b></h4>
                     <ul>
                         <div v-for="(object, index) in paginated('result')" :key="index">
                             <a :href="'/documentViewpdf/' + object.id" style="color: black !important;">
@@ -117,17 +93,16 @@
                             </a>
                         </div>
                     </ul>
+                </paginate>
+                <div class="centrar" style="width: 50%; margin: 0 auto;">
+                    <paginate-links for="result" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link', 'center' :'width: 50%; margin: 0 auto;'}"></paginate-links>
                 </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <popularPost></popularPost>
-                </div>
-
             </div>
-        </paginate>
 
-        <div class="centrar" style="width: 50%; margin: 0 auto;">
-            <paginate-links for="result" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link', 'center' :'width: 50%; margin: 0 auto;'}"></paginate-links>
+            <div class="col-md-6 col-lg-4">
+                <popularPost></popularPost>
+            </div>
+
         </div>
 
     </div>
@@ -180,7 +155,12 @@ export default {
 
         goToDocumentView(person) {
             console.log(person);
-            location.replace("/documentView/" + person.id);
+            this.searchFlag = false;
+            this.publicacionFlag = true;
+
+            this.sendData = person;
+            console.log(this.sendData);
+            //  location.replace("/documentView/" + person.id);
         }
 
     },
@@ -192,8 +172,10 @@ export default {
             paginate: ['result'],
             searchFlag: false,
             all_authors_flag: false,
+            publicacionFlag:false,
             all_documents: false,
-            order: "default"
+            order: "default",
+            sendData:[]
         };
     },
 
@@ -321,25 +303,35 @@ export default {
     box-sizing: border-box;
 }
 
-
 .box:hover {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  animation-name: example;
-  animation-duration: 0.25s;
-  margin-bottom: 20px;
-//   border-left: 2px solid blue;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    animation-name: example;
+    animation-duration: 0.25s;
+    margin-bottom: 20px;
+    //   border-left: 2px solid blue;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
-.pt-20{ padding-top: 20px!important; }
+.pt-20 {
+    padding-top: 20px !important;
+}
 
-.list-li-mr-20 > li{ margin-right: 20px; }
+.list-li-mr-20>li {
+    margin-right: 20px;
+}
 
-.color-primary{ color: #F9B500; }
+.color-primary {
+    color: #F9B500;
+}
 
-.mr-5 { margin-right:  5px!important; }
-.font-12{ font-size: 1.2em; }
+.mr-5 {
+    margin-right: 5px !important;
+}
+
+.font-12 {
+    font-size: 1.2em;
+}
 
 .cards {
     width: 100%;

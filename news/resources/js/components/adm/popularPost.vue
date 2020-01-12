@@ -13,11 +13,10 @@
 
     <div class="mtb-50 mb-md-0">
         <h4 class="p-title" style="margin-top: 51px;"><b>NEWSLETTER</b></h4>
-        <p class="mb-20">Subscribe to our newsletter to get notification about new updates,
-            information, discount, etc..</p>
+        <p class="mb-20"> Suscribete a nuestro newsleteer y obten las notificaciones de nuestras nuevas públicaciones</p>
         <form class="nwsltr-primary-1">
             <input type="text" placeholder="Your email" />
-            <button type="submit"><i class="ion-ios-paperplane"></i></button>
+            <button type="button" class="btn btn-warning" style="height: 34px;">Suscribete</button>
         </form>
     </div>
 
