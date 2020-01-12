@@ -1,70 +1,83 @@
 <template>
-    <div class="container query-container">
-        <div class="row my-4">
-            <div class="col-lg-12">
-                <Header />
-            </div>
+<div class="container query-container">
+    <div class="row my-4">
+        <div class="col-lg-12">
+            <Header />
         </div>
-        <div class="row my-lg-3">
-            <div class="col-lg-12">
-                <h2>
-                    <!-- Resultados para: <b>{{ this.querystring }}</b> -->
+    </div>
+    <div class="row my-lg-3">
+        <div class="col-lg-12">
+            <h2>
+                <!-- Resultados para: <b>{{ this.querystring }}</b> -->
 
-                </h2>
-            </div>
+            </h2>
         </div>
+    </div>
 
-        <div v-show="notFound" class="row">
-            <div class="col-lg-12">
-                <h3>
-                    No se han encontrado resultados. Intenta con otro término.
-                </h3>
-            </div>
+    <div v-show="notFound" class="row">
+        <div class="col-lg-12">
+            <h3>
+                No se han encontrado resultados. Intenta con otro término.
+            </h3>
         </div>
-        <!-- ALL SEARCH START -->
-        <div v-if="searchFlag">
-        <paginate name="result" :list="resultados" :per="9"  tag="div">
- <div class="row">
-    <div v-for="(person, index) in paginated('result')" :key="index" class="col-lg-4 col-md-6 col-sm-12" @click="goToDocumentView(person)" style="margin-bottom: 4%;">
-        <article class="card card--1" v-bind:style="{ 'background-image': 'url(' + person.imgdesmostrativa + ')' ,'border-color': 'gray' ,'-webkit-box-shadow': '4px 2px 3px 0px rgba(0,0,0,0.84)'}">
-            <div class="card__info-hover">
-                <svg class="card__like"  viewBox="0 0 24 24">
-                    <path fill="#000000" d="M12.1,18.55L12,18.65L11.89,18.55C7.14,14.24 4,11.39 4,8.5C4,6.5 5.5,5 7.5,5C9.04,5 10.54,6 11.07,7.36H12.93C13.46,6 14.96,5 16.5,5C18.5,5 20,6.5 20,8.5C20,11.39 16.86,14.24 12.1,18.55M16.5,3C14.76,3 13.09,3.81 12,5.08C10.91,3.81 9.24,3 7.5,3C4.42,3 2,5.41 2,8.5C2,12.27 5.4,15.36 10.55,20.03L12,21.35L13.45,20.03C18.6,15.36 22,12.27 22,8.5C22,5.41 19.58,3 16.5,3Z" />
-                </svg>
-                <div class="card__clock-info">
-                    <svg class="card__clock"  viewBox="0 0 24 24"><path d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z" />
-                    </svg><span class="card__time">{{person.fecha}}</span>
+    </div>
+    <!-- ALL SEARCH START -->
+    <div v-if="searchFlag">
+        <paginate name="result" :list="resultados" :per="9" tag="div">
+            <div class="row">
+
+                <div v-for="(person, index) in paginated('result')" :key="index" class="col-12 col-lg-4 col-md-6 box" @click="goToDocumentView(person)">
+                    <img :src="person.imgdesmostrativa" alt="" style="width: 100%; height: 300px;">
+                    <h4 class="pt-20"><a href="#"><b style="color: black;">{{person.titulo}}</b></a></h4>
+                    <ul class="" style="margin-left: -48px;">
+                        <li class="color-lite-black">Autor: <a href="#" class="color-black"><b>{{person.autor}},</b></a> <br>
+                            Jan 25, 2018</li>
+                        <!-- <li><i class="color-primary mr-5 font-12 ion-ios-bolt"></i>Jan 25, 2018</li> -->
+                    </ul>
                 </div>
-            </div>
-            <div class="card__img"></div>
-            <a href="#" class="card_link">
-                <div class="card__img--hover"></div>
-            </a>
-            <div class="card__info">
-                <span class="card__category"> {{person.idcategoria}}</span>
-                <h3 class="card__title" style="font-size: 19px !important;">{{person.titulo}}</h3>
-                <span class="card__by">Autor: <a class="card__author" title="author">{{person.autor}}</a></span>
-            </div>
-        </article>
-        </div>
- </div>
 
-        </paginate> 
+                <!-- <div v-for="(person, index) in paginated('result')" :key="index" class="col-lg-4 col-md-6 col-sm-12" @click="goToDocumentView(person)" style="margin-bottom: 4%;">
+                    <article class="card card--1" v-bind:style="{ 'background-image': 'url(' + person.imgdesmostrativa + ')' ,'border-color': 'gray' ,'-webkit-box-shadow': '4px 2px 3px 0px rgba(0,0,0,0.84)'}">
+                        <div class="card__info-hover">
+                            <svg class="card__like" viewBox="0 0 24 24">
+                                <path fill="#000000" d="M12.1,18.55L12,18.65L11.89,18.55C7.14,14.24 4,11.39 4,8.5C4,6.5 5.5,5 7.5,5C9.04,5 10.54,6 11.07,7.36H12.93C13.46,6 14.96,5 16.5,5C18.5,5 20,6.5 20,8.5C20,11.39 16.86,14.24 12.1,18.55M16.5,3C14.76,3 13.09,3.81 12,5.08C10.91,3.81 9.24,3 7.5,3C4.42,3 2,5.41 2,8.5C2,12.27 5.4,15.36 10.55,20.03L12,21.35L13.45,20.03C18.6,15.36 22,12.27 22,8.5C22,5.41 19.58,3 16.5,3Z" />
+                            </svg>
+                            <div class="card__clock-info">
+                                <svg class="card__clock" viewBox="0 0 24 24">
+                                    <path d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z" />
+                                </svg><span class="card__time">{{person.fecha}}</span>
+                            </div>
+                        </div>
+                        <div class="card__img"></div>
+                        <a href="#" class="card_link">
+                            <div class="card__img--hover"></div>
+                        </a>
+                        <div class="card__info">
+                            <span class="card__category"> {{person.idcategoria}}</span>
+                            <h3 class="card__title" style="font-size: 19px !important;">{{person.titulo}}</h3>
+                            <span class="card__by">Autor: <a class="card__author" title="author">{{person.autor}}</a></span>
+                        </div>
+                    </article>
+                </div> -->
+
+            </div>
+
+        </paginate>
 
         <div class="container h-100">
-  <div class="row h-100 justify-content-center align-items-center">
-    <div class="col-1">
-            <paginate-links for="result" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+            <div class="row h-100 justify-content-center align-items-center">
+                <div class="col-1">
+                    <paginate-links for="result" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
 
-    </div>   
-  </div>
-</div>
- 
+                </div>
+            </div>
         </div>
-        <!-- ALL SEARCH END -->
-        <!-- AUTHORS START -->
-         <div v-if="all_authors_flag">
-            <paginate name="result" :list="resultados" :per="1" >
+
+    </div>
+    <!-- ALL SEARCH END -->
+    <!-- AUTHORS START -->
+    <div v-if="all_authors_flag">
+        <paginate name="result" :list="resultados" :per="1">
 
             <div v-for="(object, index) in paginated('result')" :key="index">
                 <div class="row my-4">
@@ -82,15 +95,15 @@
                 </div>
             </div>
 
-            </paginate> 
+        </paginate>
 
         <paginate-links for="result" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
 
-        </div> 
-        <!-- AUTHORS END -->
-        <!-- DOCUMENTS START -->
-        <div v-if="all_documents">
-            <paginate name="result" :list="resultados" :per="5" >
+    </div>
+    <!-- AUTHORS END -->
+    <!-- DOCUMENTS START -->
+    <div v-if="all_documents">
+        <paginate name="result" :list="resultados" :per="5">
             <div class="row">
                 <div class="col-md-12 col-lg-8">
                     <ul>
@@ -101,31 +114,30 @@
                                     <h3>{{ object.nombre }}</h3>
                                     <p>Ver detalle</p>
                                 </li>
-                            </a>            
+                            </a>
                         </div>
                     </ul>
                 </div>
 
-            <div class="col-md-6 col-lg-4">
-                <popularPost></popularPost>
+                <div class="col-md-6 col-lg-4">
+                    <popularPost></popularPost>
+                </div>
+
             </div>
+        </paginate>
 
+        <div class="centrar" style="width: 50%; margin: 0 auto;">
+            <paginate-links for="result" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link', 'center' :'width: 50%; margin: 0 auto;'}"></paginate-links>
+        </div>
 
-            </div> 
-            </paginate> 
-
-            <div class="centrar"  style ="width: 50%; margin: 0 auto;" >
-                <paginate-links for="result" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link', 'center' :'width: 50%; margin: 0 auto;'}"></paginate-links>
-            </div>
-
-        </div> 
-        <!-- DOCUMENTS END -->
-        <div class="row my-4">
-            <div class="col-lg-12">
-                <Footer />
-            </div>
+    </div>
+    <!-- DOCUMENTS END -->
+    <div class="row my-4">
+        <div class="col-lg-12">
+            <Footer />
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -158,20 +170,20 @@ export default {
         Header,
         Footer,
         Searchcard
-    },methods: {
-  goToSecondPage () {
-    if (this.$refs.paginator) {
-      this.$refs.paginator.goToPage(2)
-    }
-  },
+    },
+    methods: {
+        goToSecondPage() {
+            if (this.$refs.paginator) {
+                this.$refs.paginator.goToPage(2)
+            }
+        },
 
-    goToDocumentView(person) {
-        console.log(person);
-        location.replace("/documentView/" + person.id);
-    }
+        goToDocumentView(person) {
+            console.log(person);
+            location.replace("/documentView/" + person.id);
+        }
 
-
-},
+    },
     data() {
         return {
             myString: null,
@@ -192,12 +204,12 @@ export default {
 
         if (this.querystring == "get_all_docs") {
             axios({
-                method: "post",
-                url: "/allrecent",
-                data: {
-                    type: this.order
-                }
-            })
+                    method: "post",
+                    url: "/allrecent",
+                    data: {
+                        type: this.order
+                    }
+                })
                 .then(resp => {
                     this.searchFlag = true;
                     this.resultados = resp.data;
@@ -207,48 +219,48 @@ export default {
             if (this.author != undefined) {
                 this.searchFlag = true;
                 axios({
-                    method: "post",
-                    url: "/allfromAuthor",
-                    data: {
-                        author: this.author
-                    }
-                })
+                        method: "post",
+                        url: "/allfromAuthor",
+                        data: {
+                            author: this.author
+                        }
+                    })
                     .then(resp => {
                         this.resultados = resp.data;
                         // console.log(resp.data);
                         this.resultados.length == undefined ||
-                        this.resultados.length <= 0
-                            ? (this.notFound = true)
-                            : (this.notFound = false);
+                            this.resultados.length <= 0 ?
+                            (this.notFound = true) :
+                            (this.notFound = false);
 
                         // console.log(this.resultados.length);
                     })
                     .catch(Error => console.log(error));
             } else if (this.theme) {
                 axios({
-                    method: "post",
-                    url: "/gettheme",
-                    data: {
-                        idcategoria: this.theme
-                    }
-                })
+                        method: "post",
+                        url: "/gettheme",
+                        data: {
+                            idcategoria: this.theme
+                        }
+                    })
                     .then(resp => {
                         this.searchFlag = true;
                         this.resultados = resp.data;
                         console.log(resp.data);
                         this.resultados.length == undefined ||
-                        this.resultados.length <= 0
-                            ? (this.notFound = true)
-                            : (this.notFound = false);
+                            this.resultados.length <= 0 ?
+                            (this.notFound = true) :
+                            (this.notFound = false);
                     })
                     .catch(Error => console.log(Error));
             } else {
                 if (this.querystring == "all") {
                     this.all_authors_flag = true;
                     axios({
-                        method: "post",
-                        url: "/allAuthors"
-                    })
+                            method: "post",
+                            url: "/allAuthors"
+                        })
                         .then(resp => {
                             console.log(resp.data);
                             this.resultados = resp.data;
@@ -256,12 +268,12 @@ export default {
                         .catch(Error => console.log(Error));
                 } else {
                     axios({
-                        method: "post",
-                        url: "/getsearch",
-                        data: {
-                            q_string: this.querystring
-                        }
-                    })
+                            method: "post",
+                            url: "/getsearch",
+                            data: {
+                                q_string: this.querystring
+                            }
+                        })
                         .then(resp => {
                             if (this.querystring == "allDocuments") {
                                 this.all_documents = true;
@@ -277,9 +289,9 @@ export default {
                                 this.resultados = resp.data;
                                 // console.log(resp.data);
                                 this.resultados.length == undefined ||
-                                this.resultados.length <= 0
-                                    ? (this.notFound = true)
-                                    : (this.notFound = false);
+                                    this.resultados.length <= 0 ?
+                                    (this.notFound = true) :
+                                    (this.notFound = false);
                                 // console.log(this.resultados.length);
                             }
                         })
@@ -305,9 +317,29 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700');
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
 
-*{
-  box-sizing: border-box;
+* {
+    box-sizing: border-box;
 }
+
+
+.box:hover {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  animation-name: example;
+  animation-duration: 0.25s;
+  margin-bottom: 20px;
+//   border-left: 2px solid blue;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.pt-20{ padding-top: 20px!important; }
+
+.list-li-mr-20 > li{ margin-right: 20px; }
+
+.color-primary{ color: #F9B500; }
+
+.mr-5 { margin-right:  5px!important; }
+.font-12{ font-size: 1.2em; }
 
 .cards {
     width: 100%;
@@ -318,16 +350,16 @@ export default {
     max-width: 820px;
 }
 
-
 .card__like {
     width: 18px;
 }
 
 .card__clock {
     width: 15px;
-  vertical-align: middle;
+    vertical-align: middle;
     fill: #AD7D52;
 }
+
 .card__time {
     font-size: 12px;
     color: #AD7D52;
@@ -340,65 +372,66 @@ export default {
 }
 
 .card__img {
-  visibility: hidden;
+    visibility: hidden;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     // width: 100%;
     height: 360px;
     // height: 235px;
-  border-top-left-radius: 12px;
-border-top-right-radius: 12px;
-  
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+
 }
 
 .card__info-hover {
     position: absolute;
     padding: 16px;
-  width: 100%;
-  opacity: 1;
-  color: #fff;
-  top: 0;
+    width: 100%;
+    opacity: 1;
+    color: #fff;
+    top: 0;
 }
 
 .card__img--hover {
-  transition: 0.2s all ease-out;
+    transition: 0.2s all ease-out;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
-  position: absolute;
+    position: absolute;
     height: 235px;
-  border-top-left-radius: 12px;
-border-top-right-radius: 12px;
-top: 0;
-  color: #fff;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    top: 0;
+    color: #fff;
 
-  
 }
+
 .card {
-  margin-right: 25px;
-  transition: all .4s cubic-bezier(0.175, 0.885, 0, 1);
-  background-color: #fff;
-  height: 360px;
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0px 13px 10px -7px rgba(0, 0, 0,0.1);
+    margin-right: 25px;
+    transition: all .4s cubic-bezier(0.175, 0.885, 0, 1);
+    background-color: #fff;
+    height: 360px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);
 }
+
 .card:hover {
-    box-shadow: 0px 30px 18px -8px rgba(0, 0, 0,0.1);
+    box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);
     transform: scale(1.10, 1.10);
     color: #fff;
 
 }
 
 .card__info {
-z-index: 2;
-  background-color: #fff;
-  border-bottom-left-radius: 12px;
-border-bottom-right-radius: 12px;
-   padding: 16px 24px 24px 24px;
+    z-index: 2;
+    background-color: #fff;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 16px 24px 24px 24px;
 }
 
 .card__category:hover {
@@ -407,7 +440,7 @@ border-bottom-right-radius: 12px;
     font-size: 13px;
     letter-spacing: 2px;
     font-weight: 500;
-  color: #868686;
+    color: #868686;
 }
 
 .card__title {
@@ -422,14 +455,13 @@ border-bottom-right-radius: 12px;
     font-weight: 500;
 }
 
-.card__author{
+.card__author {
     font-weight: 600;
     text-decoration: none;
     color: #AD7D52;
 }
 
-
-.card__author:hover{
+.card__author:hover {
     font-weight: 600;
     text-decoration: none;
     color: #fff;
@@ -449,48 +481,83 @@ border-bottom-right-radius: 12px;
     opacity: 1;
 }
 
-
 ul {
-  list-style-type: none;
-  width: 100%;
+    list-style-type: none;
+    width: 100%;
 }
- 
+
 h3 {
-  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+    font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
 }
- 
+
 li img {
-  float: left;
-  margin: 0 15px 0 0;
+    float: left;
+    margin: 0 15px 0 0;
 }
- 
+
 li p {
-  font: 200 12px/1.5 Georgia, Times New Roman, serif;
+    font: 200 12px/1.5 Georgia, Times New Roman, serif;
 }
- 
+
 li {
-  padding: 10px;
-  overflow: auto;
+    padding: 10px;
+    overflow: auto;
 }
- 
+
 li:hover {
-  background: #eee;
-  cursor: pointer;
+    background: #eee;
+    cursor: pointer;
 }
 
+.p-title {
+    position: relative;
+    padding-bottom: 20px;
+    margin-bottom: 4px;
+}
 
-.p-title{ position: relative; padding-bottom: 20px; margin-bottom: 4px; }
+.p-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #ccc;
+}
 
-.p-title:after { content:''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: #ccc; }
-.p-title:before{ content:''; position: absolute; bottom: 0; left: 0; width: 80px; height: 5px; 
-	background: #F9B500; z-index: 1; }
+.p-title:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 5px;
+    background: #F9B500;
+    z-index: 1;
+}
 
-.color-lite-black{ color: #888; }
-.color-black{ color: #111; }
+.color-lite-black {
+    color: #888;
+}
 
-.wh-100x{ height: 100px; width: 100px!important; }
-.abs-tlr{ position: absolute; top: 0; left: 0; right: 0; z-index: 1; }
-.ml-120{ margin-left: 120px!important; }
+.color-black {
+    color: #111;
+}
 
+.wh-100x {
+    height: 100px;
+    width: 100px !important;
+}
 
+.abs-tlr {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.ml-120 {
+    margin-left: 120px !important;
+}
 </style>
