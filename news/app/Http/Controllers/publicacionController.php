@@ -117,5 +117,13 @@ class publicacionController extends Controller
         return $doc;
     }
 
+    public function popularPost(Request $request){
+      //  $user = DB::table('notas')->where('importancia', 1);
+        $notas = DB::table('notas')->where('importancia', 1)->get();
+        return $notas;
+    }
+
+
+
 
 }

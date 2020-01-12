@@ -39,6 +39,8 @@ Route::post('/getpdf', 'publicacionController@getpdf');
 Route::post('/gettheme', 'publicacionController@getheme');
 // Route::post('/fetchAllDocs', 'publicacionController@fetchAllDocs');
 
+Route::post('/popularPost', 'publicacionController@popularPost');
+
 
 
 Route::post('/download/{id}', 'publicacionController@download');
