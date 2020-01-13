@@ -1,5 +1,30 @@
 <template>
-    <div class="container">
+    <body>
+        <Header />
+        <Mostrelevantsection />
+        <Recentsection />
+        <Footer />
+    </body>
+    <!-- <div class="container-fluid">
+        <div class="row">
+            <div class="col-12"> -->
+    <!-- <Header /> -->
+    <!-- </div>
+        </div> -->
+    <!-- <div class="row"> -->
+    <!-- <Mostrelevantsection /> -->
+    <!-- <div class="container">
+                <div class="h-600x h-sm-auto">
+                    <div class="h-2-3 h-sm-auto oflow-hidden"> -->
+    <!-- <div v-for="(object, index) in cards" class="col-8" :key="index">
+                <Card :arrayindex="index" />
+            </div> -->
+    <!-- </div>
+                </div>
+            </div> -->
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- <div class="container">
         <div class="row  ">
             <div class="col-12">
                 <Header />
@@ -9,9 +34,7 @@
         <div class="row mt-3 mx-3">
             <div class="col-12">
                 <div class="relevant mx-3 my-2 text-center">
-                    <!-- <p> -->
                     <a class="" href="#">LO MÁS RELEVANTE DE LA SEMANA.</a>
-                    <!-- </p> -->
                 </div>
             </div>
         </div>
@@ -41,7 +64,7 @@
                 <Footer />
             </div>
         </div>
-    </div>
+    </div> -->
 </template>
 
 <script>
@@ -51,6 +74,8 @@ import Card from "./card";
 import Body from "./body";
 import Sidebar from "./sidebar";
 import Footer from "./footer";
+import Mostrelevantsection from "./mostrelevantsection";
+import Recentsection from "./recentsection";
 
 // import { bus } from "../media/bus";
 
@@ -62,22 +87,25 @@ export default {
         Card,
         Body,
         Sidebar,
-        Footer
+        Footer,
+        Mostrelevantsection,
+        Recentsection
     },
 
     data() {
         return {
-            cards: ["1", "2"]
+            // cards: ["1", "2", "3", "4", "5", "6"]
+            // cards: ["1", "2"]
         };
-    },
-
-    created() {
-        axios.post("/relevant").then(resp => {
-            // console.log(resp.data);
-
-            EventBus.$emit("bus_relevants", resp.data);
-        });
     }
+
+    // created() {
+    //     axios.post("/relevant").then(resp => {
+    //         // console.log(resp.data);
+
+    //         EventBus.$emit("bus_relevants", resp.data);
+    //     });
+    // }
 };
 </script>
 

@@ -25,6 +25,16 @@ window.EventBus = new Vue();
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component(
+    "mostrelevantsection-component",
+    require("./components/user/recentsection.vue").default
+);
+
+Vue.component(
+    "mostrelevantsection-component",
+    require("./components/user/mostrelevantsection.vue").default
+);
+
+Vue.component(
     "pdfview-component",
     require("./components/user/pdfView.vue").default
 );
@@ -59,10 +69,15 @@ Vue.component(
     require("./components/user/documentView.vue").default
 );
 
-Vue.component("popularPost", require("./components/adm/popularPost.vue").default);
+Vue.component(
+    "popularPost",
+    require("./components/adm/popularPost.vue").default
+);
 
-Vue.component("documentView", require("./components/user/documentView.vue").default);
-
+Vue.component(
+    "documentView",
+    require("./components/user/documentView.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
