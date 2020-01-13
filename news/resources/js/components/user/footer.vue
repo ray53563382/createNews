@@ -4,7 +4,7 @@
             <div class="pt-50 pb-20 pos-relative">
                 <div class="abs-tblr pt-50 z--1 text-center">
                     <div class="h-80 pos-relative">
-                        <img class="opacty-1 h-100 w-auto" :src="logo" alt="" />
+                        <img class="opacty-1 h-100 w-auto" src="" alt="" />
                     </div>
                 </div>
                 <div class="row">

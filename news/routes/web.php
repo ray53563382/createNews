@@ -24,6 +24,8 @@ Route::get('search/{querystring}', 'DocumentsViewController@search');
 // Route::get('search/{querystring}/{author}', 'DocumentsViewController@searchbyauthor');
 Route::get('search/{querystring}/{author}', ['uses' => 'DocumentsViewController@searchbyauthor']);
 Route::get('searchbytheme/{theme}','DocumentsViewController@searchbytheme');
+Route::get('sobreNosotrosContacto','DocumentsViewController@about');
+
 
 
 

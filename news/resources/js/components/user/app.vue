@@ -1,10 +1,10 @@
 <template>
-    <body>
+    <div>
         <Header />
         <Mostrelevantsection />
         <Recentsection />
         <Footer />
-    </body>
+    </div>
     <!-- <div class="container-fluid">
         <div class="row">
             <div class="col-12"> -->

@@ -25,6 +25,11 @@ window.EventBus = new Vue();
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component(
+    "about-component",
+    require("./components/user/about.vue").default
+);
+
+Vue.component(
     "mostrelevantsection-component",
     require("./components/user/recentsection.vue").default
 );

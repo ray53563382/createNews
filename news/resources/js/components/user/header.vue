@@ -9,9 +9,13 @@
                         class="float-left float-sm-none list-a-plr-10 list-a-plr-sm-5 list-a-ptb-15 list-a-ptb-sm-10"
                     >
                         <li>
-                            <a class="pl-0 pl-sm-10">Sobre nosotros</a>
+                            <a
+                                href="sobreNosotrosContacto"
+                                class="pl-0 pl-sm-10"
+                                >Sobre nosotros | Contacto</a
+                            >
                         </li>
-                        <li><a>Contacto</a></li>
+                        <!-- <li><a>Contacto</a></li> -->
                     </ul>
                     <ul
                         class="float-right float-sm-none list-a-plr-10 list-a-plr-sm-5 list-a-ptb-15 list-a-ptb-sm-5"

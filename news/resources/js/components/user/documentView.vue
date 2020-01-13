@@ -50,7 +50,7 @@
                         }}</b></a
                     >
                 </h4>
-                <ul style="margin-left: -8px;">
+                <ul style="margin-left: 0px;">
                     <li class="color-lite-black">
                         Autor:
                         <a href="#" class="color-black"
@@ -77,7 +77,7 @@
                         }}</b></a
                     >
                 </h4>
-                <ul style="margin-left: -48px;">
+                <ul style="margin-left: 0px;">
                     <li class="color-lite-black">
                         Autor:
                         <a href="#" class="color-black"
@@ -104,7 +104,7 @@
                         }}</b></a
                     >
                 </h4>
-                <ul style="margin-left: -48px;">
+                <ul style="margin-left: 0px;">
                     <li class="color-lite-black">
                         Autor:
                         <a href="#" class="color-black"
@@ -131,7 +131,7 @@
                         }}</b></a
                     >
                 </h4>
-                <ul style="margin-left: -48px;">
+                <ul style="margin-left: 0px;">
                     <li class="color-lite-black">
                         Autor:
                         <a href="#" class="color-black"

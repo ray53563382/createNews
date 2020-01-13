@@ -163,11 +163,11 @@
             </div>
         </div>
         <!-- DOCUMENTS END -->
-        <div class="row my-4">
-            <div class="col-lg-12">
-                <Footer />
-            </div>
-        </div>
+        <!-- <div class="row my-4">
+            <div class="col-lg-12"> -->
+        <Footer class="my-3" />
+        <!-- </div>
+        </div> -->
     </div>
 </template>
 
