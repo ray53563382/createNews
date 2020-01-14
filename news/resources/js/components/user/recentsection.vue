@@ -60,7 +60,7 @@
 					<div class="row">
 					
 						<div class="col-sm-6">
-							<img :src="recientes[5].imgdesmostrativa"  alt="">
+							<img :src="recientes[5].imgdesmostrativa"  alt="" style="width: 100%;height: 300px;display: block;margin: 0 auto;">
 							<h4 class="pt-20"><a href="#"><b>{{recientes[5].titulo}}</b></a></h4>
 							<ul class="list-li-mr-20 pt-10 mb-30">
 								<li class="color-lite-black">Por <a href="#" class="color-black"><b>{{recientes[5].autor}},</b></a>
@@ -70,7 +70,7 @@
 						</div><!-- col-sm-6 -->
 						
 						<div class="col-sm-6">
-							<img :src="recientes[6].imgdesmostrativa"  alt="">
+							<img :src="recientes[6].imgdesmostrativa"  alt="" style="width: 100%;height: 300px; display: block;margin: 0 auto;">
 							<h4 class="pt-20"><a href="#"><b>{{recientes[6].titulo}}</b></a></h4>
 							<ul class="list-li-mr-20 pt-10 mb-30">
 								<li class="color-lite-black">Por <a href="#" class="color-black"><b>{{recientes[6].autor}},</b></a>
@@ -80,7 +80,7 @@
 						</div><!-- col-sm-6 -->
 					
 						<div class="col-sm-6">
-							<img :src="recientes[7].imgdesmostrativa"  alt="">
+							<img :src="recientes[7].imgdesmostrativa"  alt="" style="width: 100%;height: 300px; display: block;margin: 0 auto;">
 							<h4 class="pt-20"><a href="#"><b> <br/>{{recientes[7].titulo}}</b></a></h4>
 							<ul class="list-li-mr-20 pt-10 mb-30">
 								<li class="color-lite-black">Por <a href="#" class="color-black"><b>{{recientes[7].autor}},</b></a>
@@ -90,7 +90,7 @@
 						</div><!-- col-sm-6 -->
 						
 						<div class="col-sm-6">
-							<img :src="recientes[8].imgdesmostrativa" alt="">
+							<img :src="recientes[8].imgdesmostrativa" alt="" style="width: 100%;height: 300px; display: block;margin: 0 auto;">
 							<h4 class="pt-20"><a href="#"><b> <br/>{{recientes[8].titulo}}</b></a></h4>
 							<ul class="list-li-mr-20 pt-10 mb-30">
 								<li class="color-lite-black">Por <a href="#" class="color-black"><b>{{recientes[8].autor}},</b></a>
@@ -100,7 +100,7 @@
 						</div><!-- col-sm-6 -->
 						
 						<div class="col-sm-6">
-							<img :src="recientes[9].imgdesmostrativa"  alt="">
+							<img :src="recientes[9].imgdesmostrativa"  alt="" style="width: 100%;height: 300px; display: block;margin: 0 auto;">
 							<h4 class="pt-20"><a href="#"><b> <br/>{{recientes[8].titulo}}</b></a></h4>
 							<ul class="list-li-mr-20 pt-10 mb-30">
 								<li class="color-lite-black">Por <a href="#" class="color-black"><b>{{recientes[8].autor}},</b></a>
@@ -110,7 +110,7 @@
 						</div><!-- col-sm-6 -->
 						
 						<div class="col-sm-6">
-							<img :src="recientes[10].imgdesmostrativa"  alt="">
+							<img :src="recientes[10].imgdesmostrativa"  alt="" style="width: 100%;height: 300px; display: block;margin: 0 auto;">
 							<h4 class="pt-20"><a href="#"><b>{{recientes[10].titulo}}</b></a></h4>
 							<ul class="list-li-mr-20 pt-10 mb-30">
 								<li class="color-lite-black">Por <a href="#" class="color-black"><b>{{recientes[10].autor}},</b></a>

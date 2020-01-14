@@ -248,7 +248,9 @@ header .logo {
 }
 
 header .logo img {
-    height: 100%;
+    height: 52px;
+    margin-top: -15px;
+    /* height: 100%; */
     width: auto;
 }
 
