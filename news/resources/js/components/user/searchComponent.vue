@@ -289,6 +289,8 @@ export default {
                         })
                         .then(resp => {
                             if (this.querystring == "allDocuments") {
+                                console.log(resp.data);
+                                
                                 this.all_documents = true;
                                 this.resultados = resp.data;
                                 this.$loading(false);
@@ -303,6 +305,8 @@ export default {
                                 this.searchFlag = true;
                                 this.resultados = resp.data;
                                 this.$loading(false);
+                                console.log(resp.data);
+                                
 
                                 // console.log(resp.data);
                                 this.resultados.length == undefined ||

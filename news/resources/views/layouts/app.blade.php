@@ -27,8 +27,8 @@
 
 </head>
 <body>
-    <div id="app" >
-        {{-- <main class=""> --}}
+    <div id="app" class="container-fluid" >
+        {{-- <main  > --}}
             @yield('content')
         {{-- </main>  --}}
     </div>
