@@ -300,9 +300,11 @@ header .close-icn.active {
 
 header .src-form {
     position: absolute;
-    top: 0px;
+    /* top: 0px; */
+    top: 45%;
     bottom: 0px;
-    left: 15px;
+    /* left: 15px; */
+    left: 8%;
     right: 45px;
     z-index: 1;
     max-width: 0;
@@ -312,7 +314,8 @@ header .src-form {
 }
 
 header .src-form.active {
-    max-width: 3000px;
+    /* max-width: 3000px; */
+    max-width: 80%
 }
 
 header .src-form form {
@@ -416,6 +419,12 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu {
 }
 
 @media only screen and (max-width: 767px) {
+
+
+    .header .src-form{
+        left: 15px;
+    }
+
     header .logo {
         height: 16px;
         margin: 22px 0;
