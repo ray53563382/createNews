@@ -131,7 +131,7 @@
                                         :href="'/documentViewpdf/' + object.id"
                                         style="margin-top:2%"
                                     >
-                                        <img
+                                        <img style="width: 62px !important;"
                                             :src="object.imgdesmostrativa"
                                             :href="
                                                 '/documentViewpdf/' + object.id
@@ -176,11 +176,25 @@ import logito from "../media/home.png";
 import Header from "./header";
 import Footer from "./footer";
 import Searchcard from "./searchcard";
+import VueLoading from 'vuejs-loading-plugin'
+Vue.use(VueLoading,{
+text: 'Cargando'
+})
 
 import VuePaginate from "vue-paginate";
 Vue.use(VuePaginate);
 
+
+// Vue.use(VueLoading, {
+//   dark: true, // default false
+//   text: 'Ladataan', // default 'Loading'
+//   loading: true, // default false
+//   customLoader: myVueComponent, // replaces the spinner and text with your own
+//   background: 'rgb(255,255,255)', // set custom background
+//   classes: ['myclass'] // array, object or string
+// })
 // import { bus } from "../media/bus";
+
 
 export default {
     name: "searchview",
@@ -235,6 +249,8 @@ export default {
     },
 
     created() {
+        this.$loading(true);
+
         // console.log(this.author);
         // console.log(this.theme);
         // console.log(this.querystring);
@@ -250,6 +266,8 @@ export default {
                 .then(resp => {
                     this.searchFlag = true;
                     this.resultados = resp.data;
+                    this.$loading(false);
+
                 })
                 .catch(Error => console.log(Error));
         } else {
@@ -264,7 +282,7 @@ export default {
                 })
                     .then(resp => {
                         this.resultados = resp.data;
-                        // console.log(resp.data);
+                        this.$loading(false);
                         this.resultados.length == undefined ||
                         this.resultados.length <= 0
                             ? (this.notFound = true)
@@ -284,7 +302,7 @@ export default {
                     .then(resp => {
                         this.searchFlag = true;
                         this.resultados = resp.data;
-                        console.log(resp.data);
+                        this.$loading(false);
                         this.resultados.length == undefined ||
                         this.resultados.length <= 0
                             ? (this.notFound = true)
@@ -300,6 +318,7 @@ export default {
                     })
                         .then(resp => {
                             console.log(resp.data);
+                            this.$loading(false);
                             this.resultados = resp.data;
                         })
                         .catch(Error => console.log(Error));
@@ -315,6 +334,8 @@ export default {
                             if (this.querystring == "allDocuments") {
                                 this.all_documents = true;
                                 this.resultados = resp.data;
+                                this.$loading(false);
+
                                 // console.log(resp.data);
                                 // this.resultados = resp.data;
                                 // this.resultados.length == undefined ||
@@ -324,6 +345,8 @@ export default {
                             } else {
                                 this.searchFlag = true;
                                 this.resultados = resp.data;
+                                this.$loading(false);
+
                                 // console.log(resp.data);
                                 this.resultados.length == undefined ||
                                 this.resultados.length <= 0

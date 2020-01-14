@@ -151,6 +151,11 @@
 import logito from "../media/home.png";
 import Header from "./header";
 import Footer from "./footer";
+import VueLoading from 'vuejs-loading-plugin'
+Vue.use(VueLoading,{
+text: 'Cargando'
+})
+
 
 export default {
     name: "documentview",
@@ -193,12 +198,14 @@ export default {
         }
     },
     created() {
+        this.$loading(true);
         axios
             .post("/popularPostMedium")
             .then(resp => {
                 resp.data.forEach(element => {
                     this.registros.push(element);
                 });
+                this.$loading(false);
                 console.log(this.registros);
             })
             .catch(error => {
