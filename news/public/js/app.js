@@ -3426,6 +3426,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -3486,11 +3488,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
   data: function data() {
     return {
       registros: []
     };
+  },
+  methods: {
+    fetchAuthor: function fetchAuthor(author) {
+      console.log(author);
+      location.replace("/search/all/" + author);
+    }
   },
   created: function created() {
     var _this = this;
@@ -3505,9 +3517,8 @@ __webpack_require__.r(__webpack_exports__);
       console.log(error);
     });
   },
-  mounted: function mounted() {},
-  methods: {}
-});
+  mounted: function mounted() {}
+}, "methods", {}));
 
 /***/ }),
 
@@ -5618,12 +5629,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 
-Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_4___default.a); // import { bus } from "../media/bus";
+Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_4___default.a); // import pencil from "img/pencil.png";
+// import { bus } from "../media/bus";
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "searchview",
@@ -5649,6 +5671,10 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_4___default.a); // import { bus } 
         this.$refs.paginator.goToPage(2);
       }
     },
+    fetchAuthor: function fetchAuthor(author) {
+      console.log(author);
+      location.replace("/search/all/" + author);
+    },
     goToDocumentView: function goToDocumentView(person) {
       console.log(person);
       this.searchFlag = false;
@@ -5668,15 +5694,17 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_4___default.a); // import { bus } 
       publicacionFlag: false,
       all_documents: false,
       order: "default",
-      sendData: []
+      sendData: [] // pencil: pencil
+
     };
   },
   created: function created() {
     var _this = this;
 
-    // console.log(this.author);
-    // console.log(this.theme);
-    // console.log(this.querystring);
+    console.log(this.author);
+    console.log(this.theme);
+    console.log(this.querystring);
+
     if (this.querystring == "get_all_docs") {
       axios({
         method: "post",
@@ -10552,7 +10580,7 @@ exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Rob
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i);", ""]);
 
 // module
-exports.push([module.i, ".query-container[data-v-89b75b88] {\n  height: 100vh !important;\n}\n.author-card[data-v-89b75b88] {\n  height: 15em;\n  width: 55%;\n  border: 2px solid #151515;\n}\n*[data-v-89b75b88] {\n  box-sizing: border-box;\n}\n.box[data-v-89b75b88]:hover {\n  border-top-left-radius: 10px;\n  border-bottom-left-radius: 10px;\n  -webkit-animation-name: example;\n          animation-name: example;\n  -webkit-animation-duration: 0.25s;\n          animation-duration: 0.25s;\n  margin-bottom: 20px;\n  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);\n}\n.pt-20[data-v-89b75b88] {\n  padding-top: 20px !important;\n}\n.list-li-mr-20 > li[data-v-89b75b88] {\n  margin-right: 20px;\n}\n.color-primary[data-v-89b75b88] {\n  color: #f9b500;\n}\n.mr-5[data-v-89b75b88] {\n  margin-right: 5px !important;\n}\n.font-12[data-v-89b75b88] {\n  font-size: 1.2em;\n}\n.cards[data-v-89b75b88] {\n  width: 100%;\n  display: -webkit-box;\n  display: flex;\n  display: -webkit-flex;\n  -webkit-box-pack: center;\n          justify-content: center;\n  -webkit-justify-content: center;\n  max-width: 820px;\n}\n.card__like[data-v-89b75b88] {\n  width: 18px;\n}\n.card__clock[data-v-89b75b88] {\n  width: 15px;\n  vertical-align: middle;\n  fill: #ad7d52;\n}\n.card__time[data-v-89b75b88] {\n  font-size: 12px;\n  color: #ad7d52;\n  vertical-align: middle;\n  margin-left: 5px;\n}\n.card__clock-info[data-v-89b75b88] {\n  float: right;\n}\n.card__img[data-v-89b75b88] {\n  visibility: hidden;\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n  height: 360px;\n  border-top-left-radius: 12px;\n  border-top-right-radius: 12px;\n}\n.card__info-hover[data-v-89b75b88] {\n  position: absolute;\n  padding: 16px;\n  width: 100%;\n  opacity: 1;\n  color: #fff;\n  top: 0;\n}\n.card__img--hover[data-v-89b75b88] {\n  -webkit-transition: 0.2s all ease-out;\n  transition: 0.2s all ease-out;\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n  width: 100%;\n  position: absolute;\n  height: 235px;\n  border-top-left-radius: 12px;\n  border-top-right-radius: 12px;\n  top: 0;\n  color: #fff;\n}\n.card[data-v-89b75b88] {\n  margin-right: 25px;\n  -webkit-transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);\n  transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);\n  background-color: #fff;\n  height: 360px;\n  position: relative;\n  border-radius: 12px;\n  overflow: hidden;\n  box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);\n}\n.card[data-v-89b75b88]:hover {\n  box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);\n  -webkit-transform: scale(1.1, 1.1);\n          transform: scale(1.1, 1.1);\n  color: #fff;\n}\n.card__info[data-v-89b75b88] {\n  z-index: 2;\n  background-color: #fff;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n  padding: 16px 24px 24px 24px;\n}\n.card__category[data-v-89b75b88]:hover {\n  font-family: \"Raleway\", sans-serif;\n  text-transform: uppercase;\n  font-size: 13px;\n  letter-spacing: 2px;\n  font-weight: 500;\n  color: #868686;\n}\n.card__title[data-v-89b75b88] {\n  margin-top: 5px;\n  margin-bottom: 10px;\n  font-family: \"Roboto Slab\", serif;\n}\n.card__by[data-v-89b75b88] {\n  font-size: 12px;\n  font-family: \"Raleway\", sans-serif;\n  font-weight: 500;\n}\n.card__author[data-v-89b75b88] {\n  font-weight: 600;\n  text-decoration: none;\n  color: #ad7d52;\n}\n.card__author[data-v-89b75b88]:hover {\n  font-weight: 600;\n  text-decoration: none;\n  color: #fff;\n}\n.card:hover .card__img--hover[data-v-89b75b88] {\n  height: 100%;\n  opacity: 0.3;\n}\n.card:hover .card__info[data-v-89b75b88] {\n  background-color: transparent;\n  position: relative;\n}\n.card:hover .card__info-hover[data-v-89b75b88] {\n  opacity: 1;\n}\nul[data-v-89b75b88] {\n  list-style-type: none;\n  width: 100%;\n}\nh3[data-v-89b75b88] {\n  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;\n}\nli img[data-v-89b75b88] {\n  float: left;\n  margin: 0 15px 0 0;\n}\nli p[data-v-89b75b88] {\n  font: 200 12px/1.5 Georgia, Times New Roman, serif;\n}\nli[data-v-89b75b88] {\n  padding: 10px;\n  overflow: auto;\n}\nli[data-v-89b75b88]:hover {\n  background: #eee;\n  cursor: pointer;\n}\n.p-title[data-v-89b75b88] {\n  position: relative;\n  padding-bottom: 20px;\n  margin-bottom: 4px;\n}\n.p-title[data-v-89b75b88]:after {\n  content: \"\";\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 1px;\n  background: #ccc;\n}\n.p-title[data-v-89b75b88]:before {\n  content: \"\";\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 80px;\n  height: 5px;\n  background: #f9b500;\n  z-index: 1;\n}\n.color-lite-black[data-v-89b75b88] {\n  color: #888;\n}\n.color-black[data-v-89b75b88] {\n  color: #111;\n}\n.wh-100x[data-v-89b75b88] {\n  height: 100px;\n  width: 100px !important;\n}\n.abs-tlr[data-v-89b75b88] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  z-index: 1;\n}\n.ml-120[data-v-89b75b88] {\n  margin-left: 120px !important;\n}", ""]);
+exports.push([module.i, ".query-container[data-v-89b75b88] {\n  height: 100vh !important;\n}\n.author-card[data-v-89b75b88] {\n  height: 15em;\n  width: 55%;\n  border: 2px solid #151515;\n}\n*[data-v-89b75b88] {\n  box-sizing: border-box;\n}\n.box[data-v-89b75b88]:hover {\n  border-top-left-radius: 10px;\n  border-bottom-left-radius: 10px;\n  -webkit-animation-name: example;\n          animation-name: example;\n  -webkit-animation-duration: 0.25s;\n          animation-duration: 0.25s;\n  margin-bottom: 20px;\n  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);\n}\n.pt-20[data-v-89b75b88] {\n  padding-top: 20px !important;\n}\n.list-li-mr-20 > li[data-v-89b75b88] {\n  margin-right: 20px;\n}\n.color-primary[data-v-89b75b88] {\n  color: #f9b500;\n}\n.mr-5[data-v-89b75b88] {\n  margin-right: 5px !important;\n}\n.font-12[data-v-89b75b88] {\n  font-size: 1.2em;\n}\n.cards[data-v-89b75b88] {\n  width: 100%;\n  display: -webkit-box;\n  display: flex;\n  display: -webkit-flex;\n  -webkit-box-pack: center;\n          justify-content: center;\n  -webkit-justify-content: center;\n  max-width: 820px;\n}\n.card__like[data-v-89b75b88] {\n  width: 18px;\n}\n.card__clock[data-v-89b75b88] {\n  width: 15px;\n  vertical-align: middle;\n  fill: #ad7d52;\n}\n.card__time[data-v-89b75b88] {\n  font-size: 12px;\n  color: #ad7d52;\n  vertical-align: middle;\n  margin-left: 5px;\n}\n.card__clock-info[data-v-89b75b88] {\n  float: right;\n}\n.card__img[data-v-89b75b88] {\n  visibility: hidden;\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n  height: 360px;\n  border-top-left-radius: 12px;\n  border-top-right-radius: 12px;\n}\n.card__info-hover[data-v-89b75b88] {\n  position: absolute;\n  padding: 16px;\n  width: 100%;\n  opacity: 1;\n  color: #fff;\n  top: 0;\n}\n.card__img--hover[data-v-89b75b88] {\n  -webkit-transition: 0.2s all ease-out;\n  transition: 0.2s all ease-out;\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n  width: 100%;\n  position: absolute;\n  height: 235px;\n  border-top-left-radius: 12px;\n  border-top-right-radius: 12px;\n  top: 0;\n  color: #fff;\n}\n.card[data-v-89b75b88] {\n  margin-right: 25px;\n  -webkit-transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);\n  transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);\n  background-color: #fff;\n  height: 360px;\n  position: relative;\n  border-radius: 12px;\n  overflow: hidden;\n  box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);\n}\n.card[data-v-89b75b88]:hover {\n  box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);\n  -webkit-transform: scale(1.1, 1.1);\n          transform: scale(1.1, 1.1);\n  color: #fff;\n}\n.card__info[data-v-89b75b88] {\n  z-index: 2;\n  background-color: #fff;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n  padding: 16px 24px 24px 24px;\n}\n.card__category[data-v-89b75b88]:hover {\n  font-family: \"Raleway\", sans-serif;\n  text-transform: uppercase;\n  font-size: 13px;\n  letter-spacing: 2px;\n  font-weight: 500;\n  color: #868686;\n}\n.card__title[data-v-89b75b88] {\n  margin-top: 5px;\n  margin-bottom: 10px;\n  font-family: \"Roboto Slab\", serif;\n}\n.card__by[data-v-89b75b88] {\n  font-size: 12px;\n  font-family: \"Raleway\", sans-serif;\n  font-weight: 500;\n}\n.card__author[data-v-89b75b88] {\n  font-weight: 600;\n  text-decoration: none;\n  color: #ad7d52;\n}\n.card__author[data-v-89b75b88]:hover {\n  font-weight: 600;\n  text-decoration: none;\n  color: #fff;\n}\n.card:hover .card__img--hover[data-v-89b75b88] {\n  height: 100%;\n  opacity: 0.3;\n}\n.card:hover .card__info[data-v-89b75b88] {\n  background-color: transparent;\n  position: relative;\n}\n.card:hover .card__info-hover[data-v-89b75b88] {\n  opacity: 1;\n}\nul[data-v-89b75b88] {\n  list-style-type: none;\n  width: 100%;\n}\nh3[data-v-89b75b88] {\n  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;\n}\nli img[data-v-89b75b88] {\n  float: left;\n  margin: 0 15px 0 0;\n}\nli p[data-v-89b75b88] {\n  font: 200 12px/1.5 Georgia, Times New Roman, serif;\n}\nli[data-v-89b75b88] {\n  padding: 10px;\n  overflow: auto;\n}\nli[data-v-89b75b88]:hover {\n  background: #eee;\n  cursor: pointer;\n}\n.p-title[data-v-89b75b88] {\n  position: relative;\n  padding-bottom: 20px;\n  margin-bottom: 4px;\n}\n.p-title[data-v-89b75b88]:after {\n  content: \"\";\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 1px;\n  background: #ccc;\n}\n.p-title[data-v-89b75b88]:before {\n  content: \"\";\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 80px;\n  height: 5px;\n  background: #f9b500;\n  z-index: 1;\n}\n.color-lite-black[data-v-89b75b88] {\n  color: #888;\n}\n.color-black[data-v-89b75b88] {\n  color: #111;\n}\n.wh-100x[data-v-89b75b88] {\n  height: 100px;\n  width: 100px !important;\n}\n.abs-tlr[data-v-89b75b88] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  z-index: 1;\n}\n.ml-120[data-v-89b75b88] {\n  margin-left: 120px !important;\n}\n.mycursor[data-v-89b75b88] {\n  cursor: pointer;\n}", ""]);
 
 // exports
 
@@ -47744,7 +47772,17 @@ var render = function() {
                 _c("h6", { staticClass: "color-lite-black pt-10" }, [
                   _vm._v("\n                    Por\n                    "),
                   _c("span", { staticClass: "color-black" }, [
-                    _c("b", [_vm._v(_vm._s(item.autor) + ",")])
+                    _c(
+                      "b",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.fetchAuthor(item.autor)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(item.autor) + ",")]
+                    )
                   ]),
                   _vm._v(" "),
                   _c("span", { staticStyle: { "font-size": "12px" } }, [
@@ -48064,7 +48102,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container" },
     [
       _c("Header"),
       _vm._v(" "),
@@ -50385,30 +50422,47 @@ var render = function() {
             [
               _c(
                 "paginate",
-                { attrs: { name: "result", list: _vm.resultados, per: 1 } },
+                { attrs: { name: "result", list: _vm.resultados, per: 3 } },
                 _vm._l(_vm.paginated("result"), function(object, index) {
                   return _c("div", { key: index }, [
-                    _c("div", { staticClass: "row my-4" }, [
-                      _c("div", { staticClass: "col-lg-12" }, [
-                        _c("div", { staticClass: " container author-card" }, [
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-12" }, [
-                              _c(
-                                "a",
-                                { attrs: { href: "/search/all/" + object } },
-                                [
-                                  _vm._v(
-                                    "\n                                        " +
-                                      _vm._s(object) +
-                                      "\n                                    "
-                                  )
-                                ]
-                              )
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "container border border-warning my-5 py-4 px-4 mx-2 mycursor",
+                        on: {
+                          click: function($event) {
+                            return _vm.fetchAuthor(object)
+                          }
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-3" }, [
+                            _c("div", [
+                              _c("img", {
+                                staticClass: "img-thumbnail",
+                                staticStyle: { height: "6em", width: "4em" },
+                                attrs: {
+                                  src: __webpack_require__(/*! ../media/pencil.png */ "./resources/js/components/media/pencil.png"),
+                                  alt: ""
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-9" }, [
+                            _c("div", [
+                              _c("b", [_vm._v("Ver todo de:")]),
+                              _vm._v(" "),
+                              _c("h2", { staticClass: "text-warning" }, [
+                                _vm._v(_vm._s(object))
+                              ])
                             ])
                           ])
                         ])
-                      ])
-                    ])
+                      ]
+                    )
                   ])
                 }),
                 0
@@ -64111,6 +64165,17 @@ module.exports = "/fonts/ionicons.ttf?24712f6c47821394fba7942fbb52c3b2";
 /***/ (function(module, exports) {
 
 module.exports = "/images/logo.png?d298f91013506b2c0ab3710027ad15b1";
+
+/***/ }),
+
+/***/ "./resources/js/components/media/pencil.png":
+/*!**************************************************!*\
+  !*** ./resources/js/components/media/pencil.png ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/pencil.png?07166b63579c5ca209904eae815fbcc9";
 
 /***/ }),
 
