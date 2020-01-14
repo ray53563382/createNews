@@ -1,10 +1,11 @@
 <template>
-    <div class="container query-container">
-        <!-- <div class="row">
+<div class=" query-container">
+    <!-- <div class="row">
             <div class="col-lg-12"> -->
-        <Header />
-        <!-- </div>
+    <Header />
+    <!-- </div>
         </div> -->
+    <div class="container">
         <div class="row my-lg-3">
             <div class="col-lg-12">
                 <h2>
@@ -21,37 +22,24 @@
             </div>
         </div>
         <!-- ALL SEARCH START -->
-        <div v-if="searchFlag">
+        <div v-if="searchFlag" >
             <paginate name="result" :list="resultados" :per="9" tag="div">
                 <h4 class="p-title" style="margin-bottom: 2%">
                     <b>Publicaciones</b>
                 </h4>
                 <div class="row">
-                    <div
-                        v-for="(person, index) in paginated('result')"
-                        :key="index"
-                        class="col-12 col-lg-4 col-md-6 box"
-                        @click="goToDocumentView(person)"
-                    >
-                        <img
-                            :src="person.imgdesmostrativa"
-                            alt=""
-                            style="width: 100%; height: 300px;"
-                        />
+                    <div v-for="(person, index) in paginated('result')" :key="index" class="col-12 col-lg-4 col-md-6 box" @click="goToDocumentView(person)">
+                        <img :src="person.imgdesmostrativa" alt="" style="width: 100%; height: 300px;" />
                         <h4 class="pt-20">
-                            <a href="#"
-                                ><b style="color: black;">{{
+                            <a href="#"><b style="color: black;">{{
                                     person.titulo
-                                }}</b></a
-                            >
+                                }}</b></a>
                         </h4>
                         <!-- <ul style="margin-left: -48px;"> -->
                         <ul style="margin-left: -8px">
                             <li class="color-lite-black">
                                 Autor:
-                                <a href="#" class="color-black"
-                                    ><b>{{ person.autor }},</b></a
-                                >
+                                <a href="#" class="color-black"><b>{{ person.autor }},</b></a>
                                 <br />
                                 Jan 25, 2018
                             </li>
@@ -60,49 +48,33 @@
                 </div>
             </paginate>
 
-            <div class="container h-100">
-                <div
-                    class="row h-100 justify-content-center align-items-center"
-                >
-                    <div class="col-1">
-                        <paginate-links
-                            for="result"
-                            :classes="{
+            <div class="container h-100" style="margin-top: 3%">
+                <div class="row h-100 justify-content-center align-items-center">
+                    <div>
+                        <paginate-links for="result" :classes="{
                                 ul: 'pagination',
                                 li: 'page-item',
                                 a: 'page-link'
-                            }"
-                        ></paginate-links>
+                            }"></paginate-links>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div v-if="publicacionFlag">
-            <documentView :sendData="sendData"></documentView>
-        </div>
+        <!-- <div v-if="publicacionFlag">
+            <documentView></documentView>
+        </div> -->
 
         <!-- ALL SEARCH END -->
         <!-- AUTHORS START -->
         <div v-if="all_authors_flag">
             <paginate name="result" :list="resultados" :per="3">
-                <div
-                    v-for="(object, index) in paginated('result')"
-                    :key="index"
-                >
-                    <div
-                        @click="fetchAuthor(object)"
-                        class="container border border-warning my-5 py-4 px-4 mx-2 mycursor"
-                    >
+                <div v-for="(object, index) in paginated('result')" :key="index">
+                    <div @click="fetchAuthor(object)" class="container border border-warning my-5 py-4 px-4 mx-2 mycursor">
                         <div class="row">
                             <div class="col-3">
                                 <div>
-                                    <img
-                                        style="height: 6em; width: 4em"
-                                        src="../media/pencil.png"
-                                        alt=""
-                                        class="img-thumbnail"
-                                    />
+                                    <img style="height: 6em; width: 4em" src="../media/pencil.png" alt="" class="img-thumbnail" />
                                 </div>
                             </div>
                             <div class="col-9">
@@ -116,10 +88,7 @@
                     </div>
                 </div>
             </paginate>
-            <paginate-links
-                for="result"
-                :classes="{ ul: 'pagination', li: 'page-item', a: 'page-link' }"
-            ></paginate-links>
+            <paginate-links for="result" :classes="{ ul: 'pagination', li: 'page-item', a: 'page-link' }"></paginate-links>
         </div>
         <!-- AUTHORS END -->
         <!-- DOCUMENTS START -->
@@ -129,24 +98,12 @@
                     <paginate name="result" :list="resultados" :per="5">
                         <h4 class="p-title"><b>Documentos</b></h4>
                         <ul>
-                            <div
-                                v-for="(object, index) in paginated('result')"
-                                :key="index"
-                            >
-                                <a
-                                    :href="'/documentViewpdf/' + object.id"
-                                    style="color: black !important;"
-                                >
-                                    <li
-                                        :href="'/documentViewpdf/' + object.id"
-                                        style="margin-top:2%"
-                                    >
-                                        <img style="width: 62px !important;"
-                                            :src="object.imgdesmostrativa"
-                                            :href="
+                            <div v-for="(object, index) in paginated('result')" :key="index">
+                                <a :href="'/documentViewpdf/' + object.id" style="color: black !important;">
+                                    <li :href="'/documentViewpdf/' + object.id" style="margin-top:2%">
+                                        <img style="width: 62px !important;" :src="object.imgdesmostrativa" :href="
                                                 '/documentViewpdf/' + object.id
-                                            "
-                                        />
+                                            " />
                                         <h3>{{ object.nombre }}</h3>
                                         <p>Ver detalle</p>
                                     </li>
@@ -155,15 +112,12 @@
                         </ul>
                     </paginate>
                     <div class="centrar" style="width: 50%; margin: 0 auto;">
-                        <paginate-links
-                            for="result"
-                            :classes="{
+                        <paginate-links for="result" :classes="{
                                 ul: 'pagination',
                                 li: 'page-item',
                                 a: 'page-link',
                                 center: 'width: 50%; margin: 0 auto;'
-                            }"
-                        ></paginate-links>
+                            }"></paginate-links>
                     </div>
                 </div>
 
@@ -172,13 +126,15 @@
                 </div>
             </div>
         </div>
-        <!-- DOCUMENTS END -->
-        <!-- <div class="row my-4">
-            <div class="col-lg-12"> -->
-        <Footer class="my-3" />
-        <!-- </div>
-        </div> -->
+
     </div>
+    <!-- DOCUMENTS END -->
+    <!-- <div class="row my-4">
+            <div class="col-lg-12"> -->
+    <Footer class="my-3" />
+    <!-- </div>
+        </div> -->
+</div>
 </template>
 
 <script>
@@ -187,18 +143,16 @@ import Header from "./header";
 import Footer from "./footer";
 import Searchcard from "./searchcard";
 import VueLoading from 'vuejs-loading-plugin'
-Vue.use(VueLoading,{
-text: 'Cargando'
+Vue.use(VueLoading, {
+    text: 'Cargando'
 })
 
 import VuePaginate from "vue-paginate";
 Vue.use(VuePaginate);
 
-
 // import pencil from "img/pencil.png";
 
 // import { bus } from "../media/bus";
-
 
 export default {
     name: "searchview",
@@ -233,14 +187,8 @@ export default {
         },
 
         goToDocumentView(person) {
-            console.log(person);
-            this.searchFlag = false;
-            this.publicacionFlag = true;
-
-            this.sendData = person;
-            console.log(this.sendData);
-            //  location.replace("/documentView/" + person.id);
-        }
+            location.replace("/documentView/" + person.id);
+        }  
     },
     data() {
         return {
@@ -260,21 +208,18 @@ export default {
 
     created() {
         this.$loading(true);
-        // console.log(this.author);
-        // console.log(this.theme);
-        // console.log(this.querystring);
         console.log(this.author);
         console.log(this.theme);
         console.log(this.querystring);
 
         if (this.querystring == "get_all_docs") {
             axios({
-                method: "post",
-                url: "/allrecent",
-                data: {
-                    type: this.order
-                }
-            })
+                    method: "post",
+                    url: "/allrecent",
+                    data: {
+                        type: this.order
+                    }
+                })
                 .then(resp => {
                     this.searchFlag = true;
                     this.resultados = resp.data;
@@ -286,48 +231,48 @@ export default {
             if (this.author != undefined) {
                 this.searchFlag = true;
                 axios({
-                    method: "post",
-                    url: "/allfromAuthor",
-                    data: {
-                        author: this.author
-                    }
-                })
+                        method: "post",
+                        url: "/allfromAuthor",
+                        data: {
+                            author: this.author
+                        }
+                    })
                     .then(resp => {
                         this.resultados = resp.data;
                         this.$loading(false);
                         this.resultados.length == undefined ||
-                        this.resultados.length <= 0
-                            ? (this.notFound = true)
-                            : (this.notFound = false);
+                            this.resultados.length <= 0 ?
+                            (this.notFound = true) :
+                            (this.notFound = false);
 
                         // console.log(this.resultados.length);
                     })
                     .catch(Error => console.log(error));
             } else if (this.theme) {
                 axios({
-                    method: "post",
-                    url: "/gettheme",
-                    data: {
-                        idcategoria: this.theme
-                    }
-                })
+                        method: "post",
+                        url: "/gettheme",
+                        data: {
+                            idcategoria: this.theme
+                        }
+                    })
                     .then(resp => {
                         this.searchFlag = true;
                         this.resultados = resp.data;
                         this.$loading(false);
                         this.resultados.length == undefined ||
-                        this.resultados.length <= 0
-                            ? (this.notFound = true)
-                            : (this.notFound = false);
+                            this.resultados.length <= 0 ?
+                            (this.notFound = true) :
+                            (this.notFound = false);
                     })
                     .catch(Error => console.log(Error));
             } else {
                 if (this.querystring == "all") {
                     this.all_authors_flag = true;
                     axios({
-                        method: "post",
-                        url: "/allAuthors"
-                    })
+                            method: "post",
+                            url: "/allAuthors"
+                        })
                         .then(resp => {
                             console.log(resp.data);
                             this.$loading(false);
@@ -336,12 +281,12 @@ export default {
                         .catch(Error => console.log(Error));
                 } else {
                     axios({
-                        method: "post",
-                        url: "/getsearch",
-                        data: {
-                            q_string: this.querystring
-                        }
-                    })
+                            method: "post",
+                            url: "/getsearch",
+                            data: {
+                                q_string: this.querystring
+                            }
+                        })
                         .then(resp => {
                             if (this.querystring == "allDocuments") {
                                 this.all_documents = true;
@@ -361,9 +306,9 @@ export default {
 
                                 // console.log(resp.data);
                                 this.resultados.length == undefined ||
-                                this.resultados.length <= 0
-                                    ? (this.notFound = true)
-                                    : (this.notFound = false);
+                                    this.resultados.length <= 0 ?
+                                    (this.notFound = true) :
+                                    (this.notFound = false);
                                 // console.log(this.resultados.length);
                             }
                         })
@@ -407,7 +352,7 @@ export default {
     padding-top: 20px !important;
 }
 
-.list-li-mr-20 > li {
+.list-li-mr-20>li {
     margin-right: 20px;
 }
 

@@ -1,9 +1,11 @@
 <template>
     <div class="container">
+                <!-- <h1>{{$store.state.numero}}</h1> -->
+
         <div class="h-600x h-sm-auto">
             <div class="h-2-3 h-sm-auto oflow-hidden">
                 <div
-                    class="pb-5 pr-5 pr-sm-0 float-left float-sm-none w-2-3 w-sm-100 h-100 h-sm-300x"
+                    class="pb-5 pr-5 pr-sm-0 float-left float-sm-none w-2-3 w-sm-100 h-100 h-sm-300x relevant"
                 >
                     <a
                         class="pos-relative h-100 dplay-block"
@@ -42,7 +44,9 @@
                     class="float-left float-sm-none w-1-3 w-sm-100 h-100 h-sm-600x"
                 >
                     <div class="pl-5 pb-5 pl-sm-0 ptb-sm-5 pos-relative h-50">
-                        <a class="pos-relative h-100 dplay-block" href="#">
+                        <a class="pos-relative h-100 dplay-block" @click="goToDocumentView(relevantes[1].id)">
+
+                           
                             <div
                                 :style="{
                                     backgroundImage:
@@ -75,7 +79,7 @@
                     <!-- w-1-3 -->
 
                     <div class="pl-5 ptb-5 pl-sm-0 pos-relative h-50">
-                        <a class="pos-relative h-100 dplay-block">
+                        <a class="pos-relative h-100 dplay-block"  @click="goToDocumentView(relevantes[2].id)">
                             <div
                                 :style="{
                                     backgroundImage:
@@ -115,7 +119,7 @@
                 <div
                     class="pr-5 pr-sm-0 pt-5 float-left float-sm-none pos-relative w-1-3 w-sm-100 h-100 h-sm-300x"
                 >
-                    <a class="pos-relative h-100 dplay-block" href="#">
+                    <a class="pos-relative h-100 dplay-block" @click="goToDocumentView(relevantes[3].id)">
                         <div
                             :style="{
                                 backgroundImage:
@@ -148,7 +152,7 @@
                 <div
                     class="plr-5 plr-sm-0 pt-5 pt-sm-10 float-left float-sm-none pos-relative w-1-3 w-sm-100 h-100 h-sm-300x"
                 >
-                    <a class="pos-relative h-100 dplay-block" href="#">
+                    <a class="pos-relative h-100 dplay-block" @click="goToDocumentView(relevantes[4].id)">
                         <div
                             :style="{
                                 backgroundImage:
@@ -181,7 +185,7 @@
                 <div
                     class="pl-5 pl-sm-0 pt-5 pt-sm-10 float-left float-sm-none pos-relative w-1-3 w-sm-100 h-100 h-sm-300x"
                 >
-                    <a class="pos-relative h-100 dplay-block" href="#">
+                    <a class="pos-relative h-100 dplay-block" @click="goToDocumentView(relevantes[5].id)">
                         <div
                             :style="{
                                 backgroundImage:
@@ -224,14 +228,15 @@ export default {
 
     data() {
         return {
-            relevantes: []
+            relevantes: [],
+            publicacionFlag:false
         };
     },
 
     methods: {
         goToDocumentView(id) {
             location.replace("/documentView/" + id);
-        }
+        },
     },
 
     created() {
@@ -240,7 +245,6 @@ export default {
             url: "/relevant"
         }).then(resp => {
             this.relevantes = resp.data;
-            // console.log(this.relevantes);
         });
     }
 };

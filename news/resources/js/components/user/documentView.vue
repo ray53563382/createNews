@@ -1,21 +1,24 @@
 <template>
-    <div class="cont">
+<div>
+    <div class="row">
+        <div class="col-12">
+            <Header></Header>
+        </div>
+    </div>
+    <div class="container">
+
         <div class="row">
             <div class="col-md-12 col-lg-8">
-                <img :src="sendData.imgdesmostrativa" alt="" />
+                <img :src="docImage" alt="" />
                 <h3 class="mt-30">
-                    <b>{{ sendData.titulo }}</b>
+                    <b>{{docTitle}}</b>
                 </h3>
                 <ul class="list-li-mr-20 mtb-15">
                     <li>
-                        Por: <b>{{ sendData.autor }} </b>{{ sendData.fecha }}
+                        Por: <b>{{ docAutor }} </b>{{ docDate }}
                     </li>
                 </ul>
-                <div
-                    v-html="sendData.informacionArt"
-                    class="col-12"
-                    style="margin-bottom:5%"
-                ></div>
+                <div v-html="docTextBody" class="col-12" style="margin-bottom:5%"></div>
                 <div class="brdr-ash-1 opacty-5"></div>
             </div>
             <!-- col-md-9 -->
@@ -23,128 +26,95 @@
             <div class="d-none d-md-block d-lg-none col-md-3"></div>
             <div class="col-md-6 col-lg-4">
                 <div class="pl-20 pl-md-0">
-                    <div class="mtb-50"><popularPost></popularPost>></div>
+                    <div class="mtb-50">
+                        <popularPost></popularPost>>
+                    </div>
                     <!-- mtb-50 -->
                 </div>
                 <!--  pl-20 -->
             </div>
             <!-- col-md-3 -->
         </div>
-        <!-- row -->
 
+    </div>
+    <!-- row -->
+
+    <div class="container" v-if="registros.length != 0 " >
         <h4 class="p-title mt-50"><b>Te podría interesar</b></h4>
         <div class="row">
-            <div
-                class="col-12 col-lg-3 col-md-6 box"
-                @click="goToDocumentView(registros[0])"
-            >
-                <img
-                    :src="registros[0].imgdesmostrativa"
-                    alt=""
-                    style="width: 100%; height: 300px;"
-                />
+            <div class="col-12 col-lg-3 col-md-6 box" @click="goToDocumentView(registros[0])">
+                <img :src="registros[0].imgdesmostrativa" alt="" style="width: 100%; height: 300px;" />
                 <h4 class="pt-20">
-                    <a href="#"
-                        ><b style="color: black;">{{
+                    <a href="#"><b style="color: black;">{{
                             registros[0].titulo
-                        }}</b></a
-                    >
+                        }}</b></a>
                 </h4>
                 <ul style="margin-left: 0px;">
                     <li class="color-lite-black">
                         Autor:
-                        <a href="#" class="color-black"
-                            ><b>{{ registros[0].autor }},</b></a
-                        >
+                        <a href="#" class="color-black"><b>{{ registros[0].autor }},</b></a>
                         <br />
                         Jan 25, 2018
                     </li>
                 </ul>
             </div>
-            <div
-                class="col-12 col-lg-3 col-md-6 box"
-                @click="goToDocumentView(registros[1])"
-            >
-                <img
-                    :src="registros[1].imgdesmostrativa"
-                    alt=""
-                    style="width: 100%; height: 300px;"
-                />
+            <div class="col-12 col-lg-3 col-md-6 box" @click="goToDocumentView(registros[1])">
+                <img :src="registros[1].imgdesmostrativa" alt="" style="width: 100%; height: 300px;" />
                 <h4 class="pt-20">
-                    <a href="#"
-                        ><b style="color: black;">{{
+                    <a href="#"><b style="color: black;">{{
                             registros[1].titulo
-                        }}</b></a
-                    >
+                        }}</b></a>
                 </h4>
                 <ul style="margin-left: 0px;">
                     <li class="color-lite-black">
                         Autor:
-                        <a href="#" class="color-black"
-                            ><b>{{ registros[1].autor }},</b></a
-                        >
+                        <a href="#" class="color-black"><b>{{ registros[1].autor }},</b></a>
                         <br />
                         Jan 25, 2018
                     </li>
                 </ul>
             </div>
-            <div
-                class="col-12 col-lg-3 col-md-6 box"
-                @click="goToDocumentView(registros[2])"
-            >
-                <img
-                    :src="registros[2].imgdesmostrativa"
-                    alt=""
-                    style="width: 100%; height: 300px;"
-                />
+            <div class="col-12 col-lg-3 col-md-6 box" @click="goToDocumentView(registros[2])">
+                <img :src="registros[2].imgdesmostrativa" alt="" style="width: 100%; height: 300px;" />
                 <h4 class="pt-20">
-                    <a href="#"
-                        ><b style="color: black;">{{
+                    <a href="#"><b style="color: black;">{{
                             registros[2].titulo
-                        }}</b></a
-                    >
+                        }}</b></a>
                 </h4>
                 <ul style="margin-left: 0px;">
                     <li class="color-lite-black">
                         Autor:
-                        <a href="#" class="color-black"
-                            ><b>{{ registros[2].autor }},</b></a
-                        >
+                        <a href="#" class="color-black"><b>{{ registros[2].autor }},</b></a>
                         <br />
                         Jan 25, 2018
                     </li>
                 </ul>
             </div>
-            <div
-                class="col-12 col-lg-3 col-md-6 box"
-                @click="goToDocumentView(registros[3])"
-            >
-                <img
-                    :src="registros[3].imgdesmostrativa"
-                    alt=""
-                    style="width: 100%; height: 300px;"
-                />
+            <div class="col-12 col-lg-3 col-md-6 box" @click="goToDocumentView(registros[3])">
+                <img :src="registros[3].imgdesmostrativa" alt="" style="width: 100%; height: 300px;" />
                 <h4 class="pt-20">
-                    <a href="#"
-                        ><b style="color: black;">{{
+                    <a href="#"><b style="color: black;">{{
                             registros[3].titulo
-                        }}</b></a
-                    >
+                        }}</b></a>
                 </h4>
                 <ul style="margin-left: 0px;">
                     <li class="color-lite-black">
                         Autor:
-                        <a href="#" class="color-black"
-                            ><b>{{ registros[3].autor }},</b></a
-                        >
+                        <a href="#" class="color-black"><b>{{ registros[3].autor }},</b></a>
                         <br />
                         Jan 25, 2018
                     </li>
                 </ul>
             </div>
         </div>
-        <!-- row -->
     </div>
+    <!-- row -->
+    <div class="row" style="margin-top:3%">
+        <div class="col-12">
+            <Footer></Footer>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -152,14 +122,18 @@ import logito from "../media/home.png";
 import Header from "./header";
 import Footer from "./footer";
 import VueLoading from 'vuejs-loading-plugin'
-Vue.use(VueLoading,{
-text: 'Cargando'
+Vue.use(VueLoading, {
+    text: 'Cargando'
 })
-
 
 export default {
     name: "documentview",
-    props: ["sendData"],
+    // props: ["sendData"],
+    props: {
+        myid: {
+            required: true
+        }
+    },
 
     components: {
         Header,
@@ -170,8 +144,6 @@ export default {
             docTitle: null,
             docDate: null,
             docAutor: null,
-            // docTags: ["America", "Asia", "Mexico"],
-            // docDownloadURL: "http://someurl.com",
             docTheme: null,
             docImage: null,
             docTextBody: null,
@@ -205,12 +177,30 @@ export default {
                 resp.data.forEach(element => {
                     this.registros.push(element);
                 });
-                this.$loading(false);
-                console.log(this.registros);
             })
             .catch(error => {
                 console.log(error);
             });
+
+        axios({
+                method: "post",
+                url: "/getDocument",
+                data: {
+                    id: this.myid
+                }
+            })
+            .then(resp => {
+
+                console.log(resp);
+                this.$loading(false);
+                this.docTitle = resp.data[0].titulo;
+                this.docDate = resp.data[0].fecha;
+                this.docAutor = resp.data[0].autor;
+                this.docTheme = this.categorias[resp.data[0].idcategoria];
+                this.docImage = resp.data[0].imgdesmostrativa;
+                this.docTextBody = resp.data[0].informacionArt;
+            })
+            .catch(Error => console.log(error));
     }
 };
 </script>
@@ -222,11 +212,14 @@ export default {
     // background-color: #151515;
 }
 
+.file-icon{
+    width: 10% !important;
+}
 .mt-30 {
     margin-top: 30px !important;
 }
 
-.list-li-mr-20 > li {
+.list-li-mr-20>li {
     margin-right: 20px;
 }
 
@@ -283,11 +276,11 @@ export default {
     padding-top: 10px !important;
 }
 
-.list-a-pt-10 > li > a {
+.list-a-pt-10>li>a {
     padding-top: 10px;
 }
 
-.list-li-pt-10 > li {
+.list-li-pt-10>li {
     padding-top: 10px;
 }
 
