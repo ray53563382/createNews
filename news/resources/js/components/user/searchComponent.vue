@@ -85,27 +85,37 @@
         <!-- ALL SEARCH END -->
         <!-- AUTHORS START -->
         <div v-if="all_authors_flag">
-            <paginate name="result" :list="resultados" :per="1">
+            <paginate name="result" :list="resultados" :per="3">
                 <div
                     v-for="(object, index) in paginated('result')"
                     :key="index"
                 >
-                    <div class="row my-4">
-                        <div class="col-lg-12">
-                            <div class=" container author-card">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <a :href="'/search/all/' + object">
-                                            {{ object }}
-                                        </a>
-                                    </div>
+                    <div
+                        @click="fetchAuthor(object)"
+                        class="container border border-warning my-5 py-4 px-4 mx-2 mycursor"
+                    >
+                        <div class="row">
+                            <div class="col-3">
+                                <div>
+                                    <img
+                                        style="height: 6em; width: 4em"
+                                        src="../media/pencil.png"
+                                        alt=""
+                                        class="img-thumbnail"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <div>
+                                    <b>Ver todo de:</b>
+                                    <h2 class="text-warning">{{ object }}</h2>
+                                    <!-- <h3>object</h3> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </paginate>
-
             <paginate-links
                 for="result"
                 :classes="{ ul: 'pagination', li: 'page-item', a: 'page-link' }"
@@ -180,6 +190,8 @@ import Searchcard from "./searchcard";
 import VuePaginate from "vue-paginate";
 Vue.use(VuePaginate);
 
+// import pencil from "img/pencil.png";
+
 // import { bus } from "../media/bus";
 
 export default {
@@ -209,6 +221,11 @@ export default {
             }
         },
 
+        fetchAuthor(author) {
+            console.log(author);
+            location.replace("/search/all/" + author);
+        },
+
         goToDocumentView(person) {
             console.log(person);
             this.searchFlag = false;
@@ -231,13 +248,14 @@ export default {
             all_documents: false,
             order: "default",
             sendData: []
+            // pencil: pencil
         };
     },
 
     created() {
-        // console.log(this.author);
-        // console.log(this.theme);
-        // console.log(this.querystring);
+        console.log(this.author);
+        console.log(this.theme);
+        console.log(this.querystring);
 
         if (this.querystring == "get_all_docs") {
             axios({
@@ -603,5 +621,9 @@ li:hover {
 
 .ml-120 {
     margin-left: 120px !important;
+}
+
+.mycursor {
+    cursor: pointer;
 }
 </style>

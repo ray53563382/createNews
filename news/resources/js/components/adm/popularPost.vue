@@ -23,7 +23,9 @@
                     <h6 class="color-lite-black pt-10">
                         Por
                         <span class="color-black"
-                            ><b>{{ item.autor }},</b></span
+                            ><b @click="fetchAuthor(item.autor)"
+                                >{{ item.autor }},</b
+                            ></span
                         >
                         <span style="font-size: 12px">{{ item.fecha }} </span>
                     </h6>
@@ -32,7 +34,9 @@
         </div>
 
         <div class="mtb-50 mb-md-0">
-            <h4 class="p-title" style="margin-top: 51px;"><b>NEWSLETTER</b></h4>
+            <h4 class="p-title" style="margin-top: 51px;">
+                <b>NEWSLETTER</b>
+            </h4>
             <p class="mb-20">
                 Subscribe to our newsletter to get notification about new
                 updates, information, discount, etc..
@@ -64,6 +68,13 @@ export default {
         return {
             registros: []
         };
+    },
+
+    methods: {
+        fetchAuthor(author) {
+            console.log(author);
+            location.replace("/search/all/" + author);
+        }
     },
 
     created() {
