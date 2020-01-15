@@ -212,9 +212,9 @@ export default {
     // background-color: #151515;
 }
 
-.file-icon{
-    width: 10% !important;
-}
+// .file-icon{
+//     width: 10% !important;
+// }
 .mt-30 {
     margin-top: 30px !important;
 }
