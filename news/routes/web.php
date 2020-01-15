@@ -45,14 +45,17 @@ Route::post('/popularPost', 'publicacionController@popularPost');
 Route::post('/popularPostMedium', 'publicacionController@popularPostMedium');
 
 Route::post('/download/{id}', 'publicacionController@download');
-
 Route::get('/registerClose', 'publicacionController@cerrar');
+
+Route::post('/saveEmail', 'EmailController@store');
 
 Auth::routes();
 Route::resource('/notas', 'NotaController')->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/document', 'DocumentController')->middleware('auth');
+
+
 
 
 

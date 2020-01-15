@@ -168,10 +168,9 @@
 						
 						<div class="mtb-50 mb-md-0">
 							<h4 class="p-title"><b>NEWSLETTER</b></h4>
-							<p class="mb-20">Subscribe to our newsletter to get notification about new updates,
-								information, discount, etc..</p>
+							<p class="mb-20">Suscritebe y obten la información más relevante de nuestro sitio web</p>
 							<form class="nwsltr-primary-1">
-								<input type="text" placeholder="Your email"/>
+								<input type="mail" v-model="email" placeholder="Correo electrónico"/>
 								<button type="submit"><i class="ion-ios-paperplane"></i></button>
 							</form>
 						</div><!-- mtb-50 -->
@@ -190,11 +189,26 @@ export default {
 
 	data(){
 		return{
-			recientes: []
+			recientes: [],
+			email: '',
 		}
 	},methods:{
 	  goToDocumentView(id) {
         location.replace("/documentView/" + id);
+	},
+	saveEmail(){
+		console.log(this.email);
+		
+		 axios.post('/saveEmail', this.email)
+                .then(resp => {
+                    this.$swal(
+                        'Registrado!',
+                        'Ahora ya puedes esperar nuestra información en tu correo electronico!',
+                        'success'
+                    )
+                }).catch(error => {
+                    console.log(error);
+            });
 	}
 	}
 	,
