@@ -1,12 +1,14 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <Header></Header>
-            </div>
+<div>
+    <div class="row">
+        <div class="col-12">
+            <Header></Header>
         </div>
+    </div>
+
+    <div class="container">
         <div class="row my-5">
-            <div class="col-12">
+            <div class="col-lg-8 col-md-7 col-sm-12">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 my-5">
@@ -31,29 +33,18 @@
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <img
-                                        :src="docImage"
-                                        alt
-                                        class="img-fluid img-thumbnail"
-                                    />
+                                    <img :src="docImage" alt class="img-fluid img-thumbnail" style="width: 117px;" />
                                 </div>
                             </div>
                             <div class="row my-5">
                                 <div class="container">
-                                    <div
-                                        v-html="docTextBody"
-                                        class="col-12"
-                                    ></div>
+                                    <div v-html="docTextBody" class="col-12"></div>
                                 </div>
                             </div>
                             <div class="row my-5">
-                                <div class="col-4">
+                                <div class="col-12">
                                     <p>
-                                        <a
-                                            ref="downloadpdf"
-                                            @click="goToDownload"
-                                            >descarga pdf</a
-                                        >
+                                        <a ref="downloadpdf" @click="goToDownload" class="buttonDownload" style="float: right;">Descarga pdf</a>
                                     </p>
                                 </div>
                             </div>
@@ -61,13 +52,19 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <Footer></Footer>
+
+            <div class=" col-lg-4 col-md-5 col-sm-12">
+                <popularPost></popularPost>>
             </div>
+
         </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <Footer></Footer>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -119,7 +116,9 @@ export default {
     methods: {
         goToDownload() {
             this.docDescarga = this.docDescarga + 1;
-            const params = { descarga: this.docDescarga };
+            const params = {
+                descarga: this.docDescarga
+            };
             axios.post(`/download/${this.docId}`, params).then(res => {});
         }
     },
@@ -130,12 +129,12 @@ export default {
         console.log(this.myid);
 
         axios({
-            method: "post",
-            url: "/getpdf",
-            data: {
-                id: this.myid
-            }
-        })
+                method: "post",
+                url: "/getpdf",
+                data: {
+                    id: this.myid
+                }
+            })
             .then(resp => {
                 console.log(resp.data);
 
@@ -164,5 +163,91 @@ export default {
     height: fit-content;
     width: 100%;
     // background-color: #151515;
+}
+
+.buttonDownload {
+    display: inline-block;
+    position: relative;
+    padding: 10px 25px;
+
+    background-color: #4CC713;
+    color: white;
+
+    font-family: sans-serif;
+    text-decoration: none;
+    font-size: 0.9em;
+    text-align: center;
+    text-indent: 15px;
+}
+
+.buttonDownload:hover {
+    background-color: #333;
+    color: white;
+}
+
+.buttonDownload:before,
+.buttonDownload:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 15px;
+    top: 52%;
+}
+
+/* Download box shape  */
+.buttonDownload:before {
+    width: 10px;
+    height: 2px;
+    border-style: solid;
+    border-width: 0 2px 2px;
+}
+
+/* Download arrow shape */
+.buttonDownload:after {
+    width: 0;
+    height: 0;
+    margin-left: 3px;
+    margin-top: -7px;
+
+    border-style: solid;
+    border-width: 4px 4px 0 4px;
+    border-color: transparent;
+    border-top-color: inherit;
+
+    animation: downloadArrow 2s linear infinite;
+    animation-play-state: paused;
+}
+
+.buttonDownload:hover:before {
+    border-color: #4CC713;
+}
+
+.buttonDownload:hover:after {
+    border-top-color: #4CC713;
+    animation-play-state: running;
+}
+
+/* keyframes for the download icon anim */
+@keyframes downloadArrow {
+
+    /* 0% and 0.001% keyframes used as a hackish way of having the button frozen on a nice looking frame by default */
+    0% {
+        margin-top: -7px;
+        opacity: 1;
+    }
+
+    0.001% {
+        margin-top: -15px;
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        margin-top: 0;
+        opacity: 0;
+    }
 }
 </style>
