@@ -1,5 +1,5 @@
 <template>
-<div class=" query-container">
+<div class="query-container">
     <!-- <div class="row">
             <div class="col-lg-12"> -->
     <Header />
@@ -22,7 +22,7 @@
             </div>
         </div>
         <!-- ALL SEARCH START -->
-        <div v-if="searchFlag" >
+        <div v-if="searchFlag">
             <paginate name="result" :list="resultados" :per="9" tag="div">
                 <h4 class="p-title" style="margin-bottom: 2%">
                     <b>Publicaciones</b>
@@ -68,27 +68,45 @@
         <!-- ALL SEARCH END -->
         <!-- AUTHORS START -->
         <div v-if="all_authors_flag">
-            <paginate name="result" :list="resultados" :per="3">
-                <div v-for="(object, index) in paginated('result')" :key="index">
-                    <div @click="fetchAuthor(object)" class="container border border-warning my-5 py-4 px-4 mx-2 mycursor">
-                        <div class="row">
-                            <div class="col-3">
-                                <div>
-                                    <img style="height: 6em; width: 4em" src="../media/pencil.png" alt="" class="img-thumbnail" />
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <div>
-                                    <b>Ver todo de:</b>
-                                    <h2 class="text-warning">{{ object }}</h2>
-                                    <!-- <h3>object</h3> -->
+            <h4 class="p-title" style="margin-bottom: 2%">
+                <b>Autores</b>
+            </h4>
+            <div class="row">
+                <div class="col-lg-8 col-md-6 col-sm-12">
+                    <paginate name="result" :list="resultadosAtores" :per="5">
+                        <div v-for="(object, index) in paginated('result')" :key="index">
+                            <div @click="fetchAuthor(object)" class="container border border-warning my-5 py-4 px-4 mx-2 mycursor">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div>
+                                            <img style="height: 6em; width: 4em" src="../media/pencil.png" alt="" class="img-thumbnail" />
+                                        </div>
+                                    </div>
+                                    <div class="col-9">
+                                        <div>
+                                            <b>Ver todo de:</b>
+                                            <h2 class="text-warning" style="color:#847811 !important">{{ object }}</h2>
+                                            <!-- <h3>object</h3> -->
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </paginate>
+                    <div class="container ">
+                        <div class="row h-100 justify-content-center align-items-center">
+                            <div>
+                                <paginate-links for="result" :classes="{ ul: 'pagination', li: 'page-item', a: 'page-link' }"></paginate-links>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
-            </paginate>
-            <paginate-links for="result" :classes="{ ul: 'pagination', li: 'page-item', a: 'page-link' }"></paginate-links>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <popularPost></popularPost>
+                </div>
+            </div>
+
         </div>
         <!-- AUTHORS END -->
         <!-- DOCUMENTS START -->
@@ -188,13 +206,15 @@ export default {
 
         goToDocumentView(person) {
             location.replace("/documentView/" + person.id);
-        }  
+        }
     },
     data() {
         return {
             myString: null,
             notFound: false,
             resultados: [],
+
+            resultadosAtores: [],
             paginate: ["result"],
             searchFlag: false,
             all_authors_flag: false,
@@ -277,6 +297,11 @@ export default {
                             console.log(resp.data);
                             this.$loading(false);
                             this.resultados = resp.data;
+
+                            console.log("ijasdiojaiodjaiojsdoajodjajsdjasdjajo")
+                            this.resultadosAtores = [...new Set(this.resultados)];
+                            console.log(this.resultadosAtores);
+                            console.log("ijasdiojaiodjaiojsdoajodjajsdjasdjajo")
                         })
                         .catch(Error => console.log(Error));
                 } else {
@@ -290,9 +315,10 @@ export default {
                         .then(resp => {
                             if (this.querystring == "allDocuments") {
                                 console.log(resp.data);
-                                
+
                                 this.all_documents = true;
                                 this.resultados = resp.data;
+
                                 this.$loading(false);
 
                                 // console.log(resp.data);
@@ -306,7 +332,6 @@ export default {
                                 this.resultados = resp.data;
                                 this.$loading(false);
                                 console.log(resp.data);
-                                
 
                                 // console.log(resp.data);
                                 this.resultados.length == undefined ||
