@@ -1,130 +1,174 @@
 <template>
-<div>
-    <div class="row">
-        <div class="col-12">
-            <Header></Header>
-        </div>
-    </div>
-    <div class="container">
-
+    <div>
         <div class="row">
-            <div class="col-md-12 col-lg-8">
-                <img :src="docImage" alt="" />
-                <h3 class="mt-30">
-                    <b>{{docTitle}}</b>
-                </h3>
-                <ul class="list-li-mr-20 mtb-15">
-                    <li>
-                        Por: <b>{{ docAutor }} </b>{{ docDate }}
-                    </li>
-                </ul>
-                <div v-html="docTextBody" class="col-12" style="margin-bottom:5%"></div>
-                <div class="brdr-ash-1 opacty-5"></div>
+            <div class="col-12">
+                <Header></Header>
             </div>
-            <!-- col-md-9 -->
-
-            <div class="d-none d-md-block d-lg-none col-md-3"></div>
-            <div class="col-md-6 col-lg-4">
-                <div class="pl-20 pl-md-0">
-                    <div class="mtb-50">
-                        <popularPost></popularPost>>
-                    </div>
-                    <!-- mtb-50 -->
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-8">
+                    <img :src="docImage" alt="" />
+                    <h3 class="mt-30">
+                        <b>{{ docTitle }}</b>
+                    </h3>
+                    <ul class="list-li-mr-20 mtb-15">
+                        <li>
+                            Por: <b>{{ docAutor }} </b>{{ docDate }}
+                        </li>
+                    </ul>
+                    <div
+                        v-html="docTextBody"
+                        class="col-12 testy"
+                        style="margin-bottom:5%"
+                    ></div>
+                    <div class="brdr-ash-1 opacty-5"></div>
                 </div>
-                <!--  pl-20 -->
-            </div>
-            <!-- col-md-3 -->
-        </div>
+                <!-- col-md-9 -->
 
-    </div>
-    <!-- row -->
+                <div class="d-none d-md-block d-lg-none col-md-3"></div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="pl-20 pl-md-0">
+                        <div class="mtb-50"><popularPost></popularPost>></div>
+                        <!-- mtb-50 -->
+                    </div>
+                    <!--  pl-20 -->
+                </div>
+                <!-- col-md-3 -->
+            </div>
+        </div>
+        <!-- row -->
 
-    <div class="container" v-if="registros.length != 0 " >
-        <h4 class="p-title mt-50"><b>Te podría interesar</b></h4>
-        <div class="row">
-            <div class="col-12 col-lg-3 col-md-6 box" @click="goToDocumentView(registros[0])">
-                <img :src="registros[0].imgdesmostrativa" alt="" style="width: 100%; height: 300px;" />
-                <h4 class="pt-20">
-                    <a href="#"><b style="color: black;">{{
-                            registros[0].titulo
-                        }}</b></a>
-                </h4>
-                <ul style="margin-left: 0px;">
-                    <li class="color-lite-black">
-                        Autor:
-                        <a href="#" class="color-black"><b>{{ registros[0].autor }},</b></a>
-                        <br />
-                        Jan 25, 2018
-                    </li>
-                </ul>
+        <div class="container" v-if="registros.length != 0">
+            <h4 class="p-title mt-50"><b>Te podría interesar</b></h4>
+            <div class="row">
+                <div
+                    class="col-12 col-lg-3 col-md-6 box"
+                    @click="goToDocumentView(registros[0])"
+                >
+                    <img
+                        :src="registros[0].imgdesmostrativa"
+                        alt=""
+                        style="width: 100%; height: 300px;"
+                    />
+                    <h4 class="pt-20">
+                        <a href="#"
+                            ><b style="color: black;">{{
+                                registros[0].titulo
+                            }}</b></a
+                        >
+                    </h4>
+                    <ul style="margin-left: 0px;">
+                        <li class="color-lite-black">
+                            Autor:
+                            <a href="#" class="color-black"
+                                ><b>{{ registros[0].autor }},</b></a
+                            >
+                            <br />
+                            {{ registros[0].fecha }}
+                        </li>
+                    </ul>
+                </div>
+                <div
+                    class="col-12 col-lg-3 col-md-6 box"
+                    @click="goToDocumentView(registros[1])"
+                >
+                    <img
+                        :src="registros[1].imgdesmostrativa"
+                        alt=""
+                        style="width: 100%; height: 300px;"
+                    />
+                    <h4 class="pt-20">
+                        <a href="#"
+                            ><b style="color: black;">{{
+                                registros[1].titulo
+                            }}</b></a
+                        >
+                    </h4>
+                    <ul style="margin-left: 0px;">
+                        <li class="color-lite-black">
+                            Autor:
+                            <a href="#" class="color-black"
+                                ><b>{{ registros[1].autor }},</b></a
+                            >
+                            <br />
+                            {{ registros[1].fecha }}
+                        </li>
+                    </ul>
+                </div>
+                <div
+                    class="col-12 col-lg-3 col-md-6 box"
+                    @click="goToDocumentView(registros[2])"
+                >
+                    <img
+                        :src="registros[2].imgdesmostrativa"
+                        alt=""
+                        style="width: 100%; height: 300px;"
+                    />
+                    <h4 class="pt-20">
+                        <a href="#"
+                            ><b style="color: black;">{{
+                                registros[2].titulo
+                            }}</b></a
+                        >
+                    </h4>
+                    <ul style="margin-left: 0px;">
+                        <li class="color-lite-black">
+                            Autor:
+                            <a href="#" class="color-black"
+                                ><b>{{ registros[2].autor }},</b></a
+                            >
+                            <br />
+                            {{ registros[2].fecha }}
+                        </li>
+                    </ul>
+                </div>
+                <div
+                    class="col-12 col-lg-3 col-md-6 box"
+                    @click="goToDocumentView(registros[3])"
+                >
+                    <img
+                        :src="registros[3].imgdesmostrativa"
+                        alt=""
+                        style="width: 100%; height: 300px;"
+                    />
+                    <h4 class="pt-20">
+                        <a href="#"
+                            ><b style="color: black;">{{
+                                registros[3].titulo
+                            }}</b></a
+                        >
+                    </h4>
+                    <ul style="margin-left: 0px;">
+                        <li class="color-lite-black">
+                            Autor:
+                            <a href="#" class="color-black"
+                                ><b>{{ registros[3].autor }},</b></a
+                            >
+                            <br />
+                            {{ registros[3].fecha }}
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-12 col-lg-3 col-md-6 box" @click="goToDocumentView(registros[1])">
-                <img :src="registros[1].imgdesmostrativa" alt="" style="width: 100%; height: 300px;" />
-                <h4 class="pt-20">
-                    <a href="#"><b style="color: black;">{{
-                            registros[1].titulo
-                        }}</b></a>
-                </h4>
-                <ul style="margin-left: 0px;">
-                    <li class="color-lite-black">
-                        Autor:
-                        <a href="#" class="color-black"><b>{{ registros[1].autor }},</b></a>
-                        <br />
-                        Jan 25, 2018
-                    </li>
-                </ul>
-            </div>
-            <div class="col-12 col-lg-3 col-md-6 box" @click="goToDocumentView(registros[2])">
-                <img :src="registros[2].imgdesmostrativa" alt="" style="width: 100%; height: 300px;" />
-                <h4 class="pt-20">
-                    <a href="#"><b style="color: black;">{{
-                            registros[2].titulo
-                        }}</b></a>
-                </h4>
-                <ul style="margin-left: 0px;">
-                    <li class="color-lite-black">
-                        Autor:
-                        <a href="#" class="color-black"><b>{{ registros[2].autor }},</b></a>
-                        <br />
-                        Jan 25, 2018
-                    </li>
-                </ul>
-            </div>
-            <div class="col-12 col-lg-3 col-md-6 box" @click="goToDocumentView(registros[3])">
-                <img :src="registros[3].imgdesmostrativa" alt="" style="width: 100%; height: 300px;" />
-                <h4 class="pt-20">
-                    <a href="#"><b style="color: black;">{{
-                            registros[3].titulo
-                        }}</b></a>
-                </h4>
-                <ul style="margin-left: 0px;">
-                    <li class="color-lite-black">
-                        Autor:
-                        <a href="#" class="color-black"><b>{{ registros[3].autor }},</b></a>
-                        <br />
-                        Jan 25, 2018
-                    </li>
-                </ul>
+        </div>
+        <!-- row -->
+        <div class="row" style="margin-top:3%">
+            <div class="col-12">
+                <Footer></Footer>
             </div>
         </div>
     </div>
-    <!-- row -->
-    <div class="row" style="margin-top:3%">
-        <div class="col-12">
-            <Footer></Footer>
-        </div>
-    </div>
-</div>
 </template>
 
 <script>
 import logito from "../media/home.png";
 import Header from "./header";
 import Footer from "./footer";
-import VueLoading from 'vuejs-loading-plugin'
+import VueLoading from "vuejs-loading-plugin";
 Vue.use(VueLoading, {
-    text: 'Cargando'
-})
+    text: "Cargando"
+});
 
 export default {
     name: "documentview",
@@ -183,14 +227,13 @@ export default {
             });
 
         axios({
-                method: "post",
-                url: "/getDocument",
-                data: {
-                    id: this.myid
-                }
-            })
+            method: "post",
+            url: "/getDocument",
+            data: {
+                id: this.myid
+            }
+        })
             .then(resp => {
-
                 console.log(resp);
                 this.$loading(false);
                 this.docTitle = resp.data[0].titulo;
@@ -205,21 +248,25 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+.testy >>> div > div > div > span > img {
+    width: 24% !important;
+    margin: 4em 1em 2em 1em;
+}
+
 .placeholder {
     height: fit-content;
     width: 100%;
-    // background-color: #151515;
 }
 
-.file-icon{
+.file-icon {
     width: 10% !important;
 }
 .mt-30 {
     margin-top: 30px !important;
 }
 
-.list-li-mr-20>li {
+.list-li-mr-20 > li {
     margin-right: 20px;
 }
 
@@ -276,11 +323,11 @@ export default {
     padding-top: 10px !important;
 }
 
-.list-a-pt-10>li>a {
+.list-a-pt-10 > li > a {
     padding-top: 10px;
 }
 
-.list-li-pt-10>li {
+.list-li-pt-10 > li {
     padding-top: 10px;
 }
 
