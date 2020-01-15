@@ -15,9 +15,6 @@
 								{{recientes[0].fecha}}</li>
 								
 							</ul>
-							<!-- <div class="overflow-hidden" >
-								<p style="overflow: hidden" v-html="recientes[0].informacionArt" ></p>
-							</div> -->
 						</div><!-- col-sm-6 -->
 						
 						<div class="col-sm-6">
@@ -40,7 +37,7 @@
 							<a class="oflow-hidden pos-relative mb-20 dplay-block"   @click="goToDocumentView(recientes[3].id)">
 								<div class="wh-100x abs-tlr"><img :src="recientes[3].imgdesmostrativa"  alt=""></div>
 								<div class="ml-120 min-h-100x">
-									<h5><b>{{recientes[1].titulo}}</b></h5>
+									<h5><b>{{recientes[3].titulo}}</b></h5>
 									<h6 class="color-lite-black pt-10">Por <span class="color-black"><b>{{recientes[3].titulo}},</b></span> {{recientes[3].fecha}}</h6>
 								</div>
 							</a><!-- oflow-hidden -->
@@ -168,7 +165,7 @@
 						
 						<div class="mtb-50 mb-md-0">
 							<h4 class="p-title"><b>NEWSLETTER</b></h4>
-							<p class="mb-20">Suscritebe y obten la información más relevante de nuestro sitio web</p>
+							<p class="mb-20">Suscribete y obten la información más relevante de nuestro sitio web</p>
 							<form class="nwsltr-primary-1">
 								<input type="mail" v-model="email" placeholder="Correo electrónico"/>
 								<button type="submit"><i class="ion-ios-paperplane"></i></button>
@@ -198,7 +195,7 @@ export default {
 	},
 	saveEmail(){
 		console.log(this.email);
-		
+
 		 axios.post('/saveEmail', this.email)
                 .then(resp => {
                     this.$swal(
@@ -223,8 +220,9 @@ export default {
 			
 		})
 		.catch(Error => console.log(Error) )
+	
+	
 	}
-
 }
 </script>
 

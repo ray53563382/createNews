@@ -213,7 +213,6 @@ export default {
             myString: null,
             notFound: false,
             resultados: [],
-
             resultadosAtores: [],
             paginate: ["result"],
             searchFlag: false,
@@ -228,14 +227,11 @@ export default {
 
     created() {
         this.$loading(true);
-        console.log(this.author);
-        console.log(this.theme);
-        console.log(this.querystring);
 
         if (this.querystring == "get_all_docs") {
             axios({
                     method: "post",
-                    url: "/allrecent",
+                    url: "/recentdata",
                     data: {
                         type: this.order
                     }

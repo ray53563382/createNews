@@ -18,7 +18,7 @@ class publicacionController extends Controller
     public function relevant()
     {
         
-        $most_relevant = DB::table('notas')->where('importancia', 2)
+        $most_relevant = DB::table('notas')->where('importancia', 1)
                             ->take(6)->get();
         return $most_relevant;
 
@@ -30,6 +30,14 @@ class publicacionController extends Controller
                             ->take(15)->get();
         return $most_recent;
     }
+
+
+    public function recentdata()
+    {
+        $most_recent = DB::table('notas')->orderBy('created_at', 'DESC')->get();
+        return $most_recent;
+    }
+
 
     public function getdoc( Request $request)
     {

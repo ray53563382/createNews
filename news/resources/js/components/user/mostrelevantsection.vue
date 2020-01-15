@@ -245,6 +245,8 @@ export default {
             url: "/relevant"
         }).then(resp => {
             this.relevantes = resp.data;
+            console.log("ijsaodjsiadjfiosjfiosdjfiojsdiofjiosdfjojfjsfjosdi");
+            console.log(this.relevantes);
         });
     }
 };

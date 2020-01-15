@@ -27,8 +27,7 @@ Route::get('searchbytheme/{theme}','DocumentsViewController@searchbytheme');
 Route::get('sobreNosotrosContacto','DocumentsViewController@about');
 
 
-
-
+Route::post('/recentdata', 'publicacionController@recentdata');
 
 Route::post('/relevant', 'publicacionController@relevant');
 Route::post('/recent', 'publicacionController@recent');
