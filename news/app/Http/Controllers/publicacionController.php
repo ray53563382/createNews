@@ -47,6 +47,56 @@ class publicacionController extends Controller
 
     public function getsearch(Request $request){
 
+         // $searchValues = preg_split('/\s+/', $request->q_string, -1, PREG_SPLIT_NO_EMPTY); 
+        // $year = 'null';
+        // $mes = 'null';
+        // $dia = 'null';
+        // // $yearMonthDay = ['yyyy', 'mm', 'dd'];
+        // $meses = ["01"=> 'enero', "02" => 'febrero',"03" => 'marzo',"04" => 'abril',"05" => 'mayo',"06" => 'junio',"07" => 'julio',"08" => 'agosto',"09" => 'septiembre',"10" => 'octubre',"11" => 'noviembre',"12" => 'diciembre', ];
+
+        // foreach ($searchValues as $value) {
+        //     if(is_numeric($value)){
+        //         if(strlen($value) == 4 ){
+        //             $year = (string) $value;
+        //         }else if(strlen($value) == 1 || strlen($value) == 2  ){
+        //             if($value >= 1 && $value <= 31){
+        //                 $dia= (string) $value;
+        //             }
+        //         }
+        //     }else{
+        //         $year = array_search($value, $meses);
+        //             if(!empty($year)){
+        //                 $mes = $year;
+        //             }
+        //         }
+        // }
+
+        // $fechaVariable = $year.'-'.$mes.'-'.$dia;
+        // print_r($fechaVariable);
+
+        // if ($year != "null" && $mes != "null" && $dia != "null") {
+        //     print_r('fechaaaa');
+        //     $porFecha = DB::table('notas')->where('fecha', 'like', $fechaVariable )->get();
+        //     return $porFecha;
+
+        // }else{
+        //     if($request->q_string == 'allDocuments'){
+        //         $all_documents = DB::table('documents')->get();
+        //         return $all_documents;
+        //     }else{
+        //         // $searchValues = preg_split('/\s+/', $request->q_string, -1, PREG_SPLIT_NO_EMPTY); 
+        //         $matches = DB::table('notas')->where(function ($q) use ($searchValues) {
+        //         foreach ($searchValues as $value) {
+        //             $q->orWhere('titulo', 'like', "%{$value}%")->orWhere('autor', 'like', "%{$value}%");
+        //         }
+        //         })->get();
+        //         print_r('normal');
+    
+        //         return $matches;
+    
+        //     }
+        // }
+
         if($request->q_string == 'allDocuments'){
             $all_documents = DB::table('documents')->get();
             return $all_documents;
@@ -55,7 +105,7 @@ class publicacionController extends Controller
             $searchValues = preg_split('/\s+/', $request->q_string, -1, PREG_SPLIT_NO_EMPTY); 
             $matches = DB::table('notas')->where(function ($q) use ($searchValues) {
             foreach ($searchValues as $value) {
-                $q->orWhere('titulo', 'like', "%{$value}%")->orWhere('autor', 'like', "%{$value}%");
+                $q->orWhere('titulo', 'like', "%{$value}%")->orWhere('autor', 'like', "%{$value}%")->orWhere('fecha', 'like', "%{$value}%" );
             }
             })->get();
 
