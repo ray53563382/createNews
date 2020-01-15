@@ -43,14 +43,16 @@ class publicacionController extends Controller
             $all_documents = DB::table('documents')->get();
             return $all_documents;
         }else{
-                // split on 1+ whitespace & ignore empty (eg. trailing space)
+
             $searchValues = preg_split('/\s+/', $request->q_string, -1, PREG_SPLIT_NO_EMPTY); 
             $matches = DB::table('notas')->where(function ($q) use ($searchValues) {
             foreach ($searchValues as $value) {
-                $q->orWhere('titulo', 'like', "%{$value}%");
+                $q->orWhere('titulo', 'like', "%{$value}%")->orWhere('autor', 'like', "%{$value}%");
             }
             })->get();
-        return $matches;
+
+            return $matches;
+
         }
     }
 
