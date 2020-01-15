@@ -2,10 +2,11 @@
 <div class="pl-20 pl-md-0">
     <div class="mtb-50">
         <h4 class="p-title"><b>Publicaciones destacadas</b></h4>
-        <a v-for="(item, index) in registros" :key="index" class="oflow-hidden pos-relative mb-20 dplay-block"  @click="goToDocumentView(item)" style="margin-bottom: 3% !important;">
+        <a v-for="(item, index) in registros" :key="index" class="oflow-hidden pos-relative mb-20 dplay-block" @click="goToDocumentView(item)" style="margin-bottom: 3% !important;">
             <div class="wh-100x abs-tlr">
                 <img :src="item.imgdesmostrativa" alt="" style=" height: 100px; width: 100px!important;" />
             </div>
+
             <div class="ml-120 min-h-100x">
                 <h5 class="color-black ">
                     <b>{{ item.titulo }}</b>
@@ -24,6 +25,7 @@
             <b>NEWSLETTER</b>
         </h4>
         <p class="mb-20">Suscribete y obten la información más relevante de nuestro sitio web</p>
+
         <form class="nwsltr-primary-1">
             <input type="text" placeholder="Your email" />
             <button type="submit">
@@ -33,16 +35,6 @@
     </div>
 </div>
 
-<!-- <div class="mtb-50 mb-md-0">
-        <h4 class="p-title" style="margin-top: 51px;"><b>NEWSLETTER</b></h4>
-        <p class="mb-20"> Suscribete a nuestro newsleteer y obten las notificaciones de nuestras nuevas públicaciones</p>
-        <form class="nwsltr-primary-1">
-            <input type="text" placeholder="Your email" />
-            <button type="button" class="btn btn-warning" style="height: 34px;">Suscribete</button>
-        </form>
-    </div> -->
-
-<!-- </div> -->
 </template>
 
 <script>
@@ -75,11 +67,9 @@ export default {
                 console.log(error);
             });
     },
-    mounted() {
-       
-    },
+    mounted() {},
     methods: {
-         goToDocumentView(item) {
+        goToDocumentView(item) {
             location.replace("/documentView/" + item.id);
         }
     }
