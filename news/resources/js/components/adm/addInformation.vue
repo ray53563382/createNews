@@ -98,7 +98,11 @@
                                         <option value="8">Bosques y deforestación</option>
                                         <option value="9">Megaproyectos</option>
                                     </select>
+                                                                    <button type="button" class="btn btn-primary">Primary</button>
+
                                 </div>
+
+
                             </div>
                         </div>
 

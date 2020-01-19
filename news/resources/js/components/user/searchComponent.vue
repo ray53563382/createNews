@@ -41,7 +41,7 @@
                                 Autor:
                                 <a href="#" class="color-black"><b>{{ person.autor }},</b></a>
                                 <br />
-                                Jan 25, 2018
+                                {{person.fecha}}
                             </li>
                         </ul>
                     </div>

@@ -34,6 +34,13 @@
               <p style="font-size: 11px !important;">Ver registros de pdf</p>
             </a>
           </li>
+
+           <li>
+            <a class="nav-link" v-on:click="changeData('multimedia')">
+              <i class="far fa-image" style="font-size: 25px !important;margin-right: 15px !important;"></i>
+              <p style="font-size: 11px !important;">Multimedia</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -134,6 +141,8 @@ export default {
         this.dynamicComponent = "addInformation";
       } else if (msg == "pdf") {
         this.dynamicComponent = "addpdf";
+      }else if(msg=='multimedia'){
+        this.dynamicComponent = "addMulti";
       }
     }
   },

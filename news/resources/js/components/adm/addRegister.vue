@@ -36,7 +36,7 @@
                                             <div class="col-md-4 pr-1">
                                                 <div class="form-group">
                                                     <label>Categoria</label>
-                                                     <select class="form-control" v-model="registro.idcategoria">
+                                                    <select class="form-control" v-model="registro.idcategoria" style="width: 72%;     display: inline-block;" >
                                                         <option value="1">Crisis climática y conservación</option>
                                                         <option value="2">Minería</option>
                                                         <option value="3">Hidroeléctricas y eólicas</option>
@@ -47,7 +47,39 @@
                                                         <option value="8">Bosques y deforestación</option>
                                                         <option value="9">Megaproyectos</option>
                                                     </select>
-                                                </div>
+ 
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Categoria</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+           <div class="row">
+                <div class="col-md-12 pr-1">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ingresa la categoria</label>
+                        <input type="text" class="form-control" placeholder="" v-model="categoria">
+                    </div>
+                </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" v-on:click="guardarCategoria()">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+                                            </div>
+                                            
                                             </div>
                                         </div>
 
@@ -159,6 +191,7 @@
         return {
             registros: [],
             errors: [],
+            categoria:'',
             registro: {titulo:'',fecha:'', autor:'', importancia:'' ,idcategoria:'',informacionArt:'',imgdesmostrativa:''}
         }
         },
@@ -232,6 +265,9 @@
           fileReader.onload = (e)=>{
               this.registro.imgdesmostrativa = e.target.result
           }
+        },
+        guardarCategoria(){
+            console.log(this.categoria);
         }
         },
         components: {
