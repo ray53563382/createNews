@@ -90,8 +90,7 @@
                     <!-- <li>
                         <a class="pl-0 pl-sm-10" href="#">Terms & Conditions</a>
                     </li> -->
-                    <li><a href="#">CONTACTO</a></li>
-                    <li><a href="#">SOBRE NOSOTROS</a></li>
+                    <li><a href="sobreNosotrosContacto">SOBRE NOSOTROS</a></li>
                     <!-- <li><a href="#">Contact us</a></li> -->
                 </ul>
                 <ul

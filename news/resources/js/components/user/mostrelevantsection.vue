@@ -1,6 +1,8 @@
 <template>
     <div class="container">
-                <!-- <h1>{{$store.state.numero}}</h1> -->
+        <!-- <div>
+            <h2>{{ relevantes[0].fecha }}</h2>
+        </div> -->
 
         <div class="h-600x h-sm-auto">
             <div class="h-2-3 h-sm-auto oflow-hidden">
@@ -35,18 +37,17 @@
                                 </li>
                             </ul>
                         </div>
-                        <!--abs-blr --> </a
-                    ><!-- pos-relative -->
+                    </a>
                 </div>
-                <!-- w-1-3 -->
 
                 <div
                     class="float-left float-sm-none w-1-3 w-sm-100 h-100 h-sm-600x"
                 >
                     <div class="pl-5 pb-5 pl-sm-0 ptb-sm-5 pos-relative h-50">
-                        <a class="pos-relative h-100 dplay-block" @click="goToDocumentView(relevantes[1].id)">
-
-                           
+                        <a
+                            class="pos-relative h-100 dplay-block"
+                            @click="goToDocumentView(relevantes[1].id)"
+                        >
                             <div
                                 :style="{
                                     backgroundImage:
@@ -73,13 +74,14 @@
                                     </li>
                                 </ul>
                             </div>
-                            <!--abs-blr --> </a
-                        ><!-- pos-relative -->
+                        </a>
                     </div>
-                    <!-- w-1-3 -->
 
                     <div class="pl-5 ptb-5 pl-sm-0 pos-relative h-50">
-                        <a class="pos-relative h-100 dplay-block"  @click="goToDocumentView(relevantes[2].id)">
+                        <a
+                            class="pos-relative h-100 dplay-block"
+                            @click="goToDocumentView(relevantes[2].id)"
+                        >
                             <div
                                 :style="{
                                     backgroundImage:
@@ -106,20 +108,19 @@
                                     </li>
                                 </ul>
                             </div>
-                            <!--abs-blr --> </a
-                        ><!-- pos-relative -->
+                        </a>
                     </div>
-                    <!-- w-1-3 -->
                 </div>
-                <!-- float-left -->
             </div>
-            <!-- h-2-3 -->
 
             <div class="h-1-3 oflow-hidden">
                 <div
                     class="pr-5 pr-sm-0 pt-5 float-left float-sm-none pos-relative w-1-3 w-sm-100 h-100 h-sm-300x"
                 >
-                    <a class="pos-relative h-100 dplay-block" @click="goToDocumentView(relevantes[3].id)">
+                    <a
+                        class="pos-relative h-100 dplay-block"
+                        @click="goToDocumentView(relevantes[3].id)"
+                    >
                         <div
                             :style="{
                                 backgroundImage:
@@ -144,15 +145,16 @@
                                 </li>
                             </ul>
                         </div>
-                        <!--abs-blr --> </a
-                    ><!-- pos-relative -->
+                    </a>
                 </div>
-                <!-- w-1-3 -->
 
                 <div
                     class="plr-5 plr-sm-0 pt-5 pt-sm-10 float-left float-sm-none pos-relative w-1-3 w-sm-100 h-100 h-sm-300x"
                 >
-                    <a class="pos-relative h-100 dplay-block" @click="goToDocumentView(relevantes[4].id)">
+                    <a
+                        class="pos-relative h-100 dplay-block"
+                        @click="goToDocumentView(relevantes[4].id)"
+                    >
                         <div
                             :style="{
                                 backgroundImage:
@@ -177,15 +179,16 @@
                                 </li>
                             </ul>
                         </div>
-                        <!--abs-blr --> </a
-                    ><!-- pos-relative -->
+                    </a>
                 </div>
-                <!-- w-1-3 -->
 
                 <div
                     class="pl-5 pl-sm-0 pt-5 pt-sm-10 float-left float-sm-none pos-relative w-1-3 w-sm-100 h-100 h-sm-300x"
                 >
-                    <a class="pos-relative h-100 dplay-block" @click="goToDocumentView(relevantes[5].id)">
+                    <a
+                        class="pos-relative h-100 dplay-block"
+                        @click="goToDocumentView(relevantes[5].id)"
+                    >
                         <div
                             :style="{
                                 backgroundImage:
@@ -210,16 +213,11 @@
                                 </li>
                             </ul>
                         </div>
-                        <!--abs-blr --> </a
-                    ><!-- pos-relative -->
+                    </a>
                 </div>
-                <!-- w-1-3 -->
             </div>
-            <!-- h-2-3 -->
         </div>
-        <!-- h-100vh -->
     </div>
-    <!-- container -->
 </template>
 
 <script>
@@ -229,7 +227,9 @@ export default {
     data() {
         return {
             relevantes: [],
-            publicacionFlag:false
+            extra: [],
+            carousel_index: 0,
+            publicacionFlag: false
         };
     },
 
@@ -237,17 +237,40 @@ export default {
         goToDocumentView(id) {
             location.replace("/documentView/" + id);
         },
+
+        notesCarousel() {
+            // console.log(this.carousel_index);
+
+            this.carousel_index >= 4
+                ? (this.carousel_index = 0)
+                : (this.carousel_index = this.carousel_index++);
+            this.relevantes[0].id = this.extra[this.carousel_index].id;
+            this.relevantes[0].imgdesmostrativa = this.extra[
+                this.carousel_index
+            ].imgdesmostrativa;
+            this.relevantes[0].fecha = this.extra[this.carousel_index].fecha;
+            this.relevantes[0].autor = this.extra[this.carousel_index].autor;
+            this.relevantes[0].titulo = this.extra[this.carousel_index].titulo;
+            this.carousel_index++;
+        }
     },
 
     created() {
+        let self = this;
+
         axios({
             method: "post",
             url: "/relevant"
         }).then(resp => {
             this.relevantes = resp.data;
-            console.log("ijsaodjsiadjfiosjfiosdjfiojsdiofjiosdfjojfjsfjosdi");
-            console.log(this.relevantes);
+            this.extra = resp.data.slice(6);
+            // console.log(resp.data);
+            // console.log(this.extra);
         });
+
+        setInterval(function() {
+            self.notesCarousel();
+        }, 5000);
     }
 };
 </script>

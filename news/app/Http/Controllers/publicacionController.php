@@ -18,8 +18,16 @@ class publicacionController extends Controller
     public function relevant()
     {
         
-        $most_relevant = DB::table('notas')->where('importancia', 1)
-                            ->take(6)->get();
+        $most_relevant = DB::table('notas')->where('importancia', 1)->take(10)->get();
+        // $most_relevant = DB::table('notas')->where('importancia', 1)->get();
+        // $most_relevant_array = (array) $most_relevant;
+
+        // $extra_relevant = array_slice($most_relevant_array, 6);
+
+        // $all_relevant = [];
+        // $all_relevant[0] = $most_relevant_array;
+        // $all_relevant[1] = $extra_relevant;
+
         return $most_relevant;
 
     }
@@ -28,6 +36,7 @@ class publicacionController extends Controller
     {
         $most_recent = DB::table('notas')->where('importancia', '>=', 2)->orderBy('created_at', 'DESC')    
                             ->take(15)->get();
+
         return $most_recent;
     }
 

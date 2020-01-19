@@ -12,7 +12,7 @@
                             <a
                                 href="sobreNosotrosContacto"
                                 class="pl-0 pl-sm-10"
-                                >Sobre nosotros | Contacto</a
+                                >Sobre nosotros</a
                             >
                         </li>
                     </ul>

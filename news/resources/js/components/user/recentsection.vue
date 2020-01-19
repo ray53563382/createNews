@@ -124,6 +124,44 @@
             <div class="col-md-6 col-lg-4">
                 <div class="pl-20 pl-md-0">
 
+
+                    <div class="mtb-50">
+							<h4 class="p-title"><b>POPULAR POSTS</b></h4>
+							<a class="oflow-hidden pos-relative mb-20 dplay-block" href="#">
+								<div class="wh-100x abs-tlr"><img src="images/polular-1-100x100.jpg" alt=""></div>
+								<div class="ml-120 min-h-100x">
+									<h5><b>Bitcoin Billionares Hidding in Plain Sight</b></h5>
+									<h6 class="color-lite-black pt-10">by <span class="color-black"><b>Danile Palmer,</b></span> Jan 25, 2018</h6>
+								</div>
+							</a><!-- oflow-hidden -->
+							
+							<a class="oflow-hidden pos-relative mb-20 dplay-block" href="#">
+								<div class="wh-100x abs-tlr"><img src="images/polular-2-100x100.jpg" alt=""></div>
+								<div class="ml-120 min-h-100x">
+									<h5><b>Bitcoin Billionares Hidding in Plain Sight</b></h5>
+									<h6 class="color-lite-black pt-10">by <span class="color-black"><b>Danile Palmer,</b></span> Jan 25, 2018</h6>
+								</div>
+							</a><!-- oflow-hidden -->
+							
+							<a class="oflow-hidden pos-relative mb-20 dplay-block" href="#">
+								<div class="wh-100x abs-tlr"><img src="images/polular-3-100x100.jpg" alt=""></div>
+								<div class="ml-120 min-h-100x">
+									<h5><b>Bitcoin Billionares Hidding in Plain Sight</b></h5>
+									<h6 class="color-lite-black pt-10">by <span class="color-black"><b>Danile Palmer,</b></span> Jan 25, 2018</h6>
+								</div>
+							</a><!-- oflow-hidden -->
+							
+							<a class="oflow-hidden pos-relative mb-20 dplay-block" href="#">
+								<div class="wh-100x abs-tlr"><img src="images/polular-4-100x100.jpg" alt=""></div>
+								<div class="ml-120 min-h-100x">
+									<h5><b>Bitcoin Billionares Hidding in Plain Sight</b></h5>
+									<h6 class="color-lite-black pt-10">by <span class="color-black"><b>Danile Palmer,</b></span> Jan 25, 2018</h6>
+								</div>
+							</a><!-- oflow-hidden -->
+							
+						</div>
+
+
                     <div class="mtb-50">
                         <h4 class="p-title"><b>PUBLICACIONES QUE PUEDEN INTERESARTE</b></h4>
                         <a class="oflow-hidden pos-relative mb-20 dplay-block" @click="goToDocumentView(recientes[10].id)">
@@ -169,19 +207,17 @@
                         </form>
                     </div><!-- mtb-50 -->
 
-                    <div class="mtb-50">
-                        <h4 class="p-title"><b>Multimedia</b> <a style="font-size:12px">Ver todo</a></h4>
-                        <iframe width="350" height="300" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1">
+                    <div class="mtb-50 .embed-responsive ">
+                        <h4 class="p-title "><b>Multimedia</b> <a style="font-size:12px">Ver todo</a></h4>
+                        <iframe class="my-3" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1">
                         </iframe>
                         <h5><b>Nombre de video</b></h5>
-                        <h6 class="color-lite-black pt-10">Tipo:  <span class="color-black"><b>Multimedia</b></span> Video</h6>
-
-						     <iframe width="350" height="300" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1">
+                        <h6 class="color-lite-black pt-10 ">Tipo:  <span class="color-black"><b>Multimedia</b></span> Video</h6>
+						     <iframe class="my-3" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1">
                         </iframe>
                         <h5><b>Nombre de video</b></h5>
-                        <h6 class="color-lite-black pt-10">Tipo:  <span class="color-black"><b>Multimedia</b></span> Video</h6>
-
-						     <iframe width="350" height="300" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1">
+                        <h6 class="color-lite-black pt-10 ">Tipo:  <span class="color-black"><b>Multimedia</b></span> Video</h6>
+						     <iframe class="my-3" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1">
                         </iframe>
                         <h5><b>Nombre de video</b></h5>
                         <h6 class="color-lite-black pt-10">Tipo:  <span class="color-black"><b>Multimedia</b></span> Video</h6>
