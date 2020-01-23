@@ -38,6 +38,12 @@ class publicacionController extends Controller
                             ->take(15)->get();
 
         return $most_recent;
+
+    }
+
+    public function getNews(){
+        $news = DB::table('noticias')->orderBy('fecha', 'DESC')->take(4)->get();
+        return $news;
     }
 
 
@@ -45,6 +51,12 @@ class publicacionController extends Controller
     {
         $most_recent = DB::table('notas')->orderBy('created_at', 'DESC')->get();
         return $most_recent;
+    }
+
+    public function allnews()
+    {
+        $recent_news = DB::table('noticias')->orderBy('created_at', 'DESC')->get();
+        return $recent_news;
     }
 
 

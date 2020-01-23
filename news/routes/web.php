@@ -28,9 +28,13 @@ Route::get('sobreNosotrosContacto','DocumentsViewController@about');
 
 
 Route::post('/recentdata', 'publicacionController@recentdata');
+Route::post('/allnews', 'publicacionController@allnews');
+
 
 Route::post('/relevant', 'publicacionController@relevant');
 Route::post('/recent', 'publicacionController@recent');
+Route::post('/getNews', 'publicacionController@getNews');
+
 Route::post('/getDocument', 'publicacionController@getdoc');
 Route::post('/getsearch', 'publicacionController@getsearch');
 Route::post('/allAuthors', 'publicacionController@getAllAuthors');
@@ -50,6 +54,8 @@ Route::post('/saveEmail', 'EmailController@store');
 
 Auth::routes();
 Route::resource('/notas', 'NotaController')->middleware('auth');
+Route::resource('/guardarNoticia', 'NoticiasController')->middleware('auth');
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/document', 'DocumentController')->middleware('auth');

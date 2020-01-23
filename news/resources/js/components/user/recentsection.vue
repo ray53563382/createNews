@@ -126,39 +126,39 @@
 
 
                     <div class="mtb-50">
-							<h4 class="p-title"><b>POPULAR POSTS</b></h4>
+							<h4 class="p-title"><b>NOTICIAS</b></h4>
 							<a class="oflow-hidden pos-relative mb-20 dplay-block" href="#">
-								<div class="wh-100x abs-tlr"><img src="images/polular-1-100x100.jpg" alt=""></div>
+								<div class="wh-100x abs-tlr"><img :src="noticias[0].imgdesmostrativa" alt=""></div>
 								<div class="ml-120 min-h-100x">
-									<h5><b>Bitcoin Billionares Hidding in Plain Sight</b></h5>
-									<h6 class="color-lite-black pt-10">by <span class="color-black"><b>Danile Palmer,</b></span> Jan 25, 2018</h6>
+									<h5><b>{{noticias[0].titulo}}</b></h5>
+									<h6 class="color-lite-black pt-10"><span v-if="noticias[0].autor == 'Sin Autor' " class="color-black">by <b> Danile Palmer,</b></span> Jan 25, 2018</h6>
 								</div>
 							</a><!-- oflow-hidden -->
 							
 							<a class="oflow-hidden pos-relative mb-20 dplay-block" href="#">
-								<div class="wh-100x abs-tlr"><img src="images/polular-2-100x100.jpg" alt=""></div>
+								<div class="wh-100x abs-tlr"><img :src="noticias[1].imgdesmostrativa"  alt=""></div>
 								<div class="ml-120 min-h-100x">
-									<h5><b>Bitcoin Billionares Hidding in Plain Sight</b></h5>
-									<h6 class="color-lite-black pt-10">by <span class="color-black"><b>Danile Palmer,</b></span> Jan 25, 2018</h6>
+									<h5><b>{{noticias[1].titulo}}</b></h5>
+									<h6 class="color-lite-black pt-10"><span  v-if="noticias[1].autor == 'Sin Autor' "  class="color-black">by <b>Danile Palmer,</b></span> Jan 25, 2018</h6>
 								</div>
 							</a><!-- oflow-hidden -->
 							
 							<a class="oflow-hidden pos-relative mb-20 dplay-block" href="#">
-								<div class="wh-100x abs-tlr"><img src="images/polular-3-100x100.jpg" alt=""></div>
+								<div class="wh-100x abs-tlr"><img :src="noticias[2].imgdesmostrativa"  alt=""></div>
 								<div class="ml-120 min-h-100x">
-									<h5><b>Bitcoin Billionares Hidding in Plain Sight</b></h5>
-									<h6 class="color-lite-black pt-10">by <span class="color-black"><b>Danile Palmer,</b></span> Jan 25, 2018</h6>
+									<h5><b>{{noticias[2].titulo}}</b></h5>
+									<h6 class="color-lite-black pt-10"><span  v-if="noticias[2].autor == 'Sin Autor' " class="color-black">by <b>Danile Palmer,</b></span> Jan 25, 2018</h6>
 								</div>
 							</a><!-- oflow-hidden -->
 							
 							<a class="oflow-hidden pos-relative mb-20 dplay-block" href="#">
-								<div class="wh-100x abs-tlr"><img src="images/polular-4-100x100.jpg" alt=""></div>
+								<div class="wh-100x abs-tlr"><img :src="noticias[3].imgdesmostrativa"  alt=""></div>
 								<div class="ml-120 min-h-100x">
-									<h5><b>Bitcoin Billionares Hidding in Plain Sight</b></h5>
-									<h6 class="color-lite-black pt-10">by <span class="color-black"><b>Danile Palmer,</b></span> Jan 25, 2018</h6>
+									<h5><b>{{noticias[3].titulo}}</b></h5>
+									<h6 class="color-lite-black pt-10"><span v-if="noticias[3].autor == 'Sin Autor' " class="color-black">by <b >Danile Palmer,</b></span> Jan 25, 2018</h6>
 								</div>
 							</a><!-- oflow-hidden -->
-							
+							<a class="dplay-block btn-brdr-primary mt-20 mb-md-50" href="/search/get_all_news"><b>Ver más noticias.</b></a>
 						</div>
 
 
@@ -167,7 +167,7 @@
                         <a class="oflow-hidden pos-relative mb-20 dplay-block" @click="goToDocumentView(recientes[10].id)">
                             <div class="wh-100x abs-tlr"><img :src="recientes[10].imgdesmostrativa"></div>
                             <div class="ml-120 min-h-100x">
-                                <h5><b>Bitcoin Billionares Hidding in Plain Sight</b></h5>
+                                <h5><b>{{recientes[10].titulo}}</b></h5>
                                 <h6 class="color-lite-black pt-10">Por <span class="color-black"><b>{{recientes[10].autor}},</b></span> {{recientes[11].fecha}}</h6>
                             </div>
                         </a><!-- oflow-hidden -->
@@ -238,6 +238,7 @@ export default {
     data() {
         return {
             recientes: [],
+            noticias: [],
             email: '',
         }
     },
@@ -266,8 +267,22 @@ export default {
                 url: "/recent"
             })
             .then(resp => {
-                this.recientes = resp.data
-                console.log(this.recientes);
+
+                this.recientes = resp.data;
+
+                axios({
+                     method: "post",
+                       url: "/getNews"
+                })
+                .then(resp =>{
+                    this.noticias = resp.data;
+                    console.log(this.noticias);
+                    
+                })
+
+                
+                // this.recientes = resp.data
+                // console.log(this.recientes);
 
             })
             .catch(Error => console.log(Error))
