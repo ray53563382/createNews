@@ -2869,6 +2869,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2891,7 +2893,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
         informacionArt: '',
         imgdesmostrativa: '',
         id: ''
-      }
+      },
+      importantes: []
     };
   },
   created: function created() {
@@ -2968,6 +2971,40 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
       fileReader.onload = function (e) {
         _this4.registro.imgdesmostrativa = e.target.result;
       };
+    },
+    agregarImportantes: function agregarImportantes(item, index) {
+      var _this5 = this;
+
+      // console.log(item.id)
+      // console.log(this.$refs[item.id]);
+      if (this.importantes.length >= 10) {
+        this.$swal({
+          title: '¿Colocar estas publicaciones como las más relevantes?',
+          text: "Siempre puedes cambiar las publicaciones.",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Aceptar'
+        }).then(function (result) {
+          if (result.value) {
+            axios({
+              method: "post",
+              url: "/updateimportant",
+              data: {
+                importantes: _this5.importantes
+              }
+            }).then(function (resp) {
+              console.log('importantes');
+            });
+          }
+        });
+      } else {
+        this.$refs[item.id][0].style.background = "rgba(246, 153, 63, 0.4)";
+        this.importantes.push(item.id);
+      }
+
+      console.log(this.importantes);
     }
   },
   components: {
@@ -11295,7 +11332,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.modal-dialog[data-v-5974494a] {\r\n    margin: 0px auto 0px auto\n}\r\n", ""]);
+exports.push([module.i, "\n.modal-dialog[data-v-5974494a] {\r\n    margin: 0px auto 0px auto;\r\n    /* color: rgba(246, 153, 63, 0.6); */\n}\r\n", ""]);
 
 // exports
 
@@ -47162,64 +47199,87 @@ var render = function() {
                       _c(
                         "tbody",
                         _vm._l(_vm.notas, function(item, index) {
-                          return _c("tr", { key: index }, [
-                            _c("td", [_vm._v(_vm._s(index + 1))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.titulo))]),
-                            _vm._v(" "),
-                            item.importancia == 1
-                              ? _c("td", { staticStyle: { color: "green" } }, [
-                                  _vm._v("Alta")
-                                ])
-                              : item.importancia == 2
-                              ? _c("td", { staticStyle: { color: "orange" } }, [
-                                  _vm._v("Media")
-                                ])
-                              : item.importancia == 3
-                              ? _c("td", { staticStyle: { color: "red" } }, [
-                                  _vm._v("Baja")
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.autor))]),
-                            _vm._v(" "),
-                            _vm._m(2, true),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-labeled btn-success",
-                                  attrs: {
-                                    type: "button",
-                                    "data-toggle": "modal",
-                                    "data-target": "#exampleModalLong"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editar(item)
-                                    }
-                                  }
-                                },
-                                [_vm._m(3, true)]
-                              ),
+                          return _c(
+                            "tr",
+                            { key: index, ref: item.id, refInFor: true },
+                            [
+                              _c("td", [_vm._v(_vm._s(index + 1))]),
                               _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-labeled btn-danger",
-                                  staticStyle: { "margin-left": "4%" },
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.eliminar(item, index)
+                              _c("td", [_vm._v(_vm._s(item.titulo))]),
+                              _vm._v(" "),
+                              item.importancia == 1
+                                ? _c(
+                                    "td",
+                                    { staticStyle: { color: "green" } },
+                                    [_vm._v("Alta")]
+                                  )
+                                : item.importancia == 2
+                                ? _c(
+                                    "td",
+                                    { staticStyle: { color: "orange" } },
+                                    [_vm._v("Media")]
+                                  )
+                                : item.importancia == 3
+                                ? _c("td", { staticStyle: { color: "red" } }, [
+                                    _vm._v("Baja")
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.autor))]),
+                              _vm._v(" "),
+                              _vm._m(2, true),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-labeled btn-success",
+                                    attrs: {
+                                      type: "button",
+                                      "data-toggle": "modal",
+                                      "data-target": "#exampleModalLong"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.editar(item)
+                                      }
                                     }
-                                  }
-                                },
-                                [_vm._m(4, true)]
-                              )
-                            ])
-                          ])
+                                  },
+                                  [_vm._m(3, true)]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-labeled btn-danger",
+                                    staticStyle: { "margin-left": "4%" },
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.eliminar(item, index)
+                                      }
+                                    }
+                                  },
+                                  [_vm._m(4, true)]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-labeled btn-primary",
+                                    staticStyle: { "margin-left": "4%" },
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.agregarImportantes(item)
+                                      }
+                                    }
+                                  },
+                                  [_vm._m(5, true)]
+                                )
+                              ])
+                            ]
+                          )
                         }),
                         0
                       )
@@ -47236,7 +47296,7 @@ var render = function() {
       ? _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-12" }, [
             _c("div", { staticClass: "card strpied-tabled-with-hover" }, [
-              _vm._m(5),
+              _vm._m(6),
               _vm._v(" "),
               _c(
                 "div",
@@ -47682,6 +47742,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "btn-label" }, [
       _c("i", { staticClass: "fa fa-remove" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "btn-label" }, [
+      _c("i", { staticClass: "fa fa-star" })
     ])
   },
   function() {
