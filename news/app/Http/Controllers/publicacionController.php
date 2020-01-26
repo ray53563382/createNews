@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 use App\Nota;
 use App\Document;
-use App\importante;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,16 +18,7 @@ class publicacionController extends Controller
     public function relevant()
     {
         
-        $most_relevant = DB::table('notas')->where('importancia', 1)->take(10)->get();
-        // $most_relevant = DB::table('notas')->where('importancia', 1)->get();
-        // $most_relevant_array = (array) $most_relevant;
-
-        // $extra_relevant = array_slice($most_relevant_array, 6);
-
-        // $all_relevant = [];
-        // $all_relevant[0] = $most_relevant_array;
-        // $all_relevant[1] = $extra_relevant;
-
+        $most_relevant = DB::table('notas')->where('relevante', 1)->take(10)->get();
         return $most_relevant;
 
     }
@@ -212,7 +202,47 @@ class publicacionController extends Controller
     }
 
     public function updateimportant(Request $request){
-       
+
+        print_r($request->importantes);
+
+        $todos_relevantes = DB::table('notas')->where('relevante', 1)->get();
+
+        if(count($todos_relevantes) <= 0 && count($request->importantes) >= 0 ){
+            foreach ($request->importantes as $value) {
+                $mydoc = Nota::find($value);
+                $mydoc->relevante = 1;
+                $mydoc->save();
+            }
+        }else{
+            foreach ($todos_relevantes as $value) {
+                # code...
+                $doc = Nota::find($value->id);
+                // print_r($value->id);
+                if( in_array($value->id , $request->importantes) ){
+                    $doc->relevante = 1;
+                    $doc->save();
+                    // print_r('agregado');
+                }else{
+                    $doc->relevante = 0;
+                    $doc->save();
+                    // print_r('else');
+                }
+            }
+        }
+    }
+
+    public function colocarImportante(Request $request){
+        $insert = Nota::find($request->id);
+        $insert->relevante = 1;
+        $insert->save();
+        return $insert;
+    }
+
+    public function removerImportante(Request $request ){
+        $insert = Nota::find($request->id);
+        $insert->relevante = 0;
+        $insert->save();
+        return $insert;
     }
 
 }

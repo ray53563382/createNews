@@ -2871,6 +2871,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2902,6 +2903,12 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
 
     axios.get('/notas').then(function (res) {
       _this.notas = res.data;
+
+      _this.notas.forEach(function (element) {
+        if (element.relevante >= 1) {
+          _this.importantes.push(element.id);
+        }
+      });
     });
   },
   mounted: function mounted() {},
@@ -2972,14 +2979,19 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
         _this4.registro.imgdesmostrativa = e.target.result;
       };
     },
-    agregarImportantes: function agregarImportantes(item, index) {
+    iluminaImportantes: function iluminaImportantes(item) {
+      if (item.relevante == 1) {
+        this.$refs[item.id][0].style.background = "rgba(246, 153, 63, 0.4)";
+      } else {
+        return;
+      }
+    },
+    agregarImportantes: function agregarImportantes(item) {
       var _this5 = this;
 
-      // console.log(item.id)
-      // console.log(this.$refs[item.id]);
-      if (this.importantes.length >= 10) {
+      if (this.importantes.indexOf(item.id) != -1) {
         this.$swal({
-          title: '¿Colocar estas publicaciones como las más relevantes?',
+          title: '¿Remover esta publicacion de relevante?',
           text: "Siempre puedes cambiar las publicaciones.",
           type: 'warning',
           showCancelButton: true,
@@ -2988,23 +3000,42 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
           confirmButtonText: 'Aceptar'
         }).then(function (result) {
           if (result.value) {
+            _this5.importantes.slice(_this5.importantes.indexOf(item.id), 1);
+
+            _this5.$refs[item.id][0].style.background = "#FFF";
             axios({
               method: "post",
-              url: "/updateimportant",
+              url: "/removerImportante",
               data: {
-                importantes: _this5.importantes
+                id: item.id
               }
-            }).then(function (resp) {
-              console.log('importantes');
             });
           }
         });
       } else {
-        this.$refs[item.id][0].style.background = "rgba(246, 153, 63, 0.4)";
-        this.importantes.push(item.id);
-      }
+        this.$swal({
+          title: '¿Colocar esta publicacione como relevante?',
+          text: "Siempre puedes cambiar las publicaciones.",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Aceptar'
+        }).then(function (result) {
+          if (result.value) {
+            _this5.importantes.push(item.id);
 
-      console.log(this.importantes);
+            _this5.$refs[item.id][0].style.background = "rgba(246, 153, 63, 0.4)";
+            axios({
+              method: "post",
+              url: "/colocarImportante",
+              data: {
+                id: item.id
+              }
+            });
+          }
+        });
+      }
     }
   },
   components: {
@@ -11373,7 +11404,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.modal-dialog[data-v-5974494a] {\r\n    margin: 0px auto 0px auto;\r\n    /* color: rgba(246, 153, 63, 0.6); */\n}\r\n", ""]);
+exports.push([module.i, "\n.modal-dialog[data-v-5974494a] {\r\n    margin: 0px auto 0px auto;\r\n    /* color: rgba(246, 153, 63, 0.6); */\r\n    /* color: rgba(91, 192, 222, 0.5); */\n}\r\n", ""]);
 
 // exports
 
@@ -47242,7 +47273,16 @@ var render = function() {
                         _vm._l(_vm.notas, function(item, index) {
                           return _c(
                             "tr",
-                            { key: index, ref: item.id, refInFor: true },
+                            {
+                              key: index,
+                              ref: item.id,
+                              refInFor: true,
+                              style: [
+                                item.relevante == 1
+                                  ? { background: "rgba(91, 192, 222, 0.2)" }
+                                  : { background: "#FFF" }
+                              ]
+                            },
                             [
                               _c("td", [_vm._v(_vm._s(index + 1))]),
                               _vm._v(" "),

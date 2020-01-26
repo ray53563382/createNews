@@ -42,7 +42,9 @@ Route::post('/allfromAuthor', 'publicacionController@getAllFromAuthor');
 Route::post('/allrecent', 'publicacionController@allrecent');
 Route::post('/getpdf', 'publicacionController@getpdf');
 Route::post('/gettheme', 'publicacionController@getheme');
-Route::post('/updateimportant', 'publicacionController@updateimportant');
+Route::post('/colocarImportante', 'publicacionController@colocarImportante');
+Route::post('/removerImportante', 'publicacionController@removerImportante');
+
 // Route::post('/fetchAllDocs', 'publicacionController@fetchAllDocs');
 
 Route::post('/popularPost', 'publicacionController@popularPost');
