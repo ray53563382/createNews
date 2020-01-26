@@ -48,6 +48,9 @@ Route::get('/registerClose', 'publicacionController@cerrar');
 
 Route::post('/saveEmail', 'EmailController@store');
 
+Route::resource('/categorias', 'CategoriaController')->middleware('auth');
+
+
 Auth::routes();
 Route::resource('/notas', 'NotaController')->middleware('auth');
 
