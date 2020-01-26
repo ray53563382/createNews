@@ -3627,6 +3627,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -3646,18 +3650,29 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
         idcategoria: '',
         informacionArt: '',
         imgdesmostrativa: ''
-      }
+      },
+      categorias: {
+        descripcion: ''
+      },
+      categoriasDta: []
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
-    axios.get('/notas').then(function (res) {
-      console.log(res);
+    var _this = this;
+
+    this.categoriasDta = [];
+    axios.get('/categorias').then(function (res) {
+      res.data.forEach(function (element) {
+        _this.categoriasDta.push({
+          id: element.id,
+          descripcion: element.descripcion
+        });
+      });
     });
   },
   methods: {
     agregar: function agregar(e) {
-      var _this = this;
+      var _this2 = this;
 
       this.errors = [];
 
@@ -3698,16 +3713,16 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
 
       if (this.registro.titulo && this.registro.fecha && this.registro.autor && this.registro.importancia && this.registro.idcategoria && this.registro.informacionArt && this.registro.imgdesmostrativa) {
         axios.post('/notas', this.registro).then(function (resp) {
-          _this.errors = [];
-          _this.registro.titulo = "";
-          _this.registro.fecha = "";
-          _this.registro.autor = "";
-          _this.registro.importancia = "";
-          _this.registro.idcategoria = "";
-          _this.registro.imgdesmostrativa = "";
-          _this.registro.informacionArt = "";
+          _this2.errors = [];
+          _this2.registro.titulo = "";
+          _this2.registro.fecha = "";
+          _this2.registro.autor = "";
+          _this2.registro.importancia = "";
+          _this2.registro.idcategoria = "";
+          _this2.registro.imgdesmostrativa = "";
+          _this2.registro.informacionArt = "";
 
-          _this.$swal('Articulo guardado!', 'Ahora ya puedo visualizarlo en su página web!', 'success');
+          _this2.$swal('Articulo guardado!', 'Ahora ya puedo visualizarlo en su página web!', 'success');
 
           document.getElementById("imgdata").value = "";
         })["catch"](function (error) {
@@ -3716,17 +3731,43 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
       }
     },
     obtenerImagen: function obtenerImagen(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       var fileReader = new FileReader();
       fileReader.readAsDataURL(e.target.files[0]);
 
       fileReader.onload = function (e) {
-        _this2.registro.imgdesmostrativa = e.target.result;
+        _this3.registro.imgdesmostrativa = e.target.result;
       };
     },
     guardarCategoria: function guardarCategoria() {
+      var _this4 = this;
+
+      this.categoriasDta = [];
       console.log(this.categoria);
+
+      if (this.categoria != '') {
+        this.categorias.descripcion = this.categoria;
+        axios.post('/categorias', this.categorias).then(function (res) {
+          _this4.$swal('Categoría guardada!', 'Ahora ya puedo visualizarlo en su página web!', 'success');
+
+          _this4.categoria = '';
+          axios.get('/categorias').then(function (res) {
+            res.data.forEach(function (element) {
+              _this4.categoriasDta.push({
+                id: element.id,
+                descripcion: element.descripcion
+              });
+            });
+          });
+        });
+      } else {
+        this.$swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'No se pudo agregar la categoría!'
+        });
+      }
     }
   },
   components: {
@@ -48727,7 +48768,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-4 pr-1" }, [
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v("Categoria")]),
+                      _c("label", [
+                        _vm._v("Categoria " + _vm._s(_vm.registro.idcategoria))
+                      ]),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -48765,43 +48808,20 @@ var render = function() {
                             }
                           }
                         },
-                        [
-                          _c("option", { attrs: { value: "1" } }, [
-                            _vm._v("Crisis climática y conservación")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "2" } }, [
-                            _vm._v("Minería")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "3" } }, [
-                            _vm._v("Hidroeléctricas y eólicas")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "4" } }, [
-                            _vm._v("Petróleo fracking y gasoductos")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "5" } }, [
-                            _vm._v("Derechos indígenas")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "6" } }, [
-                            _vm._v("Tierra y territorio")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "7" } }, [
-                            _vm._v("Agua")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "8" } }, [
-                            _vm._v("Bosques y deforestación")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "9" } }, [
-                            _vm._v("Megaproyectos")
-                          ])
-                        ]
+                        _vm._l(_vm.categoriasDta, function(item) {
+                          return _c(
+                            "option",
+                            { key: item.id, domProps: { value: item.id } },
+                            [
+                              _vm._v(
+                                "\n                                                            " +
+                                  _vm._s(item.descripcion) +
+                                  "\n                                                        "
+                              )
+                            ]
+                          )
+                        }),
+                        0
                       ),
                       _vm._v(" "),
                       _c(
@@ -68188,8 +68208,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Coyoacan\createNews\news\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Coyoacan\createNews\news\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\HP\Desktop\createNews\news\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\HP\Desktop\createNews\news\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

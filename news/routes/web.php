@@ -53,10 +53,14 @@ Route::get('/registerClose', 'publicacionController@cerrar');
 
 Route::post('/saveEmail', 'EmailController@store');
 
-Route::resource('/categorias', 'CategoriaController')->middleware('auth');
+Route::resource('/categorias', 'CategoriaController');
+
+
 
 
 Auth::routes();
+
+Route::resource('/multimedia', 'MultimediaController')->middleware('auth');
 Route::resource('/notas', 'NotaController')->middleware('auth');
 Route::resource('/guardarNoticia', 'NoticiasController')->middleware('auth');
 

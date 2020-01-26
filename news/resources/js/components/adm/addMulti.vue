@@ -13,7 +13,7 @@
                             <div class="col-lg-12 pr-1">
                                 <div class="form-group">
                                     <label>Nombre de archivo</label>
-                                    <input type="text" class="form-control" v-model="nombre">
+                                    <input type="text" class="form-control" v-model="registro.nombre">
                                 </div>
                             </div>
                         </div>
@@ -22,7 +22,7 @@
                             <div class="col-lg-6 pr-1">
                                 <div class="form-group">
                                     <label>Url</label>
-                                    <select class="form-control" v-model="audio">
+                                    <select class="form-control" v-model="registro.data">
                                         <option value="1">Video</option>
                                         <option value="2">Audio</option>
                                     </select>
@@ -31,7 +31,7 @@
                             <div class="col-lg-6 pr-1">
                                 <div class="form-group">
                                     <label>Url</label>
-                                    <input type="text" class="form-control" v-model="url">
+                                    <input type="text" class="form-control" v-model="registro.url">
                                 </div>
                             </div>
                         </div>
@@ -46,9 +46,8 @@
     </div>
 
     <div class="row">
-        
-        <div class="col-lg-12">
 
+        <div class="col-lg-12">
             <div class="card-body table-full-width table-responsive">
                 <table class="table table-hover table-striped">
                     <thead>
@@ -58,30 +57,11 @@
 
                     </thead>
                     <tbody>
-
-                        <!-- <tr v-for="(item, index) in notas" :key="index"> -->
                         <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <!-- <td>{{item.titulo}}</td>
-                            <td v-if="item.importancia == 1" style="color:green">Alta</td>
-                            <td v-else-if="item.importancia == 2" style="color: orange;">Media</td>
-                            <td v-else-if="item.importancia == 3" style="color: red">Baja</td>
-                            <td>{{item.autor}}</td>
-                            <td>
-                                <div>
-                                    Para ver información click en editar
-                                </div>
-                            </td>
-                            <td>
-                                <button type="button" @click="editar(item)" data-toggle="modal" data-target="#exampleModalLong" class="btn btn-labeled btn-success">
-                                    <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
-                                <button type="button" @click="eliminar(item,index)" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
-                                    <span class="btn-label"><i class="fa fa-remove"></i></span></button>
-                            </td> -->
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
                         </tr>
-
                     </tbody>
                 </table>
             </div>
@@ -95,13 +75,27 @@ export default {
 
     data() {
         return {
-            nomre: '',
-            url: '',
+
+             registro: {
+                nombre: '',
+                data: '',
+                url: '',
+            },
         }
+    }, mounted() {
+        axios.get('/multimedia').then(res => {
+         console.log(res);
+        });
     },
     methods: {
         agregar() {
-            console.log("hola we");
+
+            // if(nombre != '' && data != '' && url != ''){
+                
+
+            // }else{
+            //     console.log("error")
+            // }
         }
     }
 }

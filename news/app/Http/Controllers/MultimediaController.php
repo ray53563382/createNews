@@ -4,25 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Categoria;
+use App\Multimedia;
 
 
-class CategoriaController extends Controller
+class MultimediaController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         if($request->ajax()){
-            return Categoria::all();
+            return Multimedia::all();
         }else{
             return view('home');
         }
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -42,10 +41,7 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $categoria = new Categoria();
-        $categoria->descripcion = $request->descripcion;
-        $categoria->save();
-        return $categoria;
+        //
     }
 
     /**
