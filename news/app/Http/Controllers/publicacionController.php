@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Nota;
 use App\Document;
+use App\importante;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,13 +39,26 @@ class publicacionController extends Controller
                             ->take(15)->get();
 
         return $most_recent;
+
     }
+
+    public function getNews(){
+        $news = DB::table('noticias')->orderBy('fecha', 'DESC')->take(4)->get();
+        return $news;
+    }
+
 
 
     public function recentdata()
     {
         $most_recent = DB::table('notas')->orderBy('created_at', 'DESC')->get();
         return $most_recent;
+    }
+
+    public function allnews()
+    {
+        $recent_news = DB::table('noticias')->orderBy('created_at', 'DESC')->get();
+        return $recent_news;
     }
 
 
@@ -195,6 +209,10 @@ class publicacionController extends Controller
     public function popularPostMedium(Request $request){
           $notas = DB::table('notas')->where('importancia', 2)->get();
           return $notas;
-      }
+    }
+
+    public function updateimportant(Request $request){
+       
+    }
 
 }

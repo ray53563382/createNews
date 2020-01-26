@@ -44,6 +44,22 @@
                         <li>
                             <a
                                 class="nav-link"
+                                v-on:click="changeData('noticia')"
+                            >
+                                <i
+                                    class="far fa-newspaper"
+                                    style="font-size: 25px !important;margin-right: 15px !important;"
+                                ></i>
+                                <p
+                                    style="font-size: 11px !important; cursor:pointer"
+                                >
+                                    Agregar Noticias
+                                </p>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                class="nav-link"
                                 v-on:click="changeData('informacion')"
                             >
                                 <i
@@ -206,6 +222,8 @@ export default {
                 this.dynamicComponent = "addpdf";
             } else if (msg == "multimedia") {
                 this.dynamicComponent = "addMulti";
+            } else if (msg == "noticia") {
+                this.dynamicComponent = "addNoticia";
             }
         }
     },

@@ -21,7 +21,7 @@
 
 
                             <!-- <paginate name="result" :list="notas" :per="2" tag="tbody"> -->
-                                <tr v-for="(item, index) in notas" :key="index">
+                                <tr :ref="item.id" v-for="(item, index) in notas" :key="index">
                                     <!-- <paginate name="result" :list="notas" :per="2" tag="tbody"> -->
                                     <td>{{index + 1}}</td>
                                     <td>{{item.titulo}}</td>
@@ -39,6 +39,8 @@
                                             <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
                                         <button type="button" @click="eliminar(item,index)" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
                                             <span class="btn-label"><i class="fa fa-remove"></i></span></button>
+                                        <button type="button" @click="agregarImportantes(item)" class="btn btn-labeled btn-primary" style="margin-left: 4%;">
+                                        <span class="btn-label"><i class="fa fa-star"></i></span></button>
                                     </td>
                                 </tr>
                             <!-- </paginate> -->
@@ -187,7 +189,8 @@ export default {
                 informacionArt: '',
                 imgdesmostrativa: '',
                 id: ''
-            }
+            },
+            importantes: []
         }
     },
     created() {
@@ -254,12 +257,49 @@ export default {
         regresar() {
             this.modoEditar = false;
         },
+
         obtenerImagen(e) {
             let fileReader = new FileReader();
             fileReader.readAsDataURL(e.target.files[0]);
             fileReader.onload = (e) => {
                 this.registro.imgdesmostrativa = e.target.result
             }
+        },
+
+        agregarImportantes(item, index){
+            // console.log(item.id)
+            // console.log(this.$refs[item.id]);
+            if (this.importantes.length >= 10 ) {
+                    this.$swal({
+                    title: '¿Colocar estas publicaciones como las más relevantes?',
+                    text: "Siempre puedes cambiar las publicaciones.",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    if (result.value) {
+                        axios({
+                            method: "post",
+                            url: "/updateimportant",
+                            data: {
+                                importantes: this.importantes
+                            }
+                        })
+                        .then(resp =>{
+                            console.log('importantes');
+                        })
+
+                    }
+                })
+            } else {
+                this.$refs[item.id][0].style.background = "rgba(246, 153, 63, 0.4)"
+                this.importantes.push(item.id)
+            }
+            console.log(this.importantes);
+            
+            
         }
     },
     components: {
@@ -270,6 +310,7 @@ export default {
 
 <style scoped>
 .modal-dialog {
-    margin: 0px auto 0px auto
+    margin: 0px auto 0px auto;
+    /* color: rgba(246, 153, 63, 0.6); */
 }
 </style>

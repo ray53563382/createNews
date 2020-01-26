@@ -243,6 +243,21 @@ export default {
 
                 })
                 .catch(Error => console.log(Error));
+        } else if(this.querystring == "get_all_news"){
+            axios({
+                    method: "post",
+                    url: "/allnews",
+                    data: {
+                        type: this.order
+                    }
+                })
+                .then(resp => {
+                    this.searchFlag = true;
+                    this.resultados = resp.data;
+                    this.$loading(false);
+
+                })
+                .catch(Error => console.log(Error));
         } else {
             if (this.author != undefined) {
                 this.searchFlag = true;

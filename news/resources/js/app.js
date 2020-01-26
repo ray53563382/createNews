@@ -29,12 +29,7 @@ Vue.component(
     require("./components/user/about.vue").default
 );
 
-Vue.component(
-    "addMulti",
-    require("./components/adm/addMulti.vue").default
-);
-
-
+Vue.component("addMulti", require("./components/adm/addMulti.vue").default);
 
 Vue.component(
     "mostrelevantsection-component",
@@ -69,6 +64,9 @@ Vue.component(
     "addDocument",
     require("./components/adm/addDocument.vue").default
 );
+
+Vue.component("addNoticia", require("./components/adm/addNoticia.vue").default);
+
 Vue.component(
     "addRegister",
     require("./components/adm/addRegister.vue").default
