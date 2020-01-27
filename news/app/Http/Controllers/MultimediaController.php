@@ -14,12 +14,13 @@ class MultimediaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if($request->ajax()){
-            return Multimedia::all();
-        }else{
-            return view('home');
+            $multimedia = Multimedia::all();            
+           return $multimedia;
+         }else{
+             return view('pages/multimedia');
         }
     }
 
@@ -41,7 +42,12 @@ class MultimediaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $multi = new Multimedia();
+        $multi->nombre = $request->nombre;
+        $multi->tipo = $request->tipo;
+        $multi->url = $request->url;
+        $multi->save();
+        return $multi;
     }
 
     /**
@@ -75,7 +81,12 @@ class MultimediaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $multi = Multimedia::find($id);
+        $multi->nombre = $request->nombre;
+        $multi->tipo = $request->tipo;
+        $multi->url = $request->url;
+        $multi->save();
+        return $multi;
     }
 
     /**
@@ -86,6 +97,7 @@ class MultimediaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $nota = Multimedia::find($id);
+        $nota->delete();
     }
 }

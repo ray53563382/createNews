@@ -13,7 +13,7 @@
                         class="pos-relative h-100 dplay-block"
                         @click="goToDocumentView(relevantes[0].id)"
                     >
-                        <div
+                        <div v-if="relevantes[0].imgdesmostrativa != undefined"
                             :style="{
                                 backgroundImage:
                                     'url(' +
@@ -48,7 +48,7 @@
                             class="pos-relative h-100 dplay-block"
                             @click="goToDocumentView(relevantes[1].id)"
                         >
-                            <div
+                            <div v-if="relevantes[1].imgdesmostrativa != undefined"
                                 :style="{
                                     backgroundImage:
                                         'url(' +
@@ -82,7 +82,7 @@
                             class="pos-relative h-100 dplay-block"
                             @click="goToDocumentView(relevantes[2].id)"
                         >
-                            <div
+                            <div v-if="relevantes[2].imgdesmostrativa != undefined"
                                 :style="{
                                     backgroundImage:
                                         'url(' +
@@ -121,7 +121,7 @@
                         class="pos-relative h-100 dplay-block"
                         @click="goToDocumentView(relevantes[3].id)"
                     >
-                        <div
+                        <div v-if="relevantes[3].imgdesmostrativa != undefined"
                             :style="{
                                 backgroundImage:
                                     'url(' +
@@ -155,7 +155,7 @@
                         class="pos-relative h-100 dplay-block"
                         @click="goToDocumentView(relevantes[4].id)"
                     >
-                        <div
+                        <div v-if="relevantes[4].imgdesmostrativa != undefined"
                             :style="{
                                 backgroundImage:
                                     'url(' +
@@ -189,7 +189,7 @@
                         class="pos-relative h-100 dplay-block"
                         @click="goToDocumentView(relevantes[5].id)"
                     >
-                        <div
+                        <div v-if="relevantes[5].imgdesmostrativa != undefined"
                             :style="{
                                 backgroundImage:
                                     'url(' +
