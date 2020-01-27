@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Route::get('documentView/{id}', 'DocumentsViewController@index' );
 Route::get('documentViewpdf/{id}', 'DocumentsViewController@pdfview' );
+
+
 Route::get('search/{querystring}', 'DocumentsViewController@search');
 // Route::get('search/{querystring}/{author}', 'DocumentsViewController@searchbyauthor');
 Route::get('search/{querystring}/{author}', ['uses' => 'DocumentsViewController@searchbyauthor']);
@@ -58,13 +60,12 @@ Route::get('/registerClose', 'publicacionController@cerrar');
 Route::post('/saveEmail', 'EmailController@store');
 
 Route::resource('/categorias', 'CategoriaController');
-
+Route::resource('/multimedia', 'MultimediaController');
 
 
 
 Auth::routes();
 
-Route::resource('/multimedia', 'MultimediaController')->middleware('auth');
 Route::resource('/notas', 'NotaController')->middleware('auth');
 Route::resource('/guardarNoticia', 'NoticiasController')->middleware('auth');
 

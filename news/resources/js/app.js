@@ -24,6 +24,10 @@ window.EventBus = new Vue();
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+
+Vue.component('multimediadata', require('./components/user/multimedia.vue').default); //component name should be in camel-case
+
+
 Vue.component(
     "about-component",
     require("./components/user/about.vue").default
@@ -93,6 +97,9 @@ Vue.component(
     "documentView",
     require("./components/user/documentView.vue").default
 );
+
+
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
