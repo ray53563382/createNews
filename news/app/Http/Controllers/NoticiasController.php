@@ -80,18 +80,18 @@ class NoticiasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $nota = Nota::find($id);
-        $nota->titulo = $request->titulo;
-        $nota->fecha = $request->fecha;
-        $nota->autor = $request->autor;
-        $nota->importancia = $request->importancia;
-        $nota->idcategoria = $request->idcategoria;
-        $nota->informacionArt = $request->informacionArt;
-        $nota->imgdesmostrativa = $request->imgdesmostrativa;
-        $nota->save();
-        return $nota;
+        $noticia = Noticia::find($request->id);
+        $noticia->titulo = $request->titulo;
+        $noticia->fecha = $request->fecha;
+        $noticia->autor = $request->autor;
+        $noticia->importancia = $request->importancia;
+        $noticia->idcategoria = $request->idcategoria;
+        $noticia->informacionArt = $request->informacionArt;
+        $noticia->imgdesmostrativa = $request->imgdesmostrativa;
+        $noticia->save();
+        return $noticia;
     }
 
     /**
@@ -100,10 +100,10 @@ class NoticiasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $nota = Nota::find($id);
-        $nota->delete();
+        $noticia = Noticia::find($request->id);
+        $noticia->delete();
     }
 
 }
