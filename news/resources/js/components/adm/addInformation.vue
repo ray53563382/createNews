@@ -6,6 +6,7 @@
                 <div class="card-header ">
                     <h4 class="card-title">Registro de publicaciones</h4>
                     <p class="card-category">Si no encuentra su información recargue la página web</p>
+                    <!-- <div @click="subirImportantes" class="btn btn-primary">Marcar como relevantes</div>         -->
                 </div>
                 <div class="card-body table-full-width table-responsive">
                     <table class="table table-hover table-striped">
@@ -21,7 +22,7 @@
 
 
                             <!-- <paginate name="result" :list="notas" :per="2" tag="tbody"> -->
-                                <tr :ref="item.id" v-for="(item, index) in notas" :key="index">
+                                <tr  v-for="(item, index) in notas" :key="index" :ref="item.id"  :style="[item.relevante == 1 ? {'background': 'rgba(91, 192, 222, 0.2)'} : {'background': '#FFF'}]" >
                                     <!-- <paginate name="result" :list="notas" :per="2" tag="tbody"> -->
                                     <td>{{index + 1}}</td>
                                     <td>{{item.titulo}}</td>
@@ -196,8 +197,14 @@ export default {
     created() {
         axios.get('/notas').then(res => {
             this.notas = res.data;
+            this.notas.forEach(element => {
+                if (element.relevante >= 1) {
+                    this.importantes.push(element.id)
+                }
+            });
         })
     },
+
     mounted() {},
     methods: {
         eliminar(item, index) {
@@ -266,40 +273,63 @@ export default {
             }
         },
 
-        agregarImportantes(item, index){
-            // console.log(item.id)
-            // console.log(this.$refs[item.id]);
-            if (this.importantes.length >= 10 ) {
-                    this.$swal({
-                    title: '¿Colocar estas publicaciones como las más relevantes?',
+        iluminaImportantes(item){
+            if(item.relevante == 1){
+                 this.$refs[item.id][0].style.background = "rgba(246, 153, 63, 0.4)"
+            }else{
+                return
+            }
+        },
+
+
+        agregarImportantes(item){
+
+            if(this.importantes.indexOf(item.id) != -1){
+                this.$swal({
+                    title: '¿Remover esta publicacion de relevante?',
                     text: "Siempre puedes cambiar las publicaciones.",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Aceptar'
-                }).then((result) => {
+                    }).then((result) => {
                     if (result.value) {
+                        this.importantes.slice(this.importantes.indexOf(item.id), 1)
+                        this.$refs[item.id][0].style.background = "#FFF"
                         axios({
                             method: "post",
-                            url: "/updateimportant",
+                            url: "/removerImportante",
                             data: {
-                                importantes: this.importantes
+                                id: item.id
                             }
                         })
-                        .then(resp =>{
-                            console.log('importantes');
-                        })
-
                     }
                 })
-            } else {
-                this.$refs[item.id][0].style.background = "rgba(246, 153, 63, 0.4)"
-                this.importantes.push(item.id)
+            }else{
+                  this.$swal({
+                    title: '¿Colocar esta publicacione como relevante?',
+                    text: "Siempre puedes cambiar las publicaciones.",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar'
+                    }).then((result) => {
+                    if (result.value) {
+                        this.importantes.push(item.id);
+                        this.$refs[item.id][0].style.background = "rgba(246, 153, 63, 0.4)"
+                        axios({
+                            method: "post",
+                            url: "/colocarImportante",
+                            data: {
+                                id: item.id
+                            }
+                        })
+                    }
+                })
             }
-            console.log(this.importantes);
-            
-            
+
         }
     },
     components: {
@@ -312,5 +342,6 @@ export default {
 .modal-dialog {
     margin: 0px auto 0px auto;
     /* color: rgba(246, 153, 63, 0.6); */
+    /* color: rgba(91, 192, 222, 0.5); */
 }
 </style>
