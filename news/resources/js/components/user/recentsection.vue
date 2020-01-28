@@ -240,6 +240,11 @@
 </template>
 
 <script>
+import VueLoading from 'vuejs-loading-plugin'
+Vue.use(VueLoading, {
+    text: 'Cargando'
+})
+
 export default {
     name: "recentsection",
 
@@ -256,14 +261,10 @@ export default {
             location.replace("/documentView/" + id);
         },
 
-        verMultimedia(){
-            console.log("vamos a ver multimedia");
-            location.replace("/multimedia/" );
-
+        verMultimedia() {
+            location.replace("/multimedia/");
         },
         saveEmail() {
-            console.log(this.email);
-
             axios.post('/saveEmail', this.email)
                 .then(resp => {
                     this.$swal(
@@ -277,22 +278,7 @@ export default {
         }
     },
     mounted() {
-        this.resgistrosMulti = [];
-
-        axios.get('/multimedia').then(res => {
-
-            res.data.forEach(element => {
-
-                let url = element.url.split('v=');
-                console.log(url);
-                element.url = url[1];
-                this.resgistrosMulti.push(element)
-
-            });
-
-            console.log("**********************");
-            console.log(this.resgistrosMulti);
-        });
+        this.$loading(true);
 
         axios({
                 method: "post",
@@ -301,21 +287,26 @@ export default {
             .then(resp => {
 
                 this.recientes = resp.data;
-
                 axios({
                         method: "post",
                         url: "/getNews"
                     })
                     .then(resp => {
                         this.noticias = resp.data;
-                        console.log(this.noticias);
-
+                        this.$loading(false);
                     })
             })
             .catch(Error => console.log(Error))
     },
     created() {
-
+        this.resgistrosMulti = [];
+        axios.get('/multimedia').then(res => {
+            res.data.forEach(element => {
+                let url = element.url.split('v=');
+                element.url = url[1];
+                this.resgistrosMulti.push(element)
+            });
+        });
     }
 }
 </script>

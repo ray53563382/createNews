@@ -20,21 +20,21 @@
                         class="float-right float-sm-none list-a-plr-10 list-a-plr-sm-5 list-a-ptb-15 list-a-ptb-sm-5"
                     >
                         <li>
-                            <a class="pl-0 pl-sm-10"
+                            <a class="pl-0 pl-sm-10" href="https://www.facebook.com/ceccam.orgclass" 
                                 ><i class="ion-social-facebook"></i
                             ></a>
                         </li>
                         <li>
-                            <a><i class="ion-social-twitter"></i></a>
+                            <a  href="https://twitter.com/Ceccam9"><i class="ion-social-twitter" ></i></a>
                         </li>
+                        <!-- <li>
+                            <a  href="enlacepagina.html"><i class="ion-social-google"></i></a>
+                        </li> -->
+                        <!-- <li>
+                            <a  href="enlacepagina.html"><i class="ion-social-instagram"></i></a>
+                        </li> -->
                         <li>
-                            <a><i class="ion-social-google"></i></a>
-                        </li>
-                        <li>
-                            <a><i class="ion-social-instagram"></i></a>
-                        </li>
-                        <li>
-                            <a><i class="ion-social-youtube"></i></a>
+                            <a  href="enlacepagina.html"><i class="ion-social-youtube"></i></a>
                         </li>
                     </ul>
                 </div>

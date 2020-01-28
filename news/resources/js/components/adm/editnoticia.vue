@@ -1,5 +1,5 @@
 <template>
-<div class="container-fluid">
+<div class="">
     <div class="row" v-if="modoEditar == false">
         <div class="col-md-12">
             <div class="card strpied-tabled-with-hover">
