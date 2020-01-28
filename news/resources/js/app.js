@@ -36,6 +36,11 @@ Vue.component(
 Vue.component("addMulti", require("./components/adm/addMulti.vue").default);
 
 Vue.component(
+    "editnoticia",
+    require("./components/adm/editnoticia.vue").default
+);
+
+Vue.component(
     "mostrelevantsection-component",
     require("./components/user/recentsection.vue").default
 );

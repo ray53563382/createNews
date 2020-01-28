@@ -33,7 +33,7 @@ class publicacionController extends Controller
     }
 
     public function getNews(){
-        $news = DB::table('noticias')->orderBy('fecha', 'DESC')->take(4)->get();
+        $news = DB::table('noticias')->orderBy('fecha', 'DESC')->get();
         return $news;
     }
 
@@ -201,35 +201,6 @@ class publicacionController extends Controller
           return $notas;
     }
 
-    public function updateimportant(Request $request){
-
-        print_r($request->importantes);
-
-        $todos_relevantes = DB::table('notas')->where('relevante', 1)->get();
-
-        if(count($todos_relevantes) <= 0 && count($request->importantes) >= 0 ){
-            foreach ($request->importantes as $value) {
-                $mydoc = Nota::find($value);
-                $mydoc->relevante = 1;
-                $mydoc->save();
-            }
-        }else{
-            foreach ($todos_relevantes as $value) {
-                # code...
-                $doc = Nota::find($value->id);
-                // print_r($value->id);
-                if( in_array($value->id , $request->importantes) ){
-                    $doc->relevante = 1;
-                    $doc->save();
-                    // print_r('agregado');
-                }else{
-                    $doc->relevante = 0;
-                    $doc->save();
-                    // print_r('else');
-                }
-            }
-        }
-    }
 
     public function colocarImportante(Request $request){
         $insert = Nota::find($request->id);

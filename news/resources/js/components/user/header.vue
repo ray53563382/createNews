@@ -69,7 +69,12 @@
                 <li class="drop-down">
                     <a>TEMAS<i class="ion-arrow-down-b"></i></a>
                     <ul class="drop-down-menu drop-down-inner">
-                        <li>
+                        <li v-for="(item, index) in categorias" :key="index">
+                            <a @click="search_theme(item.id)">{{
+                                item.descripcion
+                            }}</a>
+                        </li>
+                        <!-- <li>
                             <a @click="search_theme('1')"
                                 >Crisis Climática y Conservación</a
                             >
@@ -99,7 +104,7 @@
                                 >Bosques y deforestación</a
                             >
                         </li>
-                        <li><a @click="search_theme('9')">Megaproyectos</a></li>
+                        <li><a @click="search_theme('9')">Megaproyectos</a></li> -->
                     </ul>
                 </li>
                 <li><a @click="all_authors">AUTORES</a></li>
@@ -123,8 +128,18 @@ export default {
         return {
             logo: logo,
             home: home,
-            searchString: null
+            searchString: null,
+            categorias: ["1", "2", "3"]
         };
+    },
+
+    created() {
+        axios({
+            url: "/categorias"
+        }).then(resp => {
+            console.log(resp.data);
+            this.categorias = resp.data;
+        });
     },
 
     methods: {

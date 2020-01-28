@@ -2,4 +2,4 @@
 
 @section('content')
 <about-component><about-component/>
-@endsection
+@endsection 

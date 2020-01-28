@@ -36,6 +36,8 @@ Route::post('/allnews', 'publicacionController@allnews');
 Route::post('/relevant', 'publicacionController@relevant');
 Route::post('/recent', 'publicacionController@recent');
 Route::post('/getNews', 'publicacionController@getNews');
+Route::post('/updateNews', 'NoticiasController@update');
+Route::post('/deleteNew', 'NoticiasController@destroy');
 
 Route::post('/getDocument', 'publicacionController@getdoc');
 Route::post('/getsearch', 'publicacionController@getsearch');
