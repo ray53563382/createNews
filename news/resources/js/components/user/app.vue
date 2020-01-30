@@ -1,7 +1,7 @@
 <template>
     <div>
         <Header />
-        <Mostrelevantsection />
+        <Mostrelevantsection/>
         <Recentsection />
         <Footer />
     </div>

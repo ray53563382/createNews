@@ -3,37 +3,36 @@
     <Header />
 
     <div class="container">
-
         <div class="col-md-12 col-lg-12">
             <h4 class="p-title"><b>Multimedia</b></h4>
 
             <div class="row">
                 <div class="col-12">
                     <ul id="tabs" class="nav nav-tabs">
-                        <li class="nav-item"><a href="" data-target="#profile1" data-toggle="tab" class="nav-link small text-uppercase active">Videos</a></li>
-                        <li class="nav-item"><a href="" data-target="#messages1" data-toggle="tab" class="nav-link small text-uppercase">Podcast</a></li>
+
+                        <li class="nav-item"><a class="nav-link small text-uppercase active" v-on:click="changeData('Videos')">Videos</a></li>
+                        <li class="nav-item"><a class="nav-link small text-uppercase" v-on:click="changeData('Podcast')">Podcast</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="row">
-                <div id="profile1" class=" row tab-pane fade active show">
-                    <div class="multimedia col-lg-4" style="margin-top: 3%" v-for="(data, index) in resgistrosMulti" :key="`data-${index}`">
+                <div id="profile1" class=" row tab-pane fade active show" v-if="visible == true">
+                    <div class="multimedia col-lg-4" style="margin-top: 3%" v-for="(data, index) in resgistrosMultiVideo" :key="`data-${index}`">
                         <iframe width="360" height="240" :src="'https://www.youtube.com/embed/'+ data.url" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         <h6 class="color-lite-black pt-10 ">Tipo: <span class="color-black"><b>Multimedia</b></span> Video</h6>
                         <h5><b>{{data.nombre}}</b></h5>
                     </div>
                 </div>
 
-                <div id="messages1" class="tab-pane fade">
-                    <div class="list-group"><a href="" class="list-group-item d-inline-block"><span class="float-right badge badge-pill badge-dark">44</span> Message 1</a> <a href="" class="list-group-item d-inline-block"><span class="float-right badge badge-pill badge-dark">8</span> Message 2</a> <a href="" class="list-group-item d-inline-block"><span class="float-right badge badge-pill badge-dark">23</span> Message 3</a> <a href="" class="list-group-item d-inline-block text-muted">Message n..</a></div>
+                <div id="profile1" class=" row tab-pane fade active show" v-if="visible == false">
+                    <div class="multimedia col-lg-4" style="margin-top: 3%" v-for="(data, index) in resgistrosMultiAudio" :key="`data-${index}`">
+                        <iframe width="360" height="240" :src="'https://www.youtube.com/embed/'+ data.url" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <h6 class="color-lite-black pt-10 ">Tipo: <span class="color-black"><b>Multimedia</b></span> Video</h6>
+                        <h5><b>{{data.nombre}}</b></h5>
+                    </div>
                 </div>
-
             </div>
-
-            <!-- <div id="tabsContent" class="tab-content">
-              
-            </div> -->
 
         </div>
 
@@ -53,24 +52,42 @@ export default {
     },
     data() {
         return {
-            resgistrosMulti: [],
+            resgistrosMultiVideo: [],
+            resgistrosMultiAudio: [],
+            visible: Boolean
         }
     },
     mounted() {
-        this.resgistrosMulti = [];
+        this.resgistrosMultiVideo = [];
+        this.resgistrosMultiAudio = [];
 
         axios.get('/multimedia').then(res => {
-
             res.data.forEach(element => {
                 let url = element.url.split('v=');
-                console.log(url);
                 element.url = url[1];
-                this.resgistrosMulti.push(element)
-            });
+                if (element.tipo == 1) {
+                    this.resgistrosMultiVideo.push(element)
 
+                } else {
+                    this.resgistrosMultiAudio.push(element)
+                }
+
+            });
+            this.visible = true;
             console.log("**********************");
-            console.log(this.resgistrosMulti);
+            console.log(this.resgistrosMultiVideo);
+            console.log(this.resgistrosMultiAudio);
         });
+
+    },
+    methods: {
+        changeData(data) {
+            if (data == "Videos") {
+                this.visible = true;
+            } else {
+                this.visible = false;
+            }
+        }
     }
 };
 </script>
