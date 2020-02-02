@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Crisis climatica') }}</title>
+    <title>{{ config('app.name', 'Crisis climatica 2') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -25,9 +25,21 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-157527442-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157527442-1');
+    </script>
+
+
 </head>
 <body>
-    <div id="app" class="container-fluid" >
+    <!-- <div id="app" class="container-fluid" > -->
+    <div id="app" >
         {{-- <main  > --}}
             @yield('content')
         {{-- </main>  --}}

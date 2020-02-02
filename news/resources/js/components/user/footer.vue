@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="mb-30">
-                            <a href="#"><img :src="logo"/></a>
+                            <a href="#"><img :src="logo" style="width:86%"/></a>
                             <p class="mtb-20 color-ccc">
                                 Teléfonos : (55) 5661 19 25 - (55) 5661 53 98
                             </p>
@@ -122,7 +122,7 @@
 </template>
 
 <script>
-import logo from "../media/logo.png";
+import logo from "../media/LogoCeccam.png";
 
 export default {
     data() {
