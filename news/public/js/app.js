@@ -5420,6 +5420,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -5449,6 +5452,8 @@ Vue.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_3__["default"], {
       docTextBody: null,
       docEtiquetas: null,
       docURL: null,
+      showvideo: false,
+      showdescarga: false,
       logito: _media_home_png__WEBPACK_IMPORTED_MODULE_0___default.a,
       dataID: "hey",
       registros: [],
@@ -5479,20 +5484,69 @@ Vue.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_3__["default"], {
       }
     }).then(function (resp) {
       // console.log(resp);
-      _this.$loading(false);
+      if (resp.data.url == null) {
+        console.log("uno");
 
-      _this.docTitle = resp.data.titulo;
-      _this.docDate = resp.data.fecha;
-      _this.docAutor = resp.data.autor;
-      _this.docTheme = _this.categorias[resp.data.idcategoria];
-      _this.docImage = resp.data.imgdesmostrativa;
-      _this.docTextBody = resp.data.informacionArt;
-      _this.$refs.downloadpdf.download = "documento.pdf";
-      _this.$refs.downloadpdf.href = resp.data.pdf;
-      var url = resp.data.url.split("v=");
-      _this.docURL = url[1];
+        if (resp.data.pdf == null) {
+          console.log("pdf null");
+          _this.docTitle = resp.data.titulo;
+          _this.docDate = resp.data.fecha;
+          _this.docAutor = resp.data.autor;
+          _this.docTheme = _this.categorias[resp.data.idcategoria];
+          _this.docImage = resp.data.imgdesmostrativa;
+          _this.docTextBody = resp.data.informacionArt;
+
+          _this.$loading(false);
+        } else {
+          console.log("pdf no null");
+          _this.showdescarga = true;
+          _this.docTitle = resp.data.titulo;
+          _this.docDate = resp.data.fecha;
+          _this.docAutor = resp.data.autor;
+          _this.docTheme = _this.categorias[resp.data.idcategoria];
+          _this.docImage = resp.data.imgdesmostrativa;
+          _this.docTextBody = resp.data.informacionArt;
+          _this.$refs.downloadpdf.download = "documento.pdf";
+          _this.$refs.downloadpdf.href = resp.data.pdf;
+
+          _this.$loading(false);
+        }
+      } else {
+        console.log("dos");
+
+        if (resp.data.pdf == null) {
+          _this.showvideo = true;
+          _this.docTitle = resp.data.titulo;
+          _this.docDate = resp.data.fecha;
+          _this.docAutor = resp.data.autor;
+          _this.docTheme = _this.categorias[resp.data.idcategoria];
+          _this.docImage = resp.data.imgdesmostrativa;
+          _this.docTextBody = resp.data.informacionArt;
+          var url = resp.data.url.split("v=");
+          _this.docURL = url[1];
+
+          _this.$loading(false);
+        } else {
+          _this.docTitle = resp.data.titulo;
+          _this.docDate = resp.data.fecha;
+          _this.docAutor = resp.data.autor;
+          _this.docTheme = _this.categorias[resp.data.idcategoria];
+          _this.docImage = resp.data.imgdesmostrativa;
+          _this.docTextBody = resp.data.informacionArt;
+          _this.showdescarga = true;
+          _this.showvideo = true;
+          _this.$refs.downloadpdf.download = "documento.pdf";
+          _this.$refs.downloadpdf.href = resp.data.pdf;
+
+          var _url = resp.data.url.split("v=");
+
+          _this.docURL = _url[1];
+
+          _this.$loading(false);
+        }
+      }
     })["catch"](function (Error) {
-      return console.log(error);
+      return console.log(Error);
     });
   }
 });
@@ -6189,8 +6243,8 @@ Vue.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_3__["default"], {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _media_logo_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../media/logo.png */ "./resources/js/components/media/logo.png");
-/* harmony import */ var _media_logo_png__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_media_logo_png__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _media_LogoCeccam_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../media/LogoCeccam.png */ "./resources/js/components/media/LogoCeccam.png");
+/* harmony import */ var _media_LogoCeccam_png__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_media_LogoCeccam_png__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -6318,7 +6372,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      logo: _media_logo_png__WEBPACK_IMPORTED_MODULE_0___default.a
+      logo: _media_LogoCeccam_png__WEBPACK_IMPORTED_MODULE_0___default.a
     };
   }
 });
@@ -6336,8 +6390,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _media_logo_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../media/logo.png */ "./resources/js/components/media/logo.png");
-/* harmony import */ var _media_logo_png__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_media_logo_png__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _media_LogoCeccam_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../media/LogoCeccam.png */ "./resources/js/components/media/LogoCeccam.png");
+/* harmony import */ var _media_LogoCeccam_png__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_media_LogoCeccam_png__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _media_home_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../media/home.png */ "./resources/js/components/media/home.png");
 /* harmony import */ var _media_home_png__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_media_home_png__WEBPACK_IMPORTED_MODULE_2__);
 //
@@ -6447,7 +6501,7 @@ var $ = jquery__WEBPACK_IMPORTED_MODULE_0___default.a;
   name: "header-component",
   data: function data() {
     return {
-      logo: _media_logo_png__WEBPACK_IMPORTED_MODULE_1___default.a,
+      logo: _media_LogoCeccam_png__WEBPACK_IMPORTED_MODULE_1___default.a,
       home: _media_home_png__WEBPACK_IMPORTED_MODULE_2___default.a,
       searchString: null,
       categorias: ["1", "2", "3"]
@@ -53220,31 +53274,61 @@ var render = function() {
             domProps: { innerHTML: _vm._s(_vm.docTextBody) }
           }),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 col-lg-8 .embed-responsive" }, [
-            _c("div", { staticClass: "col-lg-4 my-4" }, [
-              _c("iframe", {
-                attrs: {
-                  width: "360",
-                  height: "240",
-                  src: "https://www.youtube.com/embed/" + _vm.docURL,
-                  frameborder: "0",
-                  allow:
-                    "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-                  allowfullscreen: ""
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.showvideo,
+                  expression: "showvideo"
                 }
-              })
-            ])
-          ]),
+              ],
+              staticClass: "col-md-12 col-lg-8 .embed-responsive"
+            },
+            [
+              _c("div", { staticClass: "col-lg-4 my-4" }, [
+                _c("iframe", {
+                  attrs: {
+                    width: "360",
+                    height: "240",
+                    src: "https://www.youtube.com/embed/" + _vm.docURL,
+                    frameborder: "0",
+                    allow:
+                      "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
+                    allowfullscreen: ""
+                  }
+                })
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 col-lg-8" }, [
-            _c("div", { staticClass: "col-12" }, [
-              _c("p", [
-                _c("a", { ref: "downloadpdf", staticClass: "buttonDownload" }, [
-                  _vm._v("Descarga pdf")
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.showdescarga,
+                  expression: "showdescarga"
+                }
+              ],
+              staticClass: "col-md-12 col-lg-8"
+            },
+            [
+              _c("div", { staticClass: "col-12" }, [
+                _c("p", [
+                  _c(
+                    "a",
+                    { ref: "downloadpdf", staticClass: "buttonDownload" },
+                    [_vm._v("Descarga pdf")]
+                  )
                 ])
               ])
-            ])
-          ]),
+            ]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-12 col-lg-8" }, [
             _c("p", [
@@ -54091,7 +54175,10 @@ var render = function() {
           _c("div", { staticClass: "col-sm-4" }, [
             _c("div", { staticClass: "mb-30" }, [
               _c("a", { attrs: { href: "#" } }, [
-                _c("img", { attrs: { src: _vm.logo } })
+                _c("img", {
+                  staticStyle: { width: "86%" },
+                  attrs: { src: _vm.logo }
+                })
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "mtb-20 color-ccc" }, [
@@ -70897,6 +70984,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/media/LogoCeccam.png":
+/*!******************************************************!*\
+  !*** ./resources/js/components/media/LogoCeccam.png ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/LogoCeccam.png?1c784aef09d97a31209d4288b637b041";
+
+/***/ }),
+
 /***/ "./resources/js/components/media/bitcoin.jpg":
 /*!***************************************************!*\
   !*** ./resources/js/components/media/bitcoin.jpg ***!
@@ -70938,17 +71036,6 @@ module.exports = "/images/home.png?56499d95569f7632233df91402672466";
 /***/ (function(module, exports) {
 
 module.exports = "/fonts/ionicons.ttf?24712f6c47821394fba7942fbb52c3b2";
-
-/***/ }),
-
-/***/ "./resources/js/components/media/logo.png":
-/*!************************************************!*\
-  !*** ./resources/js/components/media/logo.png ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/images/logo.png?d298f91013506b2c0ab3710027ad15b1";
 
 /***/ }),
 
