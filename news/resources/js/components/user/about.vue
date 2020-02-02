@@ -18,7 +18,10 @@
         <section>
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12 col-md-8">
+                    <div
+                        v-show="(muestramensaje = false)"
+                        class="col-sm-12 col-md-8"
+                    >
                         <h3><b>ENVÍANOS UN MENSAJE.</b></h3>
                         <p class="mb-30 mr-100 mr-sm-0">
                             Nos gustaría mucho saber sobre ti, ponte en contacto

@@ -3883,6 +3883,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3894,6 +3901,10 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
       registros: [],
       errors: [],
       categoria: "",
+      categoriasDta: [],
+      categorias: {
+        descripcion: ''
+      },
       registro: {
         titulo: "",
         fecha: "",
@@ -3905,14 +3916,22 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
       }
     };
   },
-  mounted: function mounted() {// console.log("Component mounted.");
-    // axios.get("/notas").then(res => {
-    //     console.log(res);
-    // });
+  mounted: function mounted() {
+    var _this = this;
+
+    this.categoriasDta = [];
+    axios.get('/categorias').then(function (res) {
+      res.data.forEach(function (element) {
+        _this.categoriasDta.push({
+          id: element.id,
+          descripcion: element.descripcion
+        });
+      });
+    });
   },
   methods: {
     agregar: function agregar(e) {
-      var _this = this;
+      var _this2 = this;
 
       console.log('niceee');
       this.errors = [];
@@ -3934,56 +3953,82 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
       if (!this.registro.importancia) {
         this.errors.push("El campo importancia es obligatorio.");
         console.log(this.errors);
-      }
+      } // if (!this.registro.idcategoria) {
+      //     this.errors.push("La categoria es obligatoria.");
+      //     console.log(this.errors);
+      // }
 
-      if (!this.registro.idcategoria) {
-        this.errors.push("La categoria es obligatoria.");
-        console.log(this.errors);
-      }
 
       if (!this.registro.informacionArt) {
         this.errors.push("La información del articulo es obligatoria.");
         console.log(this.errors);
-      }
+      } // if (!this.registro.imgdesmostrativa) {
+      //     this.errors.push("La imagen es obligatoria.");
+      //     console.log(this.errors);
+      // }
 
-      if (!this.registro.imgdesmostrativa) {
-        this.errors.push("La imagen es obligatoria.");
-        console.log(this.errors);
-      }
 
       if (this.registro.titulo && this.registro.fecha && // this.registro.autor &&
-      this.registro.importancia && this.registro.idcategoria && this.registro.informacionArt && this.registro.imgdesmostrativa) {
-        axios.post("/guardarNoticia", this.registro).then(function (resp) {
-          console.log(resp.data);
-          _this.errors = [];
-          _this.registro.titulo = "";
-          _this.registro.fecha = "";
-          _this.registro.autor = "Sin Autor";
-          _this.registro.importancia = "";
-          _this.registro.idcategoria = "";
-          _this.registro.imgdesmostrativa = "";
-          _this.registro.informacionArt = "";
+      this.registro.importancia && // this.registro.idcategoria &&
+      this.registro.informacionArt //   this.registro.imgdesmostrativa
+      ) {
+          axios.post("/guardarNoticia", this.registro).then(function (resp) {
+            console.log(resp.data);
+            _this2.errors = [];
+            _this2.registro.titulo = "";
+            _this2.registro.fecha = "";
+            _this2.registro.autor = "Sin Autor";
+            _this2.registro.importancia = "";
+            _this2.registro.idcategoria = "";
+            _this2.registro.imgdesmostrativa = "";
+            _this2.registro.informacionArt = "";
 
-          _this.$swal("Articulo guardado!", "Ahora ya puedo visualizarlo en su página web!", "success");
+            _this2.$swal("Articulo guardado!", "Ahora ya puedo visualizarlo en su página web!", "success");
 
-          document.getElementById("imgdata").value = "";
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
+            document.getElementById("imgdata").value = "";
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
     },
     obtenerImagen: function obtenerImagen(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       var fileReader = new FileReader();
       fileReader.readAsDataURL(e.target.files[0]);
 
       fileReader.onload = function (e) {
-        _this2.registro.imgdesmostrativa = e.target.result;
+        _this3.registro.imgdesmostrativa = e.target.result;
       };
     },
     guardarCategoria: function guardarCategoria() {
+      var _this4 = this;
+
+      this.categoriasDta = [];
       console.log(this.categoria);
+
+      if (this.categoria != '') {
+        this.categorias.descripcion = this.categoria;
+        axios.post('/categorias', this.categorias).then(function (res) {
+          _this4.$swal('Categoría guardada!', 'Ahora ya puedo visualizarlo en su página web!', 'success');
+
+          _this4.categoria = '';
+          axios.get('/categorias').then(function (res) {
+            res.data.forEach(function (element) {
+              _this4.categoriasDta.push({
+                id: element.id,
+                descripcion: element.descripcion
+              });
+            });
+          });
+        });
+      } else {
+        this.$swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'No se pudo agregar la categoría!'
+        });
+      }
     }
   },
   components: {
@@ -5041,6 +5086,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _footer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./footer */ "./resources/js/components/user/footer.vue");
 /* harmony import */ var _header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header */ "./resources/js/components/user/header.vue");
+//
+//
+//
 //
 //
 //
@@ -50812,43 +50860,20 @@ var render = function() {
                             }
                           }
                         },
-                        [
-                          _c("option", { attrs: { value: "1" } }, [
-                            _vm._v("Crisis climática y conservación")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "2" } }, [
-                            _vm._v("Minería")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "3" } }, [
-                            _vm._v("Hidroeléctricas y eólicas")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "4" } }, [
-                            _vm._v("Petróleo fracking y gasoductos")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "5" } }, [
-                            _vm._v("Derechos indígenas")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "6" } }, [
-                            _vm._v("Tierra y territorio")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "7" } }, [
-                            _vm._v("Agua")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "8" } }, [
-                            _vm._v("Bosques y deforestación")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "9" } }, [
-                            _vm._v("Megaproyectos")
-                          ])
-                        ]
+                        _vm._l(_vm.categoriasDta, function(item) {
+                          return _c(
+                            "option",
+                            { key: item.id, domProps: { value: item.id } },
+                            [
+                              _vm._v(
+                                "\n                                                            " +
+                                  _vm._s(item.descripcion) +
+                                  "\n                                                        "
+                              )
+                            ]
+                          )
+                        }),
+                        0
                       ),
                       _vm._v(" "),
                       _c(
@@ -53008,7 +53033,39 @@ var render = function() {
     [
       _c("Header"),
       _vm._v(" "),
-      _vm._m(0),
+      _c("section", [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: (_vm.muestramensaje = false),
+                    expression: "(muestramensaje = false)"
+                  }
+                ],
+                staticClass: "col-sm-12 col-md-8"
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("p", { staticClass: "mb-30 mr-100 mr-sm-0" }, [
+                  _vm._v(
+                    "\n                        Nos gustaría mucho saber sobre ti, ponte en contacto\n                        con nosotros.\n                    "
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(2)
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("Footer", { staticClass: "my-0" })
     ],
@@ -53020,208 +53077,184 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("section", [
-      _c("div", { staticClass: "container" }, [
+    return _c("h3", [_c("b", [_vm._v("ENVÍANOS UN MENSAJE.")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "form",
+      {
+        staticClass:
+          "form-block form-bold form-mb-20 form-h-35 form-brdr-b-grey pr-50 pr-sm-0"
+      },
+      [
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-sm-12 col-md-8" }, [
-            _c("h3", [_c("b", [_vm._v("ENVÍANOS UN MENSAJE.")])]),
-            _vm._v(" "),
-            _c("p", { staticClass: "mb-30 mr-100 mr-sm-0" }, [
-              _vm._v(
-                "\n                        Nos gustaría mucho saber sobre ti, ponte en contacto\n                        con nosotros.\n                    "
-              )
+          _c("div", { staticClass: "col-sm-6" }, [
+            _c("p", { staticClass: "color-ash" }, [
+              _vm._v("Nombre "),
+              _c("b", [_vm._v("*")])
             ]),
             _vm._v(" "),
-            _c(
-              "form",
-              {
+            _c("div", { staticClass: "pos-relative" }, [
+              _c("input", { staticClass: "pr-20", attrs: { type: "text" } }),
+              _vm._v(" "),
+              _c("i", { staticClass: "abs-tbr lh-35 font-13 color-green" })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-6" }, [
+            _c("p", { staticClass: "color-ash" }, [_vm._v("Email*")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "pos-relative" }, [
+              _c("input", { staticClass: "pr-20", attrs: { type: "email" } }),
+              _vm._v(" "),
+              _c("i", {
                 staticClass:
-                  "form-block form-bold form-mb-20 form-h-35 form-brdr-b-grey pr-50 pr-sm-0"
-              },
-              [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-sm-6" }, [
-                    _c("p", { staticClass: "color-ash" }, [
-                      _vm._v("Nombre "),
-                      _c("b", [_vm._v("*")])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "pos-relative" }, [
-                      _c("input", {
-                        staticClass: "pr-20",
-                        attrs: { type: "text" }
-                      }),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass: "abs-tbr lh-35 font-13 color-green"
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-6" }, [
-                    _c("p", { staticClass: "color-ash" }, [_vm._v("Email*")]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "pos-relative" }, [
-                      _c("input", {
-                        staticClass: "pr-20",
-                        attrs: { type: "email" }
-                      }),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass:
-                          "dplay-none abs-tbr lh-35 font-13 color-green ion-android-done"
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-6" }, [
-                    _c("p", { staticClass: "color-ash" }, [
-                      _vm._v(
-                        "\n                                    Número telefónico "
-                      ),
-                      _c("b", [_vm._v("*")])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "pos-relative" }, [
-                      _c("input", {
-                        staticClass: "pr-20",
-                        attrs: { type: "text" }
-                      }),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass:
-                          "dplay-none abs-tbr lh-35 font-13 color-green ion-android-done"
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-6" }, [
-                    _c("p", { staticClass: "color-ash" }, [
-                      _vm._v("compañia "),
-                      _c("b", [_vm._v("*")])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "pos-relative" }, [
-                      _c("input", {
-                        staticClass: "pr-20",
-                        attrs: { type: "text" }
-                      }),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass:
-                          "dplay-none abs-tbr lh-35 font-13 color-green ion-android-done"
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-12" }, [
-                    _c("div", { staticClass: "pos-relative pr-80" }, [
-                      _c("p", { staticClass: "color-ash" }, [
-                        _vm._v(
-                          "\n                                        Mensaje "
-                        ),
-                        _c("b", [_vm._v("*")])
-                      ]),
-                      _vm._v(" "),
-                      _c("h4", [
-                        _c("b", [_vm._v("Escríbenos tus comentarios.")])
-                      ]),
-                      _vm._v(" "),
-                      _c("textarea", { staticClass: "mb-0" }),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "abs-br font-20 plr-15 btn-fill-primary",
-                          attrs: { type: "submit" }
-                        },
-                        [_c("i", { staticClass: "ion-ios-paperplane" })]
-                      )
-                    ])
-                  ])
-                ])
-              ]
+                  "dplay-none abs-tbr lh-35 font-13 color-green ion-android-done"
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-6" }, [
+            _c("p", { staticClass: "color-ash" }, [
+              _vm._v(
+                "\n                                    Número telefónico "
+              ),
+              _c("b", [_vm._v("*")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "pos-relative" }, [
+              _c("input", { staticClass: "pr-20", attrs: { type: "text" } }),
+              _vm._v(" "),
+              _c("i", {
+                staticClass:
+                  "dplay-none abs-tbr lh-35 font-13 color-green ion-android-done"
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-6" }, [
+            _c("p", { staticClass: "color-ash" }, [
+              _vm._v("compañia "),
+              _c("b", [_vm._v("*")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "pos-relative" }, [
+              _c("input", { staticClass: "pr-20", attrs: { type: "text" } }),
+              _vm._v(" "),
+              _c("i", {
+                staticClass:
+                  "dplay-none abs-tbr lh-35 font-13 color-green ion-android-done"
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-12" }, [
+            _c("div", { staticClass: "pos-relative pr-80" }, [
+              _c("p", { staticClass: "color-ash" }, [
+                _vm._v("\n                                        Mensaje "),
+                _c("b", [_vm._v("*")])
+              ]),
+              _vm._v(" "),
+              _c("h4", [_c("b", [_vm._v("Escríbenos tus comentarios.")])]),
+              _vm._v(" "),
+              _c("textarea", { staticClass: "mb-0" }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "abs-br font-20 plr-15 btn-fill-primary",
+                  attrs: { type: "submit" }
+                },
+                [_c("i", { staticClass: "ion-ios-paperplane" })]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-12 col-md-4" }, [
+      _c("h3", { staticClass: "mb-20 mt-sm-50" }, [
+        _c("b", [_vm._v("INFORMACIÓN")])
+      ]),
+      _vm._v(" "),
+      _c(
+        "ul",
+        {
+          staticClass:
+            "font-11 list-relative list-li-pl-30 list-block list-li-mb-15"
+        },
+        [
+          _c("li", [
+            _c("i", { staticClass: "abs-tl ion-ios-location" }),
+            _vm._v("599 Co Rd\n                            771 Coyoacán"),
+            _c("br"),
+            _vm._v("81237. Ciudad de México\n                        ")
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("i", { staticClass: "abs-tl ion-android-mail" }),
+            _vm._v(
+              "crisisclimatica.yautonomia@gmail.com\n                        "
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-sm-12 col-md-4" }, [
-            _c("h3", { staticClass: "mb-20 mt-sm-50" }, [
-              _c("b", [_vm._v("INFORMACIÓN")])
-            ]),
-            _vm._v(" "),
-            _c(
-              "ul",
-              {
-                staticClass:
-                  "font-11 list-relative list-li-pl-30 list-block list-li-mb-15"
-              },
-              [
-                _c("li", [
-                  _c("i", { staticClass: "abs-tl ion-ios-location" }),
-                  _vm._v("599 Co Rd\n                            771 Coyoacán"),
-                  _c("br"),
-                  _vm._v("81237. Ciudad de México\n                        ")
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("i", { staticClass: "abs-tl ion-android-mail" }),
-                  _vm._v(
-                    "crisisclimatica.yautonomia@gmail.com\n                        "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("i", { staticClass: "abs-tl ion-android-call" }),
-                  _vm._v("(55) 5661\n                            19 25 "),
-                  _c("br"),
-                  _vm._v(
-                    "\n                            (55) 5661 53 98\n                        "
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "ul",
-              {
-                staticClass:
-                  "font-11  list-a-plr-10 list-a-plr-sm-5 list-a-ptb-15 list-a-ptb-sm-5"
-              },
-              [
-                _c("li", [
-                  _c("a", { staticClass: "pl-0", attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "ion-social-linkedin" })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "ion-social-facebook" })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "ion-social-twitter" })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "ion-social-google" })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "ion-social-pinterest" })
-                  ])
-                ])
-              ]
+          _c("li", [
+            _c("i", { staticClass: "abs-tl ion-android-call" }),
+            _vm._v("(55) 5661\n                            19 25 "),
+            _c("br"),
+            _vm._v(
+              "\n                            (55) 5661 53 98\n                        "
             )
           ])
-        ])
-      ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "ul",
+        {
+          staticClass:
+            "font-11  list-a-plr-10 list-a-plr-sm-5 list-a-ptb-15 list-a-ptb-sm-5"
+        },
+        [
+          _c("li", [
+            _c("a", { staticClass: "pl-0", attrs: { href: "#" } }, [
+              _c("i", { staticClass: "ion-social-linkedin" })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("a", { attrs: { href: "#" } }, [
+              _c("i", { staticClass: "ion-social-facebook" })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("a", { attrs: { href: "#" } }, [
+              _c("i", { staticClass: "ion-social-twitter" })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("a", { attrs: { href: "#" } }, [
+              _c("i", { staticClass: "ion-social-google" })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("a", { attrs: { href: "#" } }, [
+              _c("i", { staticClass: "ion-social-pinterest" })
+            ])
+          ])
+        ]
+      )
     ])
   }
 ]
