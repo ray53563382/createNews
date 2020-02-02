@@ -38,7 +38,8 @@
 
 </head>
 <body>
-    <div id="app" class="container-fluid" >
+    <!-- <div id="app" class="container-fluid" > -->
+    <div id="app" >
         {{-- <main  > --}}
             @yield('content')
         {{-- </main>  --}}
