@@ -118,7 +118,7 @@
 <script>
 import JQuery from "jquery";
 let $ = JQuery;
-import logo from "../media/logo.png";
+import logo from "../media/LogoCeccam.png";
 import home from "../media/home.png";
 
 export default {
