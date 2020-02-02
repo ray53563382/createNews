@@ -1,158 +1,288 @@
 <template>
-<div class="query-container">
-    <!-- <div class="row">
+    <div class="query-container">
+        <Header></Header>
+        <!-- <div class="row">
             <div class="col-lg-12"> -->
-    <Header />
-    <!-- </div>
+        <!-- <Header /> -->
+        <!-- </div>
         </div> -->
-    <div class="container">
-        <div class="row my-lg-3">
-            <div class="col-lg-12">
-                <h2>
-                    <!-- Resultados para: <b>{{ this.querystring }}</b> -->
-                </h2>
-            </div>
-        </div>
-
-        <div v-show="notFound" class="row">
-            <div class="col-lg-12">
-                <h3>
-                    No se han encontrado resultados. Intenta con otro término.
-                </h3>
-            </div>
-        </div>
-        <!-- ALL SEARCH START -->
-        <div v-if="searchFlag">
-            <paginate name="result" :list="resultados" :per="9" tag="div">
-                <h4 class="p-title" style="margin-bottom: 2%">
-                    <b>Publicaciones</b>
-                </h4>
-                <div class="row">
-                    <div v-for="(person, index) in paginated('result')" :key="index" class="col-12 col-lg-4 col-md-6 box" @click="goToDocumentView(person)">
-                        <img :src="person.imgdesmostrativa" alt="" style="width: 100%; height: 300px;" />
-                        <h4 class="pt-20">
-                            <a href="#"><b style="color: black;">{{
-                                    person.titulo
-                                }}</b></a>
-                        </h4>
-                        <!-- <ul style="margin-left: -48px;"> -->
-                        <ul style="margin-left: -8px">
-                            <li class="color-lite-black">
-                                Autor:
-                                <a href="#" class="color-black"><b>{{ person.autor }},</b></a>
-                                <br />
-                                {{person.fecha}}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </paginate>
-
-            <div class="container h-100" style="margin-top: 3%">
-                <div class="row h-100 justify-content-center align-items-center">
-                    <div>
-                        <paginate-links for="result" :classes="{
-                                ul: 'pagination',
-                                li: 'page-item',
-                                a: 'page-link'
-                            }"></paginate-links>
-                    </div>
+        <div class="container">
+            <div class="row my-lg-3">
+                <div class="col-lg-12">
+                    <h2>
+                        <!-- Resultados para: <b>{{ this.querystring }}</b> -->
+                    </h2>
                 </div>
             </div>
-        </div>
 
-        <!-- <div v-if="publicacionFlag">
+            <div v-show="notFound" class="row">
+                <div class="col-lg-12">
+                    <h3>
+                        No se han encontrado resultados. Intenta con otro
+                        término.
+                    </h3>
+                </div>
+            </div>
+            <!-- ALL SEARCH START -->
+            <div v-if="searchFlag">
+                <paginate name="result" :list="resultados" :per="9" tag="div">
+                    <h4 class="p-title" style="margin-bottom: 2%">
+                        <b>Publicaciones</b>
+                    </h4>
+                    <div class="row">
+                        <div
+                            v-for="(person, index) in paginated('result')"
+                            :key="index"
+                            class="col-12 col-lg-4 col-md-6 box"
+                            @click="goToDocumentView(person)"
+                        >
+                            <img
+                                :src="person.imgdesmostrativa"
+                                alt=""
+                                style="width: 100%; height: 300px;"
+                            />
+                            <h4 class="pt-20">
+                                <a href="#"
+                                    ><b style="color: black;">{{
+                                        person.titulo
+                                    }}</b></a
+                                >
+                            </h4>
+                            <!-- <ul style="margin-left: -48px;"> -->
+                            <ul style="margin-left: -8px">
+                                <li class="color-lite-black">
+                                    Autor:
+                                    <a href="#" class="color-black"
+                                        ><b>{{ person.autor }},</b></a
+                                    >
+                                    <br />
+                                    {{ person.fecha }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </paginate>
+
+                <div class="container h-100" style="margin-top: 3%">
+                    <div
+                        class="row h-100 justify-content-center align-items-center"
+                    >
+                        <div>
+                            <paginate-links
+                                for="result"
+                                :classes="{
+                                    ul: 'pagination',
+                                    li: 'page-item',
+                                    a: 'page-link'
+                                }"
+                            ></paginate-links>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div v-if="publicacionFlag">
             <documentView></documentView>
         </div> -->
 
-        <!-- ALL SEARCH END -->
-        <!-- AUTHORS START -->
-        <div v-if="all_authors_flag">
-            <h4 class="p-title" style="margin-bottom: 2%">
-                <b>Autores</b>
-            </h4>
-            <div class="row">
-                <div class="col-lg-8 col-md-6 col-sm-12">
-                    <paginate name="result" :list="resultadosAtores" :per="5">
-                        <div v-for="(object, index) in paginated('result')" :key="index">
-                            <div @click="fetchAuthor(object)" class="container border border-warning my-5 py-4 px-4 mx-2 mycursor">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <div>
-                                            <img style="height: 6em; width: 4em" src="../media/pencil.png" alt="" class="img-thumbnail" />
+            <!-- ALL SEARCH END -->
+            <!-- AUTHORS START -->
+            <div v-if="all_authors_flag">
+                <h4 class="p-title" style="margin-bottom: 2%">
+                    <b>Autores</b>
+                </h4>
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-sm-12">
+                        <paginate
+                            name="result"
+                            :list="resultadosAtores"
+                            :per="5"
+                        >
+                            <div
+                                v-for="(object, index) in paginated('result')"
+                                :key="index"
+                            >
+                                <div
+                                    @click="fetchAuthor(object)"
+                                    class="container border border-warning my-5 py-4 px-4 mx-2 mycursor"
+                                >
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div>
+                                                <img
+                                                    style="height: 6em; width: 4em"
+                                                    src="../media/pencil.png"
+                                                    alt=""
+                                                    class="img-thumbnail"
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-9">
-                                        <div>
-                                            <b>Ver todo de:</b>
-                                            <h2 class="text-warning" style="color:#847811 !important">{{ object }}</h2>
-                                            <!-- <h3>object</h3> -->
+                                        <div class="col-9">
+                                            <div>
+                                                <b>Ver todo de:</b>
+                                                <h2
+                                                    class="text-warning"
+                                                    style="color:#847811 !important"
+                                                >
+                                                    {{ object }}
+                                                </h2>
+                                                <!-- <h3>object</h3> -->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </paginate>
-                    <div class="container ">
-                        <div class="row h-100 justify-content-center align-items-center">
-                            <div>
-                                <paginate-links for="result" :classes="{ ul: 'pagination', li: 'page-item', a: 'page-link' }"></paginate-links>
+                        </paginate>
+                        <div class="container ">
+                            <div
+                                class="row h-100 justify-content-center align-items-center"
+                            >
+                                <div>
+                                    <paginate-links
+                                        for="result"
+                                        :classes="{
+                                            ul: 'pagination',
+                                            li: 'page-item',
+                                            a: 'page-link'
+                                        }"
+                                    ></paginate-links>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <popularPost></popularPost>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <popularPost></popularPost>
+                    </div>
                 </div>
             </div>
-
-        </div>
-        <!-- AUTHORS END -->
-        <!-- DOCUMENTS START -->
-        <div v-if="all_documents">
-            <div class="row">
-                <div class="col-md-12 col-lg-8">
-                    <paginate name="result" :list="resultados" :per="5">
-                        <h4 class="p-title"><b>Documentos</b></h4>
-                        <ul>
-                            <div v-for="(object, index) in paginated('result')" :key="index">
-                                <a :href="'/documentViewpdf/' + object.id" style="color: black !important;">
-                                    <li :href="'/documentViewpdf/' + object.id" style="margin-top:2%">
-                                        <img style="width: 62px !important;" :src="object.imgdesmostrativa" :href="
+            <!-- AUTHORS END -->
+            <!-- DOCUMENTS START -->
+            <div v-if="all_documents">
+                <div class="row">
+                    <div class="col-md-12 col-lg-8">
+                        <paginate name="result" :list="resultados" :per="5">
+                            <h4 class="p-title"><b>Documentos</b></h4>
+                            <ul>
+                                <div
+                                    v-for="(object, index) in paginated(
+                                        'result'
+                                    )"
+                                    :key="index"
+                                >
+                                    <a
+                                        :href="'/documentViewpdf/' + object.id"
+                                        style="color: black !important;"
+                                    >
+                                        <li
+                                            :href="
                                                 '/documentViewpdf/' + object.id
-                                            " />
-                                        <h3>{{ object.nombre }}</h3>
-                                        <p>Ver detalle</p>
-                                    </li>
-                                </a>
-                            </div>
-                        </ul>
-                    </paginate>
-                    <div class="centrar" style="width: 50%; margin: 0 auto;">
-                        <paginate-links for="result" :classes="{
-                                ul: 'pagination',
-                                li: 'page-item',
-                                a: 'page-link',
-                                center: 'width: 50%; margin: 0 auto;'
-                            }"></paginate-links>
+                                            "
+                                            style="margin-top:2%"
+                                        >
+                                            <img
+                                                style="width: 62px !important;"
+                                                :src="object.imgdesmostrativa"
+                                                :href="
+                                                    '/documentViewpdf/' +
+                                                        object.id
+                                                "
+                                            />
+                                            <h3>{{ object.nombre }}</h3>
+                                            <p>Ver detalle</p>
+                                        </li>
+                                    </a>
+                                </div>
+                            </ul>
+                        </paginate>
+                        <div
+                            class="centrar"
+                            style="width: 50%; margin: 0 auto;"
+                        >
+                            <paginate-links
+                                for="result"
+                                :classes="{
+                                    ul: 'pagination',
+                                    li: 'page-item',
+                                    a: 'page-link',
+                                    center: 'width: 50%; margin: 0 auto;'
+                                }"
+                            ></paginate-links>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <popularPost></popularPost>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-md-6 col-lg-4">
-                    <popularPost></popularPost>
+            <!-- Todos las acciones -->
+            <div v-if="allActionsFlag">
+                <paginate name="result" :list="resultados" :per="9" tag="div">
+                    <h4 class="p-title" style="margin-bottom: 2%">
+                        <b>Publicaciones</b>
+                    </h4>
+                    <div class="row">
+                        <div
+                            v-for="(person, index) in paginated('result')"
+                            :key="index"
+                            class="col-12 col-lg-4 col-md-6 box"
+                            @click="goToActionView(person)"
+                        >
+                            <img
+                                :src="person.imgdesmostrativa"
+                                alt=""
+                                style="width: 100%; height: 300px;"
+                            />
+                            <h4 class="pt-20">
+                                <a href="#"
+                                    ><b style="color: black;">{{
+                                        person.titulo
+                                    }}</b></a
+                                >
+                            </h4>
+                            <!-- <ul style="margin-left: -48px;"> -->
+                            <ul style="margin-left: -8px">
+                                <li class="color-lite-black">
+                                    Autor:
+                                    <a href="#" class="color-black"
+                                        ><b>{{ person.autor }},</b></a
+                                    >
+                                    <br />
+                                    {{ person.fecha }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </paginate>
+
+                <div class="container h-100" style="margin-top: 3%">
+                    <div
+                        class="row h-100 justify-content-center align-items-center"
+                    >
+                        <div>
+                            <paginate-links
+                                for="result"
+                                :classes="{
+                                    ul: 'pagination',
+                                    li: 'page-item',
+                                    a: 'page-link'
+                                }"
+                            ></paginate-links>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <!-- Todos las acciones END -->
         </div>
+        <!-- DOCUMENTS END -->
 
-    </div>
-    <!-- DOCUMENTS END -->
-    <!-- <div class="row my-4">
+        <!-- <div class="row my-4">
             <div class="col-lg-12"> -->
-    <Footer class="my-3" />
-    <!-- </div>
+        <Footer class="my-3" />
+        <!-- </div>
         </div> -->
-</div>
+    </div>
 </template>
 
 <script>
@@ -160,10 +290,10 @@ import logito from "../media/home.png";
 import Header from "./header";
 import Footer from "./footer";
 import Searchcard from "./searchcard";
-import VueLoading from 'vuejs-loading-plugin'
+import VueLoading from "vuejs-loading-plugin";
 Vue.use(VueLoading, {
-    text: 'Cargando'
-})
+    text: "Cargando"
+});
 
 import VuePaginate from "vue-paginate";
 Vue.use(VuePaginate);
@@ -206,6 +336,9 @@ export default {
 
         goToDocumentView(person) {
             location.replace("/documentView/" + person.id);
+        },
+        goToActionView(person) {
+            location.replace("/actionView/" + person.id);
         }
     },
     data() {
@@ -220,6 +353,7 @@ export default {
             publicacionFlag: false,
             all_documents: false,
             order: "default",
+            allActionsFlag: false,
             sendData: []
             // pencil: pencil
         };
@@ -230,99 +364,117 @@ export default {
 
         if (this.querystring == "get_all_docs") {
             axios({
-                    method: "post",
-                    url: "/recentdata",
-                    data: {
-                        type: this.order
-                    }
-                })
+                method: "post",
+                url: "/recentdata",
+                data: {
+                    type: this.order
+                }
+            })
                 .then(resp => {
                     this.searchFlag = true;
                     this.resultados = resp.data;
                     this.$loading(false);
-
                 })
                 .catch(Error => console.log(Error));
-        } else if(this.querystring == "get_all_news"){
+        } else if (this.querystring == "get_all_acciones") {
             axios({
-                    method: "post",
-                    url: "/allnews",
-                    data: {
-                        type: this.order
-                    }
+                method: "post",
+                url: "/getAllActions",
+                data: {
+                    orden: this.order
+                }
+            })
+                .then(resp => {
+                    this.allActionsFlag = true;
+                    this.resultados = resp.data;
+                    this.$loading(false);
                 })
+                .catch(Error => console.log(Error));
+        } else if (this.querystring == "get_all_news") {
+            axios({
+                method: "post",
+                url: "/allnews",
+                data: {
+                    type: this.order
+                }
+            })
                 .then(resp => {
                     this.searchFlag = true;
                     this.resultados = resp.data;
                     this.$loading(false);
-
                 })
                 .catch(Error => console.log(Error));
         } else {
             if (this.author != undefined) {
                 this.searchFlag = true;
                 axios({
-                        method: "post",
-                        url: "/allfromAuthor",
-                        data: {
-                            author: this.author
-                        }
-                    })
+                    method: "post",
+                    url: "/allfromAuthor",
+                    data: {
+                        author: this.author
+                    }
+                })
                     .then(resp => {
                         this.resultados = resp.data;
                         this.$loading(false);
                         this.resultados.length == undefined ||
-                            this.resultados.length <= 0 ?
-                            (this.notFound = true) :
-                            (this.notFound = false);
+                        this.resultados.length <= 0
+                            ? (this.notFound = true)
+                            : (this.notFound = false);
 
                         // console.log(this.resultados.length);
                     })
                     .catch(Error => console.log(error));
             } else if (this.theme) {
                 axios({
-                        method: "post",
-                        url: "/gettheme",
-                        data: {
-                            idcategoria: this.theme
-                        }
-                    })
+                    method: "post",
+                    url: "/gettheme",
+                    data: {
+                        idcategoria: this.theme
+                    }
+                })
                     .then(resp => {
                         this.searchFlag = true;
                         this.resultados = resp.data;
                         this.$loading(false);
                         this.resultados.length == undefined ||
-                            this.resultados.length <= 0 ?
-                            (this.notFound = true) :
-                            (this.notFound = false);
+                        this.resultados.length <= 0
+                            ? (this.notFound = true)
+                            : (this.notFound = false);
                     })
                     .catch(Error => console.log(Error));
             } else {
                 if (this.querystring == "all") {
                     this.all_authors_flag = true;
                     axios({
-                            method: "post",
-                            url: "/allAuthors"
-                        })
+                        method: "post",
+                        url: "/allAuthors"
+                    })
                         .then(resp => {
                             console.log(resp.data);
                             this.$loading(false);
                             this.resultados = resp.data;
 
-                            console.log("ijasdiojaiodjaiojsdoajodjajsdjasdjajo")
-                            this.resultadosAtores = [...new Set(this.resultados)];
+                            console.log(
+                                "ijasdiojaiodjaiojsdoajodjajsdjasdjajo"
+                            );
+                            this.resultadosAtores = [
+                                ...new Set(this.resultados)
+                            ];
                             console.log(this.resultadosAtores);
-                            console.log("ijasdiojaiodjaiojsdoajodjajsdjasdjajo")
+                            console.log(
+                                "ijasdiojaiodjaiojsdoajodjajsdjasdjajo"
+                            );
                         })
                         .catch(Error => console.log(Error));
                 } else {
                     axios({
-                            method: "post",
-                            url: "/getsearch",
-                            data: {
-                                q_string: this.querystring
-                            }
-                        })
+                        method: "post",
+                        url: "/getsearch",
+                        data: {
+                            q_string: this.querystring
+                        }
+                    })
                         .then(resp => {
                             if (this.querystring == "allDocuments") {
                                 console.log(resp.data);
@@ -346,9 +498,9 @@ export default {
 
                                 // console.log(resp.data);
                                 this.resultados.length == undefined ||
-                                    this.resultados.length <= 0 ?
-                                    (this.notFound = true) :
-                                    (this.notFound = false);
+                                this.resultados.length <= 0
+                                    ? (this.notFound = true)
+                                    : (this.notFound = false);
                                 // console.log(this.resultados.length);
                             }
                         })
@@ -392,7 +544,7 @@ export default {
     padding-top: 20px !important;
 }
 
-.list-li-mr-20>li {
+.list-li-mr-20 > li {
     margin-right: 20px;
 }
 

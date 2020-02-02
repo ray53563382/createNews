@@ -20,12 +20,16 @@
                         class="float-right float-sm-none list-a-plr-10 list-a-plr-sm-5 list-a-ptb-15 list-a-ptb-sm-5"
                     >
                         <li>
-                            <a class="pl-0 pl-sm-10" href="https://www.facebook.com/ceccam.orgclass" 
+                            <a
+                                class="pl-0 pl-sm-10"
+                                href="https://www.facebook.com/ceccam.orgclass"
                                 ><i class="ion-social-facebook"></i
                             ></a>
                         </li>
                         <li>
-                            <a  href="https://twitter.com/Ceccam9"><i class="ion-social-twitter" ></i></a>
+                            <a href="https://twitter.com/Ceccam9"
+                                ><i class="ion-social-twitter"></i
+                            ></a>
                         </li>
                         <!-- <li>
                             <a  href="enlacepagina.html"><i class="ion-social-google"></i></a>
@@ -34,7 +38,9 @@
                             <a  href="enlacepagina.html"><i class="ion-social-instagram"></i></a>
                         </li> -->
                         <li>
-                            <a  href="enlacepagina.html"><i class="ion-social-youtube"></i></a>
+                            <a href="enlacepagina.html"
+                                ><i class="ion-social-youtube"></i
+                            ></a>
                         </li>
                     </ul>
                 </div>
@@ -74,39 +80,15 @@
                                 item.descripcion
                             }}</a>
                         </li>
-                        <!-- <li>
-                            <a @click="search_theme('1')"
-                                >Crisis Climática y Conservación</a
-                            >
-                        </li>
-                        <li><a @click="search_theme('2')">Minería</a></li>
-                        <li>
-                            <a @click="search_theme('3')"
-                                >Hidroeléctricas y eólicas</a
-                            >
-                        </li>
-                        <li>
-                            <a @click="search_theme('4')"
-                                >Petróleo, Fracking y Gasoductos</a
-                            >
-                        </li>
-                        <li>
-                            <a @click="search_theme('5')">Derechos indígenas</a>
-                        </li>
-                        <li>
-                            <a @click="search_theme('6')">
-                                Tierra y Territorio</a
-                            >
-                        </li>
-                        <li><a @click="search_theme('7')">Agua</a></li>
-                        <li>
-                            <a @click="search_theme('8')"
-                                >Bosques y deforestación</a
-                            >
-                        </li>
-                        <li><a @click="search_theme('9')">Megaproyectos</a></li> -->
                     </ul>
                 </li>
+                <li class="drop-down">
+                    <a>Declaraciones<i class="ion-arrow-down-b"></i></a>
+                    <ul class="drop-down-menu drop-down-inner">
+                        <li><a @click="all_actions">Acciones</a></li>
+                    </ul>
+                </li>
+
                 <li><a @click="all_authors">AUTORES</a></li>
                 <li><a @click="all_documents">DOCUMENTOS</a></li>
             </ul>
@@ -158,6 +140,10 @@ export default {
         },
         all_documents() {
             this.searchString = "allDocuments";
+            location.replace("/search/" + this.searchString);
+        },
+        all_actions() {
+            this.searchString = "get_all_acciones";
             location.replace("/search/" + this.searchString);
         },
         display_menu() {

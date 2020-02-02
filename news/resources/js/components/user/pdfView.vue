@@ -1,70 +1,83 @@
 <template>
-<div>
-    <div class="row">
-        <div class="col-12">
-            <Header></Header>
+    <div>
+        <div class="row">
+            <div class="col-12">
+                <Header></Header>
+            </div>
         </div>
-    </div>
 
-    <div class="container">
-        <div class="row my-5">
-            <div class="col-lg-8 col-md-7 col-sm-12">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 my-5">
-                            <p class="h1 text-muted">{{ docTitle }}</p>
-                            <!-- <p class="h1 text-muted">{{docTitle}}</p> -->
+        <div class="container">
+            <div class="row my-5">
+                <div class="col-lg-8 col-md-7 col-sm-12">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 my-5">
+                                <p class="h1 text-muted">{{ docTitle }}</p>
+                                <!-- <p class="h1 text-muted">{{docTitle}}</p> -->
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-4">
-                                    <p>Por: {{ docAutor }}</p>
-                                </div>
-                                <!-- <div class="col-4">
+                        <div class="row">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p>Por: {{ docAutor }}</p>
+                                    </div>
+                                    <!-- <div class="col-4">
                                     <p class="h5">Tema: {{ docTheme }}</p>
                                 </div> -->
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <p class="h6">{{ docDate }}</p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <img :src="docImage" alt class="img-fluid img-thumbnail" style="width: 117px;" />
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p class="h6">{{ docDate }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row my-5">
-                                <div class="container">
-                                    <div v-html="docTextBody" class="col-12"></div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <img
+                                            :src="docImage"
+                                            alt
+                                            class="img-fluid img-thumbnail"
+                                            style="width: 117px;"
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row my-5">
-                                <div class="col-12">
-                                    <p>
-                                        <a ref="downloadpdf" @click="goToDownload" class="buttonDownload" style="float: right;">Descarga pdf</a>
-                                    </p>
+                                <div class="row my-5">
+                                    <div class="container">
+                                        <div
+                                            v-html="docTextBody"
+                                            class="col-12"
+                                        ></div>
+                                    </div>
+                                </div>
+                                <div class="row my-5">
+                                    <div class="col-12">
+                                        <p>
+                                            <a
+                                                ref="downloadpdf"
+                                                @click="goToDownload"
+                                                class="buttonDownload"
+                                                style="float: right;"
+                                                >Descarga pdf</a
+                                            >
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class=" col-lg-4 col-md-5 col-sm-12">
-                <popularPost></popularPost>>
+                <div class=" col-lg-4 col-md-5 col-sm-12">
+                    <popularPost></popularPost>>
+                </div>
             </div>
-
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <Footer></Footer>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <Footer></Footer>
-        </div>
-    </div>
-</div>
 </template>
 
 <script>
@@ -129,12 +142,12 @@ export default {
         console.log(this.myid);
 
         axios({
-                method: "post",
-                url: "/getpdf",
-                data: {
-                    id: this.myid
-                }
-            })
+            method: "post",
+            url: "/getpdf",
+            data: {
+                id: this.myid
+            }
+        })
             .then(resp => {
                 console.log(resp.data);
 
@@ -170,7 +183,7 @@ export default {
     position: relative;
     padding: 10px 25px;
 
-    background-color: #4CC713;
+    background-color: #4cc713;
     color: white;
 
     font-family: sans-serif;
@@ -187,7 +200,7 @@ export default {
 
 .buttonDownload:before,
 .buttonDownload:after {
-    content: ' ';
+    content: " ";
     display: block;
     position: absolute;
     left: 15px;
@@ -219,17 +232,16 @@ export default {
 }
 
 .buttonDownload:hover:before {
-    border-color: #4CC713;
+    border-color: #4cc713;
 }
 
 .buttonDownload:hover:after {
-    border-top-color: #4CC713;
+    border-top-color: #4cc713;
     animation-play-state: running;
 }
 
 /* keyframes for the download icon anim */
 @keyframes downloadArrow {
-
     /* 0% and 0.001% keyframes used as a hackish way of having the button frozen on a nice looking frame by default */
     0% {
         margin-top: -7px;

@@ -24,9 +24,10 @@ window.EventBus = new Vue();
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-
-Vue.component('multimediadata', require('./components/user/multimedia.vue').default); //component name should be in camel-case
-
+Vue.component(
+    "multimediadata",
+    require("./components/user/multimedia.vue").default
+); //component name should be in camel-case
 
 Vue.component(
     "about-component",
@@ -56,6 +57,11 @@ Vue.component(
 );
 
 Vue.component(
+    "actionview-component",
+    require("./components/user/actionView.vue").default
+);
+
+Vue.component(
     "searchview-component",
     require("./components/user/searchComponent.vue").default
 );
@@ -73,6 +79,8 @@ Vue.component(
     "addDocument",
     require("./components/adm/addDocument.vue").default
 );
+
+Vue.component("addAction", require("./components/adm/addAction.vue").default);
 
 Vue.component("addNoticia", require("./components/adm/addNoticia.vue").default);
 
@@ -97,9 +105,6 @@ Vue.component(
     "documentView",
     require("./components/user/documentView.vue").default
 );
-
-
-
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

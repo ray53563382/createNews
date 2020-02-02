@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Route::get('documentView/{id}', 'DocumentsViewController@index' );
 Route::get('documentViewpdf/{id}', 'DocumentsViewController@pdfview' );
+Route::get('actionView/{id}', 'DocumentsViewController@actionview' );
+
 
 
 Route::get('search/{querystring}', 'DocumentsViewController@search');
@@ -47,7 +49,14 @@ Route::post('/allrecent', 'publicacionController@allrecent');
 Route::post('/getpdf', 'publicacionController@getpdf');
 Route::post('/gettheme', 'publicacionController@getheme');
 Route::post('/colocarImportante', 'publicacionController@colocarImportante');
-Route::post('/removerImportante', 'publicacionController@removerImportante');
+
+// Acciones
+Route::post('/actionRegister', 'ActionsController@store');
+Route::post('/getAllActions', 'ActionsController@index');
+Route::post('/getAction', 'ActionsController@show');
+
+
+
 
 // Route::post('/fetchAllDocs', 'publicacionController@fetchAllDocs');
 

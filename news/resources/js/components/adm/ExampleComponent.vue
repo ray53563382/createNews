@@ -60,6 +60,22 @@
                         <li>
                             <a
                                 class="nav-link"
+                                v-on:click="changeData('accion')"
+                            >
+                                <i
+                                    class="fas fa-passport"
+                                    style="font-size: 25px !important;margin-right: 15px !important;"
+                                ></i>
+                                <p
+                                    style="font-size: 11px !important; cursor:pointer"
+                                >
+                                    Agregar Acciones
+                                </p>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                class="nav-link"
                                 v-on:click="changeData('informacion')"
                             >
                                 <i
@@ -241,6 +257,8 @@ export default {
                 this.dynamicComponent = "addNoticia";
             } else if (msg == "editnoticias") {
                 this.dynamicComponent = "editnoticia";
+            } else if (msg == "accion") {
+                this.dynamicComponent = "addAction";
             }
         }
     },
