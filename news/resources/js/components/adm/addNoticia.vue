@@ -34,7 +34,14 @@
                                             <div class="col-md-4 pr-1">
                                                 <div class="form-group">
                                                     <label>Categoria</label>
-                                                    <select class="form-control" v-model="registro.idcategoria" style="width: 72%;     display: inline-block;" >
+
+                                                    <select class="form-control" v-model="registro.idcategoria" style="width: 72%;     display: inline-block;">
+                                                        <option v-for="item in categoriasDta" :value="item.id" :key="item.id">
+                                                            {{ item.descripcion }}
+                                                        </option>
+                                                    </select>
+
+                                                    <!-- <select class="form-control" v-model="registro.idcategoria" style="width: 72%;     display: inline-block;" >
                                                         <option value="1">Crisis climática y conservación</option>
                                                         <option value="2">Minería</option>
                                                         <option value="3">Hidroeléctricas y eólicas</option>
@@ -44,7 +51,7 @@
                                                         <option value="7">Agua</option>
                                                         <option value="8">Bosques y deforestación</option>
                                                         <option value="9">Megaproyectos</option>
-                                                    </select>
+                                                    </select> -->
  
 
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">+</button>
@@ -187,6 +194,12 @@ export default {
             registros: [],
             errors: [],
             categoria: "",
+            categoriasDta:[],
+
+            categorias: {
+                descripcion: ''
+            },
+
             registro: {
                 titulo: "",
                 fecha: "",
@@ -199,10 +212,15 @@ export default {
         };
     },
     mounted() {
-        // console.log("Component mounted.");
-        // axios.get("/notas").then(res => {
-        //     console.log(res);
-        // });
+        this.categoriasDta = [];
+        axios.get('/categorias').then(res => {
+            res.data.forEach(element => {
+                this.categoriasDta.push({
+                    id: element.id,
+                    descripcion: element.descripcion
+                });
+            });
+        });
     },
     methods: {
         agregar: function(e) {
@@ -225,27 +243,27 @@ export default {
                 this.errors.push("El campo importancia es obligatorio.");
                 console.log(this.errors);
             }
-            if (!this.registro.idcategoria) {
-                this.errors.push("La categoria es obligatoria.");
-                console.log(this.errors);
-            }
+            // if (!this.registro.idcategoria) {
+            //     this.errors.push("La categoria es obligatoria.");
+            //     console.log(this.errors);
+            // }
             if (!this.registro.informacionArt) {
                 this.errors.push("La información del articulo es obligatoria.");
                 console.log(this.errors);
             }
-            if (!this.registro.imgdesmostrativa) {
-                this.errors.push("La imagen es obligatoria.");
-                console.log(this.errors);
-            }
+            // if (!this.registro.imgdesmostrativa) {
+            //     this.errors.push("La imagen es obligatoria.");
+            //     console.log(this.errors);
+            // }
 
             if (
                 this.registro.titulo &&
                 this.registro.fecha &&
                 // this.registro.autor &&
                 this.registro.importancia &&
-                this.registro.idcategoria &&
-                this.registro.informacionArt &&
-                this.registro.imgdesmostrativa
+               // this.registro.idcategoria &&
+                this.registro.informacionArt 
+             //   this.registro.imgdesmostrativa
             ) {
                 axios
                     .post("/guardarNoticia", this.registro)
@@ -280,7 +298,36 @@ export default {
             };
         },
         guardarCategoria() {
+              this.categoriasDta = [];
             console.log(this.categoria);
+            if (this.categoria != '') {
+                this.categorias.descripcion = this.categoria;
+                axios.post('/categorias', this.categorias)
+                    .then((res) => {
+                        this.$swal(
+                            'Categoría guardada!',
+                            'Ahora ya puedo visualizarlo en su página web!',
+                            'success'
+                        )
+                        this.categoria = '';
+
+                        axios.get('/categorias').then(res => {
+                            res.data.forEach(element => {
+                                this.categoriasDta.push({
+                                    id: element.id,
+                                    descripcion: element.descripcion
+                                });
+                            });
+                        });
+                    })
+
+            } else {
+                this.$swal({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No se pudo agregar la categoría!',
+                })
+            }
         }
     },
     components: {
