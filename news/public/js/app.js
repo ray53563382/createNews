@@ -2496,8 +2496,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-sweetalert2 */ "./node_modules/vue-sweetalert2/dist/index.js");
 /* harmony import */ var sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert2/dist/sweetalert2.min.css */ "./node_modules/sweetalert2/dist/sweetalert2.min.css");
 /* harmony import */ var sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2_dist_sweetalert2_min_css__WEBPACK_IMPORTED_MODULE_3__);
-//
-//
+/* harmony import */ var vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuejs-loading-plugin */ "./node_modules/vuejs-loading-plugin/index.js");
 //
 //
 //
@@ -2613,6 +2612,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED_MODULE_2__["default"]);
+
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  text: 'Cargando'
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2644,6 +2647,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
     agregar: function agregar(e) {
       var _this2 = this;
 
+      this.$loading(true);
       this.errors = [];
 
       if (!this.registro.fecha) {
@@ -2660,11 +2664,10 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
 
       if (!this.registro.imgdesmostrativa) {
         this.errors.push("La imagen es obligatoria.");
-      }
+      } // if (!this.registro.pdf) {
+      // this.errors.push("El pdf es obligatorio.");
+      // }
 
-      if (!this.registro.pdf) {
-        this.errors.push("El pdf es obligatorio.");
-      }
 
       if (!this.registro.informacion) {
         this.errors.push("La información es obligatoria.");
@@ -2672,7 +2675,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
 
       this.registro.descarga = 0;
 
-      if (this.registro.nombre && this.registro.fecha && this.registro.importancia && this.registro.imgdesmostrativa && this.registro.pdf && this.registro.informacion) {
+      if (this.registro.nombre && this.registro.fecha && this.registro.importancia && this.registro.imgdesmostrativa && this.registro.informacion) {
         axios.post('/document', this.registro).then(function (resp) {
           _this2.registro.fecha = "";
           _this2.registro.nombre = "";
@@ -2683,6 +2686,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
 
           document.getElementById("pdf").value = "";
           document.getElementById("img").value = "";
+
+          _this2.$loading(false);
         })["catch"](function (error) {
           console.log(error);
         });
@@ -6234,12 +6239,85 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Header: _header__WEBPACK_IMPORTED_MODULE_0__["default"],
     Footer: _footer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      resgistrosMultiVideo: [],
+      resgistrosMultiAudio: [],
+      visible: Boolean
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.resgistrosMultiVideo = [];
+    this.resgistrosMultiAudio = [];
+    axios.get('/multimedia').then(function (res) {
+      res.data.forEach(function (element) {
+        var url = element.url.split('v=');
+        element.url = url[1];
+
+        if (element.tipo == 1) {
+          _this.resgistrosMultiVideo.push(element);
+        } else {
+          _this.resgistrosMultiAudio.push(element);
+        }
+      });
+      _this.visible = true;
+      console.log("**********************");
+      console.log(_this.resgistrosMultiVideo);
+      console.log(_this.resgistrosMultiAudio);
+    });
+  },
+  methods: {
+    changeData: function changeData(data) {
+      if (data == "Videos") {
+        this.visible = true;
+      } else {
+        this.visible = false;
+      }
+    }
   }
 });
 
@@ -6455,6 +6533,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-loading-plugin */ "./node_modules/vuejs-loading-plugin/index.js");
 //
 //
 //
@@ -6696,6 +6775,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+Vue.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_0__["default"], {
+  text: 'Cargando'
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "recentsection",
   data: function data() {
@@ -6711,13 +6794,11 @@ __webpack_require__.r(__webpack_exports__);
       location.replace("/documentView/" + id);
     },
     verMultimedia: function verMultimedia() {
-      console.log("vamos a ver multimedia");
       location.replace("/multimedia/");
     },
     saveEmail: function saveEmail() {
       var _this = this;
 
-      console.log(this.email);
       axios.post('/saveEmail', this.email).then(function (resp) {
         _this.$swal('Registrado!', 'Ahora ya puedes esperar nuestra información en tu correo electronico!', 'success');
       })["catch"](function (error) {
@@ -6728,18 +6809,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this2 = this;
 
-    this.resgistrosMulti = [];
-    axios.get('/multimedia').then(function (res) {
-      res.data.forEach(function (element) {
-        var url = element.url.split('v=');
-        console.log(url);
-        element.url = url[1];
-
-        _this2.resgistrosMulti.push(element);
-      });
-      console.log("**********************");
-      console.log(_this2.resgistrosMulti);
-    });
+    this.$loading(true);
     axios({
       method: "post",
       url: "/recent"
@@ -6750,13 +6820,26 @@ __webpack_require__.r(__webpack_exports__);
         url: "/getNews"
       }).then(function (resp) {
         _this2.noticias = resp.data;
-        console.log(_this2.noticias);
+
+        _this2.$loading(false);
       });
     })["catch"](function (Error) {
       return console.log(Error);
     });
   },
-  created: function created() {}
+  created: function created() {
+    var _this3 = this;
+
+    this.resgistrosMulti = [];
+    axios.get('/multimedia').then(function (res) {
+      res.data.forEach(function (element) {
+        var url = element.url.split('v=');
+        element.url = url[1];
+
+        _this3.resgistrosMulti.push(element);
+      });
+    });
+  }
 });
 
 /***/ }),
@@ -47552,7 +47635,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-fluid" }, [
+  return _c("div", {}, [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-8" }, [
         _c("div", { staticClass: "card" }, [
@@ -47826,22 +47909,22 @@ var staticRenderFns = [
             _vm._v(" "),
             _c("p", { staticClass: "description" }, [
               _vm._v(
-                "\n                                           michael24\n                                       "
+                "\r\n                            michael24\r\n                        "
               )
             ])
           ]),
           _vm._v(" "),
           _c("p", { staticClass: "description text-center" }, [
             _vm._v(
-              "\n                                       Registra articulos y novedades de tu página web \n                                       "
+              "\r\n                        Registra articulos y novedades de tu página web\r\n                        "
             ),
             _c("br"),
             _vm._v(
-              " Valida que tus datos esten correctos para el correcto guardado\n                                       "
+              " Valida que tus datos esten correctos para el correcto guardado\r\n                        "
             ),
             _c("br"),
             _vm._v(
-              " Despues de guardar valida tus cambios en tu página web\n                                   "
+              " Despues de guardar valida tus cambios en tu página web\r\n                    "
             )
           ])
         ]),
@@ -48517,7 +48600,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-fluid" }, [
+  return _c("div", {}, [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-lg-12" }, [
         _c("div", { staticClass: "card" }, [
@@ -50176,7 +50259,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-fluid" }, [
+  return _c("div", {}, [
     _vm.modoEditar == false
       ? _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-12" }, [
@@ -50625,7 +50708,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-fluid" }, [
+  return _c("div", {}, [
     _vm.modoEditar == false
       ? _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-12" }, [
@@ -52508,25 +52591,28 @@ var staticRenderFns = [
               },
               [
                 _c("li", [
-                  _c("a", { staticClass: "pl-0 pl-sm-10" }, [
-                    _c("i", { staticClass: "ion-social-facebook" })
+                  _c(
+                    "a",
+                    {
+                      staticClass: "pl-0 pl-sm-10",
+                      attrs: {
+                        href: "https://www.facebook.com/ceccam.orgclass"
+                      }
+                    },
+                    [_c("i", { staticClass: "ion-social-facebook" })]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c("a", { attrs: { href: "https://twitter.com/Ceccam9" } }, [
+                    _c("i", { staticClass: "ion-social-twitter" })
                   ])
                 ]),
                 _vm._v(" "),
                 _c("li", [
-                  _c("a", [_c("i", { staticClass: "ion-social-twitter" })])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", [_c("i", { staticClass: "ion-social-google" })])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", [_c("i", { staticClass: "ion-social-instagram" })])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", [_c("i", { staticClass: "ion-social-youtube" })])
+                  _c("a", { attrs: { href: "enlacepagina.html" } }, [
+                    _c("i", { staticClass: "ion-social-youtube" })
+                  ])
                 ])
               ]
             )
@@ -53050,11 +53136,168 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "daots" },
-    [_c("Header"), _vm._v(" "), _c("Footer", { staticClass: "my-3" })],
+    [
+      _c("Header"),
+      _vm._v(" "),
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "col-md-12 col-lg-12" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-12" }, [
+              _c("ul", { staticClass: "nav nav-tabs", attrs: { id: "tabs" } }, [
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link small text-uppercase active",
+                      on: {
+                        click: function($event) {
+                          return _vm.changeData("Videos")
+                        }
+                      }
+                    },
+                    [_vm._v("Videos")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link small text-uppercase",
+                      on: {
+                        click: function($event) {
+                          return _vm.changeData("Podcast")
+                        }
+                      }
+                    },
+                    [_vm._v("Podcast")]
+                  )
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _vm.visible == true
+              ? _c(
+                  "div",
+                  {
+                    staticClass: " row tab-pane fade active show",
+                    attrs: { id: "profile1" }
+                  },
+                  _vm._l(_vm.resgistrosMultiVideo, function(data, index) {
+                    return _c(
+                      "div",
+                      {
+                        key: "data-" + index,
+                        staticClass: "multimedia col-lg-4",
+                        staticStyle: { "margin-top": "3%" }
+                      },
+                      [
+                        _c("iframe", {
+                          attrs: {
+                            width: "360",
+                            height: "240",
+                            src: "https://www.youtube.com/embed/" + data.url,
+                            frameborder: "0",
+                            allow:
+                              "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
+                            allowfullscreen: ""
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm._m(1, true),
+                        _vm._v(" "),
+                        _c("h5", [_c("b", [_vm._v(_vm._s(data.nombre))])])
+                      ]
+                    )
+                  }),
+                  0
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.visible == false
+              ? _c(
+                  "div",
+                  {
+                    staticClass: " row tab-pane fade active show",
+                    attrs: { id: "profile1" }
+                  },
+                  _vm._l(_vm.resgistrosMultiAudio, function(data, index) {
+                    return _c(
+                      "div",
+                      {
+                        key: "data-" + index,
+                        staticClass: "multimedia col-lg-4",
+                        staticStyle: { "margin-top": "3%" }
+                      },
+                      [
+                        _c("iframe", {
+                          attrs: {
+                            width: "360",
+                            height: "240",
+                            src: "https://www.youtube.com/embed/" + data.url,
+                            frameborder: "0",
+                            allow:
+                              "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
+                            allowfullscreen: ""
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm._m(2, true),
+                        _vm._v(" "),
+                        _c("h5", [_c("b", [_vm._v(_vm._s(data.nombre))])])
+                      ]
+                    )
+                  }),
+                  0
+                )
+              : _vm._e()
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("Footer", { staticClass: "my-3" })
+    ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", { staticClass: "p-title" }, [
+      _c("b", [_vm._v("Multimedia")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h6", { staticClass: "color-lite-black pt-10 " }, [
+      _vm._v("Tipo: "),
+      _c("span", { staticClass: "color-black" }, [
+        _c("b", [_vm._v("Multimedia")])
+      ]),
+      _vm._v(" Video")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h6", { staticClass: "color-lite-black pt-10 " }, [
+      _vm._v("Tipo: "),
+      _c("span", { staticClass: "color-black" }, [
+        _c("b", [_vm._v("Multimedia")])
+      ]),
+      _vm._v(" Video")
+    ])
+  }
+]
 render._withStripped = true
 
 
