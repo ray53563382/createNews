@@ -251,7 +251,7 @@ export default {
         notesCarousel() {
             // console.log(this.carousel_index);
 
-            this.carousel_index >= 4
+            this.carousel_index >= this.extra.length
                 ? (this.carousel_index = 0)
                 : (this.carousel_index = this.carousel_index++);
             this.relevantes[0].id = this.extra[this.carousel_index].id;
@@ -273,7 +273,13 @@ export default {
             url: "/relevant"
         }).then(resp => {
             this.relevantes = resp.data;
-            this.extra = resp.data.slice(6);
+            axios({
+                method: "post",
+                url: "/getSuperRelevantes"
+            }).then(resp => {
+                // this.extra = resp.data.slice(6);
+                this.extra = resp.data;
+            });
             // console.log(resp.data);
             // console.log(this.extra);
         });

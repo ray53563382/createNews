@@ -3294,6 +3294,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3317,18 +3324,21 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
         imgdesmostrativa: '',
         id: ''
       },
-      importantes: []
+      importantes: [],
+      muyimportantes: []
     };
   },
   created: function created() {
     var _this = this;
 
     axios.get('/notas').then(function (res) {
-      _this.notas = res.data;
+      _this.notas = res.data; // console.log(res.data);
 
       _this.notas.forEach(function (element) {
-        if (element.relevante >= 1) {
+        if (element.relevante == 1) {
           _this.importantes.push(element.id);
+        } else if (element.relevante == 2) {
+          _this.muyimportantes.push(element.id);
         }
       });
     });
@@ -3408,6 +3418,17 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
         return;
       }
     },
+    seleccionafondo: function seleccionafondo(fondo) {
+      if (fondo == 0 || fondo == null || fondo == "NULL") {
+        return '#FFF';
+      } else if (fondo == 1) {
+        return 'rgba(58, 155, 211, 0.794)';
+      } else if (fondo == 2) {
+        return 'rgba(188, 211, 58, 0.794)';
+      }
+
+      console.log(fondo);
+    },
     agregarImportantes: function agregarImportantes(item) {
       var _this5 = this;
 
@@ -3451,6 +3472,57 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
             axios({
               method: "post",
               url: "/colocarImportante",
+              data: {
+                id: item.id
+              }
+            });
+          }
+        });
+      }
+    },
+    agregaSuperImportante: function agregaSuperImportante(item) {
+      var _this6 = this;
+
+      if (this.muyimportantes.indexOf(item.id) != -1) {
+        this.$swal({
+          title: '¿Remover esta publicacion muy relevante?',
+          text: "Siempre puedes cambiar las publicaciones.",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Aceptar'
+        }).then(function (result) {
+          if (result.value) {
+            _this6.muyimportantes.slice(_this6.muyimportantes.indexOf(item.id), 1);
+
+            _this6.$refs[item.id][0].style.background = "#FFF";
+            axios({
+              method: "post",
+              url: "/removerImportante",
+              data: {
+                id: item.id
+              }
+            });
+          }
+        });
+      } else {
+        this.$swal({
+          title: '¿Colocar esta publicacione como muy relevante?',
+          text: "Siempre puedes cambiar las publicaciones.",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Aceptar'
+        }).then(function (result) {
+          if (result.value) {
+            _this6.muyimportantes.push(item.id);
+
+            _this6.$refs[item.id][0].style.background = "rgba(188, 211, 58, 0.794)";
+            axios({
+              method: "post",
+              url: "/colocarSuperImportante",
               data: {
                 id: item.id
               }
@@ -7364,7 +7436,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     notesCarousel: function notesCarousel() {
       // console.log(this.carousel_index);
-      this.carousel_index >= 4 ? this.carousel_index = 0 : this.carousel_index = this.carousel_index++;
+      this.carousel_index >= this.extra.length ? this.carousel_index = 0 : this.carousel_index = this.carousel_index++;
       this.relevantes[0].id = this.extra[this.carousel_index].id;
       this.relevantes[0].imgdesmostrativa = this.extra[this.carousel_index].imgdesmostrativa;
       this.relevantes[0].fecha = this.extra[this.carousel_index].fecha;
@@ -7382,7 +7454,13 @@ __webpack_require__.r(__webpack_exports__);
       url: "/relevant"
     }).then(function (resp) {
       _this.relevantes = resp.data;
-      _this.extra = resp.data.slice(6); // console.log(resp.data);
+      axios({
+        method: "post",
+        url: "/getSuperRelevantes"
+      }).then(function (resp) {
+        // this.extra = resp.data.slice(6);
+        _this.extra = resp.data;
+      }); // console.log(resp.data);
       // console.log(this.extra);
     });
     setInterval(function () {
@@ -13394,7 +13472,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.modal-dialog[data-v-5974494a] {\r\n    margin: 0px auto 0px auto;\r\n    /* color: rgba(246, 153, 63, 0.6); */\r\n    /* color: rgba(91, 192, 222, 0.5); */\n}\r\n", ""]);
+exports.push([module.i, "\n.modal-dialog[data-v-5974494a] {\r\n    margin: 0px auto 0px auto;\r\n    /* color: rgba(246, 153, 63, 0.6); */\r\n    color: rgba(58, 155, 211, 0.794);\r\n    /* color: rgba(91, 192, 222, 0.5); */\r\n    /* color: rgba(219, 146, 226, 0.643); */\n}\r\n", ""]);
 
 // exports
 
@@ -50140,11 +50218,9 @@ var render = function() {
                               key: index,
                               ref: item.id,
                               refInFor: true,
-                              style: [
-                                item.relevante == 1
-                                  ? { background: "rgba(91, 192, 222, 0.2)" }
-                                  : { background: "#FFF" }
-                              ]
+                              style: {
+                                background: _vm.seleccionafondo(item.relevante)
+                              }
                             },
                             [
                               _c("td", [_vm._v(_vm._s(index + 1))]),
@@ -50196,7 +50272,7 @@ var render = function() {
                                   "button",
                                   {
                                     staticClass: "btn btn-labeled btn-danger",
-                                    staticStyle: { "margin-left": "4%" },
+                                    staticStyle: { "margin-left": "2%" },
                                     attrs: { type: "button" },
                                     on: {
                                       click: function($event) {
@@ -50211,7 +50287,7 @@ var render = function() {
                                   "button",
                                   {
                                     staticClass: "btn btn-labeled btn-primary",
-                                    staticStyle: { "margin-left": "4%" },
+                                    staticStyle: { "margin-left": "2%" },
                                     attrs: { type: "button" },
                                     on: {
                                       click: function($event) {
@@ -50220,6 +50296,21 @@ var render = function() {
                                     }
                                   },
                                   [_vm._m(5, true)]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-labeled btn-warning",
+                                    staticStyle: { "margin-left": "2%" },
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.agregaSuperImportante(item)
+                                      }
+                                    }
+                                  },
+                                  [_vm._m(6, true)]
                                 )
                               ])
                             ]
@@ -50240,7 +50331,7 @@ var render = function() {
       ? _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-12" }, [
             _c("div", { staticClass: "card strpied-tabled-with-hover" }, [
-              _vm._m(6),
+              _vm._m(7),
               _vm._v(" "),
               _c(
                 "div",
@@ -50629,6 +50720,30 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("p", { staticClass: "card-category" }, [
         _vm._v("Si no encuentra su información recargue la página web")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 my-3" }, [
+        _c("p"),
+        _c("div", {
+          staticStyle: {
+            height: "1em",
+            width: "1em",
+            background: "rgba(188, 211, 58, 0.794)"
+          }
+        }),
+        _vm._v(" Más importante (Carousel). "),
+        _c("p"),
+        _vm._v(" "),
+        _c("p"),
+        _c("div", {
+          staticStyle: {
+            height: "1em",
+            width: "1em",
+            background: "rgba(58, 155, 211, 0.794)"
+          }
+        }),
+        _vm._v(" Importante. "),
+        _c("p")
       ])
     ])
   },
@@ -50686,6 +50801,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "btn-label" }, [
       _c("i", { staticClass: "fa fa-remove" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "btn-label" }, [
+      _c("i", { staticClass: "fa fa-star" })
     ])
   },
   function() {

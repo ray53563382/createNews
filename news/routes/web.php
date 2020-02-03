@@ -36,6 +36,7 @@ Route::post('/allnews', 'publicacionController@allnews');
 
 
 Route::post('/relevant', 'publicacionController@relevant');
+Route::post('/getSuperRelevantes', 'publicacionController@masrelevante');
 Route::post('/recent', 'publicacionController@recent');
 Route::post('/getNews', 'publicacionController@getNews');
 Route::post('/updateNews', 'NoticiasController@update');
@@ -49,6 +50,8 @@ Route::post('/allrecent', 'publicacionController@allrecent');
 Route::post('/getpdf', 'publicacionController@getpdf');
 Route::post('/gettheme', 'publicacionController@getheme');
 Route::post('/colocarImportante', 'publicacionController@colocarImportante');
+Route::post('/removerImportante', 'publicacionController@removerImportante');
+Route::post('/colocarSuperImportante', 'publicacionController@colocarSuperImportante');
 
 // Acciones
 Route::post('/actionRegister', 'ActionsController@store');

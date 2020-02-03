@@ -6,6 +6,10 @@
                 <div class="card-header ">
                     <h4 class="card-title">Registro de publicaciones</h4>
                     <p class="card-category">Si no encuentra su información recargue la página web</p>
+                    <div class="col-12 my-3">
+                        <p> <div style="height: 1em; width: 1em; background: rgba(188, 211, 58, 0.794)" ></div> Más importante (Carousel). </p>
+                        <p> <div style="height: 1em; width: 1em; background: rgba(58, 155, 211, 0.794)" ></div> Importante. </p>
+                    </div>
                     <!-- <div @click="subirImportantes" class="btn btn-primary">Marcar como relevantes</div>         -->
                 </div>
                 <div class="card-body table-full-width table-responsive">
@@ -22,7 +26,8 @@
 
 
                             <!-- <paginate name="result" :list="notas" :per="2" tag="tbody"> -->
-                                <tr  v-for="(item, index) in notas" :key="index" :ref="item.id"  :style="[item.relevante == 1 ? {'background': 'rgba(91, 192, 222, 0.2)'} : {'background': '#FFF'}]" >
+                                <!-- <tr  v-for="(item, index) in notas" :key="index" :ref="item.id"  :style="[item.relevante == 0 ? item.relevante == 2 ? {'background': 'rgba(91, 192, 222, 0.2)'} : {'background': '#d878f0da'}  : {'background': '#FFF'}]" > -->
+                                <tr  v-for="(item, index) in notas" :key="index" :ref="item.id"  :style="{'background': seleccionafondo(item.relevante)}" >
                                     <!-- <paginate name="result" :list="notas" :per="2" tag="tbody"> -->
                                     <td>{{index + 1}}</td>
                                     <td>{{item.titulo}}</td>
@@ -38,9 +43,11 @@
                                     <td>
                                         <button type="button" @click="editar(item)" data-toggle="modal" data-target="#exampleModalLong" class="btn btn-labeled btn-success">
                                             <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
-                                        <button type="button" @click="eliminar(item,index)" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
+                                        <button type="button" @click="eliminar(item,index)" class="btn btn-labeled btn-danger" style="margin-left: 2%;">
                                             <span class="btn-label"><i class="fa fa-remove"></i></span></button>
-                                        <button type="button" @click="agregarImportantes(item)" class="btn btn-labeled btn-primary" style="margin-left: 4%;">
+                                        <button type="button" @click="agregarImportantes(item)" class="btn btn-labeled btn-primary" style="margin-left: 2%;">
+                                        <span class="btn-label"><i class="fa fa-star"></i></span></button>
+                                        <button type="button" @click="agregaSuperImportante(item)" class="btn btn-labeled btn-warning" style="margin-left: 2%;">
                                         <span class="btn-label"><i class="fa fa-star"></i></span></button>
                                     </td>
                                 </tr>
@@ -191,15 +198,20 @@ export default {
                 imgdesmostrativa: '',
                 id: ''
             },
-            importantes: []
+            importantes: [],
+            muyimportantes: []
         }
     },
     created() {
         axios.get('/notas').then(res => {
             this.notas = res.data;
+            // console.log(res.data);
+            
             this.notas.forEach(element => {
-                if (element.relevante >= 1) {
+                if (element.relevante == 1) {
                     this.importantes.push(element.id)
+                }else if(element.relevante == 2){
+                    this.muyimportantes.push(element.id)
                 }
             });
         })
@@ -281,6 +293,19 @@ export default {
             }
         },
 
+        seleccionafondo(fondo){
+
+            if(fondo == 0 || fondo == null || fondo == "NULL"){
+                return '#FFF'
+            }else if(fondo == 1){
+                return 'rgba(58, 155, 211, 0.794)'
+            }else if(fondo == 2){
+                return 'rgba(188, 211, 58, 0.794)'
+            }
+            console.log(fondo);
+            
+        },
+
 
         agregarImportantes(item){
 
@@ -330,6 +355,55 @@ export default {
                 })
             }
 
+        },
+           agregaSuperImportante(item){
+
+            if(this.muyimportantes.indexOf(item.id) != -1){
+                this.$swal({
+                    title: '¿Remover esta publicacion muy relevante?',
+                    text: "Siempre puedes cambiar las publicaciones.",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar'
+                    }).then((result) => {
+                    if (result.value) {
+                        this.muyimportantes.slice(this.muyimportantes.indexOf(item.id), 1)
+                        this.$refs[item.id][0].style.background = "#FFF"
+                        axios({
+                            method: "post",
+                            url: "/removerImportante",
+                            data: {
+                                id: item.id
+                            }
+                        })
+                    }
+                })
+            }else{
+                  this.$swal({
+                    title: '¿Colocar esta publicacione como muy relevante?',
+                    text: "Siempre puedes cambiar las publicaciones.",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar'
+                    }).then((result) => {
+                    if (result.value) {
+                        this.muyimportantes.push(item.id);
+                        this.$refs[item.id][0].style.background = "rgba(188, 211, 58, 0.794)"
+                        axios({
+                            method: "post",
+                            url: "/colocarSuperImportante",
+                            data: {
+                                id: item.id
+                            }
+                        })
+                    }
+                })
+            }
+
         }
     },
     components: {
@@ -342,6 +416,8 @@ export default {
 .modal-dialog {
     margin: 0px auto 0px auto;
     /* color: rgba(246, 153, 63, 0.6); */
+    color: rgba(58, 155, 211, 0.794);
     /* color: rgba(91, 192, 222, 0.5); */
+    /* color: rgba(219, 146, 226, 0.643); */
 }
 </style>

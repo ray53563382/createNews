@@ -18,8 +18,16 @@ class publicacionController extends Controller
     public function relevant()
     {
         
-        $most_relevant = DB::table('notas')->where('relevante', 1)->take(10)->get();
+        $most_relevant = DB::table('notas')->where('relevante', 1)->take(6)->get();
         return $most_relevant;
+
+    }
+
+    public function masrelevante()
+    {
+        
+        $most_relevante = DB::table('notas')->where('relevante', 2)->get();
+        return $most_relevante;
 
     }
 
@@ -212,6 +220,13 @@ class publicacionController extends Controller
     public function removerImportante(Request $request ){
         $insert = Nota::find($request->id);
         $insert->relevante = 0;
+        $insert->save();
+        return $insert;
+    }
+
+    public function colocarSuperImportante(Request $request){
+        $insert = Nota::find($request->id);
+        $insert->relevante = 2;
         $insert->save();
         return $insert;
     }
