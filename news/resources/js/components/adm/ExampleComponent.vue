@@ -117,6 +117,21 @@
                         <li>
                             <a
                                 class="nav-link"
+                                v-on:click="changeData('editacciones')"
+                            >
+                                <i
+                                    class="fas fa-list-ul"
+                                    style="font-size: 25px !important;margin-right: 15px !important;"
+                                ></i>
+                                <p style="font-size: 11px !important;">
+                                    Ver Acciones
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a
+                                class="nav-link"
                                 v-on:click="changeData('multimedia')"
                             >
                                 <i
@@ -259,6 +274,8 @@ export default {
                 this.dynamicComponent = "editnoticia";
             } else if (msg == "accion") {
                 this.dynamicComponent = "addAction";
+            } else if (msg == "editacciones") {
+                this.dynamicComponent = "editAcciones";
             }
         }
     },

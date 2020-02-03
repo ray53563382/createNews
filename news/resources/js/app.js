@@ -42,6 +42,11 @@ Vue.component(
 );
 
 Vue.component(
+    "editAcciones",
+    require("./components/adm/editAcciones.vue").default
+);
+
+Vue.component(
     "mostrelevantsection-component",
     require("./components/user/recentsection.vue").default
 );

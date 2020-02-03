@@ -41,7 +41,6 @@ class actionsController extends Controller
     public function store(Request $request)
     {
         ini_set('memory_limit', '-1');
-        // print_r($request->nueva_accion['titulo']);
         $Action = new Action();
         $Action->titulo = $request->nueva_accion['titulo'];
         $Action->fecha = $request->nueva_accion['fecha'];
@@ -88,9 +87,23 @@ class actionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        ini_set('memory_limit', '-1');
+        // var_dump($request->id);
+        $Action = Action::find($request->id);
+        $Action->titulo = $request->titulo;
+        $Action->fecha = $request->fecha;
+        $Action->autor = $request->autor;
+        $Action->importancia = $request->importancia;
+        $Action->idcategoria = $request->idcategoria;
+        $Action->informacionArt = $request->informacionArt;
+        $Action->imgdesmostrativa = $request->imgdesmostrativa;
+        $Action->pdf = $request->pdf;
+        $Action->url = $request->url; 
+        $Action->save();
+        return $Action;
+
     }
 
     /**
@@ -99,8 +112,9 @@ class actionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $accion = Action::find($request->id);
+        $accion->delete();
     }
 }

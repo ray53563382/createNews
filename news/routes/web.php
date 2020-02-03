@@ -54,6 +54,8 @@ Route::post('/colocarImportante', 'publicacionController@colocarImportante');
 Route::post('/actionRegister', 'ActionsController@store');
 Route::post('/getAllActions', 'ActionsController@index');
 Route::post('/getAction', 'ActionsController@show');
+Route::post('/updateAction', 'ActionsController@update');
+Route::post('/deleteAction', 'ActionsController@destroy');
 
 
 
