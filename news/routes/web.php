@@ -21,6 +21,7 @@ Route::get('/', function () {
 Route::get('documentView/{id}', 'DocumentsViewController@index' );
 Route::get('documentViewpdf/{id}', 'DocumentsViewController@pdfview' );
 Route::get('actionView/{id}', 'DocumentsViewController@actionview' );
+Route::get('newView/{id}', 'DocumentsViewController@newview' );
 
 
 
@@ -60,7 +61,7 @@ Route::post('/getAction', 'ActionsController@show');
 Route::post('/updateAction', 'ActionsController@update');
 Route::post('/deleteAction', 'ActionsController@destroy');
 
-
+Route::post('/getNew', 'NoticiasController@getNew');
 
 
 // Route::post('/fetchAllDocs', 'publicacionController@fetchAllDocs');

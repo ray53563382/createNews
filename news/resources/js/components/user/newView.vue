@@ -22,30 +22,7 @@
                         class="col-12 testy"
                         style="margin-bottom:5%"
                     ></div>
-                    <div
-                        v-show="showvideo"
-                        class="col-md-12 col-lg-8 .embed-responsive"
-                    >
-                        <div class="col-lg-4 my-4">
-                            <iframe
-                                width="360"
-                                height="240"
-                                :src="'https://www.youtube.com/embed/' + docURL"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen
-                            ></iframe>
-                        </div>
-                    </div>
-                    <div v-show="showdescarga" class="col-md-12 col-lg-8">
-                        <div class="col-12">
-                            <p>
-                                <a ref="downloadpdf" class="buttonDownload"
-                                    >Descarga pdf</a
-                                >
-                            </p>
-                        </div>
-                    </div>
+
                     <div class="col-md-12 col-lg-8">
                         <p><b>Categoría: </b> {{ docTheme }}</p>
                     </div>
@@ -199,7 +176,7 @@ Vue.use(VueLoading, {
 });
 
 export default {
-    name: "actionview",
+    name: "newview",
     // props: ["sendData"],
     props: {
         myid: {
@@ -221,8 +198,6 @@ export default {
             docTextBody: null,
             docEtiquetas: null,
             docURL: null,
-            showvideo: false,
-            showdescarga: false,
             logito: logito,
             dataID: "hey",
             registros: [],
@@ -255,74 +230,24 @@ export default {
                 });
             })
             .catch(error => {
-                console.log(error);
+                console.log(Error);
             });
 
         axios({
             method: "post",
-            url: "/getAction",
+            url: "/getNew",
             data: {
                 id: this.myid
             }
         })
             .then(resp => {
-                // console.log(resp);
-                if (resp.data.url == null) {
-                    console.log("uno");
-
-                    if (resp.data.pdf == null) {
-                        console.log("pdf null");
-
-                        this.docTitle = resp.data.titulo;
-                        this.docDate = resp.data.fecha;
-                        this.docAutor = resp.data.autor;
-                        this.docTheme = this.categorias[resp.data.idcategoria];
-                        this.docImage = resp.data.imgdesmostrativa;
-                        this.docTextBody = resp.data.informacionArt;
-                        this.$loading(false);
-                    } else {
-                        console.log("pdf no null");
-                        this.showdescarga = true;
-                        this.docTitle = resp.data.titulo;
-                        this.docDate = resp.data.fecha;
-                        this.docAutor = resp.data.autor;
-                        this.docTheme = this.categorias[resp.data.idcategoria];
-                        this.docImage = resp.data.imgdesmostrativa;
-                        this.docTextBody = resp.data.informacionArt;
-                        this.$refs.downloadpdf.download = "documento.pdf";
-                        this.$refs.downloadpdf.href = resp.data.pdf;
-                        this.$loading(false);
-                    }
-                } else {
-                    console.log("dos");
-
-                    if (resp.data.pdf == null) {
-                        this.showvideo = true;
-                        this.docTitle = resp.data.titulo;
-                        this.docDate = resp.data.fecha;
-                        this.docAutor = resp.data.autor;
-                        this.docTheme = this.categorias[resp.data.idcategoria];
-                        this.docImage = resp.data.imgdesmostrativa;
-                        this.docTextBody = resp.data.informacionArt;
-                        let url = resp.data.url.split("v=");
-                        this.docURL = url[1];
-                        this.$loading(false);
-                    } else {
-                        this.docTitle = resp.data.titulo;
-                        this.docDate = resp.data.fecha;
-                        this.docAutor = resp.data.autor;
-                        this.docTheme = this.categorias[resp.data.idcategoria];
-                        this.docImage = resp.data.imgdesmostrativa;
-                        this.docTextBody = resp.data.informacionArt;
-                        this.showdescarga = true;
-                        this.showvideo = true;
-                        this.$refs.downloadpdf.download = "documento.pdf";
-                        this.$refs.downloadpdf.href = resp.data.pdf;
-                        let url = resp.data.url.split("v=");
-                        this.docURL = url[1];
-                        this.$loading(false);
-                    }
-                }
+                this.docTitle = resp.data.titulo;
+                this.docDate = resp.data.fecha;
+                this.docAutor = resp.data.autor;
+                this.docTheme = this.categorias[resp.data.idcategoria];
+                this.docImage = resp.data.imgdesmostrativa;
+                this.docTextBody = resp.data.informacionArt;
+                this.$loading(false);
             })
             .catch(Error => console.log(Error));
     }

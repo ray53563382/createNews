@@ -81,6 +81,63 @@
                 </div>
             </div>
 
+              <div v-if="newsFlag">
+                <paginate name="result" :list="resultados" :per="9" tag="div">
+                    <h4 class="p-title" style="margin-bottom: 2%">
+                        <b>Publicaciones</b>
+                    </h4>
+                    <div class="row">
+                        <div
+                            v-for="(person, index) in paginated('result')"
+                            :key="index"
+                            class="col-12 col-lg-4 col-md-6 box"
+                            @click="goToNewview(person)"
+                        >
+                            <img
+                                :src="person.imgdesmostrativa"
+                                alt=""
+                                style="width: 100%; height: 300px;"
+                            />
+                            <h4 class="pt-20">
+                                <a href="#"
+                                    ><b style="color: black;">{{
+                                        person.titulo
+                                    }}</b></a
+                                >
+                            </h4>
+                            <!-- <ul style="margin-left: -48px;"> -->
+                            <ul style="margin-left: -8px">
+                                <li class="color-lite-black">
+                                    Autor:
+                                    <a href="#" class="color-black"
+                                        ><b>{{ person.autor }},</b></a
+                                    >
+                                    <br />
+                                    {{ person.fecha }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </paginate>
+
+                <div class="container h-100" style="margin-top: 3%">
+                    <div
+                        class="row h-100 justify-content-center align-items-center"
+                    >
+                        <div>
+                            <paginate-links
+                                for="result"
+                                :classes="{
+                                    ul: 'pagination',
+                                    li: 'page-item',
+                                    a: 'page-link'
+                                }"
+                            ></paginate-links>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- <div v-if="publicacionFlag">
             <documentView></documentView>
         </div> -->
@@ -339,6 +396,10 @@ export default {
         },
         goToActionView(person) {
             location.replace("/actionView/" + person.id);
+        },
+
+        goToNewview(person) {
+            location.replace("/newView/" + person.id);
         }
     },
     data() {
@@ -354,7 +415,8 @@ export default {
             all_documents: false,
             order: "default",
             allActionsFlag: false,
-            sendData: []
+            sendData: [],
+            newsFlag: false
             // pencil: pencil
         };
     },
@@ -399,7 +461,7 @@ export default {
                 }
             })
                 .then(resp => {
-                    this.searchFlag = true;
+                    this.newsFlag = true;
                     this.resultados = resp.data;
                     this.$loading(false);
                 })

@@ -62,6 +62,11 @@ Vue.component(
 );
 
 Vue.component(
+    "newview-component",
+    require("./components/user/newView.vue").default
+);
+
+Vue.component(
     "actionview-component",
     require("./components/user/actionView.vue").default
 );

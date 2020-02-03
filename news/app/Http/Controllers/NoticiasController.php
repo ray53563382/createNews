@@ -106,4 +106,10 @@ class NoticiasController extends Controller
         $noticia->delete();
     }
 
+    public function getNew(Request $request)
+    {
+        $noticia = Noticia::find($request->id);
+        return $noticia;
+    }
+
 }

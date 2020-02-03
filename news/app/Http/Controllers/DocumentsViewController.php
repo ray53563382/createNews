@@ -16,6 +16,11 @@ class DocumentsViewController extends Controller
         return view('pages.pdfview')->with('id', $id);
     }
 
+    public function newview($id){
+        // $controller_id['id'] = $id;
+        return view('pages.newview')->with('id', $id);
+    }
+
     public function actionview($id){
         // $controller_id['id'] = $id;
         return view('pages.actionview')->with('id', $id);
