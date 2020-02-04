@@ -49,7 +49,7 @@
             <div class="row">
                 <div
                     class="col-12 col-lg-3 col-md-6 box"
-                    @click="goToDocumentView(registros[0])"
+                    @click="goToDocumentView(registros[0].id)"
                 >
                     <img
                         :src="registros[0].imgdesmostrativa"
@@ -76,7 +76,7 @@
                 </div>
                 <div
                     class="col-12 col-lg-3 col-md-6 box"
-                    @click="goToDocumentView(registros[1])"
+                    @click="goToDocumentView(registros[1].id)"
                 >
                     <img
                         :src="registros[1].imgdesmostrativa"
@@ -103,7 +103,7 @@
                 </div>
                 <div
                     class="col-12 col-lg-3 col-md-6 box"
-                    @click="goToDocumentView(registros[2])"
+                    @click="goToDocumentView(registros[2].id)"
                 >
                     <img
                         :src="registros[2].imgdesmostrativa"
@@ -130,7 +130,7 @@
                 </div>
                 <div
                     class="col-12 col-lg-3 col-md-6 box"
-                    @click="goToDocumentView(registros[3])"
+                    @click="goToDocumentView(registros[3].id)"
                 >
                     <img
                         :src="registros[3].imgdesmostrativa"
@@ -217,7 +217,7 @@ export default {
     },
     methods: {
         goToDocumentView(data) {
-            console.log(data);
+            location.replace("/documentView/" + data);
         }
     },
     created() {

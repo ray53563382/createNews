@@ -7,7 +7,7 @@
                 <h4 class="p-title"><b>PUBLICACIONES RECIENTES</b></h4>
                 <div class="row">
 
-                    <div class="col-sm-6" @click="goToDocumentView(recientes[0].id)">
+                    <div class="col-sm-6 hoverevent" @click="goToDocumentView(recientes[0].id)">
                         <img v-if="recientes[0].imgdesmostrativa != undefined" :src="recientes[0].imgdesmostrativa" alt="">
                         <h4 class="pt-20"><a @click="goToDocumentView(recientes[0].id)"><b>{{recientes[0].titulo}}</b></a></h4>
                         <ul class="list-li-mr-20 pt-10 pb-20">
@@ -18,7 +18,7 @@
                     </div><!-- col-sm-6 -->
 
                     <div class="col-sm-6">
-                        <a class="oflow-hidden pos-relative mb-20 dplay-block" @click="goToDocumentView(recientes[1].id)">
+                        <a class="oflow-hidden pos-relative mb-20 dplay-block hoverevent" @click="goToDocumentView(recientes[1].id)">
                             <div class="wh-100x abs-tlr"><img v-if="recientes[1].imgdesmostrativa" :src="recientes[1].imgdesmostrativa" alt=""></div>
                             <div class="ml-120 min-h-100x">
                                 <h5><b>{{recientes[1].titulo}}</b></h5>
@@ -26,7 +26,7 @@
                             </div>
                         </a><!-- oflow-hidden -->
 
-                        <a class="oflow-hidden pos-relative mb-20 dplay-block" @click="goToDocumentView(recientes[2].id)">
+                        <a class="oflow-hidden pos-relative mb-20 dplay-block hoverevent" @click="goToDocumentView(recientes[2].id)">
                             <div class="wh-100x abs-tlr"><img v-if="recientes[2].imgdesmostrativa" :src="recientes[2].imgdesmostrativa" alt=""></div>
                             <div class="ml-120 min-h-100x">
                                 <h5><b>{{recientes[2].titulo}}</b></h5>
@@ -34,7 +34,7 @@
                             </div>
                         </a><!-- oflow-hidden -->
 
-                        <a class="oflow-hidden pos-relative mb-20 dplay-block" @click="goToDocumentView(recientes[3].id)">
+                        <a class="oflow-hidden pos-relative mb-20 dplay-block hoverevent" @click="goToDocumentView(recientes[3].id)">
                             <div class="wh-100x abs-tlr"><img v-if="recientes[3].imgdesmostrativa" :src="recientes[3].imgdesmostrativa" alt=""></div>
                             <div class="ml-120 min-h-100x">
                                 <h5><b>{{recientes[3].titulo}}</b></h5>
@@ -42,7 +42,7 @@
                             </div>
                         </a><!-- oflow-hidden -->
 
-                        <a class="oflow-hidden pos-relative mb-20 dplay-block" @click="goToDocumentView(recientes[4].id)">
+                        <a class="oflow-hidden pos-relative mb-20 dplay-block hoverevent" @click="goToDocumentView(recientes[4].id)">
                             <div class="wh-100x abs-tlr"><img v-if="recientes[4].imgdesmostrativa" :src="recientes[4].imgdesmostrativa" alt=""></div>
                             <div class="ml-120 min-h-100x">
                                 <h5><b>{{recientes[4].titulo}}</b></h5>
@@ -56,7 +56,7 @@
                 <h4 class="p-title mt-30"><b>PUBLICACIONES</b></h4>
                 <div class="row">
 
-                    <div class="col-sm-6 box" @click="goToDocumentView(recientes[5].id)">
+                    <div class="col-sm-6 box hoverevent" @click="goToDocumentView(recientes[5].id)">
                         <img v-if="recientes[5].imgdesmostrativa" :src="recientes[5].imgdesmostrativa" alt="" style="width: 100%;height: 300px;display: block;margin: 0 auto;">
                         <h4 class="pt-20"><a><b>{{recientes[5].titulo}}</b></a></h4>
                         <ul class="list-li-mr-20 pt-10 mb-30">
@@ -66,7 +66,7 @@
                         </ul>
                     </div><!-- col-sm-6 -->
 
-                    <div class="col-sm-6 box" @click="goToDocumentView(recientes[6].id)">
+                    <div class="col-sm-6 box hoverevent" @click="goToDocumentView(recientes[6].id)">
                         <img v-if="recientes[6].imgdesmostrativa" :src="recientes[6].imgdesmostrativa" alt="" style="width: 100%;height: 300px; display: block;margin: 0 auto;">
                         <h4 class="pt-20"><a href="#"><b>{{recientes[6].titulo}}</b></a></h4>
                         <ul class="list-li-mr-20 pt-10 mb-30">
@@ -76,7 +76,7 @@
                         </ul>
                     </div><!-- col-sm-6 -->
 
-                    <div class="col-sm-6 box " @click="goToDocumentView(recientes[7].id)">
+                    <div class="col-sm-6 box hoverevent" @click="goToDocumentView(recientes[7].id)">
                         <img v-if="recientes[7].imgdesmostrativa" :src="recientes[7].imgdesmostrativa" alt="" style="width: 100%;height: 300px; display: block;margin: 0 auto;">
                         <h4 class="pt-20"><a href="#"><b> <br />{{recientes[7].titulo}}</b></a></h4>
                         <ul class="list-li-mr-20 pt-10 mb-30">
@@ -86,7 +86,7 @@
                         </ul>
                     </div><!-- col-sm-6 -->
 
-                    <div class="col-sm-6 box" @click="goToDocumentView(recientes[8].id)">
+                    <div class="col-sm-6 box hoverevent" @click="goToDocumentView(recientes[8].id)">
                         <img v-if="recientes[8].imgdesmostrativa" :src="recientes[8].imgdesmostrativa" alt="" style="width: 100%;height: 300px; display: block;margin: 0 auto;">
                         <h4 class="pt-20"><a href="#"><b> <br />{{recientes[8].titulo}}</b></a></h4>
                         <ul class="list-li-mr-20 pt-10 mb-30">
@@ -96,7 +96,7 @@
                         </ul>
                     </div><!-- col-sm-6 -->
 
-                    <div class="col-sm-6 box" @click="goToDocumentView(recientes[9].id)">
+                    <div class="col-sm-6 box hoverevent" @click="goToDocumentView(recientes[9].id)">
                         <img v-if="recientes[9].imgdesmostrativa" :src="recientes[9].imgdesmostrativa" alt="" style="width: 100%;height: 300px; display: block;margin: 0 auto;">
                         <h4 class="pt-20"><a href="#"><b> <br />{{recientes[9].titulo}}</b></a></h4>
                         <ul class="list-li-mr-20 pt-10 mb-30">
@@ -106,7 +106,7 @@
                         </ul>
                     </div><!-- col-sm-6 -->
 
-                    <div class="col-sm-6 box" @click="goToDocumentView(recientes[10].id)">
+                    <div class="col-sm-6 box hoverevent" @click="goToDocumentView(recientes[10].id)">
                         <img v-if="recientes[10].imgdesmostrativa" :src="recientes[10].imgdesmostrativa" alt="" style="width: 100%;height: 300px; display: block;margin: 0 auto;">
                         <h4 class="pt-20"><a href="#"><b>{{recientes[10].titulo}}</b></a></h4>
                         <ul class="list-li-mr-20 pt-10 mb-30">
@@ -126,32 +126,32 @@
 
                     <div class="mtb-50">
                         <h4 class="p-title"><b>NOTICIAS</b></h4>
-                        <a class="oflow-hidden pos-relative mb-20 dplay-block" href="#">
-                            <div class="wh-100x abs-tlr"><img v-if="recientes[0].imgdesmostrativa" :src="noticias[0].imgdesmostrativa" alt=""></div>
+                        <a @click="goToNewview(noticias[0].id)" class="oflow-hidden pos-relative mb-20 dplay-block hoverevent" >
+                            <div class="wh-100x abs-tlr"><img v-if="noticias[0].imgdesmostrativa" :src="noticias[0].imgdesmostrativa" alt=""></div>
                             <div class="ml-120 min-h-100x">
                                 <h5><b>{{noticias[0].titulo}}</b></h5>
                                 <h6 class="color-lite-black pt-10"><span v-if="noticias[0].autor == 'Sin Autor' " class="color-black">by <b> Danile Palmer,</b></span> Jan 25, 2018</h6>
                             </div>
                         </a><!-- oflow-hidden -->
 
-                        <a class="oflow-hidden pos-relative mb-20 dplay-block" href="#">
-                            <div class="wh-100x abs-tlr"><img v-if="recientes[1].imgdesmostrativa" :src="noticias[1].imgdesmostrativa" alt=""></div>
+                        <a @click="goToNewview(noticias[1].id)" class="oflow-hidden pos-relative mb-20 dplay-block hoverevent" >
+                            <div class="wh-100x abs-tlr"><img v-if="noticias[1].imgdesmostrativa" :src="noticias[1].imgdesmostrativa" alt=""></div>
                             <div class="ml-120 min-h-100x">
                                 <h5><b>{{noticias[1].titulo}}</b></h5>
                                 <h6 class="color-lite-black pt-10"><span v-if="noticias[1].autor == 'Sin Autor' " class="color-black">by <b>Danile Palmer,</b></span> Jan 25, 2018</h6>
                             </div>
                         </a><!-- oflow-hidden -->
 
-                        <a class="oflow-hidden pos-relative mb-20 dplay-block" href="#">
-                            <div class="wh-100x abs-tlr"><img v-if="recientes[2].imgdesmostrativa" :src="noticias[2].imgdesmostrativa" alt=""></div>
+                        <a @click="goToNewview(noticias[2].id)" class="oflow-hidden pos-relative mb-20 dplay-block hoverevent" >
+                            <div class="wh-100x abs-tlr"><img v-if="noticias[2].imgdesmostrativa" :src="noticias[2].imgdesmostrativa" alt=""></div>
                             <div class="ml-120 min-h-100x">
                                 <h5><b>{{noticias[2].titulo}}</b></h5>
                                 <h6 class="color-lite-black pt-10"><span v-if="noticias[2].autor == 'Sin Autor' " class="color-black">by <b>Danile Palmer,</b></span> Jan 25, 2018</h6>
                             </div>
                         </a><!-- oflow-hidden -->
 
-                        <a class="oflow-hidden pos-relative mb-20 dplay-block" href="#">
-                            <div class="wh-100x abs-tlr"><img v-if="recientes[3].imgdesmostrativa" :src="noticias[3].imgdesmostrativa" alt=""></div>
+                        <a @click="goToNewview(noticias[3].id)" class="oflow-hidden pos-relative mb-20 dplay-block hoverevent" >
+                            <div class="wh-100x abs-tlr"><img v-if="noticias[3].imgdesmostrativa" :src="noticias[3].imgdesmostrativa" alt=""></div>
                             <div class="ml-120 min-h-100x">
                                 <h5><b>{{noticias[3].titulo}}</b></h5>
                                 <h6 class="color-lite-black pt-10"><span v-if="noticias[3].autor == 'Sin Autor' " class="color-black">by <b>Danile Palmer,</b></span> Jan 25, 2018</h6>
@@ -162,7 +162,7 @@
 
                     <div class="mtb-50">
                         <h4 class="p-title"><b>PUBLICACIONES QUE PUEDEN INTERESARTE</b></h4>
-                        <a class="oflow-hidden pos-relative mb-20 dplay-block" @click="goToDocumentView(recientes[10].id)">
+                        <a class="oflow-hidden pos-relative mb-20 dplay-block hoverevent" @click="goToDocumentView(recientes[10].id)">
                             <div class="wh-100x abs-tlr"><img v-if="recientes[10].imgdesmostrativa" :src="recientes[10].imgdesmostrativa"></div>
                             <div class="ml-120 min-h-100x">
                                 <h5><b>{{recientes[10].titulo}}</b></h5>
@@ -170,7 +170,7 @@
                             </div>
                         </a><!-- oflow-hidden -->
 
-                        <a class="oflow-hidden pos-relative mb-20 dplay-block" @click="goToDocumentView(recientes[11].id)">
+                        <a class="oflow-hidden pos-relative mb-20 dplay-block hoverevent" @click="goToDocumentView(recientes[11].id)">
                             <div class="wh-100x abs-tlr"><img v-if="recientes[12].imgdesmostrativa" :src="recientes[12].imgdesmostrativa" alt=""></div>
                             <div class="ml-120 min-h-100x">
                                 <h5><b>{{recientes[11].titulo}}</b></h5>
@@ -178,7 +178,7 @@
                             </div>
                         </a><!-- oflow-hidden -->
 
-                        <a class="oflow-hidden pos-relative mb-20 dplay-block" @click="goToDocumentView(recientes[12].id)">
+                        <a class="oflow-hidden pos-relative mb-20 dplay-block hoverevent" @click="goToDocumentView(recientes[12].id)">
                             <div class="wh-100x abs-tlr"><img v-if="recientes[13].imgdesmostrativa" :src="recientes[13].imgdesmostrativa" alt=""></div>
                             <div class="ml-120 min-h-100x">
                                 <h5><b>{{recientes[12].titulo}}</b></h5>
@@ -186,7 +186,7 @@
                             </div>
                         </a><!-- oflow-hidden -->
 
-                        <a class="oflow-hidden pos-relative mb-20 dplay-block" @click="goToDocumentView(recientes[14].id)">
+                        <a class="oflow-hidden pos-relative mb-20 dplay-block hoverevent" @click="goToDocumentView(recientes[14].id)">
                             <div class="wh-100x abs-tlr"><img v-if="recientes[14].imgdesmostrativa" :src="recientes[14].imgdesmostrativa" alt=""></div>
                             <div class="ml-120 min-h-100x">
                                 <h5><b>{{recientes[14].titulo}}</b></h5>
@@ -275,6 +275,9 @@ export default {
                 }).catch(error => {
                     console.log(error);
                 });
+        },
+         goToNewview(itemid) {
+            location.replace("/newView/" + itemid);
         }
     },
     mounted() {
@@ -312,5 +315,7 @@ export default {
 </script>
 
 <style>
-
+.hoverevent:hover {
+    cursor: pointer;
+}
 </style>

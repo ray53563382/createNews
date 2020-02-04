@@ -10,7 +10,7 @@
                     class="pb-5 pr-5 pr-sm-0 float-left float-sm-none w-2-3 w-sm-100 h-100 h-sm-300x relevant"
                 >
                     <a
-                        class="pos-relative h-100 dplay-block"
+                        class="pos-relative h-100 dplay-block hoverevent"
                         @click="goToDocumentView(relevantes[0].id)"
                     >
                         <div
@@ -46,7 +46,7 @@
                 >
                     <div class="pl-5 pb-5 pl-sm-0 ptb-sm-5 pos-relative h-50">
                         <a
-                            class="pos-relative h-100 dplay-block"
+                            class="pos-relative h-100 dplay-block hoverevent"
                             @click="goToDocumentView(relevantes[1].id)"
                         >
                             <div
@@ -83,7 +83,7 @@
 
                     <div class="pl-5 ptb-5 pl-sm-0 pos-relative h-50">
                         <a
-                            class="pos-relative h-100 dplay-block"
+                            class="pos-relative h-100 dplay-block hoverevent"
                             @click="goToDocumentView(relevantes[2].id)"
                         >
                             <div
@@ -99,7 +99,9 @@
                                 class="img-bg bg-3 bg-grad-layer-6"
                             ></div>
 
-                            <div class="abs-blr color-white p-20 bg-sm-color-7">
+                            <div
+                                class="abs-blr color-white p-20 bg-sm-color-7 hoverevent"
+                            >
                                 <h4 class="mb-10 mb-sm-5">
                                     <b>{{ relevantes[2].titulo }}</b>
                                 </h4>
@@ -125,7 +127,7 @@
                     class="pr-5 pr-sm-0 pt-5 float-left float-sm-none pos-relative w-1-3 w-sm-100 h-100 h-sm-300x"
                 >
                     <a
-                        class="pos-relative h-100 dplay-block"
+                        class="pos-relative h-100 dplay-block hoverevent"
                         @click="goToDocumentView(relevantes[3].id)"
                     >
                         <div
@@ -160,7 +162,7 @@
                     class="plr-5 plr-sm-0 pt-5 pt-sm-10 float-left float-sm-none pos-relative w-1-3 w-sm-100 h-100 h-sm-300x"
                 >
                     <a
-                        class="pos-relative h-100 dplay-block"
+                        class="pos-relative h-100 dplay-block hoverevent"
                         @click="goToDocumentView(relevantes[4].id)"
                     >
                         <div
@@ -195,7 +197,7 @@
                     class="pl-5 pl-sm-0 pt-5 pt-sm-10 float-left float-sm-none pos-relative w-1-3 w-sm-100 h-100 h-sm-300x"
                 >
                     <a
-                        class="pos-relative h-100 dplay-block"
+                        class="pos-relative h-100 dplay-block hoverevent"
                         @click="goToDocumentView(relevantes[5].id)"
                     >
                         <div
@@ -291,4 +293,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.hoverevent:hover {
+    cursor: pointer;
+}
+</style>
