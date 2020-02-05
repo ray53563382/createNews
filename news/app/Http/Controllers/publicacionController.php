@@ -41,11 +41,14 @@ class publicacionController extends Controller
     }
 
     public function getNews(){
-        $news = DB::table('noticias')->orderBy('fecha', 'DESC')->take(4)->get();
+        $news = DB::table('noticias')->orderBy('fecha', 'DESC')->get();
         return $news;
     }
 
-
+    public function getNewsHome(){
+        $news = DB::table('noticias')->orderBy('fecha', 'DESC')->take(4)->get();
+        return $news;
+    }
 
     public function recentdata()
     {

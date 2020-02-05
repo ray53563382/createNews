@@ -292,7 +292,7 @@ export default {
                 this.recientes = resp.data;
                 axios({
                         method: "post",
-                        url: "/getNews"
+                        url: "/getNewsHome"
                     })
                     .then(resp => {
                         this.noticias = resp.data;
