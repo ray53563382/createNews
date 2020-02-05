@@ -5,7 +5,7 @@
                 <Header></Header>
             </div>
         </div>
-        <div class="container">
+        <div class="container my-4">
             <div class="row">
                 <div class="col-md-12 col-lg-8">
                     <img :src="docImage" alt="" />
@@ -14,7 +14,7 @@
                     </h3>
                     <ul class="list-li-mr-20 mtb-15">
                         <li>
-                            Por : <b>{{ docAutor }} </b>{{ docDate }}
+                            Por : <b>{{ docAutor }}, </b> <i>{{ docDate }}</i>
                         </li>
                     </ul>
                     <div
@@ -46,8 +46,13 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-12 col-lg-8">
-                        <p><b>Categoría: </b> {{ docTheme }}</p>
+                    <div class="col-md-12 col-lg-8 my-5">
+                        <a @click="searchtheme(docThemeID)">
+                            <p>
+                                <b>Categoría: </b>
+                                <span class="hoverevent">{{ docTheme }}</span>
+                            </p>
+                        </a>
                     </div>
 
                     <div class="brdr-ash-1 opacty-5"></div>
@@ -57,7 +62,7 @@
                 <div class="d-none d-md-block d-lg-none col-md-3"></div>
                 <div class="col-md-6 col-lg-4">
                     <div class="pl-20 pl-md-0">
-                        <div class="mtb-50"><popularPost></popularPost>></div>
+                        <div class="mtb-50"><popularPost></popularPost></div>
                         <!-- mtb-50 -->
                     </div>
                     <!--  pl-20 -->
@@ -72,7 +77,7 @@
             <div class="row">
                 <div
                     class="col-12 col-lg-3 col-md-6 box"
-                    @click="goToDocumentView(registros[0])"
+                    @click="goToDocumentView(registros[0].id)"
                 >
                     <img
                         :src="registros[0].imgdesmostrativa"
@@ -99,7 +104,7 @@
                 </div>
                 <div
                     class="col-12 col-lg-3 col-md-6 box"
-                    @click="goToDocumentView(registros[1])"
+                    @click="goToDocumentView(registros[1].id)"
                 >
                     <img
                         :src="registros[1].imgdesmostrativa"
@@ -126,7 +131,7 @@
                 </div>
                 <div
                     class="col-12 col-lg-3 col-md-6 box"
-                    @click="goToDocumentView(registros[2])"
+                    @click="goToDocumentView(registros[2].id)"
                 >
                     <img
                         :src="registros[2].imgdesmostrativa"
@@ -153,7 +158,7 @@
                 </div>
                 <div
                     class="col-12 col-lg-3 col-md-6 box"
-                    @click="goToDocumentView(registros[3])"
+                    @click="goToDocumentView(registros[3].id)"
                 >
                     <img
                         :src="registros[3].imgdesmostrativa"
@@ -221,6 +226,7 @@ export default {
             docTextBody: null,
             docEtiquetas: null,
             docURL: null,
+            docThemeID: null,
             showvideo: false,
             showdescarga: false,
             logito: logito,
@@ -241,8 +247,11 @@ export default {
         };
     },
     methods: {
-        goToDocumentView(data) {
-            console.log(data);
+        goToDocumentView(id) {
+            location.replace("/documentView/" + id);
+        },
+        searchtheme(id) {
+            location.replace("/searchbytheme/" + id);
         }
     },
     created() {
@@ -272,18 +281,19 @@ export default {
 
                     if (resp.data.pdf == null) {
                         console.log("pdf null");
-
                         this.docTitle = resp.data.titulo;
                         this.docDate = resp.data.fecha;
                         this.docAutor = resp.data.autor;
                         this.docTheme = this.categorias[resp.data.idcategoria];
                         this.docImage = resp.data.imgdesmostrativa;
                         this.docTextBody = resp.data.informacionArt;
+                        this.docThemeID = resp.data.idcategoria;
                         this.$loading(false);
                     } else {
                         console.log("pdf no null");
                         this.showdescarga = true;
                         this.docTitle = resp.data.titulo;
+                        this.docThemeID = resp.data.idcategoria;
                         this.docDate = resp.data.fecha;
                         this.docAutor = resp.data.autor;
                         this.docTheme = this.categorias[resp.data.idcategoria];
@@ -299,6 +309,7 @@ export default {
                     if (resp.data.pdf == null) {
                         this.showvideo = true;
                         this.docTitle = resp.data.titulo;
+                        this.docThemeID = resp.data.idcategoria;
                         this.docDate = resp.data.fecha;
                         this.docAutor = resp.data.autor;
                         this.docTheme = this.categorias[resp.data.idcategoria];
@@ -310,6 +321,7 @@ export default {
                     } else {
                         this.docTitle = resp.data.titulo;
                         this.docDate = resp.data.fecha;
+                        this.docThemeID = resp.data.idcategoria;
                         this.docAutor = resp.data.autor;
                         this.docTheme = this.categorias[resp.data.idcategoria];
                         this.docImage = resp.data.imgdesmostrativa;
@@ -330,6 +342,10 @@ export default {
 </script>
 
 <style scoped>
+.hoverevent:hover {
+    cursor: pointer;
+}
+
 .testy >>> div > div > div > span > img {
     width: 24% !important;
     margin: 4em 1em 2em 1em;

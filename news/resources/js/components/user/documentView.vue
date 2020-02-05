@@ -29,7 +29,7 @@
                 <div class="d-none d-md-block d-lg-none col-md-3"></div>
                 <div class="col-md-6 col-lg-4">
                     <div class="pl-20 pl-md-0">
-                        <div class="mtb-50"><popularPost></popularPost>></div>
+                        <div class="mtb-50"><popularPost></popularPost></div>
                         <!-- mtb-50 -->
                     </div>
                     <!--  pl-20 -->

@@ -5524,6 +5524,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
   data: function data() {
     return {
@@ -5954,6 +5970,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -5983,6 +6004,7 @@ Vue.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_3__["default"], {
       docTextBody: null,
       docEtiquetas: null,
       docURL: null,
+      docThemeID: null,
       showvideo: false,
       showdescarga: false,
       logito: _media_home_png__WEBPACK_IMPORTED_MODULE_0___default.a,
@@ -5992,8 +6014,11 @@ Vue.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_3__["default"], {
     };
   },
   methods: {
-    goToDocumentView: function goToDocumentView(data) {
-      console.log(data);
+    goToDocumentView: function goToDocumentView(id) {
+      location.replace("/documentView/" + id);
+    },
+    searchtheme: function searchtheme(id) {
+      location.replace("/searchbytheme/" + id);
     }
   },
   created: function created() {
@@ -6026,12 +6051,14 @@ Vue.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_3__["default"], {
           _this.docTheme = _this.categorias[resp.data.idcategoria];
           _this.docImage = resp.data.imgdesmostrativa;
           _this.docTextBody = resp.data.informacionArt;
+          _this.docThemeID = resp.data.idcategoria;
 
           _this.$loading(false);
         } else {
           console.log("pdf no null");
           _this.showdescarga = true;
           _this.docTitle = resp.data.titulo;
+          _this.docThemeID = resp.data.idcategoria;
           _this.docDate = resp.data.fecha;
           _this.docAutor = resp.data.autor;
           _this.docTheme = _this.categorias[resp.data.idcategoria];
@@ -6048,6 +6075,7 @@ Vue.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_3__["default"], {
         if (resp.data.pdf == null) {
           _this.showvideo = true;
           _this.docTitle = resp.data.titulo;
+          _this.docThemeID = resp.data.idcategoria;
           _this.docDate = resp.data.fecha;
           _this.docAutor = resp.data.autor;
           _this.docTheme = _this.categorias[resp.data.idcategoria];
@@ -6060,6 +6088,7 @@ Vue.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_3__["default"], {
         } else {
           _this.docTitle = resp.data.titulo;
           _this.docDate = resp.data.fecha;
+          _this.docThemeID = resp.data.idcategoria;
           _this.docAutor = resp.data.autor;
           _this.docTheme = _this.categorias[resp.data.idcategoria];
           _this.docImage = resp.data.imgdesmostrativa;
@@ -6925,6 +6954,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _media_LogoCeccam_png__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_media_LogoCeccam_png__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _media_home_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../media/home.png */ "./resources/js/components/media/home.png");
 /* harmony import */ var _media_home_png__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_media_home_png__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13870,7 +13909,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.testy[data-v-7a67d078] div > div > div > span > img {\r\n    width: 24% !important;\r\n    margin: 4em 1em 2em 1em;\n}\n.placeholder[data-v-7a67d078] {\r\n    height: -webkit-fit-content;\r\n    height: -moz-fit-content;\r\n    height: fit-content;\r\n    width: 100%;\n}\n.file-icon[data-v-7a67d078] {\r\n    width: 10% !important;\n}\n.mt-30[data-v-7a67d078] {\r\n    margin-top: 30px !important;\n}\n.list-li-mr-20 > li[data-v-7a67d078] {\r\n    margin-right: 20px;\n}\n.mtb-15[data-v-7a67d078] {\r\n    margin-top: 15px !important;\r\n    margin-bottom: 15px !important;\n}\n.brdr-ash-1[data-v-7a67d078] {\r\n    height: 1px;\r\n    background: #aaa;\n}\n.opacty-5[data-v-7a67d078] {\r\n    opacity: 0.5;\n}\n.p-title[data-v-7a67d078] {\r\n    position: relative;\r\n    padding-bottom: 20px;\r\n    margin-bottom: 40px;\n}\n.p-title[data-v-7a67d078]:after {\r\n    content: \"\";\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 1px;\r\n    background: #ccc;\n}\n.p-title[data-v-7a67d078]:before {\r\n    content: \"\";\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n    width: 80px;\r\n    height: 5px;\r\n    background: #f9b500;\r\n    z-index: 1;\n}\n.mt-50[data-v-7a67d078] {\r\n    margin-top: 50px !important;\n}\n.pt-20[data-v-7a67d078] {\r\n    padding-top: 20px !important;\n}\n.pt-10[data-v-7a67d078] {\r\n    padding-top: 10px !important;\n}\n.list-a-pt-10 > li > a[data-v-7a67d078] {\r\n    padding-top: 10px;\n}\n.list-li-pt-10 > li[data-v-7a67d078] {\r\n    padding-top: 10px;\n}\n.mb-30[data-v-7a67d078] {\r\n    margin-bottom: 30px !important;\n}\n.color-lite-black[data-v-7a67d078] {\r\n    color: #888;\n}\n.color-black[data-v-7a67d078] {\r\n    color: #111;\n}\n.color-primary[data-v-7a67d078] {\r\n    color: #f9b500;\n}\n.mr-5[data-v-7a67d078] {\r\n    margin-right: 5px !important;\n}\n.buttonDownload[data-v-7a67d078] {\r\n    display: inline-block;\r\n    position: relative;\r\n    padding: 10px 25px;\r\n\r\n    background-color: #4cc713;\r\n    color: white;\r\n\r\n    font-family: sans-serif;\r\n    text-decoration: none;\r\n    font-size: 0.9em;\r\n    text-align: center;\r\n    text-indent: 15px;\n}\n.buttonDownload[data-v-7a67d078]:hover {\r\n    background-color: #333;\r\n    color: white;\n}\n.buttonDownload[data-v-7a67d078]:before,\r\n.buttonDownload[data-v-7a67d078]:after {\r\n    content: \" \";\r\n    display: block;\r\n    position: absolute;\r\n    left: 15px;\r\n    top: 52%;\n}\r\n\r\n/* Download box shape  */\n.buttonDownload[data-v-7a67d078]:before {\r\n    width: 10px;\r\n    height: 2px;\r\n    border-style: solid;\r\n    border-width: 0 2px 2px;\n}\r\n\r\n/* Download arrow shape */\n.buttonDownload[data-v-7a67d078]:after {\r\n    width: 0;\r\n    height: 0;\r\n    margin-left: 3px;\r\n    margin-top: -7px;\r\n\r\n    border-style: solid;\r\n    border-width: 4px 4px 0 4px;\r\n    border-color: transparent;\r\n    border-top-color: inherit;\r\n\r\n    -webkit-animation: downloadArrow 2s linear infinite;\r\n\r\n            animation: downloadArrow 2s linear infinite;\r\n    -webkit-animation-play-state: paused;\r\n            animation-play-state: paused;\n}\n.buttonDownload[data-v-7a67d078]:hover:before {\r\n    border-color: #4cc713;\n}\n.buttonDownload[data-v-7a67d078]:hover:after {\r\n    border-top-color: #4cc713;\r\n    -webkit-animation-play-state: running;\r\n            animation-play-state: running;\n}\r\n", ""]);
+exports.push([module.i, "\n.hoverevent[data-v-7a67d078]:hover {\r\n    cursor: pointer;\n}\n.testy[data-v-7a67d078] div > div > div > span > img {\r\n    width: 24% !important;\r\n    margin: 4em 1em 2em 1em;\n}\n.placeholder[data-v-7a67d078] {\r\n    height: -webkit-fit-content;\r\n    height: -moz-fit-content;\r\n    height: fit-content;\r\n    width: 100%;\n}\n.file-icon[data-v-7a67d078] {\r\n    width: 10% !important;\n}\n.mt-30[data-v-7a67d078] {\r\n    margin-top: 30px !important;\n}\n.list-li-mr-20 > li[data-v-7a67d078] {\r\n    margin-right: 20px;\n}\n.mtb-15[data-v-7a67d078] {\r\n    margin-top: 15px !important;\r\n    margin-bottom: 15px !important;\n}\n.brdr-ash-1[data-v-7a67d078] {\r\n    height: 1px;\r\n    background: #aaa;\n}\n.opacty-5[data-v-7a67d078] {\r\n    opacity: 0.5;\n}\n.p-title[data-v-7a67d078] {\r\n    position: relative;\r\n    padding-bottom: 20px;\r\n    margin-bottom: 40px;\n}\n.p-title[data-v-7a67d078]:after {\r\n    content: \"\";\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 1px;\r\n    background: #ccc;\n}\n.p-title[data-v-7a67d078]:before {\r\n    content: \"\";\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n    width: 80px;\r\n    height: 5px;\r\n    background: #f9b500;\r\n    z-index: 1;\n}\n.mt-50[data-v-7a67d078] {\r\n    margin-top: 50px !important;\n}\n.pt-20[data-v-7a67d078] {\r\n    padding-top: 20px !important;\n}\n.pt-10[data-v-7a67d078] {\r\n    padding-top: 10px !important;\n}\n.list-a-pt-10 > li > a[data-v-7a67d078] {\r\n    padding-top: 10px;\n}\n.list-li-pt-10 > li[data-v-7a67d078] {\r\n    padding-top: 10px;\n}\n.mb-30[data-v-7a67d078] {\r\n    margin-bottom: 30px !important;\n}\n.color-lite-black[data-v-7a67d078] {\r\n    color: #888;\n}\n.color-black[data-v-7a67d078] {\r\n    color: #111;\n}\n.color-primary[data-v-7a67d078] {\r\n    color: #f9b500;\n}\n.mr-5[data-v-7a67d078] {\r\n    margin-right: 5px !important;\n}\n.buttonDownload[data-v-7a67d078] {\r\n    display: inline-block;\r\n    position: relative;\r\n    padding: 10px 25px;\r\n\r\n    background-color: #4cc713;\r\n    color: white;\r\n\r\n    font-family: sans-serif;\r\n    text-decoration: none;\r\n    font-size: 0.9em;\r\n    text-align: center;\r\n    text-indent: 15px;\n}\n.buttonDownload[data-v-7a67d078]:hover {\r\n    background-color: #333;\r\n    color: white;\n}\n.buttonDownload[data-v-7a67d078]:before,\r\n.buttonDownload[data-v-7a67d078]:after {\r\n    content: \" \";\r\n    display: block;\r\n    position: absolute;\r\n    left: 15px;\r\n    top: 52%;\n}\r\n\r\n/* Download box shape  */\n.buttonDownload[data-v-7a67d078]:before {\r\n    width: 10px;\r\n    height: 2px;\r\n    border-style: solid;\r\n    border-width: 0 2px 2px;\n}\r\n\r\n/* Download arrow shape */\n.buttonDownload[data-v-7a67d078]:after {\r\n    width: 0;\r\n    height: 0;\r\n    margin-left: 3px;\r\n    margin-top: -7px;\r\n\r\n    border-style: solid;\r\n    border-width: 4px 4px 0 4px;\r\n    border-color: transparent;\r\n    border-top-color: inherit;\r\n\r\n    -webkit-animation: downloadArrow 2s linear infinite;\r\n\r\n            animation: downloadArrow 2s linear infinite;\r\n    -webkit-animation-play-state: paused;\r\n            animation-play-state: paused;\n}\n.buttonDownload[data-v-7a67d078]:hover:before {\r\n    border-color: #4cc713;\n}\n.buttonDownload[data-v-7a67d078]:hover:after {\r\n    border-top-color: #4cc713;\r\n    -webkit-animation-play-state: running;\r\n            animation-play-state: running;\n}\r\n", ""]);
 
 // exports
 
@@ -54676,7 +54715,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("h6", { staticClass: "color-lite-black pt-10" }, [
-                  _vm._v("\r\n                    Por\r\n                    "),
+                  _vm._v("\n                    Por\n                    "),
                   _c("span", { staticClass: "color-black" }, [
                     _c(
                       "b",
@@ -54728,7 +54767,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("p", { staticClass: "mb-20" }, [
         _vm._v(
-          "Suscribete y obten la información más relevante de nuestro sitio web"
+          "\n            Suscribete y obten la información más relevante de nuestro sitio\n            web\n        "
         )
       ]),
       _vm._v(" "),
@@ -55019,7 +55058,7 @@ var render = function() {
       _c("div", { staticClass: "col-12" }, [_c("Header")], 1)
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "container my-4" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-md-12 col-lg-8" }, [
           _c("img", { attrs: { src: _vm.docImage, alt: "" } }),
@@ -55031,8 +55070,9 @@ var render = function() {
           _c("ul", { staticClass: "list-li-mr-20 mtb-15" }, [
             _c("li", [
               _vm._v("\n                        Por : "),
-              _c("b", [_vm._v(_vm._s(_vm.docAutor) + " ")]),
-              _vm._v(_vm._s(_vm.docDate) + "\n                    ")
+              _c("b", [_vm._v(_vm._s(_vm.docAutor) + ", ")]),
+              _vm._v(" "),
+              _c("i", [_vm._v(_vm._s(_vm.docDate))])
             ])
           ]),
           _vm._v(" "),
@@ -55098,11 +55138,26 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 col-lg-8" }, [
-            _c("p", [
-              _c("b", [_vm._v("Categoría: ")]),
-              _vm._v(" " + _vm._s(_vm.docTheme))
-            ])
+          _c("div", { staticClass: "col-md-12 col-lg-8 my-5" }, [
+            _c(
+              "a",
+              {
+                on: {
+                  click: function($event) {
+                    return _vm.searchtheme(_vm.docThemeID)
+                  }
+                }
+              },
+              [
+                _c("p", [
+                  _c("b", [_vm._v("Categoría: ")]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "hoverevent" }, [
+                    _vm._v(_vm._s(_vm.docTheme))
+                  ])
+                ])
+              ]
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "brdr-ash-1 opacty-5" })
@@ -55112,12 +55167,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-md-6 col-lg-4" }, [
           _c("div", { staticClass: "pl-20 pl-md-0" }, [
-            _c(
-              "div",
-              { staticClass: "mtb-50" },
-              [_c("popularPost"), _vm._v(">")],
-              1
-            )
+            _c("div", { staticClass: "mtb-50" }, [_c("popularPost")], 1)
           ])
         ])
       ])
@@ -55134,7 +55184,7 @@ var render = function() {
                 staticClass: "col-12 col-lg-3 col-md-6 box",
                 on: {
                   click: function($event) {
-                    return _vm.goToDocumentView(_vm.registros[0])
+                    return _vm.goToDocumentView(_vm.registros[0].id)
                   }
                 }
               },
@@ -55180,7 +55230,7 @@ var render = function() {
                 staticClass: "col-12 col-lg-3 col-md-6 box",
                 on: {
                   click: function($event) {
-                    return _vm.goToDocumentView(_vm.registros[1])
+                    return _vm.goToDocumentView(_vm.registros[1].id)
                   }
                 }
               },
@@ -55226,7 +55276,7 @@ var render = function() {
                 staticClass: "col-12 col-lg-3 col-md-6 box",
                 on: {
                   click: function($event) {
-                    return _vm.goToDocumentView(_vm.registros[2])
+                    return _vm.goToDocumentView(_vm.registros[2].id)
                   }
                 }
               },
@@ -55272,7 +55322,7 @@ var render = function() {
                 staticClass: "col-12 col-lg-3 col-md-6 box",
                 on: {
                   click: function($event) {
-                    return _vm.goToDocumentView(_vm.registros[3])
+                    return _vm.goToDocumentView(_vm.registros[3].id)
                   }
                 }
               },
@@ -55695,12 +55745,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-md-6 col-lg-4" }, [
           _c("div", { staticClass: "pl-20 pl-md-0" }, [
-            _c(
-              "div",
-              { staticClass: "mtb-50" },
-              [_c("popularPost"), _vm._v(">")],
-              1
-            )
+            _c("div", { staticClass: "mtb-50" }, [_c("popularPost")], 1)
           ])
         ])
       ])
@@ -56153,48 +56198,9 @@ var render = function() {
       _vm._v(" "),
       _vm._m(1),
       _vm._v(" "),
-      _c("div", { staticClass: "src-form" }, [
-        _c("form", [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.searchString,
-                expression: "searchString"
-              }
-            ],
-            attrs: {
-              type: "text",
-              placeholder: "Busca entre nuestras publicaciones"
-            },
-            domProps: { value: _vm.searchString },
-            on: {
-              keyup: function($event) {
-                if (
-                  !$event.type.indexOf("key") &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                ) {
-                  return null
-                }
-                return _vm.search($event)
-              },
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.searchString = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("button", { on: { click: _vm.search } }, [
-            _c("i", { staticClass: "ion-search" })
-          ])
-        ])
-      ]),
-      _vm._v(" "),
       _vm._m(2),
+      _vm._v(" "),
+      _vm._m(3),
       _vm._v(" "),
       _c("ul", { staticClass: "main-menu", attrs: { id: "main-menu" } }, [
         _c("li", [
@@ -56204,7 +56210,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "drop-down" }, [
-          _vm._m(3),
+          _vm._m(4),
           _vm._v(" "),
           _c(
             "ul",
@@ -56229,7 +56235,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "drop-down" }, [
-          _vm._m(4),
+          _vm._m(5),
           _vm._v(" "),
           _c("ul", { staticClass: "drop-down-menu drop-down-inner" }, [
             _c("li", [
@@ -56330,6 +56336,28 @@ var staticRenderFns = [
       _c("i", { staticClass: "active src-icn ion-search" }),
       _vm._v(" "),
       _c("i", { staticClass: "close-icn ion-close" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "src-form" }, [
+      _c("form", { staticClass: "form-inline px-5 py-3" }, [
+        _c("input", {
+          staticClass: "form-control mr-2",
+          attrs: { placeholder: "Have a look around :)", type: "search" }
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-outline-success my-2",
+            attrs: { type: "submit" }
+          },
+          [_c("i", { staticClass: "ion-search" })]
+        )
+      ])
     ])
   },
   function() {
@@ -57074,12 +57102,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-md-6 col-lg-4" }, [
           _c("div", { staticClass: "pl-20 pl-md-0" }, [
-            _c(
-              "div",
-              { staticClass: "mtb-50" },
-              [_c("popularPost"), _vm._v(">")],
-              1
-            )
+            _c("div", { staticClass: "mtb-50" }, [_c("popularPost")], 1)
           ])
         ])
       ])
@@ -57448,7 +57471,7 @@ var render = function() {
         _c(
           "div",
           { staticClass: " col-lg-4 col-md-5 col-sm-12" },
-          [_c("popularPost"), _vm._v(">\n            ")],
+          [_c("popularPost")],
           1
         )
       ])
