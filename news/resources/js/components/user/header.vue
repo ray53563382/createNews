@@ -83,7 +83,7 @@
                     </ul>
                 </li>
                 <li class="drop-down">
-                    <a>Declaraciones<i class="ion-arrow-down-b"></i></a>
+                    <a>DECLARACIONES<i class="ion-arrow-down-b"></i></a>
                     <ul class="drop-down-menu drop-down-inner">
                         <li><a @click="all_actions">Acciones</a></li>
                     </ul>
