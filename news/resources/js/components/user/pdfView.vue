@@ -68,7 +68,7 @@
                 </div>
 
                 <div class=" col-lg-4 col-md-5 col-sm-12">
-                    <popularPost></popularPost>>
+                    <popularPost></popularPost>
                 </div>
             </div>
         </div>
