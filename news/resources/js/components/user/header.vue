@@ -20,14 +20,14 @@
                         class="float-right float-sm-none list-a-plr-10 list-a-plr-sm-5 list-a-ptb-15 list-a-ptb-sm-5"
                     >
                         <li>
-                            <a
+                            <a target="_blank"
                                 class="pl-0 pl-sm-10"
-                                href="https://www.facebook.com/ceccam.orgclass"
+                                href="https://www.facebook.com/ceccam.org"
                                 ><i class="ion-social-facebook"></i
                             ></a>
                         </li>
                         <li>
-                            <a href="https://twitter.com/Ceccam9"
+                            <a target="_blank" href="https://twitter.com/Ceccam9"
                                 ><i class="ion-social-twitter"></i
                             ></a>
                         </li>
@@ -38,7 +38,7 @@
                             <a  href="enlacepagina.html"><i class="ion-social-instagram"></i></a>
                         </li> -->
                         <li>
-                            <a href="enlacepagina.html"
+                            <a target="_blank" href="https://www.youtube.com/channel/UC0WRsxDsAxyG8y_PkcKJA-w"
                                 ><i class="ion-social-youtube"></i
                             ></a>
                         </li>

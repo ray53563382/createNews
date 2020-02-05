@@ -97,21 +97,16 @@
                     class="float-right float-sm-none list-a-plr-10 list-a-plr-sm-5 list-a-ptb-15 list-a-ptb-sm-5"
                 >
                     <li>
-                        <a class="pl-0 pl-sm-10" href="#"
+                        <a class="pl-0 pl-sm-10" 
+                            href="https://www.facebook.com/ceccam.org"
                             ><i class="ion-social-facebook"></i
                         ></a>
                     </li>
                     <li>
-                        <a href="#"><i class="ion-social-twitter"></i></a>
+                        <a  href="https://twitter.com/Ceccam9"><i class="ion-social-twitter"></i></a>
                     </li>
                     <li>
-                        <a href="#"><i class="ion-social-google"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="ion-social-instagram"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="ion-social-youtube"></i></a>
+                        <a href="https://www.youtube.com/channel/UC0WRsxDsAxyG8y_PkcKJA-w"><i class="ion-social-youtube"></i></a>
                     </li>
                 </ul>
             </div>

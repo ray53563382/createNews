@@ -106,12 +106,22 @@
                     </div>
                     <!-- col-md-6 -->
 
-                    <div class="col-sm-12 col-md-4">
-                        <h3 class="mb-20 mt-sm-50"><b>INFORMACIÓN</b></h3>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <h3 class="mb-20 mt-sm-50"><b>Sobre nosotros</b></h3>
 
-                        <ul
-                            class="font-11 list-relative list-li-pl-30 list-block list-li-mb-15"
-                        >
+                        <p>Crisis climática y autonomía es un sitio web construido por el Centro de Estudios para el
+                        Cambio en el Campo Mexicano (Ceccam), con el fin de enfocar los problemas que provoca
+                        la crisis climática y las soluciones que proponen los pueblos indígenas y las sociedades
+                        campesinas. En sentido opuesto los proyectos energéticos y extractivos, causantes de la
+                        crisis climática atentan contra la autonomía de los pueblos indígenas y campesinos, invaden
+                        sus territorios y amenazan sus formas de vida.
+                        La información contenida se refiere principalmente a México y da cuenta de las luchas de
+                        los pueblos indígenas y campesinos por mantener la autonomía en sus territorios, a pesar de
+                        la invasión de empresas mineras, de generación eléctrica, de explotación de hidrocarburos,
+                        o la instalaciuón de megaproyectos, con el apoyo del Estado.</p>
+
+                        <ul style="margin-top:2%"
+                            class="font-11 list-relative list-li-pl-30 list-block list-li-mb-15">
                             <li>
                                 <i class="abs-tl ion-ios-location"></i>599 Co Rd
                                 771 Coyoacán<br />81237. Ciudad de México
@@ -126,35 +136,7 @@
                                 (55) 5661 53 98
                             </li>
                         </ul>
-                        <ul
-                            class="font-11  list-a-plr-10 list-a-plr-sm-5 list-a-ptb-15 list-a-ptb-sm-5"
-                        >
-                            <li>
-                                <a class="pl-0" href="#"
-                                    ><i class="ion-social-linkedin"></i
-                                ></a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    ><i class="ion-social-facebook"></i
-                                ></a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    ><i class="ion-social-twitter"></i
-                                ></a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    ><i class="ion-social-google"></i
-                                ></a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    ><i class="ion-social-pinterest"></i
-                                ></a>
-                            </li>
-                        </ul>
+                    
                     </div>
                     <!-- col-md-6 -->
                 </div>
