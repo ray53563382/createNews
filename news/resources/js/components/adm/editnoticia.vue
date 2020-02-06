@@ -274,7 +274,8 @@ export default {
                 this.modoEditar = false;
                 axios({
                     method: "post",
-                    url: "/getNews",
+                    // url: "/getNews",
+                    url: "/allnews",
 
                 })
                 .then(resp=>{

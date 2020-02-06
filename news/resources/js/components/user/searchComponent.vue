@@ -442,6 +442,8 @@ export default {
         }
       })
         .then(resp => {
+          console.log(resp.data);
+          
           this.newsFlag = true;
           this.resultados = resp.data;
           this.$loading(false);

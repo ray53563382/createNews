@@ -40,10 +40,10 @@ class publicacionController extends Controller
 
     }
 
-    public function getNews(){
-        $news = DB::table('noticias')->orderBy('fecha', 'DESC')->get();
-        return $news;
-    }
+    // public function getNews(){
+    //     $news = DB::table('noticias')->orderBy('fecha', 'ASC')->get();
+    //     return $news;
+    // }
 
     public function getNewsHome(){
         $news = DB::table('noticias')->orderBy('fecha', 'DESC')->take(4)->get();
@@ -56,11 +56,11 @@ class publicacionController extends Controller
         return $most_recent;
     }
 
-    public function allnews()
-    {
-        $recent_news = DB::table('noticias')->orderBy('created_at', 'DESC')->get();
-        return $recent_news;
-    }
+    // public function allnews()
+    // {
+    //     $recent_news = DB::table('noticias')->orderBy('created_at', 'DESC')->get();
+    //     return $recent_news;
+    // }
 
 
     public function getdoc( Request $request)

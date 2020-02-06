@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
+
 
 use Illuminate\Http\Request;
 use App\Noticia;
@@ -110,6 +112,15 @@ class NoticiasController extends Controller
     {
         $noticia = Noticia::find($request->id);
         return $noticia;
+    }
+
+    public function allnews(Request $request)
+    {
+        
+        // $news = DB::table('noticias')->orderBy('fecha', 'DESC')->paginate(50);
+        $news = DB::table('noticias')->orderBy('fecha', 'DESC')->take(100)->get();
+        return $news;
+       
     }
 
 }

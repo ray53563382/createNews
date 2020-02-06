@@ -33,7 +33,8 @@ Route::get('sobreNosotrosContacto','DocumentsViewController@about');
 
 
 Route::post('/recentdata', 'publicacionController@recentdata');
-Route::post('/allnews', 'publicacionController@allnews');
+// Route::post('/allnews', 'publicacionController@allnews');
+Route::post('/allnews', 'NoticiasController@allnews');
 
 
 Route::post('/relevant', 'publicacionController@relevant');
