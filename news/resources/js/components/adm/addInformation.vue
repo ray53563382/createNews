@@ -57,6 +57,49 @@
                     </table>
                 </div>
             </div>
+            <nav>
+                <ul class="pagination">
+                    <li v-if="pagination.current_page > 1">
+                        <a
+                            @click="
+                                changePage(
+                                    pagination.current_page - 1
+                                )
+                            "
+                        >
+                            <span>Atrás</span>
+                        </a>
+                    </li>
+                    <li
+                        v-for="(page, index) in pagesNumber"
+                        :key="index"
+                        v-bind:class="[
+                            page == isActived ? 'active' : ''
+                        ]"
+                        @click="changePage(page)"
+                    >
+                        <a>
+                            <span>{{ page }}</span>
+                        </a>
+                    </li>
+                    <li
+                        v-if="
+                            pagination.current_page <
+                                pagination.last_page
+                        "
+                    >
+                        <a
+                            @click="
+                                changePage(
+                                    pagination.current_page + 1
+                                )
+                            "
+                        >
+                            <span>Siguiente</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
     </div>
@@ -199,12 +242,23 @@ export default {
                 id: ''
             },
             importantes: [],
-            muyimportantes: []
+            muyimportantes: [],
+            pagination: {
+                total: 0,
+                current_page: 0,
+                per_page: 0,
+                last_page: 0,
+                from: 0,
+                to: 0
+            }
         }
     },
     created() {
-        axios.get('/notas').then(res => {
-            this.notas = res.data;
+        axios.post('/recentdata').then(resp => {
+            this.notas = resp.data.notas.data;
+            this.pagination = resp.data.pagination;
+            console.log(this.notas);
+            
             // console.log(res.data);
             
             this.notas.forEach(element => {
@@ -217,8 +271,67 @@ export default {
         })
     },
 
+    computed: {
+        isActived: function() {
+            return this.pagination.current_page;
+        },
+        pagesNumber: function() {
+            if (!this.pagination.to) {
+                return [];
+            }
+
+            let from = this.pagination.current_page - 2;
+            if (from < 1) {
+                from = 1;
+            }
+
+            let to = from + 2 * 2;
+            if (to >= this.pagination.last_page) {
+                to = this.pagination.last_page;
+            }
+
+            let pagesArray = [];
+            while (from <= to) {
+                pagesArray.push(from);
+                from++;
+            }
+
+            return pagesArray;
+        }
+    },
+
     mounted() {},
     methods: {
+
+        getNotas(page) {
+            axios({
+                method: "post",
+                url: "/recentdata",
+                data: {
+                    page: page
+                }
+            })
+                .then(resp => {
+                    // this.newsFlag = true;
+                    this.notas = resp.data.notas.data;
+                    this.pagination = resp.data.pagination;
+                    this.notas.forEach(element => {
+                        if (element.relevante == 1) {
+                            this.importantes.push(element.id)
+                        }else if(element.relevante == 2){
+                            this.muyimportantes.push(element.id)
+                        }
+                    });
+                    this.$loading(false);
+                })
+                .catch(Error => console.log(Error));
+        },
+
+        changePage(page) {
+            this.pagination.current_page = page;
+            this.getNotas(page);
+        },
+
         eliminar(item, index) {
             this.$swal({
                 title: '¿Estás seguro de eliminar el registro?',
@@ -419,5 +532,133 @@ export default {
     color: rgba(58, 155, 211, 0.794);
     /* color: rgba(91, 192, 222, 0.5); */
     /* color: rgba(219, 146, 226, 0.643); */
+}
+.active {
+    background-color: rgba(57, 164, 235, 0.747) !important;
+}
+
+.query-container {
+    height: 100vh !important;
+}
+
+
+
+@import url("https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700");
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i");
+
+
+
+
+
+.pt-20 {
+    padding-top: 20px !important;
+}
+
+.list-li-mr-20 > li {
+    margin-right: 20px;
+}
+
+.color-primary {
+    color: #f9b500;
+}
+
+.mr-5 {
+    margin-right: 5px !important;
+}
+
+.paginate-result {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.font-12 {
+    font-size: 1.2em;
+}
+
+
+
+ul {
+    list-style-type: none;
+    width: 100%;
+}
+
+h3 {
+    font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+}
+
+li img {
+    float: left;
+    margin: 0 15px 0 0;
+}
+
+li p {
+    font: 200 12px/1.5 Georgia, Times New Roman, serif;
+}
+
+li {
+    padding: 10px;
+    overflow: auto;
+}
+
+li:hover {
+    background: #eee;
+    cursor: pointer;
+}
+
+.p-title {
+    position: relative;
+    padding-bottom: 20px;
+    margin-bottom: 4px;
+}
+
+.p-title:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #ccc;
+}
+
+.p-title:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 5px;
+    background: #f9b500;
+    z-index: 1;
+}
+
+.color-lite-black {
+    color: #888;
+}
+
+.color-black {
+    color: #111;
+}
+
+.wh-100x {
+    height: 100px;
+    width: 100px !important;
+}
+
+.abs-tlr {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.ml-120 {
+    margin-left: 120px !important;
+}
+
+.mycursor {
+    cursor: pointer;
 }
 </style>

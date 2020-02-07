@@ -3301,6 +3301,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3325,14 +3368,24 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
         id: ''
       },
       importantes: [],
-      muyimportantes: []
+      muyimportantes: [],
+      pagination: {
+        total: 0,
+        current_page: 0,
+        per_page: 0,
+        last_page: 0,
+        from: 0,
+        to: 0
+      }
     };
   },
   created: function created() {
     var _this = this;
 
-    axios.get('/notas').then(function (res) {
-      _this.notas = res.data; // console.log(res.data);
+    axios.post('/recentdata').then(function (resp) {
+      _this.notas = resp.data.notas.data;
+      _this.pagination = resp.data.pagination;
+      console.log(_this.notas); // console.log(res.data);
 
       _this.notas.forEach(function (element) {
         if (element.relevante == 1) {
@@ -3343,10 +3396,72 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
       });
     });
   },
+  computed: {
+    isActived: function isActived() {
+      return this.pagination.current_page;
+    },
+    pagesNumber: function pagesNumber() {
+      if (!this.pagination.to) {
+        return [];
+      }
+
+      var from = this.pagination.current_page - 2;
+
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + 2 * 2;
+
+      if (to >= this.pagination.last_page) {
+        to = this.pagination.last_page;
+      }
+
+      var pagesArray = [];
+
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+
+      return pagesArray;
+    }
+  },
   mounted: function mounted() {},
   methods: {
-    eliminar: function eliminar(item, index) {
+    getNotas: function getNotas(page) {
       var _this2 = this;
+
+      axios({
+        method: "post",
+        url: "/recentdata",
+        data: {
+          page: page
+        }
+      }).then(function (resp) {
+        // this.newsFlag = true;
+        _this2.notas = resp.data.notas.data;
+        _this2.pagination = resp.data.pagination;
+
+        _this2.notas.forEach(function (element) {
+          if (element.relevante == 1) {
+            _this2.importantes.push(element.id);
+          } else if (element.relevante == 2) {
+            _this2.muyimportantes.push(element.id);
+          }
+        });
+
+        _this2.$loading(false);
+      })["catch"](function (Error) {
+        return console.log(Error);
+      });
+    },
+    changePage: function changePage(page) {
+      this.pagination.current_page = page;
+      this.getNotas(page);
+    },
+    eliminar: function eliminar(item, index) {
+      var _this3 = this;
 
       this.$swal({
         title: '¿Estás seguro de eliminar el registro?',
@@ -3359,7 +3474,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
       }).then(function (result) {
         if (result.value) {
           axios["delete"]("/notas/".concat(item.id)).then(function () {
-            _this2.notas.splice(index, 1);
+            _this3.notas.splice(index, 1);
           });
         }
       });
@@ -3379,7 +3494,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
       console.log(this.registro);
     },
     editarData: function editarData() {
-      var _this3 = this;
+      var _this4 = this;
 
       var params = {
         titulo: this.registro.titulo,
@@ -3391,10 +3506,10 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
         imgdesmostrativa: this.registro.imgdesmostrativa
       };
       axios.put("/notas/".concat(this.registro.id), params).then(function (res) {
-        _this3.modoEditar = false;
+        _this4.modoEditar = false;
         axios.get('/notas').then(function (res) {
-          _this3.notas = res.data;
-          console.log(_this3.notas);
+          _this4.notas = res.data;
+          console.log(_this4.notas);
         });
       });
     },
@@ -3402,13 +3517,13 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
       this.modoEditar = false;
     },
     obtenerImagen: function obtenerImagen(e) {
-      var _this4 = this;
+      var _this5 = this;
 
       var fileReader = new FileReader();
       fileReader.readAsDataURL(e.target.files[0]);
 
       fileReader.onload = function (e) {
-        _this4.registro.imgdesmostrativa = e.target.result;
+        _this5.registro.imgdesmostrativa = e.target.result;
       };
     },
     iluminaImportantes: function iluminaImportantes(item) {
@@ -3430,7 +3545,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
       console.log(fondo);
     },
     agregarImportantes: function agregarImportantes(item) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.importantes.indexOf(item.id) != -1) {
         this.$swal({
@@ -3443,9 +3558,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
           confirmButtonText: 'Aceptar'
         }).then(function (result) {
           if (result.value) {
-            _this5.importantes.slice(_this5.importantes.indexOf(item.id), 1);
+            _this6.importantes.slice(_this6.importantes.indexOf(item.id), 1);
 
-            _this5.$refs[item.id][0].style.background = "#FFF";
+            _this6.$refs[item.id][0].style.background = "#FFF";
             axios({
               method: "post",
               url: "/removerImportante",
@@ -3466,9 +3581,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
           confirmButtonText: 'Aceptar'
         }).then(function (result) {
           if (result.value) {
-            _this5.importantes.push(item.id);
+            _this6.importantes.push(item.id);
 
-            _this5.$refs[item.id][0].style.background = "rgba(246, 153, 63, 0.4)";
+            _this6.$refs[item.id][0].style.background = "rgba(246, 153, 63, 0.4)";
             axios({
               method: "post",
               url: "/colocarImportante",
@@ -3481,7 +3596,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
       }
     },
     agregaSuperImportante: function agregaSuperImportante(item) {
-      var _this6 = this;
+      var _this7 = this;
 
       if (this.muyimportantes.indexOf(item.id) != -1) {
         this.$swal({
@@ -3494,9 +3609,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
           confirmButtonText: 'Aceptar'
         }).then(function (result) {
           if (result.value) {
-            _this6.muyimportantes.slice(_this6.muyimportantes.indexOf(item.id), 1);
+            _this7.muyimportantes.slice(_this7.muyimportantes.indexOf(item.id), 1);
 
-            _this6.$refs[item.id][0].style.background = "#FFF";
+            _this7.$refs[item.id][0].style.background = "#FFF";
             axios({
               method: "post",
               url: "/removerImportante",
@@ -3517,9 +3632,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
           confirmButtonText: 'Aceptar'
         }).then(function (result) {
           if (result.value) {
-            _this6.muyimportantes.push(item.id);
+            _this7.muyimportantes.push(item.id);
 
-            _this6.$refs[item.id][0].style.background = "rgba(188, 211, 58, 0.794)";
+            _this7.$refs[item.id][0].style.background = "rgba(188, 211, 58, 0.794)";
             axios({
               method: "post",
               url: "/colocarSuperImportante",
@@ -14049,10 +14164,11 @@ exports.push([module.i, "\n.loading-screen[data-v-7ab65994] {\r\n  display: -web
 
 exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
-
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700);", ""]);
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i);", ""]);
 
 // module
-exports.push([module.i, "\n.modal-dialog[data-v-5974494a] {\r\n    margin: 0px auto 0px auto;\r\n    /* color: rgba(246, 153, 63, 0.6); */\r\n    color: rgba(58, 155, 211, 0.794);\r\n    /* color: rgba(91, 192, 222, 0.5); */\r\n    /* color: rgba(219, 146, 226, 0.643); */\n}\r\n", ""]);
+exports.push([module.i, "\n.modal-dialog[data-v-5974494a] {\r\n    margin: 0px auto 0px auto;\r\n    /* color: rgba(246, 153, 63, 0.6); */\r\n    color: rgba(58, 155, 211, 0.794);\r\n    /* color: rgba(91, 192, 222, 0.5); */\r\n    /* color: rgba(219, 146, 226, 0.643); */\n}\n.active[data-v-5974494a] {\r\n    background-color: rgba(57, 164, 235, 0.747) !important;\n}\n.query-container[data-v-5974494a] {\r\n    height: 100vh !important;\n}\n.pt-20[data-v-5974494a] {\r\n    padding-top: 20px !important;\n}\n.list-li-mr-20 > li[data-v-5974494a] {\r\n    margin-right: 20px;\n}\n.color-primary[data-v-5974494a] {\r\n    color: #f9b500;\n}\n.mr-5[data-v-5974494a] {\r\n    margin-right: 5px !important;\n}\n.paginate-result[data-v-5974494a] {\r\n    width: 100%;\r\n    text-align: center;\r\n    margin-bottom: 1rem;\n}\n.font-12[data-v-5974494a] {\r\n    font-size: 1.2em;\n}\nul[data-v-5974494a] {\r\n    list-style-type: none;\r\n    width: 100%;\n}\nh3[data-v-5974494a] {\r\n    font: bold 20px/1.5 Helvetica, Verdana, sans-serif;\n}\nli img[data-v-5974494a] {\r\n    float: left;\r\n    margin: 0 15px 0 0;\n}\nli p[data-v-5974494a] {\r\n    font: 200 12px/1.5 Georgia, Times New Roman, serif;\n}\nli[data-v-5974494a] {\r\n    padding: 10px;\r\n    overflow: auto;\n}\nli[data-v-5974494a]:hover {\r\n    background: #eee;\r\n    cursor: pointer;\n}\n.p-title[data-v-5974494a] {\r\n    position: relative;\r\n    padding-bottom: 20px;\r\n    margin-bottom: 4px;\n}\n.p-title[data-v-5974494a]:after {\r\n    content: \"\";\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 1px;\r\n    background: #ccc;\n}\n.p-title[data-v-5974494a]:before {\r\n    content: \"\";\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n    width: 80px;\r\n    height: 5px;\r\n    background: #f9b500;\r\n    z-index: 1;\n}\n.color-lite-black[data-v-5974494a] {\r\n    color: #888;\n}\n.color-black[data-v-5974494a] {\r\n    color: #111;\n}\n.wh-100x[data-v-5974494a] {\r\n    height: 100px;\r\n    width: 100px !important;\n}\n.abs-tlr[data-v-5974494a] {\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    right: 0;\r\n    z-index: 1;\n}\n.ml-120[data-v-5974494a] {\r\n    margin-left: 120px !important;\n}\n.mycursor[data-v-5974494a] {\r\n    cursor: pointer;\n}\r\n", ""]);
 
 // exports
 
@@ -51049,6 +51165,67 @@ var render = function() {
                     ]
                   )
                 ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("nav", [
+              _c(
+                "ul",
+                { staticClass: "pagination" },
+                [
+                  _vm.pagination.current_page > 1
+                    ? _c("li", [
+                        _c(
+                          "a",
+                          {
+                            on: {
+                              click: function($event) {
+                                return _vm.changePage(
+                                  _vm.pagination.current_page - 1
+                                )
+                              }
+                            }
+                          },
+                          [_c("span", [_vm._v("Atrás")])]
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.pagesNumber, function(page, index) {
+                    return _c(
+                      "li",
+                      {
+                        key: index,
+                        class: [page == _vm.isActived ? "active" : ""],
+                        on: {
+                          click: function($event) {
+                            return _vm.changePage(page)
+                          }
+                        }
+                      },
+                      [_c("a", [_c("span", [_vm._v(_vm._s(page))])])]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _vm.pagination.current_page < _vm.pagination.last_page
+                    ? _c("li", [
+                        _c(
+                          "a",
+                          {
+                            on: {
+                              click: function($event) {
+                                return _vm.changePage(
+                                  _vm.pagination.current_page + 1
+                                )
+                              }
+                            }
+                          },
+                          [_c("span", [_vm._v("Siguiente")])]
+                        )
+                      ])
+                    : _vm._e()
+                ],
+                2
               )
             ])
           ])
