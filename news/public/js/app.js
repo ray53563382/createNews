@@ -5280,6 +5280,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5303,20 +5349,83 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
         imgdesmostrativa: '',
         id: ''
       },
-      importantes: []
+      importantes: [],
+      pagination: {
+        total: 0,
+        current_page: 0,
+        per_page: 0,
+        last_page: 0,
+        from: 0,
+        to: 0
+      }
     };
   },
   created: function created() {
     var _this = this;
 
-    axios.post('/getNews').then(function (res) {
-      _this.notas = res.data;
+    axios.post('/allnews').then(function (resp) {
+      _this.notas = resp.data.noticias.data;
+      _this.pagination = resp.data.pagination;
     });
+  },
+  computed: {
+    isActived: function isActived() {
+      return this.pagination.current_page;
+    },
+    pagesNumber: function pagesNumber() {
+      if (!this.pagination.to) {
+        return [];
+      }
+
+      var from = this.pagination.current_page - 2;
+
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + 2 * 2;
+
+      if (to >= this.pagination.last_page) {
+        to = this.pagination.last_page;
+      }
+
+      var pagesArray = [];
+
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+
+      return pagesArray;
+    }
   },
   mounted: function mounted() {},
   methods: {
-    eliminar: function eliminar(item, index) {
+    getNoticias: function getNoticias(page) {
       var _this2 = this;
+
+      axios({
+        method: "post",
+        url: "/allnews",
+        data: {
+          page: page
+        }
+      }).then(function (resp) {
+        // this.newsFlag = true;
+        _this2.notas = resp.data.noticias.data;
+        _this2.pagination = resp.data.pagination;
+
+        _this2.$loading(false);
+      })["catch"](function (Error) {
+        return console.log(Error);
+      });
+    },
+    changePage: function changePage(page) {
+      this.pagination.current_page = page;
+      this.getNoticias(page);
+    },
+    eliminar: function eliminar(item, index) {
+      var _this3 = this;
 
       this.$swal({
         title: '¿Estás seguro de eliminar el registro?',
@@ -5335,7 +5444,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
               id: item.id
             }
           }).then(function () {
-            _this2.notas.splice(index, 1);
+            _this3.notas.splice(index, 1);
           }); // axios.delete(`/deleteNew/${item.id}`).then(() => {
           //     this.notas.splice(index, 1);
           // })
@@ -5357,7 +5466,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
       console.log(this.registro);
     },
     editarData: function editarData() {
-      var _this3 = this;
+      var _this4 = this;
 
       // const params = {
       //     id : this.registro.id,
@@ -5383,13 +5492,13 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
           imgdesmostrativa: this.registro.imgdesmostrativa
         }
       }).then(function (resp) {
-        _this3.modoEditar = false;
+        _this4.modoEditar = false;
         axios({
           method: "post",
           // url: "/getNews",
           url: "/allnews"
         }).then(function (resp) {
-          _this3.notas = res.data; // location.reload();
+          _this4.notas = resp.data.noticias.data; // location.reload();
         });
       }); // axios.put(`/notas/${this.registro.id}`, params)
       //     .then(res => {
@@ -5404,13 +5513,13 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED
       this.modoEditar = false;
     },
     obtenerImagen: function obtenerImagen(e) {
-      var _this4 = this;
+      var _this5 = this;
 
       var fileReader = new FileReader();
       fileReader.readAsDataURL(e.target.files[0]);
 
       fileReader.onload = function (e) {
-        _this4.registro.imgdesmostrativa = e.target.result;
+        _this5.registro.imgdesmostrativa = e.target.result;
       };
     },
     iluminaImportantes: function iluminaImportantes(item) {
@@ -13925,10 +14034,11 @@ exports.push([module.i, "\n.modal-dialog[data-v-2b0056e2] {\r\n    margin: 0px a
 
 exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
-
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700);", ""]);
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i);", ""]);
 
 // module
-exports.push([module.i, "\n.modal-dialog[data-v-8bf3314a] {\r\n    margin: 0px auto 0px auto;\r\n    /* color: rgba(246, 153, 63, 0.6); */\r\n    /* color: rgba(91, 192, 222, 0.5); */\n}\r\n", ""]);
+exports.push([module.i, "\n.active[data-v-8bf3314a] {\r\n    background-color: rgba(57, 164, 235, 0.747) !important;\n}\n.query-container[data-v-8bf3314a] {\r\n    height: 100vh !important;\n}\n.pt-20[data-v-8bf3314a] {\r\n    padding-top: 20px !important;\n}\n.list-li-mr-20 > li[data-v-8bf3314a] {\r\n    margin-right: 20px;\n}\n.color-primary[data-v-8bf3314a] {\r\n    color: #f9b500;\n}\n.mr-5[data-v-8bf3314a] {\r\n    margin-right: 5px !important;\n}\n.paginate-result[data-v-8bf3314a] {\r\n    width: 100%;\r\n    text-align: center;\r\n    margin-bottom: 1rem;\n}\n.font-12[data-v-8bf3314a] {\r\n    font-size: 1.2em;\n}\n.card__by[data-v-8bf3314a] {\r\n    font-size: 12px;\r\n    font-family: \"Raleway\", sans-serif;\r\n    font-weight: 500;\n}\n.card__author[data-v-8bf3314a] {\r\n    font-weight: 600;\r\n    text-decoration: none;\r\n    color: #ad7d52;\n}\n.card__author[data-v-8bf3314a]:hover {\r\n    font-weight: 600;\r\n    text-decoration: none;\r\n    color: #fff;\n}\n.card:hover .card__img--hover[data-v-8bf3314a] {\r\n    height: 100%;\r\n    opacity: 0.3;\n}\n.card:hover .card__info[data-v-8bf3314a] {\r\n    background-color: transparent;\r\n    position: relative;\n}\n.card:hover .card__info-hover[data-v-8bf3314a] {\r\n    opacity: 1;\n}\nul[data-v-8bf3314a] {\r\n    list-style-type: none;\r\n    width: 100%;\n}\nh3[data-v-8bf3314a] {\r\n    font: bold 20px/1.5 Helvetica, Verdana, sans-serif;\n}\nli img[data-v-8bf3314a] {\r\n    float: left;\r\n    margin: 0 15px 0 0;\n}\nli p[data-v-8bf3314a] {\r\n    font: 200 12px/1.5 Georgia, Times New Roman, serif;\n}\nli[data-v-8bf3314a] {\r\n    padding: 10px;\r\n    overflow: auto;\n}\nli[data-v-8bf3314a]:hover {\r\n    background: #eee;\r\n    cursor: pointer;\n}\n.p-title[data-v-8bf3314a] {\r\n    position: relative;\r\n    padding-bottom: 20px;\r\n    margin-bottom: 4px;\n}\n.p-title[data-v-8bf3314a]:after {\r\n    content: \"\";\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 1px;\r\n    background: #ccc;\n}\n.p-title[data-v-8bf3314a]:before {\r\n    content: \"\";\r\n    position: absolute;\r\n    bottom: 0;\r\n    left: 0;\r\n    width: 80px;\r\n    height: 5px;\r\n    background: #f9b500;\r\n    z-index: 1;\n}\n.color-lite-black[data-v-8bf3314a] {\r\n    color: #888;\n}\n.color-black[data-v-8bf3314a] {\r\n    color: #111;\n}\n.wh-100x[data-v-8bf3314a] {\r\n    height: 100px;\r\n    width: 100px !important;\n}\n.abs-tlr[data-v-8bf3314a] {\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    right: 0;\r\n    z-index: 1;\n}\n.ml-120[data-v-8bf3314a] {\r\n    margin-left: 120px !important;\n}\n.mycursor[data-v-8bf3314a] {\r\n    cursor: pointer;\n}\r\n", ""]);
 
 // exports
 
@@ -54180,7 +54290,7 @@ var render = function() {
                               ]
                             },
                             [
-                              _c("td", [_vm._v(_vm._s(index + 1))]),
+                              _c("td", [_vm._v(_vm._s(item.id))]),
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(item.titulo))]),
                               _vm._v(" "),
@@ -54248,6 +54358,67 @@ var render = function() {
                     ]
                   )
                 ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("nav", [
+              _c(
+                "ul",
+                { staticClass: "pagination" },
+                [
+                  _vm.pagination.current_page > 1
+                    ? _c("li", [
+                        _c(
+                          "a",
+                          {
+                            on: {
+                              click: function($event) {
+                                return _vm.changePage(
+                                  _vm.pagination.current_page - 1
+                                )
+                              }
+                            }
+                          },
+                          [_c("span", [_vm._v("Atrás")])]
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.pagesNumber, function(page, index) {
+                    return _c(
+                      "li",
+                      {
+                        key: index,
+                        class: [page == _vm.isActived ? "active" : ""],
+                        on: {
+                          click: function($event) {
+                            return _vm.changePage(page)
+                          }
+                        }
+                      },
+                      [_c("a", [_c("span", [_vm._v(_vm._s(page))])])]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _vm.pagination.current_page < _vm.pagination.last_page
+                    ? _c("li", [
+                        _c(
+                          "a",
+                          {
+                            on: {
+                              click: function($event) {
+                                return _vm.changePage(
+                                  _vm.pagination.current_page + 1
+                                )
+                              }
+                            }
+                          },
+                          [_c("span", [_vm._v("Siguiente")])]
+                        )
+                      ])
+                    : _vm._e()
+                ],
+                2
               )
             ])
           ])

@@ -24,7 +24,8 @@
                             <!-- <paginate name="result" :list="notas" :per="2" tag="tbody"> -->
                                 <tr  v-for="(item, index) in notas" :key="index" :ref="item.id"  :style="[item.relevante == 1 ? {'background': 'rgba(91, 192, 222, 0.2)'} : {'background': '#FFF'}]" >
                                     <!-- <paginate name="result" :list="notas" :per="2" tag="tbody"> -->
-                                    <td>{{index + 1}}</td>
+                                    <!-- <td>{{index + 1}}</td> -->
+                                    <td>{{item.id}}</td>
                                     <td>{{item.titulo}}</td>
                                     <td v-if="item.importancia == 1" style="color:green">Alta</td>
                                     <td v-else-if="item.importancia == 2" style="color: orange;">Media</td>
@@ -48,8 +49,53 @@
 
                         </tbody>
                     </table>
+                    
                 </div>
+                
             </div>
+            <nav>
+                <ul class="pagination">
+                    <li v-if="pagination.current_page > 1">
+                        <a
+                            @click="
+                                changePage(
+                                    pagination.current_page - 1
+                                )
+                            "
+                        >
+                            <span>Atrás</span>
+                        </a>
+                    </li>
+                    <li
+                        v-for="(page, index) in pagesNumber"
+                        :key="index"
+                        v-bind:class="[
+                            page == isActived ? 'active' : ''
+                        ]"
+                        @click="changePage(page)"
+                    >
+                        <a>
+                            <span>{{ page }}</span>
+                        </a>
+                    </li>
+                    <li
+                        v-if="
+                            pagination.current_page <
+                                pagination.last_page
+                        "
+                    >
+                        <a
+                            @click="
+                                changePage(
+                                    pagination.current_page + 1
+                                )
+                            "
+                        >
+                            <span>Siguiente</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
     </div>
@@ -191,17 +237,79 @@ export default {
                 imgdesmostrativa: '',
                 id: ''
             },
-            importantes: []
+            importantes: [],
+            pagination: {
+                total: 0,
+                current_page: 0,
+                per_page: 0,
+                last_page: 0,
+                from: 0,
+                to: 0
+            }
         }
     },
     created() {
-        axios.post('/getNews').then(res => {
-            this.notas = res.data;
+        axios.post('/allnews').then(resp => {
+            this.notas = resp.data.noticias.data;
+            this.pagination = resp.data.pagination;
         })
+    },
+
+    
+    computed: {
+        isActived: function() {
+            return this.pagination.current_page;
+        },
+        pagesNumber: function() {
+            if (!this.pagination.to) {
+                return [];
+            }
+
+            let from = this.pagination.current_page - 2;
+            if (from < 1) {
+                from = 1;
+            }
+
+            let to = from + 2 * 2;
+            if (to >= this.pagination.last_page) {
+                to = this.pagination.last_page;
+            }
+
+            let pagesArray = [];
+            while (from <= to) {
+                pagesArray.push(from);
+                from++;
+            }
+
+            return pagesArray;
+        }
     },
 
     mounted() {},
     methods: {
+
+        getNoticias(page) {
+            axios({
+                method: "post",
+                url: "/allnews",
+                data: {
+                    page: page
+                }
+            })
+                .then(resp => {
+                    // this.newsFlag = true;
+                    this.notas = resp.data.noticias.data;
+                    this.pagination = resp.data.pagination;
+                    this.$loading(false);
+                })
+                .catch(Error => console.log(Error));
+        },
+
+        changePage(page) {
+            this.pagination.current_page = page;
+            this.getNoticias(page);
+        },
+
         eliminar(item, index) {
             this.$swal({
                 title: '¿Estás seguro de eliminar el registro?',
@@ -279,7 +387,7 @@ export default {
 
                 })
                 .then(resp=>{
-                    this.notas = res.data;
+                    this.notas = resp.data.noticias.data;
                     // location.reload();
                 })
             })
@@ -372,9 +480,165 @@ export default {
 </script>
 
 <style scoped>
-.modal-dialog {
-    margin: 0px auto 0px auto;
-    /* color: rgba(246, 153, 63, 0.6); */
-    /* color: rgba(91, 192, 222, 0.5); */
+
+.active {
+    background-color: rgba(57, 164, 235, 0.747) !important;
+}
+
+.query-container {
+    height: 100vh !important;
+}
+
+
+
+@import url("https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700");
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i");
+
+
+
+
+
+.pt-20 {
+    padding-top: 20px !important;
+}
+
+.list-li-mr-20 > li {
+    margin-right: 20px;
+}
+
+.color-primary {
+    color: #f9b500;
+}
+
+.mr-5 {
+    margin-right: 5px !important;
+}
+
+.paginate-result {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.font-12 {
+    font-size: 1.2em;
+}
+
+
+
+.card__by {
+    font-size: 12px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 500;
+}
+
+.card__author {
+    font-weight: 600;
+    text-decoration: none;
+    color: #ad7d52;
+}
+
+.card__author:hover {
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+}
+
+.card:hover .card__img--hover {
+    height: 100%;
+    opacity: 0.3;
+}
+
+.card:hover .card__info {
+    background-color: transparent;
+    position: relative;
+}
+
+.card:hover .card__info-hover {
+    opacity: 1;
+}
+
+ul {
+    list-style-type: none;
+    width: 100%;
+}
+
+h3 {
+    font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+}
+
+li img {
+    float: left;
+    margin: 0 15px 0 0;
+}
+
+li p {
+    font: 200 12px/1.5 Georgia, Times New Roman, serif;
+}
+
+li {
+    padding: 10px;
+    overflow: auto;
+}
+
+li:hover {
+    background: #eee;
+    cursor: pointer;
+}
+
+.p-title {
+    position: relative;
+    padding-bottom: 20px;
+    margin-bottom: 4px;
+}
+
+.p-title:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #ccc;
+}
+
+.p-title:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 5px;
+    background: #f9b500;
+    z-index: 1;
+}
+
+.color-lite-black {
+    color: #888;
+}
+
+.color-black {
+    color: #111;
+}
+
+.wh-100x {
+    height: 100px;
+    width: 100px !important;
+}
+
+.abs-tlr {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.ml-120 {
+    margin-left: 120px !important;
+}
+
+.mycursor {
+    cursor: pointer;
 }
 </style>

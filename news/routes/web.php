@@ -40,7 +40,6 @@ Route::post('/allnews', 'NoticiasController@allnews');
 Route::post('/relevant', 'publicacionController@relevant');
 Route::post('/getSuperRelevantes', 'publicacionController@masrelevante');
 Route::post('/recent', 'publicacionController@recent');
-Route::post('/getNews', 'publicacionController@getNews');
 Route::post('/getNewsHome', 'publicacionController@getNewsHome');
 Route::post('/updateNews', 'NoticiasController@update');
 Route::post('/deleteNew', 'NoticiasController@destroy');

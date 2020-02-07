@@ -117,7 +117,7 @@ class NoticiasController extends Controller
     public function allnews(Request $request)
     {
         
-        $news = Noticia::orderBy('fecha', 'DESC')->paginate(9);
+        $news = Noticia::orderBy('fecha', 'DESC')->paginate(12);
         // $news = DB::table('noticias')->orderBy('fecha', 'DESC')->take(100)->get();
 
         return [
