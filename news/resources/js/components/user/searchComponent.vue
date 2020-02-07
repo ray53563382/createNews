@@ -25,58 +25,86 @@
             </div>
             <!-- ALL SEARCH START -->
             <div v-if="searchFlag">
-                <paginate name="result" :list="resultados" :per="9" tag="div">
-                    <h4 class="p-title" style="margin-bottom: 2%">
-                        <b>Publicaciones</b>
-                    </h4>
-                    <div class="row">
-                        <div
-                            v-for="(person, index) in paginated('result')"
-                            :key="index"
-                            class="col-12 col-lg-4 col-md-6 box"
-                            @click="goToDocumentView(person)"
-                        >
-                            <img
-                                :src="person.imgdesmostrativa"
-                                alt
-                                style="width: 100%; height: 300px;"
-                            />
-                            <h4 class="pt-20">
-                                <a href="#">
-                                    <b style="color: black;">
-                                        {{ person.titulo }}
-                                    </b>
+                <div class="row">
+                    <div
+                        v-for="(person, index) in resultados"
+                        :key="index"
+                        class="col-12 col-lg-4 col-md-6 box"
+                        @click="goToNewview(person)"
+                    >
+                        <img
+                            :src="person.imgdesmostrativa"
+                            alt
+                            style="width: 100%; height: 300px;"
+                        />
+                        <h4 class="pt-20">
+                            <a href="#">
+                                <b style="color: black;">
+                                    {{ person.titulo }}
+                                </b>
+                            </a>
+                        </h4>
+                        <!-- <ul style="margin-left: -48px;"> -->
+                        <ul style="margin-left: -8px">
+                            <li class="color-lite-black">
+                                Autor:
+                                <a href="#" class="color-black">
+                                    <b>{{ person.autor }},</b>
                                 </a>
-                            </h4>
-                            <!-- <ul style="margin-left: -48px;"> -->
-                            <ul style="margin-left: -8px">
-                                <li class="color-lite-black">
-                                    Autor:
-                                    <a href="#" class="color-black">
-                                        <b>{{ person.autor }},</b>
-                                    </a>
-                                    <br />
-                                    {{ person.fecha }}
-                                </li>
-                            </ul>
-                        </div>
+                                <br />
+                                {{ person.fecha }}
+                            </li>
+                        </ul>
                     </div>
-                </paginate>
+                </div>
 
                 <div class="container h-100" style="margin-top: 3%">
                     <div
                         class="row h-100 justify-content-center align-items-center"
                     >
-                        <div>
-                            <paginate-links
-                                for="result"
-                                :classes="{
-                                    ul: 'pagination',
-                                    li: 'page-item',
-                                    a: 'page-link'
-                                }"
-                            ></paginate-links>
-                        </div>
+                        <nav>
+                            <ul class="pagination">
+                                <li v-if="pagination.current_page > 1">
+                                    <a
+                                        @click="
+                                            changePageNota(
+                                                pagination.current_page - 1
+                                            )
+                                        "
+                                    >
+                                        <span>Atrás</span>
+                                    </a>
+                                </li>
+                                <li
+                                    v-for="(page, index) in pagesNumber"
+                                    :key="index"
+                                    v-bind:class="[
+                                        page == isActived ? 'active' : ''
+                                    ]"
+                                    @click="changePageNota(page)"
+                                >
+                                    <a>
+                                        <span>{{ page }}</span>
+                                    </a>
+                                </li>
+                                <li
+                                    v-if="
+                                        pagination.current_page <
+                                            pagination.last_page
+                                    "
+                                >
+                                    <a
+                                        @click="
+                                            changePage(
+                                                pagination.current_page + 1
+                                            )
+                                        "
+                                    >
+                                        <span>Siguiente</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -439,6 +467,23 @@ export default {
                 .then(resp => {
                     // this.newsFlag = true;
                     this.resultados = resp.data.noticias.data;
+                    this.pagination = resp.pagination;
+                    this.$loading(false);
+                })
+                .catch(Error => console.log(Error));
+        },
+
+        getNotas(page) {
+            axios({
+                method: "post",
+                url: "/recentdata",
+                data: {
+                    page: page
+                }
+            })
+                .then(resp => {
+                    // this.newsFlag = true;
+                    this.resultados = resp.data.notas.data;
                     this.pagination = resp.data.pagination;
                     this.$loading(false);
                 })
@@ -448,6 +493,11 @@ export default {
         changePage(page) {
             this.pagination.current_page = page;
             this.getNoticias(page);
+        },
+
+        changePageNota(page) {
+            this.pagination.current_page = page;
+            this.getNotas(page);
         }
     },
     data() {
@@ -519,7 +569,10 @@ export default {
             })
                 .then(resp => {
                     this.searchFlag = true;
-                    this.resultados = resp.data;
+                    this.resultados = resp.data.notas.data;
+                    this.pagination = resp.data.pagination;
+                    console.log(this.pagination);
+
                     this.$loading(false);
                 })
                 .catch(Error => console.log(Error));

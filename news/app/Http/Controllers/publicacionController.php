@@ -48,8 +48,18 @@ class publicacionController extends Controller
 
     public function recentdata()
     {
-        $most_recent = DB::table('notas')->orderBy('created_at', 'DESC')->get();
-        return $most_recent;
+        $most_recent = Nota::orderBy('fecha', 'DESC')->paginate(12);
+        return [
+            'pagination' =>[
+                'total'         => $most_recent->total(),
+                'current_page'  => $most_recent->currentPage(),
+                'per_page'      => $most_recent->perPage(),
+                'last_page'     => $most_recent->lastPage(),
+                'from'          => $most_recent->firstItem(),
+                'to'            => $most_recent->lastPage()
+            ],
+            'notas'=> $most_recent
+        ];
     }
 
     // public function allnews()

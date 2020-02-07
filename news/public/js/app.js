@@ -8880,6 +8880,34 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8941,9 +8969,28 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
       }).then(function (resp) {
         // this.newsFlag = true;
         _this.resultados = resp.data.noticias.data;
-        _this.pagination = resp.data.pagination;
+        _this.pagination = resp.pagination;
 
         _this.$loading(false);
+      })["catch"](function (Error) {
+        return console.log(Error);
+      });
+    },
+    getNotas: function getNotas(page) {
+      var _this2 = this;
+
+      axios({
+        method: "post",
+        url: "/recentdata",
+        data: {
+          page: page
+        }
+      }).then(function (resp) {
+        // this.newsFlag = true;
+        _this2.resultados = resp.data.notas.data;
+        _this2.pagination = resp.data.pagination;
+
+        _this2.$loading(false);
       })["catch"](function (Error) {
         return console.log(Error);
       });
@@ -8951,6 +8998,10 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
     changePage: function changePage(page) {
       this.pagination.current_page = page;
       this.getNoticias(page);
+    },
+    changePageNota: function changePageNota(page) {
+      this.pagination.current_page = page;
+      this.getNotas(page);
     }
   },
   data: function data() {
@@ -9011,7 +9062,7 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
     }
   },
   created: function created() {
-    var _this2 = this;
+    var _this3 = this;
 
     this.$loading(true);
 
@@ -9023,10 +9074,12 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
           type: this.order
         }
       }).then(function (resp) {
-        _this2.searchFlag = true;
-        _this2.resultados = resp.data;
+        _this3.searchFlag = true;
+        _this3.resultados = resp.data.notas.data;
+        _this3.pagination = resp.data.pagination;
+        console.log(_this3.pagination);
 
-        _this2.$loading(false);
+        _this3.$loading(false);
       })["catch"](function (Error) {
         return console.log(Error);
       });
@@ -9038,10 +9091,10 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
           orden: this.order
         }
       }).then(function (resp) {
-        _this2.allActionsFlag = true;
-        _this2.resultados = resp.data;
+        _this3.allActionsFlag = true;
+        _this3.resultados = resp.data;
 
-        _this2.$loading(false);
+        _this3.$loading(false);
       })["catch"](function (Error) {
         return console.log(Error);
       });
@@ -9053,11 +9106,11 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
           page: 1
         }
       }).then(function (resp) {
-        _this2.newsFlag = true;
-        _this2.resultados = resp.data.noticias.data;
-        _this2.pagination = resp.data.pagination;
+        _this3.newsFlag = true;
+        _this3.resultados = resp.data.noticias.data;
+        _this3.pagination = resp.data.pagination;
 
-        _this2.$loading(false);
+        _this3.$loading(false);
       })["catch"](function (Error) {
         return console.log(Error);
       });
@@ -9071,11 +9124,11 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
             author: this.author
           }
         }).then(function (resp) {
-          _this2.resultados = resp.data;
+          _this3.resultados = resp.data;
 
-          _this2.$loading(false);
+          _this3.$loading(false);
 
-          _this2.resultados.length == undefined || _this2.resultados.length <= 0 ? _this2.notFound = true : _this2.notFound = false; // console.log(this.resultados.length);
+          _this3.resultados.length == undefined || _this3.resultados.length <= 0 ? _this3.notFound = true : _this3.notFound = false; // console.log(this.resultados.length);
         })["catch"](function (Error) {
           return console.log(error);
         });
@@ -9087,12 +9140,12 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
             idcategoria: this.theme
           }
         }).then(function (resp) {
-          _this2.searchFlag = true;
-          _this2.resultados = resp.data;
+          _this3.searchFlag = true;
+          _this3.resultados = resp.data;
 
-          _this2.$loading(false);
+          _this3.$loading(false);
 
-          _this2.resultados.length == undefined || _this2.resultados.length <= 0 ? _this2.notFound = true : _this2.notFound = false;
+          _this3.resultados.length == undefined || _this3.resultados.length <= 0 ? _this3.notFound = true : _this3.notFound = false;
         })["catch"](function (Error) {
           return console.log(Error);
         });
@@ -9105,12 +9158,12 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
           }).then(function (resp) {
             console.log(resp.data);
 
-            _this2.$loading(false);
+            _this3.$loading(false);
 
-            _this2.resultados = resp.data;
+            _this3.resultados = resp.data;
             console.log("ijasdiojaiodjaiojsdoajodjajsdjasdjajo");
-            _this2.resultadosAtores = _toConsumableArray(new Set(_this2.resultados));
-            console.log(_this2.resultadosAtores);
+            _this3.resultadosAtores = _toConsumableArray(new Set(_this3.resultados));
+            console.log(_this3.resultadosAtores);
             console.log("ijasdiojaiodjaiojsdoajodjajsdjasdjajo");
           })["catch"](function (Error) {
             return console.log(Error);
@@ -9123,12 +9176,12 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
               q_string: this.querystring
             }
           }).then(function (resp) {
-            if (_this2.querystring == "allDocuments") {
+            if (_this3.querystring == "allDocuments") {
               console.log(resp.data);
-              _this2.all_documents = true;
-              _this2.resultados = resp.data;
+              _this3.all_documents = true;
+              _this3.resultados = resp.data;
 
-              _this2.$loading(false); // console.log(resp.data);
+              _this3.$loading(false); // console.log(resp.data);
               // this.resultados = resp.data;
               // this.resultados.length == undefined ||
               // this.resultados.length <= 0
@@ -9136,14 +9189,14 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
               //     : (this.notFound = false);
 
             } else {
-              _this2.searchFlag = true;
-              _this2.resultados = resp.data;
+              _this3.searchFlag = true;
+              _this3.resultados = resp.data;
 
-              _this2.$loading(false);
+              _this3.$loading(false);
 
               console.log(resp.data); // console.log(resp.data);
 
-              _this2.resultados.length == undefined || _this2.resultados.length <= 0 ? _this2.notFound = true : _this2.notFound = false; // console.log(this.resultados.length);
+              _this3.resultados.length == undefined || _this3.resultados.length <= 0 ? _this3.notFound = true : _this3.notFound = false; // console.log(this.resultados.length);
             }
           })["catch"](function (Error) {
             return console.log(error);
@@ -58863,137 +58916,150 @@ var render = function() {
         ),
         _vm._v(" "),
         _vm.searchFlag
-          ? _c(
-              "div",
-              [
-                _c(
-                  "paginate",
-                  {
-                    attrs: {
-                      name: "result",
-                      list: _vm.resultados,
-                      per: 9,
-                      tag: "div"
-                    }
-                  },
-                  [
-                    _c(
-                      "h4",
-                      {
-                        staticClass: "p-title",
-                        staticStyle: { "margin-bottom": "2%" }
-                      },
-                      [_c("b", [_vm._v("Publicaciones")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "row" },
-                      _vm._l(_vm.paginated("result"), function(person, index) {
-                        return _c(
-                          "div",
-                          {
-                            key: index,
-                            staticClass: "col-12 col-lg-4 col-md-6 box",
-                            on: {
-                              click: function($event) {
-                                return _vm.goToDocumentView(person)
-                              }
-                            }
-                          },
+          ? _c("div", [
+              _c(
+                "div",
+                { staticClass: "row" },
+                _vm._l(_vm.resultados, function(person, index) {
+                  return _c(
+                    "div",
+                    {
+                      key: index,
+                      staticClass: "col-12 col-lg-4 col-md-6 box",
+                      on: {
+                        click: function($event) {
+                          return _vm.goToNewview(person)
+                        }
+                      }
+                    },
+                    [
+                      _c("img", {
+                        staticStyle: { width: "100%", height: "300px" },
+                        attrs: { src: person.imgdesmostrativa, alt: "" }
+                      }),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "pt-20" }, [
+                        _c("a", { attrs: { href: "#" } }, [
+                          _c("b", { staticStyle: { color: "black" } }, [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(person.titulo) +
+                                "\n                            "
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("ul", { staticStyle: { "margin-left": "-8px" } }, [
+                        _c("li", { staticClass: "color-lite-black" }, [
+                          _vm._v(
+                            "\n                            Autor:\n                            "
+                          ),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "color-black",
+                              attrs: { href: "#" }
+                            },
+                            [_c("b", [_vm._v(_vm._s(person.autor) + ",")])]
+                          ),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(person.fecha) +
+                              "\n                        "
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "container h-100",
+                  staticStyle: { "margin-top": "3%" }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "row h-100 justify-content-center align-items-center"
+                    },
+                    [
+                      _c("nav", [
+                        _c(
+                          "ul",
+                          { staticClass: "pagination" },
                           [
-                            _c("img", {
-                              staticStyle: { width: "100%", height: "300px" },
-                              attrs: { src: person.imgdesmostrativa, alt: "" }
-                            }),
-                            _vm._v(" "),
-                            _c("h4", { staticClass: "pt-20" }, [
-                              _c("a", { attrs: { href: "#" } }, [
-                                _c("b", { staticStyle: { color: "black" } }, [
-                                  _vm._v(
-                                    "\n                                    " +
-                                      _vm._s(person.titulo) +
-                                      "\n                                "
-                                  )
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "ul",
-                              { staticStyle: { "margin-left": "-8px" } },
-                              [
-                                _c("li", { staticClass: "color-lite-black" }, [
-                                  _vm._v(
-                                    "\n                                Autor:\n                                "
-                                  ),
+                            _vm.pagination.current_page > 1
+                              ? _c("li", [
                                   _c(
                                     "a",
                                     {
-                                      staticClass: "color-black",
-                                      attrs: { href: "#" }
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.changePageNota(
+                                            _vm.pagination.current_page - 1
+                                          )
+                                        }
+                                      }
                                     },
-                                    [
-                                      _c("b", [
-                                        _vm._v(_vm._s(person.autor) + ",")
-                                      ])
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("br"),
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(person.fecha) +
-                                      "\n                            "
+                                    [_c("span", [_vm._v("Atrás")])]
                                   )
                                 ])
-                              ]
-                            )
-                          ]
-                        )
-                      }),
-                      0
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "container h-100",
-                    staticStyle: { "margin-top": "3%" }
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "row h-100 justify-content-center align-items-center"
-                      },
-                      [
-                        _c(
-                          "div",
-                          [
-                            _c("paginate-links", {
-                              attrs: {
-                                for: "result",
-                                classes: {
-                                  ul: "pagination",
-                                  li: "page-item",
-                                  a: "page-link"
-                                }
-                              }
-                            })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm._l(_vm.pagesNumber, function(page, index) {
+                              return _c(
+                                "li",
+                                {
+                                  key: index,
+                                  class: [
+                                    page == _vm.isActived ? "active" : ""
+                                  ],
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.changePageNota(page)
+                                    }
+                                  }
+                                },
+                                [_c("a", [_c("span", [_vm._v(_vm._s(page))])])]
+                              )
+                            }),
+                            _vm._v(" "),
+                            _vm.pagination.current_page <
+                            _vm.pagination.last_page
+                              ? _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.changePage(
+                                            _vm.pagination.current_page + 1
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_c("span", [_vm._v("Siguiente")])]
+                                  )
+                                ])
+                              : _vm._e()
                           ],
-                          1
+                          2
                         )
-                      ]
-                    )
-                  ]
-                )
-              ],
-              1
-            )
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ])
           : _vm._e(),
         _vm._v(" "),
         _vm.newsFlag
