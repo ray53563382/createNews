@@ -7260,27 +7260,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 var $ = jquery__WEBPACK_IMPORTED_MODULE_0___default.a;
 
@@ -56653,9 +56632,48 @@ var render = function() {
       _vm._v(" "),
       _vm._m(1),
       _vm._v(" "),
-      _vm._m(2),
+      _c("div", { staticClass: "src-form" }, [
+        _c("form", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.searchString,
+                expression: "searchString"
+              }
+            ],
+            attrs: {
+              type: "text",
+              placeholder: "Busca entre nuestras publicaciones"
+            },
+            domProps: { value: _vm.searchString },
+            on: {
+              keyup: function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.search($event)
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.searchString = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("button", { on: { click: _vm.search } }, [
+            _c("i", { staticClass: "ion-search" })
+          ])
+        ])
+      ]),
       _vm._v(" "),
-      _vm._m(3),
+      _vm._m(2),
       _vm._v(" "),
       _c("ul", { staticClass: "main-menu", attrs: { id: "main-menu" } }, [
         _c("li", [
@@ -56665,7 +56683,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "drop-down" }, [
-          _vm._m(4),
+          _vm._m(3),
           _vm._v(" "),
           _c(
             "ul",
@@ -56690,7 +56708,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "drop-down" }, [
-          _vm._m(5),
+          _vm._m(4),
           _vm._v(" "),
           _c("ul", { staticClass: "drop-down-menu drop-down-inner" }, [
             _c("li", [
@@ -56807,64 +56825,6 @@ var staticRenderFns = [
       _c("i", { staticClass: "active src-icn ion-search" }),
       _vm._v(" "),
       _c("i", { staticClass: "close-icn ion-close" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "src-form" }, [
-      _c("form", { staticClass: "expanding-search-form" }, [
-        _c("div", { staticClass: "search-dropdown" }, [
-          _c(
-            "button",
-            {
-              staticClass: "button dropdown-toggle",
-              attrs: { type: "button" }
-            },
-            [
-              _c("span", { staticClass: "toggle-active" }, [
-                _vm._v("Everything")
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "ion-arrow-down-b" })
-            ]
-          ),
-          _vm._v(" "),
-          _c("ul", { staticClass: "dropdown-menu" }, [
-            _c("li", { staticClass: "menu-active" }, [
-              _c("a", { attrs: { href: "#" } }, [_vm._v("Everything")])
-            ]),
-            _vm._v(" "),
-            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("People")])]),
-            _vm._v(" "),
-            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Products")])]),
-            _vm._v(" "),
-            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Blog")])])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "search-input",
-          attrs: { id: "global-search", type: "search", placeholder: "Search" }
-        }),
-        _vm._v(" "),
-        _c(
-          "label",
-          { staticClass: "search-label", attrs: { for: "global-search" } },
-          [_c("span", { staticClass: "sr-only" }, [_vm._v("Global Search")])]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "button search-button", attrs: { type: "button" } },
-          [
-            _c("span", { staticClass: "icon ion-search" }, [
-              _c("span", { staticClass: "sr-only" }, [_vm._v("Search")])
-            ])
-          ]
-        )
-      ])
     ])
   },
   function() {
