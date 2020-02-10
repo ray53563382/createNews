@@ -20,14 +20,17 @@
                         class="float-right float-sm-none list-a-plr-10 list-a-plr-sm-5 list-a-ptb-15 list-a-ptb-sm-5"
                     >
                         <li>
-                            <a target="_blank"
+                            <a
+                                target="_blank"
                                 class="pl-0 pl-sm-10"
                                 href="https://www.facebook.com/ceccam.org"
                                 ><i class="ion-social-facebook"></i
                             ></a>
                         </li>
                         <li>
-                            <a target="_blank" href="https://twitter.com/Ceccam9"
+                            <a
+                                target="_blank"
+                                href="https://twitter.com/Ceccam9"
                                 ><i class="ion-social-twitter"></i
                             ></a>
                         </li>
@@ -38,7 +41,9 @@
                             <a  href="enlacepagina.html"><i class="ion-social-instagram"></i></a>
                         </li> -->
                         <li>
-                            <a target="_blank" href="https://www.youtube.com/channel/UC0WRsxDsAxyG8y_PkcKJA-w"
+                            <a
+                                target="_blank"
+                                href="https://www.youtube.com/channel/UC0WRsxDsAxyG8y_PkcKJA-w"
                                 ><i class="ion-social-youtube"></i
                             ></a>
                         </li>
@@ -55,14 +60,35 @@
                 <i class="close-icn ion-close"></i>
             </a>
             <div class="src-form">
-                <form>
+                <form class="expanding-search-form">
+                    <div class="search-dropdown">
+                        <button class="button dropdown-toggle" type="button">
+                            <span class="toggle-active">Everything</span>
+                            <span class="ion-arrow-down-b"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li class="menu-active">
+                                <a href="#">Everything</a>
+                            </li>
+                            <li><a href="#">People</a></li>
+                            <li><a href="#">Products</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
                     <input
-                        v-on:keyup.enter="search"
-                        v-model="searchString"
-                        type="text"
-                        placeholder="Busca entre nuestras publicaciones"
+                        class="search-input"
+                        id="global-search"
+                        type="search"
+                        placeholder="Search"
                     />
-                    <button @click="search"><i class="ion-search"></i></button>
+                    <label class="search-label" for="global-search">
+                        <span class="sr-only">Global Search</span>
+                    </label>
+                    <button class="button search-button" type="button">
+                        <span class="icon ion-search">
+                            <span class="sr-only">Search</span>
+                        </span>
+                    </button>
                 </form>
             </div>
 
@@ -164,5 +190,142 @@ export default {
 <style lang="scss" scoped>
 a:hover {
     cursor: pointer;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+}
+
+.expanding-search-form {
+    position: relative;
+    top: 40%;
+    left: 35%;
+    display: inline-block;
+    height: 34px;
+    width: auto;
+}
+.expanding-search-form .search-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px solid #999;
+    z-index: 2;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: 250ms all ease-in-out;
+}
+.expanding-search-form .search-input {
+    position: relative;
+    top: 0;
+    display: inline-block;
+    height: 34px;
+    width: 150px;
+    float: left;
+    border: 0;
+    font-size: 16px;
+    z-index: 2;
+    box-shadow: none;
+    border-radius: 0;
+    transition: 250ms all ease-in-out;
+}
+.expanding-search-form .search-input:focus {
+    width: 300px;
+    outline: none;
+}
+.expanding-search-form .search-input:focus + .search-label {
+    border-color: #2299ff;
+}
+.expanding-search-form .button {
+    position: relative;
+    top: 0;
+    display: inline-block;
+    float: left;
+    padding: 0 10px;
+    color: #fff;
+    border: 1px solid transparent;
+    background-color: #2299ff;
+    text-align: center;
+    transition: 250ms all ease-in-out;
+}
+.expanding-search-form .button:hover {
+    background-color: #0080ee;
+}
+.expanding-search-form .search-dropdown {
+    position: relative;
+    top: 0;
+    display: inline-block;
+    float: left;
+    padding: 3px;
+}
+.expanding-search-form .search-dropdown.open .dropdown-menu {
+    display: block;
+}
+.expanding-search-form .dropdown-toggle {
+    height: 28px;
+    font-size: 12px;
+    line-height: 28px;
+    border-radius: 2px;
+    z-index: 3;
+}
+.expanding-search-form .dropdown-menu {
+    position: absolute;
+    top: calc(100% - 1px);
+    display: none;
+    margin: 0;
+    padding: 5px;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid #999;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    z-index: 3;
+    transition: 250ms all ease-in-out;
+}
+.expanding-search-form .dropdown-menu > li > a {
+    display: block;
+    padding: 4px 12px;
+    color: #2299ff;
+    font-size: 14px;
+    line-height: 20px;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: 250ms all ease-in-out;
+}
+.expanding-search-form .dropdown-menu > li > a:hover {
+    color: #fff;
+    background-color: #2299ff;
+}
+.expanding-search-form .dropdown-menu > .menu-active {
+    display: none;
+}
+.expanding-search-form .search-button {
+    height: 34px;
+    z-index: 3;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.expanding-search-form .search-button .icon {
+    font-size: 20px;
 }
 </style>

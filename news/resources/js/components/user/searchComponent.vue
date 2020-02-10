@@ -30,7 +30,7 @@
                         v-for="(person, index) in resultados"
                         :key="index"
                         class="col-12 col-lg-4 col-md-6 box"
-                        @click="goToNewview(person)"
+                        @click="goToDocumentView(person)"
                     >
                         <img
                             :src="person.imgdesmostrativa"
@@ -115,7 +115,7 @@
                         v-for="(person, index) in resultados"
                         :key="index"
                         class="col-12 col-lg-4 col-md-6 box"
-                        @click="goToNewview(person)"
+                        @click="gotoNewView(person)"
                     >
                         <img
                             :src="person.imgdesmostrativa"
@@ -452,6 +452,10 @@ export default {
             location.replace("/actionView/" + person.id);
         },
 
+        gotoNewView(person) {
+            location.replace("/newView/" + person.id);
+        },
+
         goToNewview(person) {
             location.replace("/newView/" + person.id);
         },
@@ -467,7 +471,7 @@ export default {
                 .then(resp => {
                     // this.newsFlag = true;
                     this.resultados = resp.data.noticias.data;
-                    this.pagination = resp.pagination;
+                    this.pagination = resp.data.pagination;
                     this.$loading(false);
                 })
                 .catch(Error => console.log(Error));
