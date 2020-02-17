@@ -17,6 +17,13 @@ Route::get('/', function () {
 
 });
 
+// Ruta para decidir el tipo de búsqueda.
+Route::get('search/{typeofsearch}/{querystring}', 'DocumentsViewController@searchIn');
+// Busqueda en Noticias
+Route::post('buscaEnNoticias', 'NoticiasController@searchIn');
+// Busqueda en Publicaciones
+Route::post('buscaEnPublicaciones', 'publicacionController@searchIn');
+
 
 Route::get('documentView/{id}', 'DocumentsViewController@index' );
 Route::get('documentViewpdf/{id}', 'DocumentsViewController@pdfview' );

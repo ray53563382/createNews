@@ -134,4 +134,30 @@ class NoticiasController extends Controller
         
     }
 
+    public function searchIn(Request $request){
+      
+       $searchValues = preg_split('/\s+/', $request->busqueda, -1, PREG_SPLIT_NO_EMPTY); 
+       $matches = Noticia::where(function ($q) use ($searchValues) {
+       foreach ($searchValues as $value) {
+           $q->orWhere('titulo', 'like', "%{$value}%");
+       }
+       })->paginate(9);
+
+       return [
+        'pagination' =>[
+            'total'         => $matches->total(),
+            'current_page'  => $matches->currentPage(),
+            'per_page'      => $matches->perPage(),
+            'last_page'     => $matches->lastPage(),
+            'from'          => $matches->firstItem(),
+            'to'            => $matches->lastPage()
+        ],
+        'noticias'=> $matches
+    ];
+
+       
+   }
+
+
+
 }

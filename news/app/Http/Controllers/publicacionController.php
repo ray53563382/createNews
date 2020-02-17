@@ -75,6 +75,28 @@ class publicacionController extends Controller
         return $document;
     }
 
+    public function searchIn(Request $request){
+
+        $searchValues = preg_split('/\s+/', $request->busqueda, -1, PREG_SPLIT_NO_EMPTY); 
+        $busquedaNotas = Nota::where(function ($q) use ($searchValues) {
+        foreach ($searchValues as $value) {
+            $q->orWhere('titulo', 'like', "%{$value}%")->orWhere('autor', 'like', "%{$value}%")->orWhere('fecha', 'like', "%{$value}%" );
+        }
+        })->paginate(9);
+ 
+        return [
+            'pagination' =>[
+                'total'         => $busquedaNotas->total(),
+                'current_page'  => $busquedaNotas->currentPage(),
+                'per_page'      => $busquedaNotas->perPage(),
+                'last_page'     => $busquedaNotas->lastPage(),
+                'from'          => $busquedaNotas->firstItem(),
+                'to'            => $busquedaNotas->lastPage()
+            ],
+            'notas'=> $busquedaNotas
+        ];
+    }
+
     public function getsearch(Request $request){
 
          // $searchValues = preg_split('/\s+/', $request->q_string, -1, PREG_SPLIT_NO_EMPTY); 

@@ -46,4 +46,9 @@ class DocumentsViewController extends Controller
     public function searchbytheme( $theme){
         return view( 'pages.searchview')->with('theme', $theme);
     }
+
+    public function searchIn($typeofsearch,$querystring){
+        // $queryString['querystring'] = $querystring;
+        return view('pages.searchview', ['querystring' => $querystring, 'typeofsearch' => $typeofsearch ]);
+    }
 }

@@ -7260,10 +7260,78 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var $ = jquery__WEBPACK_IMPORTED_MODULE_0___default.a;
 
 
+$(document).ready(function (e) {
+  $(".search-panel .dropdown-menu").find("a").click(function (e) {
+    e.preventDefault();
+    var param = $(this).attr("href").replace("#", "");
+    var concept = $(this).html();
+    $(".search-panel span#search_concept").html(concept);
+    $(".input-group #search_param").val(param);
+  });
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "header-component",
   data: function data() {
@@ -7271,6 +7339,7 @@ var $ = jquery__WEBPACK_IMPORTED_MODULE_0___default.a;
       logo: _media_LogoCeccam_png__WEBPACK_IMPORTED_MODULE_1___default.a,
       home: _media_home_png__WEBPACK_IMPORTED_MODULE_2___default.a,
       searchString: null,
+      typeOfSearch: null,
       categorias: ["1", "2", "3"]
     };
   },
@@ -7287,7 +7356,11 @@ var $ = jquery__WEBPACK_IMPORTED_MODULE_0___default.a;
   methods: {
     search: function search() {
       // console.log(this.searchString);
-      location.replace("/search/" + this.searchString);
+      if (this.typeOfSearch == null) {
+        location.replace("/search/" + this.searchString);
+      } else {
+        location.replace("/search/" + this.typeOfSearch + "/" + this.searchString);
+      }
     },
     fetch_all_docs: function fetch_all_docs() {
       location.replace("/search/get_all_docs");
@@ -7312,6 +7385,9 @@ var $ = jquery__WEBPACK_IMPORTED_MODULE_0___default.a;
     },
     search_theme: function search_theme(theme) {
       location.replace("/searchbytheme/" + theme);
+    },
+    changeString: function changeString(value) {
+      value == "noticias" ? this.typeOfSearch = "noticias" : this.typeOfSearch = "publicaciones";
     }
   }
 });
@@ -9051,6 +9127,9 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
     },
     theme: {
       requiered: false
+    },
+    typeofsearch: {
+      requiered: false
     }
   },
   components: {
@@ -9073,9 +9152,6 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
     },
     goToActionView: function goToActionView(person) {
       location.replace("/actionView/" + person.id);
-    },
-    gotoNewView: function gotoNewView(person) {
-      location.replace("/newView/" + person.id);
     },
     goToNewview: function goToNewview(person) {
       location.replace("/newView/" + person.id);
@@ -9149,7 +9225,9 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
         last_page: 0,
         from: 0,
         to: 0
-      } // pencil: pencil
+      },
+      isNoticia: false,
+      isPublicacion: false // pencil: pencil
 
     };
   },
@@ -9201,6 +9279,40 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
         _this3.resultados = resp.data.notas.data;
         _this3.pagination = resp.data.pagination;
         console.log(_this3.pagination);
+
+        _this3.$loading(false);
+      })["catch"](function (Error) {
+        return console.log(Error);
+      });
+    } else if (this.typeofsearch == "noticias") {
+      axios({
+        method: "post",
+        url: "/buscaEnNoticias",
+        data: {
+          busqueda: this.querystring,
+          page: 1
+        }
+      }).then(function (resp) {
+        _this3.newsFlag = true;
+        _this3.resultados = resp.data.noticias.data;
+        _this3.pagination = resp.data.pagination;
+
+        _this3.$loading(false);
+      })["catch"](function (Error) {
+        return console.log(Error);
+      });
+    } else if (this.typeofsearch == "publicaciones") {
+      axios({
+        method: "post",
+        url: "/buscaEnPublicaciones",
+        data: {
+          busqueda: this.querystring,
+          page: 1
+        }
+      }).then(function (resp) {
+        _this3.searchFlag = true;
+        _this3.resultados = resp.data.notas.data;
+        _this3.pagination = resp.data.pagination;
 
         _this3.$loading(false);
       })["catch"](function (Error) {
@@ -14022,7 +14134,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "a[data-v-009a3fd6]:hover {\n  cursor: pointer;\n}\n*[data-v-009a3fd6],\n*[data-v-009a3fd6]:before,\n*[data-v-009a3fd6]:after {\n  box-sizing: border-box;\n}\n.sr-only[data-v-009a3fd6] {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  padding: 0;\n  margin: -1px;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n}\nbody[data-v-009a3fd6],\nhtml[data-v-009a3fd6] {\n  width: 100%;\n  height: 100%;\n}\n.expanding-search-form[data-v-009a3fd6] {\n  position: relative;\n  top: 40%;\n  left: 35%;\n  display: inline-block;\n  height: 34px;\n  width: auto;\n}\n.expanding-search-form .search-label[data-v-009a3fd6] {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  border: 1px solid #999;\n  z-index: 2;\n  cursor: pointer;\n  border-radius: 3px;\n  -webkit-transition: 250ms all ease-in-out;\n  transition: 250ms all ease-in-out;\n}\n.expanding-search-form .search-input[data-v-009a3fd6] {\n  position: relative;\n  top: 0;\n  display: inline-block;\n  height: 34px;\n  width: 150px;\n  float: left;\n  border: 0;\n  font-size: 16px;\n  z-index: 2;\n  box-shadow: none;\n  border-radius: 0;\n  -webkit-transition: 250ms all ease-in-out;\n  transition: 250ms all ease-in-out;\n}\n.expanding-search-form .search-input[data-v-009a3fd6]:focus {\n  width: 300px;\n  outline: none;\n}\n.expanding-search-form .search-input:focus + .search-label[data-v-009a3fd6] {\n  border-color: #2299ff;\n}\n.expanding-search-form .button[data-v-009a3fd6] {\n  position: relative;\n  top: 0;\n  display: inline-block;\n  float: left;\n  padding: 0 10px;\n  color: #fff;\n  border: 1px solid transparent;\n  background-color: #2299ff;\n  text-align: center;\n  -webkit-transition: 250ms all ease-in-out;\n  transition: 250ms all ease-in-out;\n}\n.expanding-search-form .button[data-v-009a3fd6]:hover {\n  background-color: #0080ee;\n}\n.expanding-search-form .search-dropdown[data-v-009a3fd6] {\n  position: relative;\n  top: 0;\n  display: inline-block;\n  float: left;\n  padding: 3px;\n}\n.expanding-search-form .search-dropdown.open .dropdown-menu[data-v-009a3fd6] {\n  display: block;\n}\n.expanding-search-form .dropdown-toggle[data-v-009a3fd6] {\n  height: 28px;\n  font-size: 12px;\n  line-height: 28px;\n  border-radius: 2px;\n  z-index: 3;\n}\n.expanding-search-form .dropdown-menu[data-v-009a3fd6] {\n  position: absolute;\n  top: calc(100% - 1px);\n  display: none;\n  margin: 0;\n  padding: 5px;\n  list-style: none;\n  background-color: #fff;\n  border: 1px solid #999;\n  border-bottom-right-radius: 3px;\n  border-bottom-left-radius: 3px;\n  z-index: 3;\n  -webkit-transition: 250ms all ease-in-out;\n  transition: 250ms all ease-in-out;\n}\n.expanding-search-form .dropdown-menu > li > a[data-v-009a3fd6] {\n  display: block;\n  padding: 4px 12px;\n  color: #2299ff;\n  font-size: 14px;\n  line-height: 20px;\n  text-decoration: none;\n  border-radius: 2px;\n  -webkit-transition: 250ms all ease-in-out;\n  transition: 250ms all ease-in-out;\n}\n.expanding-search-form .dropdown-menu > li > a[data-v-009a3fd6]:hover {\n  color: #fff;\n  background-color: #2299ff;\n}\n.expanding-search-form .dropdown-menu > .menu-active[data-v-009a3fd6] {\n  display: none;\n}\n.expanding-search-form .search-button[data-v-009a3fd6] {\n  height: 34px;\n  z-index: 3;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.expanding-search-form .search-button .icon[data-v-009a3fd6] {\n  font-size: 20px;\n}", ""]);
+exports.push([module.i, "a[data-v-009a3fd6]:hover {\n  cursor: pointer;\n}\n*[data-v-009a3fd6],\n*[data-v-009a3fd6]:before,\n*[data-v-009a3fd6]:after {\n  box-sizing: border-box;\n}\n.sr-only[data-v-009a3fd6] {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  padding: 0;\n  margin: -1px;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n}\nbody[data-v-009a3fd6],\nhtml[data-v-009a3fd6] {\n  width: 100%;\n  height: 100%;\n}\n.mydrop[data-v-009a3fd6] {\n  -webkit-transform: translate3d(10.5em, 1em, 0px) !important;\n          transform: translate3d(10.5em, 1em, 0px) !important;\n}\n.mybtn[data-v-009a3fd6] {\n  width: 10em !important;\n}\n.myform[data-v-009a3fd6] {\n  width: 70% !important;\n}\n.myinput[data-v-009a3fd6] {\n  margin-left: 1em;\n  width: 80% !important;\n  display: inline !important;\n}\n@media only screen and (max-width: 768px) {\nli[data-v-009a3fd6] {\n    font-size: 0.7em !important;\n}\n.myinput[data-v-009a3fd6] {\n    margin-left: 4em;\n    width: 90% !important;\n}\n}", ""]);
 
 // exports
 
@@ -56632,17 +56744,19 @@ var render = function() {
       _vm._v(" "),
       _vm._m(1),
       _vm._v(" "),
-      _c("div", { staticClass: "src-form" }, [
+      _c("div", { staticClass: "src-form myform" }, [
         _c("form", [
           _c("input", {
             directives: [
               {
                 name: "model",
-                rawName: "v-model",
+                rawName: "v-model.lazy",
                 value: _vm.searchString,
-                expression: "searchString"
+                expression: "searchString",
+                modifiers: { lazy: true }
               }
             ],
+            staticClass: "myinput",
             attrs: {
               type: "text",
               placeholder: "Busca entre nuestras publicaciones"
@@ -56658,22 +56772,63 @@ var render = function() {
                 }
                 return _vm.search($event)
               },
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
+              change: function($event) {
                 _vm.searchString = $event.target.value
               }
             }
           }),
           _vm._v(" "),
-          _c("button", { on: { click: _vm.search } }, [
-            _c("i", { staticClass: "ion-search" })
+          _c("div", { staticClass: "input-group-btn search-panel" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticClass: "dropdown-menu mydrop", attrs: { role: "menu" } },
+              [
+                _c("li", [
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#its_equal" },
+                      on: {
+                        click: function($event) {
+                          return _vm.changeString("publicaciones")
+                        }
+                      }
+                    },
+                    [
+                      _c("span", {
+                        staticClass: "glyphicon glyphicon-envelope text-danger"
+                      }),
+                      _vm._v("\n                                Publicaciones")
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#its_equal" },
+                      on: {
+                        click: function($event) {
+                          return _vm.changeString("noticias")
+                        }
+                      }
+                    },
+                    [
+                      _vm._m(3),
+                      _vm._v("\n                                Noticias")
+                    ]
+                  )
+                ])
+              ]
+            )
           ])
         ])
       ]),
       _vm._v(" "),
-      _vm._m(2),
+      _vm._m(4),
       _vm._v(" "),
       _c("ul", { staticClass: "main-menu", attrs: { id: "main-menu" } }, [
         _c("li", [
@@ -56683,7 +56838,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "drop-down" }, [
-          _vm._m(3),
+          _vm._m(5),
           _vm._v(" "),
           _c(
             "ul",
@@ -56708,7 +56863,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "drop-down" }, [
-          _vm._m(4),
+          _vm._m(6),
           _vm._v(" "),
           _c("ul", { staticClass: "drop-down-menu drop-down-inner" }, [
             _c("li", [
@@ -56826,6 +56981,32 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("i", { staticClass: "close-icn ion-close" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-default dropdown-toggle mybtn",
+        attrs: { type: "button", "data-toggle": "dropdown" }
+      },
+      [
+        _c("span", { attrs: { id: "search_concept" } }, [
+          _c("span", { staticClass: "glyphicon glyphicon-align-justify" }),
+          _vm._v("\n                            Buscar en...")
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "caret" })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "fa fa-newspaper" })])
   },
   function() {
     var _vm = this
@@ -59260,7 +59441,7 @@ var render = function() {
                       staticClass: "col-12 col-lg-4 col-md-6 box",
                       on: {
                         click: function($event) {
-                          return _vm.gotoNewView(person)
+                          return _vm.goToNewview(person)
                         }
                       }
                     },

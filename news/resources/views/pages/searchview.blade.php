@@ -8,6 +8,8 @@
 
     @if (isset($author))
         <searchview-component querystring="{{$querystring}}" author="{{$author}}" ><searchview-component/>
+    @elseif (isset($typeofsearch))
+        <searchview-component querystring="{{$querystring}}" typeofsearch="{{$typeofsearch}}" ><searchview-component/>
     @else
         <searchview-component querystring="{{$querystring}}" ><searchview-component/> 
     @endif

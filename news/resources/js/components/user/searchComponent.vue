@@ -115,7 +115,7 @@
                         v-for="(person, index) in resultados"
                         :key="index"
                         class="col-12 col-lg-4 col-md-6 box"
-                        @click="gotoNewView(person)"
+                        @click="goToNewview(person)"
                     >
                         <img
                             :src="person.imgdesmostrativa"
@@ -426,6 +426,10 @@ export default {
 
         theme: {
             requiered: false
+        },
+
+        typeofsearch: {
+            requiered: false
         }
     },
     components: {
@@ -450,10 +454,6 @@ export default {
         },
         goToActionView(person) {
             location.replace("/actionView/" + person.id);
-        },
-
-        gotoNewView(person) {
-            location.replace("/newView/" + person.id);
         },
 
         goToNewview(person) {
@@ -526,7 +526,9 @@ export default {
                 last_page: 0,
                 from: 0,
                 to: 0
-            }
+            },
+            isNoticia: false,
+            isPublicacion: false
             // pencil: pencil
         };
     },
@@ -577,6 +579,38 @@ export default {
                     this.pagination = resp.data.pagination;
                     console.log(this.pagination);
 
+                    this.$loading(false);
+                })
+                .catch(Error => console.log(Error));
+        } else if (this.typeofsearch == "noticias") {
+            axios({
+                method: "post",
+                url: "/buscaEnNoticias",
+                data: {
+                    busqueda: this.querystring,
+                    page: 1
+                }
+            })
+                .then(resp => {
+                    this.newsFlag = true;
+                    this.resultados = resp.data.noticias.data;
+                    this.pagination = resp.data.pagination;
+                    this.$loading(false);
+                })
+                .catch(Error => console.log(Error));
+        } else if (this.typeofsearch == "publicaciones") {
+            axios({
+                method: "post",
+                url: "/buscaEnPublicaciones",
+                data: {
+                    busqueda: this.querystring,
+                    page: 1
+                }
+            })
+                .then(resp => {
+                    this.searchFlag = true;
+                    this.resultados = resp.data.notas.data;
+                    this.pagination = resp.data.pagination;
                     this.$loading(false);
                 })
                 .catch(Error => console.log(Error));

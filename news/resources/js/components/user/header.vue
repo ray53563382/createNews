@@ -34,12 +34,7 @@
                                 ><i class="ion-social-twitter"></i
                             ></a>
                         </li>
-                        <!-- <li>
-                            <a  href="enlacepagina.html"><i class="ion-social-google"></i></a>
-                        </li> -->
-                        <!-- <li>
-                            <a  href="enlacepagina.html"><i class="ion-social-instagram"></i></a>
-                        </li> -->
+
                         <li>
                             <a
                                 target="_blank"
@@ -59,15 +54,79 @@
                 <i class="active src-icn ion-search"></i>
                 <i class="close-icn ion-close"></i>
             </a>
-            <div class="src-form">
+            <div class="src-form myform">
                 <form>
                     <input
                         v-on:keyup.enter="search"
-                        v-model="searchString"
+                        v-model.lazy="searchString"
                         type="text"
                         placeholder="Busca entre nuestras publicaciones"
+                        class="myinput"
                     />
-                    <button @click="search"><i class="ion-search"></i></button>
+                    <div class="input-group-btn search-panel">
+                        <button
+                            type="button"
+                            class="btn btn-default dropdown-toggle mybtn"
+                            data-toggle="dropdown"
+                        >
+                            <span id="search_concept"
+                                ><span
+                                    class="glyphicon glyphicon-align-justify"
+                                ></span>
+                                Buscar en...</span
+                            >
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu mydrop" role="menu">
+                            <li>
+                                <a
+                                    @click="changeString('publicaciones')"
+                                    href="#its_equal"
+                                >
+                                    <span
+                                        class="glyphicon glyphicon-envelope text-danger"
+                                    ></span>
+                                    Publicaciones</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    @click="changeString('noticias')"
+                                    href="#its_equal"
+                                >
+                                    <span>
+                                        <i class="fa fa-newspaper"></i>
+                                    </span>
+                                    Noticias</a
+                                >
+                            </li>
+                            <!-- <li>
+                                <a href="#greather_than">
+                                    <span
+                                        class="glyphicon glyphicon-user text-success"
+                                    ></span>
+                                    Users</a
+                                >
+                            </li>
+                            <li>
+                                <a href="#less_than"
+                                    ><span
+                                        class="glyphicon glyphicon-book text-primary"
+                                    ></span>
+                                    Books
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#all">
+                                    <span
+                                        class="glyphicon glyphicon-picture text-info"
+                                    ></span>
+                                    Pictures</a
+                                >
+                            </li> -->
+                        </ul>
+                    </div>
                 </form>
             </div>
 
@@ -108,6 +167,20 @@ let $ = JQuery;
 import logo from "../media/LogoCeccam.png";
 import home from "../media/home.png";
 
+$(document).ready(function(e) {
+    $(".search-panel .dropdown-menu")
+        .find("a")
+        .click(function(e) {
+            e.preventDefault();
+            var param = $(this)
+                .attr("href")
+                .replace("#", "");
+            var concept = $(this).html();
+            $(".search-panel span#search_concept").html(concept);
+            $(".input-group #search_param").val(param);
+        });
+});
+
 export default {
     name: "header-component",
 
@@ -116,6 +189,7 @@ export default {
             logo: logo,
             home: home,
             searchString: null,
+            typeOfSearch: null,
             categorias: ["1", "2", "3"]
         };
     },
@@ -132,7 +206,13 @@ export default {
     methods: {
         search() {
             // console.log(this.searchString);
-            location.replace("/search/" + this.searchString);
+            if (this.typeOfSearch == null) {
+                location.replace("/search/" + this.searchString);
+            } else {
+                location.replace(
+                    "/search/" + this.typeOfSearch + "/" + this.searchString
+                );
+            }
         },
 
         fetch_all_docs() {
@@ -161,6 +241,11 @@ export default {
 
         search_theme(theme) {
             location.replace("/searchbytheme/" + theme);
+        },
+        changeString(value) {
+            value == "noticias"
+                ? (this.typeOfSearch = "noticias")
+                : (this.typeOfSearch = "publicaciones");
         }
     }
 };
@@ -194,117 +279,34 @@ html {
     height: 100%;
 }
 
-.expanding-search-form {
-    position: relative;
-    top: 40%;
-    left: 35%;
-    display: inline-block;
-    height: 34px;
-    width: auto;
+.mydrop {
+    transform: translate3d(10.5em, 1em, 0px) !important;
 }
-.expanding-search-form .search-label {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    border: 1px solid #999;
-    z-index: 2;
-    cursor: pointer;
-    border-radius: 3px;
-    transition: 250ms all ease-in-out;
+
+.mybtn {
+    width: 10em !important;
 }
-.expanding-search-form .search-input {
-    position: relative;
-    top: 0;
-    display: inline-block;
-    height: 34px;
-    width: 150px;
-    float: left;
-    border: 0;
-    font-size: 16px;
-    z-index: 2;
-    box-shadow: none;
-    border-radius: 0;
-    transition: 250ms all ease-in-out;
+
+.myform {
+    width: 70% !important;
 }
-.expanding-search-form .search-input:focus {
-    width: 300px;
-    outline: none;
+
+.myinput {
+    margin-left: 1em;
+    width: 80% !important;
+    display: inline !important;
 }
-.expanding-search-form .search-input:focus + .search-label {
-    border-color: #2299ff;
-}
-.expanding-search-form .button {
-    position: relative;
-    top: 0;
-    display: inline-block;
-    float: left;
-    padding: 0 10px;
-    color: #fff;
-    border: 1px solid transparent;
-    background-color: #2299ff;
-    text-align: center;
-    transition: 250ms all ease-in-out;
-}
-.expanding-search-form .button:hover {
-    background-color: #0080ee;
-}
-.expanding-search-form .search-dropdown {
-    position: relative;
-    top: 0;
-    display: inline-block;
-    float: left;
-    padding: 3px;
-}
-.expanding-search-form .search-dropdown.open .dropdown-menu {
-    display: block;
-}
-.expanding-search-form .dropdown-toggle {
-    height: 28px;
-    font-size: 12px;
-    line-height: 28px;
-    border-radius: 2px;
-    z-index: 3;
-}
-.expanding-search-form .dropdown-menu {
-    position: absolute;
-    top: calc(100% - 1px);
-    display: none;
-    margin: 0;
-    padding: 5px;
-    list-style: none;
-    background-color: #fff;
-    border: 1px solid #999;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    z-index: 3;
-    transition: 250ms all ease-in-out;
-}
-.expanding-search-form .dropdown-menu > li > a {
-    display: block;
-    padding: 4px 12px;
-    color: #2299ff;
-    font-size: 14px;
-    line-height: 20px;
-    text-decoration: none;
-    border-radius: 2px;
-    transition: 250ms all ease-in-out;
-}
-.expanding-search-form .dropdown-menu > li > a:hover {
-    color: #fff;
-    background-color: #2299ff;
-}
-.expanding-search-form .dropdown-menu > .menu-active {
-    display: none;
-}
-.expanding-search-form .search-button {
-    height: 34px;
-    z-index: 3;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-}
-.expanding-search-form .search-button .icon {
-    font-size: 20px;
+
+@media only screen and (max-width: 768px) {
+    // .mydrop {
+    //     transform: translate3d(7em, 2em, 0px) !important;
+    // }
+    li {
+        font-size: 0.7em !important;
+    }
+    .myinput {
+        margin-left: 4em;
+        width: 90% !important;
+    }
 }
 </style>
