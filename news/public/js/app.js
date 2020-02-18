@@ -8609,9 +8609,448 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 Vue.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_0__["default"], {
-  text: 'Cargando'
+  text: "Cargando"
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "recentsection",
@@ -8620,7 +9059,7 @@ Vue.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_0__["default"], {
       recientes: [],
       noticias: [],
       resgistrosMulti: [],
-      email: ''
+      email: ""
     };
   },
   methods: {
@@ -8633,8 +9072,8 @@ Vue.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_0__["default"], {
     saveEmail: function saveEmail() {
       var _this = this;
 
-      axios.post('/saveEmail', this.email).then(function (resp) {
-        _this.$swal('Registrado!', 'Ahora ya puedes esperar nuestra información en tu correo electronico!', 'success');
+      axios.post("/saveEmail", this.email).then(function (resp) {
+        _this.$swal("Registrado!", "Ahora ya puedes esperar nuestra información en tu correo electronico!", "success");
       })["catch"](function (error) {
         console.log(error);
       });
@@ -8668,9 +9107,9 @@ Vue.use(vuejs_loading_plugin__WEBPACK_IMPORTED_MODULE_0__["default"], {
     var _this3 = this;
 
     this.resgistrosMulti = [];
-    axios.get('/multimedia').then(function (res) {
+    axios.get("/multimedia").then(function (res) {
       res.data.forEach(function (element) {
-        var url = element.url.split('v=');
+        var url = element.url.split("v=");
         element.url = url[1];
 
         _this3.resgistrosMulti.push(element);
@@ -58192,15 +58631,18 @@ var render = function() {
                 _vm._v(" "),
                 _c("ul", { staticClass: "list-li-mr-20 pt-10 pb-20" }, [
                   _c("li", { staticClass: "color-lite-black" }, [
-                    _vm._v("Por "),
+                    _vm._v(
+                      "\n                                Por\n                                "
+                    ),
                     _c(
                       "a",
                       { staticClass: "color-black", attrs: { href: "#" } },
                       [_c("b", [_vm._v(_vm._s(_vm.recientes[0].autor))])]
                     ),
                     _vm._v(
-                      "\r\n                                " +
-                        _vm._s(_vm.recientes[0].fecha)
+                      "\n                                " +
+                        _vm._s(_vm.recientes[0].fecha) +
+                        "\n                            "
                     )
                   ])
                 ])
@@ -58237,11 +58679,16 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("h6", { staticClass: "color-lite-black pt-10" }, [
-                      _vm._v("Por "),
+                      _vm._v(
+                        "\n                                    Por\n                                    "
+                      ),
                       _c("span", { staticClass: "color-black" }, [
                         _c("b", [_vm._v(_vm._s(_vm.recientes[1].autor) + ",")])
                       ]),
-                      _vm._v(_vm._s(_vm.recientes[1].fecha))
+                      _vm._v(
+                        _vm._s(_vm.recientes[1].fecha) +
+                          "\n                                "
+                      )
                     ])
                   ])
                 ]
@@ -58276,11 +58723,17 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("h6", { staticClass: "color-lite-black pt-10" }, [
-                      _vm._v("Por "),
+                      _vm._v(
+                        "\n                                    Por\n                                    "
+                      ),
                       _c("span", { staticClass: "color-black" }, [
                         _c("b", [_vm._v(_vm._s(_vm.recientes[2].autor) + ",")])
                       ]),
-                      _vm._v(" " + _vm._s(_vm.recientes[2].fecha))
+                      _vm._v(
+                        "\n                                    " +
+                          _vm._s(_vm.recientes[2].fecha) +
+                          "\n                                "
+                      )
                     ])
                   ])
                 ]
@@ -58315,11 +58768,17 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("h6", { staticClass: "color-lite-black pt-10" }, [
-                      _vm._v("Por "),
+                      _vm._v(
+                        "\n                                    Por\n                                    "
+                      ),
                       _c("span", { staticClass: "color-black" }, [
                         _c("b", [_vm._v(_vm._s(_vm.recientes[3].titulo) + ",")])
                       ]),
-                      _vm._v(" " + _vm._s(_vm.recientes[3].fecha))
+                      _vm._v(
+                        "\n                                    " +
+                          _vm._s(_vm.recientes[3].fecha) +
+                          "\n                                "
+                      )
                     ])
                   ])
                 ]
@@ -58354,11 +58813,17 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("h6", { staticClass: "color-lite-black pt-10" }, [
-                      _vm._v("Por "),
+                      _vm._v(
+                        "\n                                    Por\n                                    "
+                      ),
                       _c("span", { staticClass: "color-black" }, [
                         _c("b", [_vm._v(_vm._s(_vm.recientes[4].autor) + ",")])
                       ]),
-                      _vm._v(" " + _vm._s(_vm.recientes[4].fecha))
+                      _vm._v(
+                        "\n                                    " +
+                          _vm._s(_vm.recientes[4].fecha) +
+                          "\n                                "
+                      )
                     ])
                   ])
                 ]
@@ -58398,13 +58863,16 @@ var render = function() {
                 _vm._v(" "),
                 _c("ul", { staticClass: "list-li-mr-20 pt-10 mb-30" }, [
                   _c("li", { staticClass: "color-lite-black" }, [
-                    _vm._v("Por "),
+                    _vm._v(
+                      "\n                                Por\n                                "
+                    ),
                     _c("a", { staticClass: "color-black" }, [
                       _c("b", [_vm._v(_vm._s(_vm.recientes[5].autor) + ",")])
                     ]),
                     _vm._v(
-                      "\r\n                                " +
-                        _vm._s(_vm.recientes[5].fecha)
+                      "\n                                " +
+                        _vm._s(_vm.recientes[5].fecha) +
+                        "\n                            "
                     )
                   ])
                 ])
@@ -58442,15 +58910,18 @@ var render = function() {
                 _vm._v(" "),
                 _c("ul", { staticClass: "list-li-mr-20 pt-10 mb-30" }, [
                   _c("li", { staticClass: "color-lite-black" }, [
-                    _vm._v("Por "),
+                    _vm._v(
+                      "\n                                Por\n                                "
+                    ),
                     _c(
                       "a",
                       { staticClass: "color-black", attrs: { href: "#" } },
                       [_c("b", [_vm._v(_vm._s(_vm.recientes[6].autor) + ",")])]
                     ),
                     _vm._v(
-                      "\r\n                                " +
-                        _vm._s(_vm.recientes[6].fecha)
+                      "\n                                " +
+                        _vm._s(_vm.recientes[6].fecha) +
+                        "\n                            "
                     )
                   ])
                 ])
@@ -58488,15 +58959,18 @@ var render = function() {
                 _vm._v(" "),
                 _c("ul", { staticClass: "list-li-mr-20 pt-10 mb-30" }, [
                   _c("li", { staticClass: "color-lite-black" }, [
-                    _vm._v("Por "),
+                    _vm._v(
+                      "\n                                Por\n                                "
+                    ),
                     _c(
                       "a",
                       { staticClass: "color-black", attrs: { href: "#" } },
                       [_c("b", [_vm._v(_vm._s(_vm.recientes[7].autor) + ",")])]
                     ),
                     _vm._v(
-                      "\r\n                                " +
-                        _vm._s(_vm.recientes[7].fecha)
+                      "\n                                " +
+                        _vm._s(_vm.recientes[7].fecha) +
+                        "\n                            "
                     )
                   ])
                 ])
@@ -58534,15 +59008,18 @@ var render = function() {
                 _vm._v(" "),
                 _c("ul", { staticClass: "list-li-mr-20 pt-10 mb-30" }, [
                   _c("li", { staticClass: "color-lite-black" }, [
-                    _vm._v("Por "),
+                    _vm._v(
+                      "\n                                Por\n                                "
+                    ),
                     _c(
                       "a",
                       { staticClass: "color-black", attrs: { href: "#" } },
                       [_c("b", [_vm._v(_vm._s(_vm.recientes[8].autor) + ",")])]
                     ),
                     _vm._v(
-                      "\r\n                                " +
-                        _vm._s(_vm.recientes[8].fecha)
+                      "\n                                " +
+                        _vm._s(_vm.recientes[8].fecha) +
+                        "\n                            "
                     )
                   ])
                 ])
@@ -58580,15 +59057,18 @@ var render = function() {
                 _vm._v(" "),
                 _c("ul", { staticClass: "list-li-mr-20 pt-10 mb-30" }, [
                   _c("li", { staticClass: "color-lite-black" }, [
-                    _vm._v("Por "),
+                    _vm._v(
+                      "\n                                Por\n                                "
+                    ),
                     _c(
                       "a",
                       { staticClass: "color-black", attrs: { href: "#" } },
                       [_c("b", [_vm._v(_vm._s(_vm.recientes[9].autor) + ",")])]
                     ),
                     _vm._v(
-                      "\r\n                                " +
-                        _vm._s(_vm.recientes[5].titulo)
+                      "\n                                " +
+                        _vm._s(_vm.recientes[5].titulo) +
+                        "\n                            "
                     )
                   ])
                 ])
@@ -58629,15 +59109,18 @@ var render = function() {
                 _vm._v(" "),
                 _c("ul", { staticClass: "list-li-mr-20 pt-10 mb-30" }, [
                   _c("li", { staticClass: "color-lite-black" }, [
-                    _vm._v("Por "),
+                    _vm._v(
+                      "\n                                Por\n                                "
+                    ),
                     _c(
                       "a",
                       { staticClass: "color-black", attrs: { href: "#" } },
                       [_c("b", [_vm._v(_vm._s(_vm.recientes[10].autor) + ",")])]
                     ),
                     _vm._v(
-                      "\r\n                                " +
-                        _vm._s(_vm.recientes[10].fecha)
+                      "\n                                " +
+                        _vm._s(_vm.recientes[10].fecha) +
+                        "\n                            "
                     )
                   ])
                 ])
@@ -58686,11 +59169,23 @@ var render = function() {
                     _c("h6", { staticClass: "color-lite-black pt-10" }, [
                       _vm.noticias[0].autor == "Sin Autor"
                         ? _c("span", { staticClass: "color-black" }, [
-                            _vm._v("by "),
-                            _c("b", [_vm._v(" Danile Palmer,")])
+                            _vm._v(
+                              "Por\n                                        "
+                            ),
+                            _c("b", [
+                              _vm._v(
+                                "\n                                            " +
+                                  _vm._s(_vm.noticias[0].autor) +
+                                  ",\n                                        "
+                              )
+                            ])
                           ])
                         : _vm._e(),
-                      _vm._v(" Jan 25, 2018")
+                      _vm._v(
+                        "\n                                    " +
+                          _vm._s(_vm.noticias[0].fecha) +
+                          "\n                                "
+                      )
                     ])
                   ])
                 ]
@@ -58727,11 +59222,22 @@ var render = function() {
                     _c("h6", { staticClass: "color-lite-black pt-10" }, [
                       _vm.noticias[1].autor == "Sin Autor"
                         ? _c("span", { staticClass: "color-black" }, [
-                            _vm._v("by "),
-                            _c("b", [_vm._v("Danile Palmer,")])
+                            _vm._v(
+                              "Por\n                                        "
+                            ),
+                            _c("b", [
+                              _vm._v(
+                                _vm._s(_vm.noticias[1].autor) +
+                                  ",\n                                        "
+                              )
+                            ])
                           ])
                         : _vm._e(),
-                      _vm._v(" Jan 25, 2018")
+                      _vm._v(
+                        "\n                                    " +
+                          _vm._s(_vm.noticias[1].fecha) +
+                          "\n                                "
+                      )
                     ])
                   ])
                 ]
@@ -58768,11 +59274,22 @@ var render = function() {
                     _c("h6", { staticClass: "color-lite-black pt-10" }, [
                       _vm.noticias[2].autor == "Sin Autor"
                         ? _c("span", { staticClass: "color-black" }, [
-                            _vm._v("by "),
-                            _c("b", [_vm._v("Danile Palmer,")])
+                            _vm._v(
+                              "Por\n                                        "
+                            ),
+                            _c("b", [
+                              _vm._v(
+                                _vm._s(_vm.noticias[2].autor) +
+                                  ",\n                                        "
+                              )
+                            ])
                           ])
                         : _vm._e(),
-                      _vm._v(" Jan 25, 2018")
+                      _vm._v(
+                        "\n                                    " +
+                          _vm._s(_vm.noticias[2].fecha) +
+                          "\n                                "
+                      )
                     ])
                   ])
                 ]
@@ -58809,11 +59326,22 @@ var render = function() {
                     _c("h6", { staticClass: "color-lite-black pt-10" }, [
                       _vm.noticias[3].autor == "Sin Autor"
                         ? _c("span", { staticClass: "color-black" }, [
-                            _vm._v("by "),
-                            _c("b", [_vm._v("Danile Palmer,")])
+                            _vm._v(
+                              "Por\n                                        "
+                            ),
+                            _c("b", [
+                              _vm._v(
+                                _vm._s(_vm.noticias[3].autor) +
+                                  ",\n                                        "
+                              )
+                            ])
                           ])
                         : _vm._e(),
-                      _vm._v(" Jan 25, 2018")
+                      _vm._v(
+                        "\n                                    " +
+                          _vm._s(_vm.noticias[3].fecha) +
+                          "\n                                "
+                      )
                     ])
                   ])
                 ]
@@ -58851,11 +59379,17 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("h6", { staticClass: "color-lite-black pt-10" }, [
-                      _vm._v("Por "),
+                      _vm._v(
+                        "\n                                    Por\n                                    "
+                      ),
                       _c("span", { staticClass: "color-black" }, [
                         _c("b", [_vm._v(_vm._s(_vm.recientes[10].autor) + ",")])
                       ]),
-                      _vm._v(" " + _vm._s(_vm.recientes[11].fecha))
+                      _vm._v(
+                        "\n                                    " +
+                          _vm._s(_vm.recientes[11].fecha) +
+                          "\n                                "
+                      )
                     ])
                   ])
                 ]
@@ -58890,11 +59424,16 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("h6", { staticClass: "color-lite-black pt-10" }, [
-                      _vm._v("Por "),
+                      _vm._v(
+                        "\n                                    Por\n                                    "
+                      ),
                       _c("span", { staticClass: "color-black" }, [
                         _c("b", [_vm._v(_vm._s(_vm.recientes[11].autor) + ",")])
                       ]),
-                      _vm._v(_vm._s(_vm.recientes[12].fecha))
+                      _vm._v(
+                        _vm._s(_vm.recientes[12].fecha) +
+                          "\n                                "
+                      )
                     ])
                   ])
                 ]
@@ -58929,11 +59468,17 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("h6", { staticClass: "color-lite-black pt-10" }, [
-                      _vm._v("Por "),
+                      _vm._v(
+                        "\n                                    Por\n                                    "
+                      ),
                       _c("span", { staticClass: "color-black" }, [
                         _c("b", [_vm._v(_vm._s(_vm.recientes[12].autor) + ",")])
                       ]),
-                      _vm._v(" " + _vm._s(_vm.recientes[13].fecha))
+                      _vm._v(
+                        "\n                                    " +
+                          _vm._s(_vm.recientes[13].fecha) +
+                          "\n                                "
+                      )
                     ])
                   ])
                 ]
@@ -58968,11 +59513,16 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("h6", { staticClass: "color-lite-black pt-10" }, [
-                      _vm._v("Por "),
+                      _vm._v(
+                        "\n                                    Por\n                                    "
+                      ),
                       _c("span", { staticClass: "color-black" }, [
                         _c("b", [_vm._v(_vm._s(_vm.recientes[14].autor) + ",")])
                       ]),
-                      _vm._v(_vm._s(_vm.recientes[14].fecha))
+                      _vm._v(
+                        _vm._s(_vm.recientes[14].fecha) +
+                          "\n                                "
+                      )
                     ])
                   ])
                 ]
@@ -58984,7 +59534,7 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "mb-20" }, [
                 _vm._v(
-                  "Suscribete y obten la información más relevante de nuestro sitio web"
+                  "\n                            Suscribete y obten la información más relevante\n                            de nuestro sitio web\n                        "
                 )
               ]),
               _vm._v(" "),
@@ -59203,11 +59753,15 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h6", { staticClass: "color-lite-black pt-10 " }, [
-      _vm._v("Tipo: "),
+      _vm._v(
+        "\n                                Tipo:\n                                "
+      ),
       _c("span", { staticClass: "color-black" }, [
         _c("b", [_vm._v("Multimedia")])
       ]),
-      _vm._v(" Video")
+      _vm._v(
+        "\n                                Video\n                            "
+      )
     ])
   },
   function() {
@@ -59215,11 +59769,15 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h6", { staticClass: "color-lite-black pt-10 " }, [
-      _vm._v("Tipo: "),
+      _vm._v(
+        "\n                                Tipo:\n                                "
+      ),
       _c("span", { staticClass: "color-black" }, [
         _c("b", [_vm._v("Multimedia")])
       ]),
-      _vm._v(" Video")
+      _vm._v(
+        "\n                                Video\n                            "
+      )
     ])
   },
   function() {
@@ -59227,11 +59785,15 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h6", { staticClass: "color-lite-black pt-10 " }, [
-      _vm._v("Tipo: "),
+      _vm._v(
+        "\n                                Tipo:\n                                "
+      ),
       _c("span", { staticClass: "color-black" }, [
         _c("b", [_vm._v("Multimedia")])
       ]),
-      _vm._v(" Video")
+      _vm._v(
+        "\n                                Video\n                            "
+      )
     ])
   }
 ]
