@@ -17,6 +17,13 @@ Route::get('/', function () {
 
 });
 
+// HERE
+Route::get('searchbytheme/{theme}','DocumentsViewController@searchbytheme');
+Route::post('temaNoticias','NoticiasController@obtentema');
+Route::post('temaPublicaciones','publicacionController@obtentema');
+
+
+
 // Ruta para decidir el tipo de búsqueda.
 Route::get('search/{typeofsearch}/{querystring}', 'DocumentsViewController@searchIn');
 // Busqueda en Noticias
@@ -35,7 +42,8 @@ Route::get('newView/{id}', 'DocumentsViewController@newview' );
 Route::get('search/{querystring}', 'DocumentsViewController@search');
 // Route::get('search/{querystring}/{author}', 'DocumentsViewController@searchbyauthor');
 Route::get('search/{querystring}/{author}', ['uses' => 'DocumentsViewController@searchbyauthor']);
-Route::get('searchbytheme/{theme}','DocumentsViewController@searchbytheme');
+
+
 Route::get('sobreNosotrosContacto','DocumentsViewController@about');
 
 

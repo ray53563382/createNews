@@ -23,6 +23,226 @@
                     </h3>
                 </div>
             </div>
+
+            <!-- NEWS & NOTES -->
+            <div v-if="newsNotes">
+                <div class="mybtn ">
+                    <div>
+                        <h2 @click="cambiaNoticias" class="botones">
+                            <p
+                                v-bind:style="[
+                                    showNoticias
+                                        ? { color: '#137ee2' }
+                                        : { color: 'black' }
+                                ]"
+                            >
+                                Noticias
+                            </p>
+                        </h2>
+                        <h2 @click="cambiaPublicaciones" class="botones">
+                            <p
+                                v-bind:style="[
+                                    showPublicaciones
+                                        ? { color: '#137ee2' }
+                                        : { color: 'black' }
+                                ]"
+                            >
+                                Publicaciones
+                            </p>
+                        </h2>
+                    </div>
+                </div>
+
+                <div v-if="showNoticias" class="row">
+                    <div
+                        v-for="(person, index) in resultadosNoticias"
+                        :key="index"
+                        class="col-12 col-lg-4 col-md-6 box"
+                        @click="goToNewview(person)"
+                    >
+                        <img
+                            :src="person.imgdesmostrativa"
+                            alt
+                            style="width: 100%; height: 300px;"
+                        />
+                        <h4 class="pt-20">
+                            <a href="#">
+                                <b style="color: black;">
+                                    {{ person.titulo }}
+                                </b>
+                            </a>
+                        </h4>
+
+                        <ul style="margin-left: -8px">
+                            <li class="color-lite-black">
+                                Autor:
+                                <a href="#" class="color-black">
+                                    <b>{{ person.autor }},</b>
+                                </a>
+                                <br />
+                                {{ person.fecha }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div
+                    v-if="showNoticias"
+                    class="container h-100"
+                    style="margin-top: 3%"
+                >
+                    <div
+                        class="row h-100 justify-content-center align-items-center"
+                    >
+                        <nav>
+                            <ul class="pagination">
+                                <li v-if="paginationNoticias.current_page > 1">
+                                    <a
+                                        @click="
+                                            changePageNoticia(
+                                                paginationNoticias.current_page -
+                                                    1
+                                            )
+                                        "
+                                    >
+                                        <span>Atrás</span>
+                                    </a>
+                                </li>
+                                <li
+                                    v-for="(page, index) in pagesNumberNoticias"
+                                    :key="index"
+                                    v-bind:class="[
+                                        page == isActivedNoticias
+                                            ? 'active'
+                                            : ''
+                                    ]"
+                                    @click="changePageNoticia(page)"
+                                >
+                                    <a>
+                                        <span>{{ page }}</span>
+                                    </a>
+                                </li>
+                                <li
+                                    v-if="
+                                        paginationNoticias.current_page <
+                                            paginationNoticias.last_page
+                                    "
+                                >
+                                    <a
+                                        @click="
+                                            changePageNoticia(
+                                                paginationNoticias.current_page +
+                                                    1
+                                            )
+                                        "
+                                    >
+                                        <span>Siguiente</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+                <div v-if="showPublicaciones" class="row">
+                    <div
+                        v-for="(person, index) in resultadosPublicaciones"
+                        :key="index"
+                        class="col-12 col-lg-4 col-md-6 box"
+                        @click="goToDocumentView(person)"
+                    >
+                        <img
+                            :src="person.imgdesmostrativa"
+                            alt
+                            style="width: 100%; height: 300px;"
+                        />
+                        <h4 class="pt-20">
+                            <a href="#">
+                                <b style="color: black;">
+                                    {{ person.titulo }}
+                                </b>
+                            </a>
+                        </h4>
+
+                        <ul style="margin-left: -8px">
+                            <li class="color-lite-black">
+                                Autor:
+                                <a href="#" class="color-black">
+                                    <b>{{ person.autor }},</b>
+                                </a>
+                                <br />
+                                {{ person.fecha }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div
+                    v-if="showPublicaciones"
+                    class="container h-100"
+                    style="margin-top: 3%"
+                >
+                    <div
+                        class="row h-100 justify-content-center align-items-center"
+                    >
+                        <nav>
+                            <ul class="pagination">
+                                <li
+                                    v-if="
+                                        paginationPublicaciones.current_page > 1
+                                    "
+                                >
+                                    <a
+                                        @click="
+                                            changePagePublicacion(
+                                                paginationPublicaciones.current_page -
+                                                    1
+                                            )
+                                        "
+                                    >
+                                        <span>Atrás</span>
+                                    </a>
+                                </li>
+                                <li
+                                    v-for="(page,
+                                    index) in pagesNumberPublicaciones"
+                                    :key="index"
+                                    v-bind:class="[
+                                        page == isActivedPublicaciones
+                                            ? 'active'
+                                            : ''
+                                    ]"
+                                    @click="changePagePublicacion(page)"
+                                >
+                                    <a>
+                                        <span>{{ page }}</span>
+                                    </a>
+                                </li>
+                                <li
+                                    v-if="
+                                        paginationPublicaciones.current_page <
+                                            paginationPublicaciones.last_page
+                                    "
+                                >
+                                    <a
+                                        @click="
+                                            changePagePublicacion(
+                                                paginationPublicaciones.current_page +
+                                                    1
+                                            )
+                                        "
+                                    >
+                                        <span>Siguiente</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEWS & NOTES -->
+
             <!-- ALL SEARCH START -->
             <div v-if="searchFlag">
                 <div class="row">
@@ -502,6 +722,68 @@ export default {
         changePageNota(page) {
             this.pagination.current_page = page;
             this.getNotas(page);
+        },
+
+        //NOTE
+        getNuevaNoticia(page) {
+            axios({
+                method: "post",
+                url: "/temaNoticias",
+                data: {
+                    page: page
+                }
+            })
+                .then(resp => {
+                    // this.newsFlag = true;
+                    this.resultadosNoticias = resp.data.noticias.data;
+                    this.paginationNoticias = resp.data.paginationNoticias;
+                    this.$loading(false);
+                })
+                .catch(Error => console.log(Error));
+        },
+        changePageNoticia(page) {
+            this.paginationNoticias.current_page = page;
+            this.getNuevaNoticia(page);
+        },
+        //FIXME
+        getNuevaPublicacion(page) {
+            axios({
+                method: "post",
+                url: "/temaPublicaciones",
+                data: {
+                    page: page
+                }
+            })
+                .then(resp => {
+                    // this.newsFlag = true;
+                    this.resultadosPublicaciones = resp.data.publicaciones.data;
+                    this.paginationPublicaciones =
+                        resp.data.paginationPublicaciones;
+                    this.$loading(false);
+                })
+                .catch(Error => console.log(Error));
+        },
+        changePagePublicacion(page) {
+            this.paginationPublicaciones.current_page = page;
+            this.getNuevaPublicacion(page);
+        },
+
+        cambiaNoticias() {
+            if (this.showPublicaciones == true) {
+                this.showPublicaciones = false;
+                this.showNoticias = true;
+            } else {
+                this.showNoticias = true;
+            }
+        },
+
+        cambiaPublicaciones() {
+            if (this.showNoticias == true) {
+                this.showNoticias = false;
+                this.showPublicaciones = true;
+            } else {
+                this.showPublicaciones = true;
+            }
         }
     },
     data() {
@@ -528,8 +810,28 @@ export default {
                 to: 0
             },
             isNoticia: false,
-            isPublicacion: false
-            // pencil: pencil
+            isPublicacion: false,
+            newsNotes: false,
+            showNoticias: true,
+            showPublicaciones: false,
+            resultadosNoticias: null,
+            resultadosPublicaciones: null,
+            paginationPublicaciones: {
+                total: 0,
+                current_page: 0,
+                per_page: 0,
+                last_page: 0,
+                from: 0,
+                to: 0
+            },
+            paginationNoticias: {
+                total: 0,
+                current_page: 0,
+                per_page: 0,
+                last_page: 0,
+                from: 0,
+                to: 0
+            }
         };
     },
 
@@ -550,6 +852,58 @@ export default {
             let to = from + 2 * 2;
             if (to >= this.pagination.last_page) {
                 to = this.pagination.last_page;
+            }
+
+            let pagesArray = [];
+            while (from <= to) {
+                pagesArray.push(from);
+                from++;
+            }
+
+            return pagesArray;
+        },
+        isActivedPublicaciones: function() {
+            return this.paginationPublicaciones.current_page;
+        },
+        pagesNumberPublicaciones: function() {
+            if (!this.paginationPublicaciones.to) {
+                return [];
+            }
+
+            let from = this.paginationPublicaciones.current_page - 2;
+            if (from < 1) {
+                from = 1;
+            }
+
+            let to = from + 2 * 2;
+            if (to >= this.paginationPublicaciones.last_page) {
+                to = this.paginationPublicaciones.last_page;
+            }
+
+            let pagesArray = [];
+            while (from <= to) {
+                pagesArray.push(from);
+                from++;
+            }
+
+            return pagesArray;
+        },
+        isActivedNoticias: function() {
+            return this.paginationNoticias.current_page;
+        },
+        pagesNumberNoticias: function() {
+            if (!this.paginationNoticias.to) {
+                return [];
+            }
+
+            let from = this.paginationNoticias.current_page - 2;
+            if (from < 1) {
+                from = 1;
+            }
+
+            let to = from + 2 * 2;
+            if (to >= this.paginationNoticias.last_page) {
+                to = this.paginationNoticias.last_page;
             }
 
             let pagesArray = [];
@@ -667,19 +1021,34 @@ export default {
             } else if (this.theme) {
                 axios({
                     method: "post",
-                    url: "/gettheme",
+                    url: "/temaNoticias",
                     data: {
-                        idcategoria: this.theme
+                        tema: this.theme,
+                        page: 1
                     }
                 })
                     .then(resp => {
-                        this.searchFlag = true;
-                        this.resultados = resp.data;
-                        this.$loading(false);
-                        this.resultados.length == undefined ||
-                        this.resultados.length <= 0
-                            ? (this.notFound = true)
-                            : (this.notFound = false);
+                        this.resultadosNoticias = resp.data.noticias.data;
+                        this.paginationNoticias = resp.data.paginationNoticias;
+                        axios({
+                            method: "post",
+                            url: "/temaPublicaciones",
+                            data: {
+                                tema: this.theme,
+                                page: 1
+                            }
+                        }).then(resp => {
+                            this.resultadosPublicaciones =
+                                resp.data.publicaciones.data;
+                            this.paginationPublicaciones =
+                                resp.data.paginationPublicaciones;
+                            this.newsNotes = true;
+                            this.$loading(false);
+                        });
+                        // this.resultados.length == undefined ||
+                        // this.resultados.length <= 0
+                        //     ? (this.notFound = true)
+                        //     : (this.notFound = false);
                     })
                     .catch(Error => console.log(Error));
             } else {
@@ -1027,6 +1396,15 @@ li:hover {
 }
 
 .mycursor {
+    cursor: pointer;
+}
+
+// BOTH
+.mybtn {
+    margin: 1em 0 3em 0;
+}
+.botones {
+    margin: 0.2em 0 0.1em 0;
     cursor: pointer;
 }
 </style>

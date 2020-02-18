@@ -9543,6 +9543,226 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -9640,6 +9860,70 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
     changePageNota: function changePageNota(page) {
       this.pagination.current_page = page;
       this.getNotas(page);
+    },
+    //NOTE
+    getNuevaNoticia: function getNuevaNoticia(page) {
+      var _this3 = this;
+
+      axios({
+        method: "post",
+        url: "/temaNoticias",
+        data: {
+          page: page
+        }
+      }).then(function (resp) {
+        // this.newsFlag = true;
+        _this3.resultadosNoticias = resp.data.noticias.data;
+        _this3.paginationNoticias = resp.data.paginationNoticias;
+
+        _this3.$loading(false);
+      })["catch"](function (Error) {
+        return console.log(Error);
+      });
+    },
+    changePageNoticia: function changePageNoticia(page) {
+      this.paginationNoticias.current_page = page;
+      this.getNuevaNoticia(page);
+    },
+    //FIXME
+    getNuevaPublicacion: function getNuevaPublicacion(page) {
+      var _this4 = this;
+
+      axios({
+        method: "post",
+        url: "/temaPublicaciones",
+        data: {
+          page: page
+        }
+      }).then(function (resp) {
+        // this.newsFlag = true;
+        _this4.resultadosPublicaciones = resp.data.publicaciones.data;
+        _this4.paginationPublicaciones = resp.data.paginationPublicaciones;
+
+        _this4.$loading(false);
+      })["catch"](function (Error) {
+        return console.log(Error);
+      });
+    },
+    changePagePublicacion: function changePagePublicacion(page) {
+      this.paginationPublicaciones.current_page = page;
+      this.getNuevaPublicacion(page);
+    },
+    cambiaNoticias: function cambiaNoticias() {
+      if (this.showPublicaciones == true) {
+        this.showPublicaciones = false;
+        this.showNoticias = true;
+      } else {
+        this.showNoticias = true;
+      }
+    },
+    cambiaPublicaciones: function cambiaPublicaciones() {
+      if (this.showNoticias == true) {
+        this.showNoticias = false;
+        this.showPublicaciones = true;
+      } else {
+        this.showPublicaciones = true;
+      }
     }
   },
   data: function data() {
@@ -9666,8 +9950,28 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
         to: 0
       },
       isNoticia: false,
-      isPublicacion: false // pencil: pencil
-
+      isPublicacion: false,
+      newsNotes: false,
+      showNoticias: true,
+      showPublicaciones: false,
+      resultadosNoticias: null,
+      resultadosPublicaciones: null,
+      paginationPublicaciones: {
+        total: 0,
+        current_page: 0,
+        per_page: 0,
+        last_page: 0,
+        from: 0,
+        to: 0
+      },
+      paginationNoticias: {
+        total: 0,
+        current_page: 0,
+        per_page: 0,
+        last_page: 0,
+        from: 0,
+        to: 0
+      }
     };
   },
   computed: {
@@ -9699,10 +10003,68 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
       }
 
       return pagesArray;
+    },
+    isActivedPublicaciones: function isActivedPublicaciones() {
+      return this.paginationPublicaciones.current_page;
+    },
+    pagesNumberPublicaciones: function pagesNumberPublicaciones() {
+      if (!this.paginationPublicaciones.to) {
+        return [];
+      }
+
+      var from = this.paginationPublicaciones.current_page - 2;
+
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + 2 * 2;
+
+      if (to >= this.paginationPublicaciones.last_page) {
+        to = this.paginationPublicaciones.last_page;
+      }
+
+      var pagesArray = [];
+
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+
+      return pagesArray;
+    },
+    isActivedNoticias: function isActivedNoticias() {
+      return this.paginationNoticias.current_page;
+    },
+    pagesNumberNoticias: function pagesNumberNoticias() {
+      if (!this.paginationNoticias.to) {
+        return [];
+      }
+
+      var from = this.paginationNoticias.current_page - 2;
+
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + 2 * 2;
+
+      if (to >= this.paginationNoticias.last_page) {
+        to = this.paginationNoticias.last_page;
+      }
+
+      var pagesArray = [];
+
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+
+      return pagesArray;
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this5 = this;
 
     this.$loading(true);
 
@@ -9714,12 +10076,12 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
           type: this.order
         }
       }).then(function (resp) {
-        _this3.searchFlag = true;
-        _this3.resultados = resp.data.notas.data;
-        _this3.pagination = resp.data.pagination;
-        console.log(_this3.pagination);
+        _this5.searchFlag = true;
+        _this5.resultados = resp.data.notas.data;
+        _this5.pagination = resp.data.pagination;
+        console.log(_this5.pagination);
 
-        _this3.$loading(false);
+        _this5.$loading(false);
       })["catch"](function (Error) {
         return console.log(Error);
       });
@@ -9732,11 +10094,11 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
           page: 1
         }
       }).then(function (resp) {
-        _this3.newsFlag = true;
-        _this3.resultados = resp.data.noticias.data;
-        _this3.pagination = resp.data.pagination;
+        _this5.newsFlag = true;
+        _this5.resultados = resp.data.noticias.data;
+        _this5.pagination = resp.data.pagination;
 
-        _this3.$loading(false);
+        _this5.$loading(false);
       })["catch"](function (Error) {
         return console.log(Error);
       });
@@ -9749,11 +10111,11 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
           page: 1
         }
       }).then(function (resp) {
-        _this3.searchFlag = true;
-        _this3.resultados = resp.data.notas.data;
-        _this3.pagination = resp.data.pagination;
+        _this5.searchFlag = true;
+        _this5.resultados = resp.data.notas.data;
+        _this5.pagination = resp.data.pagination;
 
-        _this3.$loading(false);
+        _this5.$loading(false);
       })["catch"](function (Error) {
         return console.log(Error);
       });
@@ -9765,10 +10127,10 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
           orden: this.order
         }
       }).then(function (resp) {
-        _this3.allActionsFlag = true;
-        _this3.resultados = resp.data;
+        _this5.allActionsFlag = true;
+        _this5.resultados = resp.data;
 
-        _this3.$loading(false);
+        _this5.$loading(false);
       })["catch"](function (Error) {
         return console.log(Error);
       });
@@ -9780,11 +10142,11 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
           page: 1
         }
       }).then(function (resp) {
-        _this3.newsFlag = true;
-        _this3.resultados = resp.data.noticias.data;
-        _this3.pagination = resp.data.pagination;
+        _this5.newsFlag = true;
+        _this5.resultados = resp.data.noticias.data;
+        _this5.pagination = resp.data.pagination;
 
-        _this3.$loading(false);
+        _this5.$loading(false);
       })["catch"](function (Error) {
         return console.log(Error);
       });
@@ -9798,28 +10160,42 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
             author: this.author
           }
         }).then(function (resp) {
-          _this3.resultados = resp.data;
+          _this5.resultados = resp.data;
 
-          _this3.$loading(false);
+          _this5.$loading(false);
 
-          _this3.resultados.length == undefined || _this3.resultados.length <= 0 ? _this3.notFound = true : _this3.notFound = false; // console.log(this.resultados.length);
+          _this5.resultados.length == undefined || _this5.resultados.length <= 0 ? _this5.notFound = true : _this5.notFound = false; // console.log(this.resultados.length);
         })["catch"](function (Error) {
           return console.log(error);
         });
       } else if (this.theme) {
         axios({
           method: "post",
-          url: "/gettheme",
+          url: "/temaNoticias",
           data: {
-            idcategoria: this.theme
+            tema: this.theme,
+            page: 1
           }
         }).then(function (resp) {
-          _this3.searchFlag = true;
-          _this3.resultados = resp.data;
+          _this5.resultadosNoticias = resp.data.noticias.data;
+          _this5.paginationNoticias = resp.data.paginationNoticias;
+          axios({
+            method: "post",
+            url: "/temaPublicaciones",
+            data: {
+              tema: _this5.theme,
+              page: 1
+            }
+          }).then(function (resp) {
+            _this5.resultadosPublicaciones = resp.data.publicaciones.data;
+            _this5.paginationPublicaciones = resp.data.paginationPublicaciones;
+            _this5.newsNotes = true;
 
-          _this3.$loading(false);
-
-          _this3.resultados.length == undefined || _this3.resultados.length <= 0 ? _this3.notFound = true : _this3.notFound = false;
+            _this5.$loading(false);
+          }); // this.resultados.length == undefined ||
+          // this.resultados.length <= 0
+          //     ? (this.notFound = true)
+          //     : (this.notFound = false);
         })["catch"](function (Error) {
           return console.log(Error);
         });
@@ -9832,12 +10208,12 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
           }).then(function (resp) {
             console.log(resp.data);
 
-            _this3.$loading(false);
+            _this5.$loading(false);
 
-            _this3.resultados = resp.data;
+            _this5.resultados = resp.data;
             console.log("ijasdiojaiodjaiojsdoajodjajsdjasdjajo");
-            _this3.resultadosAtores = _toConsumableArray(new Set(_this3.resultados));
-            console.log(_this3.resultadosAtores);
+            _this5.resultadosAtores = _toConsumableArray(new Set(_this5.resultados));
+            console.log(_this5.resultadosAtores);
             console.log("ijasdiojaiodjaiojsdoajodjajsdjasdjajo");
           })["catch"](function (Error) {
             return console.log(Error);
@@ -9850,12 +10226,12 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
               q_string: this.querystring
             }
           }).then(function (resp) {
-            if (_this3.querystring == "allDocuments") {
+            if (_this5.querystring == "allDocuments") {
               console.log(resp.data);
-              _this3.all_documents = true;
-              _this3.resultados = resp.data;
+              _this5.all_documents = true;
+              _this5.resultados = resp.data;
 
-              _this3.$loading(false); // console.log(resp.data);
+              _this5.$loading(false); // console.log(resp.data);
               // this.resultados = resp.data;
               // this.resultados.length == undefined ||
               // this.resultados.length <= 0
@@ -9863,14 +10239,14 @@ Vue.use(vue_paginate__WEBPACK_IMPORTED_MODULE_5___default.a); // import pencil f
               //     : (this.notFound = false);
 
             } else {
-              _this3.searchFlag = true;
-              _this3.resultados = resp.data;
+              _this5.searchFlag = true;
+              _this5.resultados = resp.data;
 
-              _this3.$loading(false);
+              _this5.$loading(false);
 
               console.log(resp.data); // console.log(resp.data);
 
-              _this3.resultados.length == undefined || _this3.resultados.length <= 0 ? _this3.notFound = true : _this3.notFound = false; // console.log(this.resultados.length);
+              _this5.resultados.length == undefined || _this5.resultados.length <= 0 ? _this5.notFound = true : _this5.notFound = false; // console.log(this.resultados.length);
             }
           })["catch"](function (Error) {
             return console.log(error);
@@ -14650,7 +15026,7 @@ exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Rob
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i);", ""]);
 
 // module
-exports.push([module.i, ".active[data-v-89b75b88] {\n  background-color: rgba(57, 164, 235, 0.747) !important;\n}\n.query-container[data-v-89b75b88] {\n  height: 100vh !important;\n}\n.author-card[data-v-89b75b88] {\n  height: 15em;\n  width: 55%;\n  border: 2px solid #151515;\n}\n*[data-v-89b75b88] {\n  box-sizing: border-box;\n}\n.box[data-v-89b75b88]:hover {\n  border-top-left-radius: 10px;\n  border-bottom-left-radius: 10px;\n  -webkit-animation-name: example;\n          animation-name: example;\n  -webkit-animation-duration: 0.25s;\n          animation-duration: 0.25s;\n  margin-bottom: 20px;\n  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);\n}\n.pt-20[data-v-89b75b88] {\n  padding-top: 20px !important;\n}\n.list-li-mr-20 > li[data-v-89b75b88] {\n  margin-right: 20px;\n}\n.color-primary[data-v-89b75b88] {\n  color: #f9b500;\n}\n.mr-5[data-v-89b75b88] {\n  margin-right: 5px !important;\n}\n.paginate-result[data-v-89b75b88] {\n  width: 100%;\n  text-align: center;\n  margin-bottom: 1rem;\n}\n.font-12[data-v-89b75b88] {\n  font-size: 1.2em;\n}\n.cards[data-v-89b75b88] {\n  width: 100%;\n  display: -webkit-box;\n  display: flex;\n  display: -webkit-flex;\n  -webkit-box-pack: center;\n          justify-content: center;\n  -webkit-justify-content: center;\n  max-width: 820px;\n}\n.card__like[data-v-89b75b88] {\n  width: 18px;\n}\n.card__clock[data-v-89b75b88] {\n  width: 15px;\n  vertical-align: middle;\n  fill: #ad7d52;\n}\n.card__time[data-v-89b75b88] {\n  font-size: 12px;\n  color: #ad7d52;\n  vertical-align: middle;\n  margin-left: 5px;\n}\n.card__clock-info[data-v-89b75b88] {\n  float: right;\n}\n.card__img[data-v-89b75b88] {\n  visibility: hidden;\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n  height: 360px;\n  border-top-left-radius: 12px;\n  border-top-right-radius: 12px;\n}\n.card__info-hover[data-v-89b75b88] {\n  position: absolute;\n  padding: 16px;\n  width: 100%;\n  opacity: 1;\n  color: #fff;\n  top: 0;\n}\n.card__img--hover[data-v-89b75b88] {\n  -webkit-transition: 0.2s all ease-out;\n  transition: 0.2s all ease-out;\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n  width: 100%;\n  position: absolute;\n  height: 235px;\n  border-top-left-radius: 12px;\n  border-top-right-radius: 12px;\n  top: 0;\n  color: #fff;\n}\n.card[data-v-89b75b88] {\n  margin-right: 25px;\n  -webkit-transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);\n  transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);\n  background-color: #fff;\n  height: 360px;\n  position: relative;\n  border-radius: 12px;\n  overflow: hidden;\n  box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);\n}\n.card[data-v-89b75b88]:hover {\n  box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);\n  -webkit-transform: scale(1.1, 1.1);\n          transform: scale(1.1, 1.1);\n  color: #fff;\n}\n.card__info[data-v-89b75b88] {\n  z-index: 2;\n  background-color: #fff;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n  padding: 16px 24px 24px 24px;\n}\n.card__category[data-v-89b75b88]:hover {\n  font-family: \"Raleway\", sans-serif;\n  text-transform: uppercase;\n  font-size: 13px;\n  letter-spacing: 2px;\n  font-weight: 500;\n  color: #868686;\n}\n.card__title[data-v-89b75b88] {\n  margin-top: 5px;\n  margin-bottom: 10px;\n  font-family: \"Roboto Slab\", serif;\n}\n.card__by[data-v-89b75b88] {\n  font-size: 12px;\n  font-family: \"Raleway\", sans-serif;\n  font-weight: 500;\n}\n.card__author[data-v-89b75b88] {\n  font-weight: 600;\n  text-decoration: none;\n  color: #ad7d52;\n}\n.card__author[data-v-89b75b88]:hover {\n  font-weight: 600;\n  text-decoration: none;\n  color: #fff;\n}\n.card:hover .card__img--hover[data-v-89b75b88] {\n  height: 100%;\n  opacity: 0.3;\n}\n.card:hover .card__info[data-v-89b75b88] {\n  background-color: transparent;\n  position: relative;\n}\n.card:hover .card__info-hover[data-v-89b75b88] {\n  opacity: 1;\n}\nul[data-v-89b75b88] {\n  list-style-type: none;\n  width: 100%;\n}\nh3[data-v-89b75b88] {\n  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;\n}\nli img[data-v-89b75b88] {\n  float: left;\n  margin: 0 15px 0 0;\n}\nli p[data-v-89b75b88] {\n  font: 200 12px/1.5 Georgia, Times New Roman, serif;\n}\nli[data-v-89b75b88] {\n  padding: 10px;\n  overflow: auto;\n}\nli[data-v-89b75b88]:hover {\n  background: #eee;\n  cursor: pointer;\n}\n.p-title[data-v-89b75b88] {\n  position: relative;\n  padding-bottom: 20px;\n  margin-bottom: 4px;\n}\n.p-title[data-v-89b75b88]:after {\n  content: \"\";\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 1px;\n  background: #ccc;\n}\n.p-title[data-v-89b75b88]:before {\n  content: \"\";\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 80px;\n  height: 5px;\n  background: #f9b500;\n  z-index: 1;\n}\n.color-lite-black[data-v-89b75b88] {\n  color: #888;\n}\n.color-black[data-v-89b75b88] {\n  color: #111;\n}\n.wh-100x[data-v-89b75b88] {\n  height: 100px;\n  width: 100px !important;\n}\n.abs-tlr[data-v-89b75b88] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  z-index: 1;\n}\n.ml-120[data-v-89b75b88] {\n  margin-left: 120px !important;\n}\n.mycursor[data-v-89b75b88] {\n  cursor: pointer;\n}", ""]);
+exports.push([module.i, ".active[data-v-89b75b88] {\n  background-color: rgba(57, 164, 235, 0.747) !important;\n}\n.query-container[data-v-89b75b88] {\n  height: 100vh !important;\n}\n.author-card[data-v-89b75b88] {\n  height: 15em;\n  width: 55%;\n  border: 2px solid #151515;\n}\n*[data-v-89b75b88] {\n  box-sizing: border-box;\n}\n.box[data-v-89b75b88]:hover {\n  border-top-left-radius: 10px;\n  border-bottom-left-radius: 10px;\n  -webkit-animation-name: example;\n          animation-name: example;\n  -webkit-animation-duration: 0.25s;\n          animation-duration: 0.25s;\n  margin-bottom: 20px;\n  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);\n}\n.pt-20[data-v-89b75b88] {\n  padding-top: 20px !important;\n}\n.list-li-mr-20 > li[data-v-89b75b88] {\n  margin-right: 20px;\n}\n.color-primary[data-v-89b75b88] {\n  color: #f9b500;\n}\n.mr-5[data-v-89b75b88] {\n  margin-right: 5px !important;\n}\n.paginate-result[data-v-89b75b88] {\n  width: 100%;\n  text-align: center;\n  margin-bottom: 1rem;\n}\n.font-12[data-v-89b75b88] {\n  font-size: 1.2em;\n}\n.cards[data-v-89b75b88] {\n  width: 100%;\n  display: -webkit-box;\n  display: flex;\n  display: -webkit-flex;\n  -webkit-box-pack: center;\n          justify-content: center;\n  -webkit-justify-content: center;\n  max-width: 820px;\n}\n.card__like[data-v-89b75b88] {\n  width: 18px;\n}\n.card__clock[data-v-89b75b88] {\n  width: 15px;\n  vertical-align: middle;\n  fill: #ad7d52;\n}\n.card__time[data-v-89b75b88] {\n  font-size: 12px;\n  color: #ad7d52;\n  vertical-align: middle;\n  margin-left: 5px;\n}\n.card__clock-info[data-v-89b75b88] {\n  float: right;\n}\n.card__img[data-v-89b75b88] {\n  visibility: hidden;\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n  height: 360px;\n  border-top-left-radius: 12px;\n  border-top-right-radius: 12px;\n}\n.card__info-hover[data-v-89b75b88] {\n  position: absolute;\n  padding: 16px;\n  width: 100%;\n  opacity: 1;\n  color: #fff;\n  top: 0;\n}\n.card__img--hover[data-v-89b75b88] {\n  -webkit-transition: 0.2s all ease-out;\n  transition: 0.2s all ease-out;\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n  width: 100%;\n  position: absolute;\n  height: 235px;\n  border-top-left-radius: 12px;\n  border-top-right-radius: 12px;\n  top: 0;\n  color: #fff;\n}\n.card[data-v-89b75b88] {\n  margin-right: 25px;\n  -webkit-transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);\n  transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);\n  background-color: #fff;\n  height: 360px;\n  position: relative;\n  border-radius: 12px;\n  overflow: hidden;\n  box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);\n}\n.card[data-v-89b75b88]:hover {\n  box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);\n  -webkit-transform: scale(1.1, 1.1);\n          transform: scale(1.1, 1.1);\n  color: #fff;\n}\n.card__info[data-v-89b75b88] {\n  z-index: 2;\n  background-color: #fff;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n  padding: 16px 24px 24px 24px;\n}\n.card__category[data-v-89b75b88]:hover {\n  font-family: \"Raleway\", sans-serif;\n  text-transform: uppercase;\n  font-size: 13px;\n  letter-spacing: 2px;\n  font-weight: 500;\n  color: #868686;\n}\n.card__title[data-v-89b75b88] {\n  margin-top: 5px;\n  margin-bottom: 10px;\n  font-family: \"Roboto Slab\", serif;\n}\n.card__by[data-v-89b75b88] {\n  font-size: 12px;\n  font-family: \"Raleway\", sans-serif;\n  font-weight: 500;\n}\n.card__author[data-v-89b75b88] {\n  font-weight: 600;\n  text-decoration: none;\n  color: #ad7d52;\n}\n.card__author[data-v-89b75b88]:hover {\n  font-weight: 600;\n  text-decoration: none;\n  color: #fff;\n}\n.card:hover .card__img--hover[data-v-89b75b88] {\n  height: 100%;\n  opacity: 0.3;\n}\n.card:hover .card__info[data-v-89b75b88] {\n  background-color: transparent;\n  position: relative;\n}\n.card:hover .card__info-hover[data-v-89b75b88] {\n  opacity: 1;\n}\nul[data-v-89b75b88] {\n  list-style-type: none;\n  width: 100%;\n}\nh3[data-v-89b75b88] {\n  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;\n}\nli img[data-v-89b75b88] {\n  float: left;\n  margin: 0 15px 0 0;\n}\nli p[data-v-89b75b88] {\n  font: 200 12px/1.5 Georgia, Times New Roman, serif;\n}\nli[data-v-89b75b88] {\n  padding: 10px;\n  overflow: auto;\n}\nli[data-v-89b75b88]:hover {\n  background: #eee;\n  cursor: pointer;\n}\n.p-title[data-v-89b75b88] {\n  position: relative;\n  padding-bottom: 20px;\n  margin-bottom: 4px;\n}\n.p-title[data-v-89b75b88]:after {\n  content: \"\";\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 1px;\n  background: #ccc;\n}\n.p-title[data-v-89b75b88]:before {\n  content: \"\";\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 80px;\n  height: 5px;\n  background: #f9b500;\n  z-index: 1;\n}\n.color-lite-black[data-v-89b75b88] {\n  color: #888;\n}\n.color-black[data-v-89b75b88] {\n  color: #111;\n}\n.wh-100x[data-v-89b75b88] {\n  height: 100px;\n  width: 100px !important;\n}\n.abs-tlr[data-v-89b75b88] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  z-index: 1;\n}\n.ml-120[data-v-89b75b88] {\n  margin-left: 120px !important;\n}\n.mycursor[data-v-89b75b88] {\n  cursor: pointer;\n}\n.mybtn[data-v-89b75b88] {\n  margin: 1em 0 3em 0;\n}\n.botones[data-v-89b75b88] {\n  margin: 0.2em 0 0.1em 0;\n  cursor: pointer;\n}", ""]);
 
 // exports
 
@@ -59842,6 +60218,383 @@ var render = function() {
           },
           [_vm._m(1)]
         ),
+        _vm._v(" "),
+        _vm.newsNotes
+          ? _c("div", [
+              _c("div", { staticClass: "mybtn " }, [
+                _c("div", [
+                  _c(
+                    "h2",
+                    {
+                      staticClass: "botones",
+                      on: { click: _vm.cambiaNoticias }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          style: [
+                            _vm.showNoticias
+                              ? { color: "#137ee2" }
+                              : { color: "black" }
+                          ]
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Noticias\n                        "
+                          )
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "h2",
+                    {
+                      staticClass: "botones",
+                      on: { click: _vm.cambiaPublicaciones }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          style: [
+                            _vm.showPublicaciones
+                              ? { color: "#137ee2" }
+                              : { color: "black" }
+                          ]
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Publicaciones\n                        "
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm.showNoticias
+                ? _c(
+                    "div",
+                    { staticClass: "row" },
+                    _vm._l(_vm.resultadosNoticias, function(person, index) {
+                      return _c(
+                        "div",
+                        {
+                          key: index,
+                          staticClass: "col-12 col-lg-4 col-md-6 box",
+                          on: {
+                            click: function($event) {
+                              return _vm.goToNewview(person)
+                            }
+                          }
+                        },
+                        [
+                          _c("img", {
+                            staticStyle: { width: "100%", height: "300px" },
+                            attrs: { src: person.imgdesmostrativa, alt: "" }
+                          }),
+                          _vm._v(" "),
+                          _c("h4", { staticClass: "pt-20" }, [
+                            _c("a", { attrs: { href: "#" } }, [
+                              _c("b", { staticStyle: { color: "black" } }, [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(person.titulo) +
+                                    "\n                            "
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("ul", { staticStyle: { "margin-left": "-8px" } }, [
+                            _c("li", { staticClass: "color-lite-black" }, [
+                              _vm._v(
+                                "\n                            Autor:\n                            "
+                              ),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "color-black",
+                                  attrs: { href: "#" }
+                                },
+                                [_c("b", [_vm._v(_vm._s(person.autor) + ",")])]
+                              ),
+                              _vm._v(" "),
+                              _c("br"),
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(person.fecha) +
+                                  "\n                        "
+                              )
+                            ])
+                          ])
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.showNoticias
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "container h-100",
+                      staticStyle: { "margin-top": "3%" }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "row h-100 justify-content-center align-items-center"
+                        },
+                        [
+                          _c("nav", [
+                            _c(
+                              "ul",
+                              { staticClass: "pagination" },
+                              [
+                                _vm.paginationNoticias.current_page > 1
+                                  ? _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.changePageNoticia(
+                                                _vm.paginationNoticias
+                                                  .current_page - 1
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_c("span", [_vm._v("Atrás")])]
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm._l(_vm.pagesNumberNoticias, function(
+                                  page,
+                                  index
+                                ) {
+                                  return _c(
+                                    "li",
+                                    {
+                                      key: index,
+                                      class: [
+                                        page == _vm.isActivedNoticias
+                                          ? "active"
+                                          : ""
+                                      ],
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.changePageNoticia(page)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("a", [
+                                        _c("span", [_vm._v(_vm._s(page))])
+                                      ])
+                                    ]
+                                  )
+                                }),
+                                _vm._v(" "),
+                                _vm.paginationNoticias.current_page <
+                                _vm.paginationNoticias.last_page
+                                  ? _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.changePageNoticia(
+                                                _vm.paginationNoticias
+                                                  .current_page + 1
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_c("span", [_vm._v("Siguiente")])]
+                                      )
+                                    ])
+                                  : _vm._e()
+                              ],
+                              2
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.showPublicaciones
+                ? _c(
+                    "div",
+                    { staticClass: "row" },
+                    _vm._l(_vm.resultadosPublicaciones, function(
+                      person,
+                      index
+                    ) {
+                      return _c(
+                        "div",
+                        {
+                          key: index,
+                          staticClass: "col-12 col-lg-4 col-md-6 box",
+                          on: {
+                            click: function($event) {
+                              return _vm.goToDocumentView(person)
+                            }
+                          }
+                        },
+                        [
+                          _c("img", {
+                            staticStyle: { width: "100%", height: "300px" },
+                            attrs: { src: person.imgdesmostrativa, alt: "" }
+                          }),
+                          _vm._v(" "),
+                          _c("h4", { staticClass: "pt-20" }, [
+                            _c("a", { attrs: { href: "#" } }, [
+                              _c("b", { staticStyle: { color: "black" } }, [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(person.titulo) +
+                                    "\n                            "
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("ul", { staticStyle: { "margin-left": "-8px" } }, [
+                            _c("li", { staticClass: "color-lite-black" }, [
+                              _vm._v(
+                                "\n                            Autor:\n                            "
+                              ),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "color-black",
+                                  attrs: { href: "#" }
+                                },
+                                [_c("b", [_vm._v(_vm._s(person.autor) + ",")])]
+                              ),
+                              _vm._v(" "),
+                              _c("br"),
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(person.fecha) +
+                                  "\n                        "
+                              )
+                            ])
+                          ])
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.showPublicaciones
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "container h-100",
+                      staticStyle: { "margin-top": "3%" }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "row h-100 justify-content-center align-items-center"
+                        },
+                        [
+                          _c("nav", [
+                            _c(
+                              "ul",
+                              { staticClass: "pagination" },
+                              [
+                                _vm.paginationPublicaciones.current_page > 1
+                                  ? _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.changePagePublicacion(
+                                                _vm.paginationPublicaciones
+                                                  .current_page - 1
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_c("span", [_vm._v("Atrás")])]
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm._l(_vm.pagesNumberPublicaciones, function(
+                                  page,
+                                  index
+                                ) {
+                                  return _c(
+                                    "li",
+                                    {
+                                      key: index,
+                                      class: [
+                                        page == _vm.isActivedPublicaciones
+                                          ? "active"
+                                          : ""
+                                      ],
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.changePagePublicacion(page)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("a", [
+                                        _c("span", [_vm._v(_vm._s(page))])
+                                      ])
+                                    ]
+                                  )
+                                }),
+                                _vm._v(" "),
+                                _vm.paginationPublicaciones.current_page <
+                                _vm.paginationPublicaciones.last_page
+                                  ? _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.changePagePublicacion(
+                                                _vm.paginationPublicaciones
+                                                  .current_page + 1
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_c("span", [_vm._v("Siguiente")])]
+                                      )
+                                    ])
+                                  : _vm._e()
+                              ],
+                              2
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                : _vm._e()
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _vm.searchFlag
           ? _c("div", [
