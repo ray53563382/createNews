@@ -158,6 +158,25 @@ class NoticiasController extends Controller
        
    }
 
+   public function obtentema(Request $request){
+      
+    $temas = Noticia::where('idcategoria', '=', $request->tema)->paginate(9);
+
+    return [
+     'paginationNoticias' =>[
+         'total'         => $temas->total(),
+         'current_page'  => $temas->currentPage(),
+         'per_page'      => $temas->perPage(),
+         'last_page'     => $temas->lastPage(),
+         'from'          => $temas->firstItem(),
+         'to'            => $temas->lastPage()
+     ],
+     'noticias'=> $temas
+ ];
+
+    
+}
+
 
 
 }

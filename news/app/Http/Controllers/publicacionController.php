@@ -199,6 +199,7 @@ class publicacionController extends Controller
         return $pdf;
     }
 
+    // TODO  make this both news & notes
     public function getheme(Request $request){
         $allthemes = DB::table('notas')->where('idcategoria', $request->idcategoria)->get();
         return $allthemes;
@@ -260,6 +261,25 @@ class publicacionController extends Controller
         $insert->relevante = 2;
         $insert->save();
         return $insert;
+    }
+
+    public function obtentema(Request $request){
+      
+        $temas = Nota::where('idcategoria', '=', $request->tema)->paginate(9);
+    
+        return [
+         'paginationPublicaciones' =>[
+             'total'         => $temas->total(),
+             'current_page'  => $temas->currentPage(),
+             'per_page'      => $temas->perPage(),
+             'last_page'     => $temas->lastPage(),
+             'from'          => $temas->firstItem(),
+             'to'            => $temas->lastPage()
+         ],
+         'publicaciones'=> $temas
+     ];
+    
+        
     }
 
 }
