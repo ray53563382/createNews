@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <div class="card strpied-tabled-with-hover">
                 <div class="card-header ">
-                    <h4 class="card-title">Registro de Acciones</h4>
+                    <h4 class="card-title">Declaraciones</h4>
                     <p class="card-category">Si las Acciones no aparecen, recarga la página web</p>
                     <!-- <div @click="subirImportantes" class="btn btn-primary">Marcar como relevantes</div>         -->
                 </div>
@@ -191,6 +191,11 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(VueSweetalert2);
 
+import VueLoading from "vuejs-loading-plugin";
+Vue.use(VueLoading, {
+    text: "Cargando"
+});
+
 export default {
     data() {
         return {
@@ -215,9 +220,11 @@ export default {
         }
     },
     created() {
+        this.$loading(true);
         axios.post('/getAllActions').then(res => {
             this.notas = res.data;
         })
+        this.$loading(false);
     },
 
     mounted() {},

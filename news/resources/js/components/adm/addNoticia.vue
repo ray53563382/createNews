@@ -4,7 +4,7 @@
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Agregar Noticias</h4>
+                                    <h4 class="card-title">Noticias</h4>
                                 </div>
                                 <div class="card-body">
                                     <form novalidate="true" enctype="multipart/form-data" @submit.prevent="agregar()">
@@ -187,6 +187,12 @@ import Vue from "vue";
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 Vue.use(VueSweetalert2);
+
+ import VueLoading from "vuejs-loading-plugin";
+    Vue.use(VueLoading, {
+        text: "Cargando"
+    });
+
 
 export default {
     data() {

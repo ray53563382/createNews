@@ -20,7 +20,7 @@
                     <div class="row">
                         <div class="col-lg-6 pr-1">
                             <div class="form-group">
-                                <label>Url</label>
+                                <label>Tipo de archivo multimedia</label>
                                 <select class="form-control" v-model="registro.tipo">
                                     <option value="1">Video</option>
                                     <option value="2">Audio</option>
@@ -124,6 +124,12 @@
 </template>
 
 <script>
+import VueLoading from "vuejs-loading-plugin";
+Vue.use(VueLoading, {
+    text: "Cargando"
+});
+
+
 export default {
     data() {
         return {
@@ -145,12 +151,14 @@ export default {
         }
     },
     mounted() {
+        this.$loading(true);
+
         this.resgistrosMulti = [];
         axios.get('/multimedia').then(res => {
             res.data.forEach(element => {
                 this.resgistrosMulti.push(element)
             });
-            console.log(this.resgistrosMulti);
+        this.$loading(false);
         });
     },
     methods: {

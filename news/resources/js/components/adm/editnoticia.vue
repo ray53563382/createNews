@@ -219,6 +219,12 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(VueSweetalert2);
 
+import VueLoading from "vuejs-loading-plugin";
+Vue.use(VueLoading, {
+    text: "Cargando"
+});
+
+
 export default {
     data() {
         return {
@@ -249,9 +255,11 @@ export default {
         }
     },
     created() {
+        this.$loading(true);
         axios.post('/allnews').then(resp => {
             this.notas = resp.data.noticias.data;
             this.pagination = resp.data.pagination;
+             this.$loading(false);
         })
     },
 
@@ -289,6 +297,8 @@ export default {
     methods: {
 
         getNoticias(page) {
+            this.$loading(true);
+
             axios({
                 method: "post",
                 url: "/allnews",

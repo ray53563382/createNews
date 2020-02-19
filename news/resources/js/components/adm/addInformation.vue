@@ -222,6 +222,10 @@ import Vue from 'vue';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(VueSweetalert2);
+import VueLoading from "vuejs-loading-plugin";
+Vue.use(VueLoading, {
+    text: "Cargando"
+});
 
 export default {
     data() {
@@ -254,13 +258,10 @@ export default {
         }
     },
     created() {
+         this.$loading(true);
         axios.post('/recentdata').then(resp => {
             this.notas = resp.data.notas.data;
             this.pagination = resp.data.pagination;
-            console.log(this.notas);
-            
-            // console.log(res.data);
-            
             this.notas.forEach(element => {
                 if (element.relevante == 1) {
                     this.importantes.push(element.id)
@@ -268,6 +269,7 @@ export default {
                     this.muyimportantes.push(element.id)
                 }
             });
+             this.$loading(false);
         })
     },
 

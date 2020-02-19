@@ -11,7 +11,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
+    <script src="https://cdn.tiny.cloud/1/dygqu45qbjzegwpdezwtvkvhmz4xm0n9hd9386waucoanzjr/tinymce/5/tinymce.min.js" referrerpolicy="origin">
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/ee67fb36a1.js" crossorigin="anonymous"></script>

@@ -8,7 +8,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-lg-8">
-                    <img :src="docImage" alt="" />
+                    <img :src="docImage" alt="" style="width: 72% !important" />
                     <h3 class="mt-30">
                         <b>{{ docTitle }}</b>
                     </h3>

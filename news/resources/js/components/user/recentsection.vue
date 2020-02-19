@@ -148,7 +148,7 @@
                     <h4 class="p-title mt-30"><b>PUBLICACIONES</b></h4>
                     <div class="row">
                         <div
-                            class="col-sm-6 box hoverevent"
+                            class="col-sm-4 box hoverevent"
                             @click="goToDocumentView(recientes[5].id)"
                         >
                             <img
@@ -159,7 +159,7 @@
                             />
                             <h4 class="pt-20">
                                 <a
-                                    ><b>{{ recientes[5].titulo }}</b></a
+                                    ><b style="font-size: 72% !important">{{ recientes[5].titulo }}</b></a
                                 >
                             </h4>
                             <ul class="list-li-mr-20 pt-10 mb-30">
@@ -175,7 +175,7 @@
                         <!-- col-sm-6 -->
 
                         <div
-                            class="col-sm-6 box hoverevent"
+                            class="col-sm-4 box hoverevent"
                             @click="goToDocumentView(recientes[6].id)"
                         >
                             <img
@@ -186,7 +186,7 @@
                             />
                             <h4 class="pt-20">
                                 <a href="#"
-                                    ><b>{{ recientes[6].titulo }}</b></a
+                                    ><b style="font-size: 72% !important">{{ recientes[6].titulo }}</b></a
                                 >
                             </h4>
                             <ul class="list-li-mr-20 pt-10 mb-30">
@@ -202,7 +202,7 @@
                         <!-- col-sm-6 -->
 
                         <div
-                            class="col-sm-6 box hoverevent"
+                            class="col-sm-4 box hoverevent"
                             @click="goToDocumentView(recientes[7].id)"
                         >
                             <img
@@ -213,7 +213,7 @@
                             />
                             <h4 class="pt-20">
                                 <a href="#"
-                                    ><b> <br />{{ recientes[7].titulo }}</b></a
+                                    ><b style="font-size: 72% !important"> <br />{{ recientes[7].titulo }}</b></a
                                 >
                             </h4>
                             <ul class="list-li-mr-20 pt-10 mb-30">
@@ -229,7 +229,7 @@
                         <!-- col-sm-6 -->
 
                         <div
-                            class="col-sm-6 box hoverevent"
+                            class="col-sm-4 box hoverevent"
                             @click="goToDocumentView(recientes[8].id)"
                         >
                             <img
@@ -240,14 +240,14 @@
                             />
                             <h4 class="pt-20">
                                 <a href="#"
-                                    ><b> <br />{{ recientes[8].titulo }}</b></a
+                                    ><b style="font-size: 72% !important"> <br />{{ recientes[8].titulo }}</b></a
                                 >
                             </h4>
                             <ul class="list-li-mr-20 pt-10 mb-30">
                                 <li class="color-lite-black">
                                     Por
                                     <a href="#" class="color-black"
-                                        ><b>{{ recientes[8].autor }},</b></a
+                                        ><b >{{ recientes[8].autor }},</b></a
                                     >
                                     {{ recientes[8].fecha }}
                                 </li>
@@ -256,7 +256,7 @@
                         <!-- col-sm-6 -->
 
                         <div
-                            class="col-sm-6 box hoverevent"
+                            class="col-sm-4 box hoverevent"
                             @click="goToDocumentView(recientes[9].id)"
                         >
                             <img
@@ -267,14 +267,14 @@
                             />
                             <h4 class="pt-20">
                                 <a href="#"
-                                    ><b> <br />{{ recientes[9].titulo }}</b></a
+                                    ><b style="font-size: 72% !important"> <br />{{ recientes[9].titulo }}</b></a
                                 >
                             </h4>
                             <ul class="list-li-mr-20 pt-10 mb-30">
                                 <li class="color-lite-black">
                                     Por
                                     <a href="#" class="color-black"
-                                        ><b>{{ recientes[9].autor }},</b></a
+                                        ><b >{{ recientes[9].autor }},</b></a
                                     >
                                     {{ recientes[5].titulo }}
                                 </li>
@@ -283,7 +283,7 @@
                         <!-- col-sm-6 -->
 
                         <div
-                            class="col-sm-6 box hoverevent"
+                            class="col-sm-4 box hoverevent"
                             @click="goToDocumentView(recientes[10].id)"
                         >
                             <img
@@ -292,9 +292,9 @@
                                 alt=""
                                 style="width: 100%;height: 300px; display: block;margin: 0 auto;"
                             />
-                            <h4 class="pt-20">
+                            <h4 class="pt-20" >
                                 <a href="#"
-                                    ><b>{{ recientes[10].titulo }}</b></a
+                                    ><b style="font-size: 72% !important">{{ recientes[10].titulo }}</b></a
                                 >
                             </h4>
                             <ul class="list-li-mr-20 pt-10 mb-30">
@@ -341,11 +341,9 @@
                                     </h5>
                                     <h6 class="color-lite-black pt-10">
                                         <span
-                                            v-if="
-                                                noticias[0].autor == 'Sin Autor'
-                                            "
                                             class="color-black"
-                                            >Por
+                                            >
+                                            Por
                                             <b>
                                                 {{ noticias[0].autor }},
                                             </b></span
@@ -372,9 +370,6 @@
                                     </h5>
                                     <h6 class="color-lite-black pt-10">
                                         <span
-                                            v-if="
-                                                noticias[1].autor == 'Sin Autor'
-                                            "
                                             class="color-black"
                                             >Por
                                             <b
@@ -403,9 +398,6 @@
                                     </h5>
                                     <h6 class="color-lite-black pt-10">
                                         <span
-                                            v-if="
-                                                noticias[2].autor == 'Sin Autor'
-                                            "
                                             class="color-black"
                                             >Por
                                             <b
@@ -434,9 +426,6 @@
                                     </h5>
                                     <h6 class="color-lite-black pt-10">
                                         <span
-                                            v-if="
-                                                noticias[3].autor == 'Sin Autor'
-                                            "
                                             class="color-black"
                                             >Por
                                             <b
@@ -643,7 +632,7 @@
                                 ></iframe>
                             </div>
 
-                            <div class="multimedia" style="margin-top: 3%">
+                            <!-- <div class="multimedia" style="margin-top: 3%">
                                 <h5>
                                     <b>{{ resgistrosMulti[2].nombre }}</b>
                                 </h5>
@@ -665,7 +654,7 @@
                                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen
                                 ></iframe>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!--  pl-20 -->

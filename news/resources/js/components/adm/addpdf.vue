@@ -128,6 +128,11 @@
     import 'sweetalert2/dist/sweetalert2.min.css';
     Vue.use(VueSweetalert2);
 
+    import VueLoading from "vuejs-loading-plugin";
+    Vue.use(VueLoading, {
+        text: "Cargando"
+    });
+
     export default {
         data() {
           return {
@@ -138,9 +143,6 @@
             modoEditar:false
           }
         },
-        mounted() {
-            console.log('Component mounted.')
-        }, 
         methods:{
           eliminar(item,index){
 
@@ -200,8 +202,10 @@
           }
         },
         created(){
+        this.$loading(true);
           axios.get('/document').then(res=>{
             this.document = res.data;
+            this.$loading(false);
           })
         },
         components: {

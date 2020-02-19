@@ -37,7 +37,7 @@
                                     style="font-size: 25px !important;margin-right: 15px !important;"
                                 ></i>
                                 <p style="font-size: 11px !important;">
-                                    Agregar Documentos
+                                    Agregar Doc
                                 </p>
                             </a>
                         </li>
@@ -151,7 +151,7 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg" color-on-scroll="500">
                 <div class="container-fluid">
-                    <a class="navbar-brand">Registro de publicaciones</a>
+                    <a class="navbar-brand">Sistema de registros</a>
                     <div
                         class="collapse navbar-collapse justify-content-end"
                         id="navigation"
@@ -200,7 +200,7 @@
                                     class="dropdown-menu"
                                     aria-labelledby="navbarDropdownMenuLink"
                                 >
-                                    <a class="dropdown-item" href="#"
+                                    <a class="dropdown-item" href="http://crisisclimaticayautonomia.org/"
                                         >Ir a home</a
                                     >
                                 </div>
@@ -250,11 +250,9 @@ export default {
     },
     methods: {
         logout() {
-            console.log("salir");
             axios.get("/registerClose").then(res => {
-                console.log("adios");
                 // this.$router.push({ path:'login' });
-                window.location.href = "http://127.0.0.1:8000/login";
+                window.location.href = "http://crisisclimaticayautonomia.org/login";
             });
         },
         changeData: function(msg) {

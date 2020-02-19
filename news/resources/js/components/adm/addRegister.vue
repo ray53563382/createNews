@@ -4,7 +4,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Agregar articulo</h4>
+                    <h4 class="card-title">Publicaciones</h4>
                 </div>
                 <div class="card-body">
                     <form novalidate="true" enctype="multipart/form-data" @submit.prevent="agregar()">

@@ -4,7 +4,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Agregar documento</h4>
+                    <h4 class="card-title">Documentos</h4>
                 </div>
                 <div class="card-body">
                     <form enctype="multipart/form-data" @submit.prevent="agregar()">
@@ -43,13 +43,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Agregar imagen de pdf </label><br>
+                                    <label>Agregar imagen demostrativa </label><br>
                                     <input type="file" id="img" accept="image/*" @change="obtenerImagen">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Agregar Docuemento</label><br>
+                                    <label>Agregar PDF</label><br>
                                     <input type="file" id="pdf" accept="pdf/*" @change="obtenerPdf">
                                 </div>
                             </div>
