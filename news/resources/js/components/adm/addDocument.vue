@@ -190,7 +190,6 @@ export default {
                     console.log(error);
                 });
             }
-
         },
         obtenerPdf(e) {
             let fileReader = new FileReader();

@@ -200,7 +200,9 @@
                                     class="dropdown-menu"
                                     aria-labelledby="navbarDropdownMenuLink"
                                 >
-                                    <a class="dropdown-item" href="http://crisisclimaticayautonomia.org/"
+                                    <a
+                                        class="dropdown-item"
+                                        href="http://crisisclimaticayautonomia.org/"
                                         >Ir a home</a
                                     >
                                 </div>
@@ -252,7 +254,8 @@ export default {
         logout() {
             axios.get("/registerClose").then(res => {
                 // this.$router.push({ path:'login' });
-                window.location.href = "http://crisisclimaticayautonomia.org/login";
+                window.location.href =
+                    "http://crisisclimaticayautonomia.org/login";
             });
         },
         changeData: function(msg) {

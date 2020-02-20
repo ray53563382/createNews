@@ -226,6 +226,7 @@ export default {
     },
     methods: {
         agregar: function (e) {
+            this.$loading(true);
             this.errors = [];
             if (!this.registro.titulo) {
                 this.errors.push("El nombre es obligatorio.");
@@ -276,6 +277,7 @@ export default {
                     this.registro.informacionArt = "";
                     this.registro.pdf = null;
                     this.registro.url = "";
+                    this.$loading(false);
                     this.$swal(
                         'Acción guardada!',
                         'Ahora ya puedo visualizarlo en su página web!',

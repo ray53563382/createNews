@@ -218,6 +218,7 @@ export default {
         };
     },
     mounted() {
+        this.$loading(true);
         this.categoriasDta = [];
         axios.get('/categorias').then(res => {
             res.data.forEach(element => {
@@ -227,11 +228,11 @@ export default {
                 });
             });
         });
+        this.$loading(false);
     },
     methods: {
         agregar: function(e) {
-            console.log('niceee');
-            
+            this.$loading(true);
             this.errors = [];
             if (!this.registro.titulo) {
                 this.errors.push("El nombre es obligatorio.");
@@ -289,6 +290,8 @@ export default {
                             "success"
                         );
                         document.getElementById("imgdata").value = "";
+                        this.$loading(false);
+
                     })
                     .catch(error => {
                         console.log(error);

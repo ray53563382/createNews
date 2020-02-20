@@ -27,7 +27,7 @@
 
                             <!-- <paginate name="result" :list="notas" :per="2" tag="tbody"> -->
                                 <!-- <tr  v-for="(item, index) in notas" :key="index" :ref="item.id"  :style="[item.relevante == 0 ? item.relevante == 2 ? {'background': 'rgba(91, 192, 222, 0.2)'} : {'background': '#d878f0da'}  : {'background': '#FFF'}]" > -->
-                                <tr  v-for="(item, index) in notas" :key="index" :ref="item.id"  :style="{'background': seleccionafondo(item.relevante)}" >
+                                <tr  v-for="(item, index) in notas" :key="index.id" :ref="item.id"  :style="{'background': seleccionafondo(item.relevante)}" >
                                     <!-- <paginate name="result" :list="notas" :per="2" tag="tbody"> -->
                                     <td>{{index + 1}}</td>
                                     <td>{{item.titulo}}</td>
@@ -368,6 +368,7 @@ export default {
             console.log(this.registro);
         },
         editarData() {
+            this.$loading(true);
             const params = {
                 titulo: this.registro.titulo,
                 fecha: this.registro.fecha,
@@ -380,12 +381,33 @@ export default {
             axios.put(`/notas/${this.registro.id}`, params)
                 .then(res => {
                     this.modoEditar = false;
-                    axios.get('/notas').then(res => {
-                        this.notas = res.data;
-                        console.log(this.notas);
+                    // axios.get('/notas').then(res => {
+                    //     this.notas = res.data;
+                    //     console.log(this.notas);
+                    // })
+                    axios({
+                        method: "post",
+                        url: "/recentdata",
+                        data: {
+                            page: page
+                        }
                     })
-
+                    .then(resp => {
+                        // this.newsFlag = true;
+                        this.notas = resp.data.notas.data;
+                        // this.pagination = resp.data.pagination;
+                        // this.notas.forEach(element => {
+                        //     if (element.relevante == 1) {
+                        //         this.importantes.push(element.id)
+                        //     }else if(element.relevante == 2){
+                        //         this.muyimportantes.push(element.id)
+                        //     }
+                        // });
+                        this.$loading(false);
+                    })
+                    .catch(Error => console.log(Error));
                 })
+            this.$loading(false);
         },
 
         regresar() {
