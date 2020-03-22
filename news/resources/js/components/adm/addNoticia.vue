@@ -224,6 +224,7 @@ export default {
         };
     },
     mounted() {
+        this.$loading(true);
         this.categoriasDta = [];
         axios.get('/categorias').then(res => {
             res.data.forEach(element => {
@@ -233,10 +234,16 @@ export default {
                 });
             });
         });
+        this.$loading(false);
     },
     methods: {
+<<<<<<< HEAD
         agregar: function (e) {
 
+=======
+        agregar: function(e) {
+            this.$loading(true);
+>>>>>>> 382232fb5bdf1d070f6b6817b7e0ae89603b369f
             this.errors = [];
             if (!this.registro.titulo) {
                 this.errors.push("El nombre es obligatorio.");

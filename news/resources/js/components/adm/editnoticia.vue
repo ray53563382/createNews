@@ -291,8 +291,6 @@ export default {
     methods: {
 
         getNoticias(page) {
-            this.$loading(true);
-
             axios({
                     method: "post",
                     url: "/allnews",
@@ -368,6 +366,7 @@ export default {
             //     informacionArt: this.registro.informacionArt,
             //     imgdesmostrativa: this.registro.imgdesmostrativa
             // };
+            this.$loading(true);
             axios({
                     method: "post",
                     url: "/updateNews",
@@ -398,6 +397,11 @@ export default {
                             // location.reload();
                         })
                 })
+<<<<<<< HEAD
+=======
+            })
+            this.$loading(false);
+>>>>>>> 382232fb5bdf1d070f6b6817b7e0ae89603b369f
             // axios.put(`/notas/${this.registro.id}`, params)
             //     .then(res => {
             //         this.modoEditar = false;

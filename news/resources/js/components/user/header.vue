@@ -8,10 +8,15 @@
                     <ul
                         class="float-left float-sm-none list-a-plr-10 list-a-plr-sm-5 list-a-ptb-15 list-a-ptb-sm-10"
                     >
+<<<<<<< HEAD
                         <li>
                             <a @click="goToNosotros" class="pl-0 pl-sm-10"
                                 >Sobre nosotros</a
                             >
+=======
+                        <li @click="goToAbout">
+                            <a class="pl-0 pl-sm-10">Sobre nosotros</a>
+>>>>>>> 382232fb5bdf1d070f6b6817b7e0ae89603b369f
                         </li>
                     </ul>
                     <ul
@@ -261,6 +266,11 @@ export default {
             value == "noticias"
                 ? (this.typeOfSearch = "noticias")
                 : (this.typeOfSearch = "publicaciones");
+        },
+        goToAbout() {
+            location.replace(
+                "http://crisisclimaticayautonomia.org/sobreNosotrosContacto"
+            );
         }
     }
 };

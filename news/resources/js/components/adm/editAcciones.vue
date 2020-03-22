@@ -275,7 +275,7 @@ export default {
             console.log(this.registro);
         },
         editarData() {
-       
+            this.$loading(true);
             axios({
                 method: "post",
                 url: "/updateAction",
@@ -304,6 +304,7 @@ export default {
                     // location.reload();
                 })
             })
+            this.$loading(false);
         },
 
         regresar() {
