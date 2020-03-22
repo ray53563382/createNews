@@ -109,6 +109,7 @@
 </template>
 
 <script>
+
 import Editor from '@tinymce/tinymce-vue'
 import Vue from 'vue';
 import VueSweetalert2 from 'vue-sweetalert2';

@@ -20,77 +20,65 @@
                         </thead>
                         <tbody>
 
-
                             <!-- <paginate name="result" :list="notas" :per="2" tag="tbody"> -->
-                                <tr  v-for="(item, index) in notas" :key="index" :ref="item.id"  :style="[item.relevante == 1 ? {'background': 'rgba(91, 192, 222, 0.2)'} : {'background': '#FFF'}]" >
-                                    <!-- <paginate name="result" :list="notas" :per="2" tag="tbody"> -->
-                                    <!-- <td>{{index + 1}}</td> -->
-                                    <td>{{item.id}}</td>
-                                    <td>{{item.titulo}}</td>
-                                    <td v-if="item.importancia == 1" style="color:green">Alta</td>
-                                    <td v-else-if="item.importancia == 2" style="color: orange;">Media</td>
-                                    <td v-else-if="item.importancia == 3" style="color: red">Baja</td>
-                                    <td>{{item.autor}}</td>
-                                    <td>
-                                        <div>
-                                            Para ver información click en editar
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button type="button" @click="editar(item)" data-toggle="modal" data-target="#exampleModalLong" class="btn btn-labeled btn-success">
-                                            <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
-                                        <button type="button" @click="eliminar(item,index)" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
-                                            <span class="btn-label"><i class="fa fa-remove"></i></span></button>
-                                        <!-- <button type="button" @click="agregarImportantes(item)" class="btn btn-labeled btn-primary" style="margin-left: 4%;">
+                            <tr v-for="(item, index) in notas" :key="index" :ref="item.id" :style="[item.relevante == 1 ? {'background': 'rgba(91, 192, 222, 0.2)'} : {'background': '#FFF'}]">
+                                <!-- <paginate name="result" :list="notas" :per="2" tag="tbody"> -->
+                                <!-- <td>{{index + 1}}</td> -->
+                                <td>{{item.id}}</td>
+                                <td>{{item.titulo}}</td>
+                                <td v-if="item.importancia == 1" style="color:green">Alta</td>
+                                <td v-else-if="item.importancia == 2" style="color: orange;">Media</td>
+                                <td v-else-if="item.importancia == 3" style="color: red">Baja</td>
+                                <td>{{item.autor}}</td>
+                                <td>
+                                    <div>
+                                        Para ver información click en editar
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" @click="editar(item)" data-toggle="modal" data-target="#exampleModalLong" class="btn btn-labeled btn-success">
+                                        <span class="btn-label"><i class="fa fa-pencil-square-o"></i></span></button>
+                                    <button type="button" @click="eliminar(item,index)" class="btn btn-labeled btn-danger" style="margin-left: 4%;">
+                                        <span class="btn-label"><i class="fa fa-remove"></i></span></button>
+                                    <!-- <button type="button" @click="agregarImportantes(item)" class="btn btn-labeled btn-primary" style="margin-left: 4%;">
                                         <span class="btn-label"><i class="fa fa-star"></i></span></button> -->
-                                    </td>
-                                </tr>
+                                </td>
+                            </tr>
                             <!-- </paginate> -->
 
                         </tbody>
                     </table>
-                    
+
                 </div>
-                
+
             </div>
             <nav>
                 <ul class="pagination">
                     <li v-if="pagination.current_page > 1">
-                        <a
-                            @click="
+                        <a @click="
                                 changePage(
                                     pagination.current_page - 1
                                 )
-                            "
-                        >
+                            ">
                             <span>Atrás</span>
                         </a>
                     </li>
-                    <li
-                        v-for="(page, index) in pagesNumber"
-                        :key="index"
-                        v-bind:class="[
+                    <li v-for="(page, index) in pagesNumber" :key="index" v-bind:class="[
                             page == isActived ? 'active' : ''
-                        ]"
-                        @click="changePage(page)"
-                    >
+                        ]" @click="changePage(page)">
                         <a>
                             <span>{{ page }}</span>
                         </a>
                     </li>
-                    <li
-                        v-if="
+                    <li v-if="
                             pagination.current_page <
                                 pagination.last_page
-                        "
-                    >
-                        <a
-                            @click="
+                        ">
+                        <a @click="
                                 changePage(
                                     pagination.current_page + 1
                                 )
-                            "
-                        >
+                            ">
                             <span>Siguiente</span>
                         </a>
                     </li>
@@ -119,7 +107,11 @@
                             <div class="col-md-4 pr-1">
                                 <div class="form-group">
                                     <label>Fecha</label>
-                                    <input type="date" style="font-size: 14px;" class="form-control" placeholder="Company" v-model="registro.fecha">
+                                    <datepicker :bootstrap-styling="true" v-model="registro.fecha" :language="es">
+                                        <div class="form-control">
+                                        </div>
+                                    </datepicker>
+                                    <!-- <input type="date" style="font-size: 14px;" class="form-control" placeholder="Company" v-model="registro.fecha"> -->
                                 </div>
                             </div>
                             <div class="col-md-4 pr-1">
@@ -147,10 +139,9 @@
                                         <option value="8">Bosques y deforestación</option>
                                         <option value="9">Megaproyectos</option>
                                     </select>
-                                                                    <button type="button" class="btn btn-primary">Primary</button>
+                                    <!-- <button type="button" class="btn btn-primary">Primary</button> -->
 
                                 </div>
-
 
                             </div>
                         </div>
@@ -199,7 +190,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-info btn-fill pull-right" style="background-color: #eaa11d !important;">Editar evaluación</button>
+                        <button type="submit" class="btn btn-info btn-fill pull-right" style="background-color: #eaa11d !important;">Editar noticia</button>
                         <button class="btn btn-info btn-fill pull-right" style="background-color: red !important;" @click="regresar()">Regresar</button>
 
                         <div class="clearfix"></div>
@@ -223,11 +214,15 @@ import VueLoading from "vuejs-loading-plugin";
 Vue.use(VueLoading, {
     text: "Cargando"
 });
-
+import Datepicker from 'vuejs-datepicker';
+import {
+    es
+} from 'vuejs-datepicker/dist/locale'
 
 export default {
     data() {
         return {
+            es: es,
             modoEditar: false,
             notas: [],
             registros: [],
@@ -259,16 +254,15 @@ export default {
         axios.post('/allnews').then(resp => {
             this.notas = resp.data.noticias.data;
             this.pagination = resp.data.pagination;
-             this.$loading(false);
+            this.$loading(false);
         })
     },
 
-    
     computed: {
-        isActived: function() {
+        isActived: function () {
             return this.pagination.current_page;
         },
-        pagesNumber: function() {
+        pagesNumber: function () {
             if (!this.pagination.to) {
                 return [];
             }
@@ -300,12 +294,12 @@ export default {
             this.$loading(true);
 
             axios({
-                method: "post",
-                url: "/allnews",
-                data: {
-                    page: page
-                }
-            })
+                    method: "post",
+                    url: "/allnews",
+                    data: {
+                        page: page
+                    }
+                })
                 .then(resp => {
                     // this.newsFlag = true;
                     this.notas = resp.data.noticias.data;
@@ -332,15 +326,15 @@ export default {
             }).then((result) => {
                 if (result.value) {
                     axios({
-                        method: "post",
-                        url: "/deleteNew",
-                        data: {
-                            id: item.id
-                        }
-                    })
-                    .then(()=>{
-                        this.notas.splice(index, 1);
-                    })
+                            method: "post",
+                            url: "/deleteNew",
+                            data: {
+                                id: item.id
+                            }
+                        })
+                        .then(() => {
+                            this.notas.splice(index, 1);
+                        })
                     // axios.delete(`/deleteNew/${item.id}`).then(() => {
                     //     this.notas.splice(index, 1);
                     // })
@@ -375,32 +369,35 @@ export default {
             //     imgdesmostrativa: this.registro.imgdesmostrativa
             // };
             axios({
-                method: "post",
-                url: "/updateNews",
-                data:{
-                    id : this.registro.id,
-                    titulo: this.registro.titulo,
-                    fecha: this.registro.fecha,
-                    autor: this.registro.autor,
-                    importancia: this.registro.importancia,
-                    idcategoria: this.registro.idcategoria,
-                    informacionArt: this.registro.informacionArt,
-                    imgdesmostrativa: this.registro.imgdesmostrativa
-                }
-            })
-            .then(resp =>{
-                this.modoEditar = false;
-                axios({
                     method: "post",
-                    // url: "/getNews",
-                    url: "/allnews",
+                    url: "/updateNews",
+                    data: {
+                        id: this.registro.id,
+                        titulo: this.registro.titulo,
+                        fecha: this.registro.fecha,
+                        autor: this.registro.autor,
+                        importancia: this.registro.importancia,
+                        idcategoria: this.registro.idcategoria,
+                        informacionArt: this.registro.informacionArt,
+                        imgdesmostrativa: this.registro.imgdesmostrativa
+                    }
+                })
+                .then(resp => {
+                    this.modoEditar = false;
+                    axios({
+                            method: "post",
+                            // url: "/getNews",
+                            url: "/allnews",
 
+                        })
+                        .then(resp => {
+                            axios.get('/getNews').then(res => {
+                                this.notas = res.data;
+                            })
+                            // this.notas = resp.data.noticias.data;
+                            // location.reload();
+                        })
                 })
-                .then(resp=>{
-                    this.notas = resp.data.noticias.data;
-                    // location.reload();
-                })
-            })
             // axios.put(`/notas/${this.registro.id}`, params)
             //     .then(res => {
             //         this.modoEditar = false;
@@ -424,14 +421,13 @@ export default {
             }
         },
 
-        iluminaImportantes(item){
-            if(item.relevante == 1){
-                 this.$refs[item.id][0].style.background = "rgba(246, 153, 63, 0.4)"
-            }else{
+        iluminaImportantes(item) {
+            if (item.relevante == 1) {
+                this.$refs[item.id][0].style.background = "rgba(246, 153, 63, 0.4)"
+            } else {
                 return
             }
         },
-
 
         // agregarImportantes(item){
 
@@ -485,12 +481,12 @@ export default {
     },
     components: {
         'editor': Editor,
+        Datepicker
     }
 }
 </script>
 
 <style scoped>
-
 .active {
     background-color: rgba(57, 164, 235, 0.747) !important;
 }
@@ -499,20 +495,14 @@ export default {
     height: 100vh !important;
 }
 
-
-
 @import url("https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700");
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i");
-
-
-
-
 
 .pt-20 {
     padding-top: 20px !important;
 }
 
-.list-li-mr-20 > li {
+.list-li-mr-20>li {
     margin-right: 20px;
 }
 
@@ -533,8 +523,6 @@ export default {
 .font-12 {
     font-size: 1.2em;
 }
-
-
 
 .card__by {
     font-size: 12px;

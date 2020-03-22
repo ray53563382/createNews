@@ -8,7 +8,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-lg-8">
-                    <img :src="docImage" alt="" style="width:65% !important"/>
+                    <img :src="docImage" alt="" style="width:65% !important" />
                     <h3 class="mt-30">
                         <b>{{ docTitle }}</b>
                     </h3>
@@ -29,7 +29,9 @@
                 <div class="d-none d-md-block d-lg-none col-md-3"></div>
                 <div class="col-md-6 col-lg-4">
                     <div class="pl-20 pl-md-0">
-                        <div class="mtb-50"><popularPost></popularPost></div>
+                        <div class="mtb-50">
+                            <popularPost></popularPost>
+                        </div>
                         <!-- mtb-50 -->
                     </div>
                     <!--  pl-20 -->
@@ -162,9 +164,11 @@
 </template>
 
 <script>
+import VueRouter from "vue-router";
 import logito from "../media/home.png";
 import Header from "./header";
 import Footer from "./footer";
+import Vue from "vue";
 import VueLoading from "vuejs-loading-plugin";
 Vue.use(VueLoading, {
     text: "Cargando"
@@ -172,13 +176,6 @@ Vue.use(VueLoading, {
 
 export default {
     name: "documentview",
-    // props: ["sendData"],
-    props: {
-        myid: {
-            required: true
-        }
-    },
-
     components: {
         Header,
         Footer
@@ -210,7 +207,11 @@ export default {
     },
     methods: {
         goToDocumentView(data) {
-            location.replace("/documentView/" + data);
+            // location.replace("/documentView/" + data);
+            const path = "/documentView/" + data;
+            if (this.$route.path !== path) {
+                this.$router.push(path);
+            }
         }
     },
     created() {
@@ -222,28 +223,27 @@ export default {
                     this.registros.push(element);
                 });
             })
-            .catch(error => {
-                console.log(error);
+            .catch(Error => {
+                console.log(Error);
             });
 
         axios({
             method: "post",
             url: "/getDocument",
             data: {
-                id: this.myid
+                id: this.$route.params.id
             }
         })
             .then(resp => {
-                console.log(resp);
-                this.$loading(false);
                 this.docTitle = resp.data[0].titulo;
                 this.docDate = resp.data[0].fecha;
                 this.docAutor = resp.data[0].autor;
                 this.docTheme = this.categorias[resp.data[0].idcategoria];
                 this.docImage = resp.data[0].imgdesmostrativa;
                 this.docTextBody = resp.data[0].informacionArt;
+                this.$loading(false);
             })
-            .catch(Error => console.log(error));
+            .catch(Error => console.log(Error));
     }
 };
 </script>

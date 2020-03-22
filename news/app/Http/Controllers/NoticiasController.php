@@ -115,11 +115,8 @@ class NoticiasController extends Controller
     }
 
     public function allnews(Request $request)
-    {
-        
-        $news = Noticia::orderBy('fecha', 'DESC')->paginate(12);
-        // $news = DB::table('noticias')->orderBy('fecha', 'DESC')->take(100)->get();
-
+    {   
+        $news = Noticia::orderBy('fecha', 'DESC')->paginate(9);
         return [
             'pagination' =>[
                 'total'         => $news->total(),
@@ -130,8 +127,7 @@ class NoticiasController extends Controller
                 'to'            => $news->lastPage()
             ],
             'noticias'=> $news
-        ];
-        
+        ]; 
     }
 
     public function searchIn(Request $request){
@@ -163,19 +159,55 @@ class NoticiasController extends Controller
     $temas = Noticia::where('idcategoria', '=', $request->tema)->paginate(9);
 
     return [
-     'paginationNoticias' =>[
-         'total'         => $temas->total(),
-         'current_page'  => $temas->currentPage(),
-         'per_page'      => $temas->perPage(),
-         'last_page'     => $temas->lastPage(),
-         'from'          => $temas->firstItem(),
-         'to'            => $temas->lastPage()
-     ],
-     'noticias'=> $temas
- ];
-
+        'paginationNoticias' =>[
+            'total'         => $temas->total(),
+            'current_page'  => $temas->currentPage(),
+            'per_page'      => $temas->perPage(),
+            'last_page'     => $temas->lastPage(),
+            'from'          => $temas->firstItem(),
+            'to'            => $temas->lastPage()
+        ],
+        'noticias'=> $temas
+    ];
     
-}
+    }
+
+    public function noticiasportema(Request $request){
+        $noticiasportema = Noticia::where('idcategoria', '=', $request->tema)->paginate(9);
+
+        return [
+            'pagination' =>[
+                'total'         => $noticiasportema->total(),
+                'current_page'  => $noticiasportema->currentPage(),
+                'per_page'      => $noticiasportema->perPage(),
+                'last_page'     => $noticiasportema->lastPage(),
+                'from'          => $noticiasportema->firstItem(),
+                'to'            => $noticiasportema->lastPage()
+            ],
+            'noticias'=> $noticiasportema
+        ];
+    }
+
+    public function noticiasporpalabras(Request $request){
+        $searchValues = preg_split('/\s+/', $request->tema, -1, PREG_SPLIT_NO_EMPTY); 
+        $noticiasporpalabras = Noticia::where(function ($q) use ($searchValues) {
+        foreach ($searchValues as $value) {
+            $q->orWhere('titulo', 'like', "%{$value}%")->orwhere('autor', 'like', "%{$value}%");
+        }
+        })->paginate(9);
+ 
+        return [
+         'pagination' =>[
+             'total'         => $noticiasporpalabras->total(),
+             'current_page'  => $noticiasporpalabras->currentPage(),
+             'per_page'      => $noticiasporpalabras->perPage(),
+             'last_page'     => $noticiasporpalabras->lastPage(),
+             'from'          => $noticiasporpalabras->firstItem(),
+             'to'            => $noticiasporpalabras->lastPage()
+         ],
+         'noticias'=> $noticiasporpalabras
+     ];
+    }
 
 
 

@@ -46,6 +46,43 @@ class publicacionController extends Controller
         return $news;
     }
 
+    public function todaslaspublicaciones(Request $request){
+    
+            $most_recent = Nota::orderBy('fecha', 'DESC')->paginate(9);
+            return [
+                'pagination' =>[
+                    'total'         => $most_recent->total(),
+                    'current_page'  => $most_recent->currentPage(),
+                    'per_page'      => $most_recent->perPage(),
+                    'last_page'     => $most_recent->lastPage(),
+                    'from'          => $most_recent->firstItem(),
+                    'to'            => $most_recent->lastPage()
+                ],
+                'notas'=> $most_recent
+            ];
+    }
+
+    public function buscapublicaciones(Request $request){
+        $searchValues = preg_split('/\s+/', $request->busqueda, -1, PREG_SPLIT_NO_EMPTY); 
+        $busquedaNotas = Nota::where(function ($q) use ($searchValues) {
+        foreach ($searchValues as $value) {
+            $q->orWhere('titulo', 'like', "%{$value}%")->orWhere('autor', 'like', "%{$value}%")->orWhere('fecha', 'like', "%{$value}%" );
+        }
+        })->paginate(9);
+ 
+        return [
+            'pagination' =>[
+                'total'         => $busquedaNotas->total(),
+                'current_page'  => $busquedaNotas->currentPage(),
+                'per_page'      => $busquedaNotas->perPage(),
+                'last_page'     => $busquedaNotas->lastPage(),
+                'from'          => $busquedaNotas->firstItem(),
+                'to'            => $busquedaNotas->lastPage()
+            ],
+            'notas'=> $busquedaNotas
+        ];
+    }
+
     public function recentdata()
     {
         $most_recent = Nota::orderBy('fecha', 'DESC')->paginate(12);
@@ -95,6 +132,58 @@ class publicacionController extends Controller
             ],
             'notas'=> $busquedaNotas
         ];
+    }
+    
+    public function publicacionesdelautor(Request $request){
+        $publicacionesdelautor = Nota::orderBy('fecha', 'DESC')->where('autor', 'like', $request->autor)->paginate(9);
+        return [
+            'pagination' =>[
+                'total'         => $publicacionesdelautor->total(),
+                'current_page'  => $publicacionesdelautor->currentPage(),
+                'per_page'      => $publicacionesdelautor->perPage(),
+                'last_page'     => $publicacionesdelautor->lastPage(),
+                'from'          => $publicacionesdelautor->firstItem(),
+                'to'            => $publicacionesdelautor->lastPage()
+            ],
+            'notas'=> $publicacionesdelautor
+        ];
+    }
+
+    public function publicacionesportema(Request $request){
+        $publicacionesportema = Nota::orderBy('fecha', 'DESC')->where('idcategoria',$request->tema)->paginate(9);
+        return [
+            'pagination' =>[
+                'total'         => $publicacionesportema->total(),
+                'current_page'  => $publicacionesportema->currentPage(),
+                'per_page'      => $publicacionesportema->perPage(),
+                'last_page'     => $publicacionesportema->lastPage(),
+                'from'          => $publicacionesportema->firstItem(),
+                'to'            => $publicacionesportema->lastPage()
+            ],
+            'notas'=> $publicacionesportema
+        ];
+    }
+
+    public function publicacionesporpalabras(Request $request){
+        $searchValues = preg_split('/\s+/', $request->tema, -1, PREG_SPLIT_NO_EMPTY); 
+        $publicacionesporpalabra = Nota::where(function ($q) use ($searchValues) {
+        foreach ($searchValues as $value) {
+            $q->orWhere('titulo', 'like', "%{$value}%")->orWhere('autor', 'like', "%{$value}%");
+        }
+        })->paginate(9);
+
+        return [
+            'pagination' =>[
+                'total'         => $publicacionesporpalabra->total(),
+                'current_page'  => $publicacionesporpalabra->currentPage(),
+                'per_page'      => $publicacionesporpalabra->perPage(),
+                'last_page'     => $publicacionesporpalabra->lastPage(),
+                'from'          => $publicacionesporpalabra->firstItem(),
+                'to'            => $publicacionesporpalabra->lastPage()
+            ],
+            'notas'=> $publicacionesporpalabra
+        ];
+
     }
 
     public function getsearch(Request $request){
@@ -167,12 +256,25 @@ class publicacionController extends Controller
     }
 
     public function getAllAuthors(){
-        $authors = DB::table('notas')->pluck('autor');
-        return $authors;
+        // $publicacionesportema = Nota::orderBy('fecha', 'DESC')->where('idcategoria', $request->tema)->paginate(9);
+        $autores = DB::table('notas')->select('autor')->paginate(9);
+        return [
+            'pagination' =>[
+                'total'         => $autores->total(),
+                'current_page'  => $autores->currentPage(),
+                'per_page'      => $autores->perPage(),
+                'last_page'     => $autores->lastPage(),
+                'from'          => $autores->firstItem(),
+                'to'            => $autores->lastPage()
+            ],
+            'autores'=> $autores
+        ];
+        // $authors = DB::table('notas')->pluck('autor');
+        // return $authors;
     }
 
     public function getAllFromAuthor(Request $request){
-        $all_from_author = DB::table('notas')->where('autor', 'like', $request->author)->get();
+        $all_from_author = Nota::table('notas')->where('autor', 'like', $request->author)->get();
         return $all_from_author;
     }
    
@@ -268,7 +370,7 @@ class publicacionController extends Controller
         $temas = Nota::where('idcategoria', '=', $request->tema)->paginate(9);
     
         return [
-         'paginationPublicaciones' =>[
+         'pagination' =>[
              'total'         => $temas->total(),
              'current_page'  => $temas->currentPage(),
              'per_page'      => $temas->perPage(),

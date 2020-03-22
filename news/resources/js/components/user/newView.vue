@@ -22,6 +22,15 @@
                         class="col-12 testy"
                         style="margin-bottom:5%"
                     ></div>
+                    <div v-show="showdescarga" class="col-md-12 col-lg-8">
+                        <div class="col-12">
+                            <p>
+                                <a ref="downloadpdf" class="buttonDownload"
+                                    >Descarga pdf</a
+                                >
+                            </p>
+                        </div>
+                    </div>
 
                     <div class="col-md-12 col-lg-8">
                         <p><b>Categoría: </b> {{ docTheme }}</p>
@@ -170,6 +179,7 @@
 import logito from "../media/home.png";
 import Header from "./header";
 import Footer from "./footer";
+import Vue from "vue";
 import VueLoading from "vuejs-loading-plugin";
 Vue.use(VueLoading, {
     text: "Cargando"
@@ -201,6 +211,7 @@ export default {
             logito: logito,
             dataID: "hey",
             registros: [],
+            showdescarga: false,
             categorias: [
                 "null",
                 "Crisis climática y conservación",
@@ -237,7 +248,7 @@ export default {
             method: "post",
             url: "/getNew",
             data: {
-                id: this.myid
+                id: this.$route.params.id
             }
         })
             .then(resp => {
@@ -247,6 +258,10 @@ export default {
                 this.docTheme = this.categorias[resp.data.idcategoria];
                 this.docImage = resp.data.imgdesmostrativa;
                 this.docTextBody = resp.data.informacionArt;
+                if (resp.data.pdf != "null") {
+                    this.$refs.downloadpdf.download = "documento.pdf";
+                    this.$refs.downloadpdf.href = resp.data.pdf;
+                }
                 this.$loading(false);
             })
             .catch(Error => console.log(Error));

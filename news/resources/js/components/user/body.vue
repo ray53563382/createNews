@@ -86,6 +86,7 @@
 <script>
 import Minicard from "./miniCard";
 import { bus } from "../media/bus";
+import Vue from 'vue'
 
 export default {
     name: "body",

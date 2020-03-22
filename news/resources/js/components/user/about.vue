@@ -1,4 +1,6 @@
 <template>
+
+
     <div>
         <Header />
         <!-- <section class="ptb-0">
@@ -151,6 +153,7 @@
 <script>
 import Footer from "./footer";
 import Header from "./header";
+import Vue from 'vue'
 
 export default {
     name: "about",

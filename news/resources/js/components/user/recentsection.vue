@@ -159,7 +159,9 @@
                             />
                             <h4 class="pt-20">
                                 <a
-                                    ><b style="font-size: 72% !important">{{ recientes[5].titulo }}</b></a
+                                    ><b style="font-size: 72% !important">{{
+                                        recientes[5].titulo
+                                    }}</b></a
                                 >
                             </h4>
                             <ul class="list-li-mr-20 pt-10 mb-30">
@@ -186,7 +188,9 @@
                             />
                             <h4 class="pt-20">
                                 <a href="#"
-                                    ><b style="font-size: 72% !important">{{ recientes[6].titulo }}</b></a
+                                    ><b style="font-size: 72% !important">{{
+                                        recientes[6].titulo
+                                    }}</b></a
                                 >
                             </h4>
                             <ul class="list-li-mr-20 pt-10 mb-30">
@@ -213,7 +217,9 @@
                             />
                             <h4 class="pt-20">
                                 <a href="#"
-                                    ><b style="font-size: 72% !important"> <br />{{ recientes[7].titulo }}</b></a
+                                    ><b style="font-size: 72% !important">
+                                        <br />{{ recientes[7].titulo }}</b
+                                    ></a
                                 >
                             </h4>
                             <ul class="list-li-mr-20 pt-10 mb-30">
@@ -240,14 +246,16 @@
                             />
                             <h4 class="pt-20">
                                 <a href="#"
-                                    ><b style="font-size: 72% !important"> <br />{{ recientes[8].titulo }}</b></a
+                                    ><b style="font-size: 72% !important">
+                                        <br />{{ recientes[8].titulo }}</b
+                                    ></a
                                 >
                             </h4>
                             <ul class="list-li-mr-20 pt-10 mb-30">
                                 <li class="color-lite-black">
                                     Por
                                     <a href="#" class="color-black"
-                                        ><b >{{ recientes[8].autor }},</b></a
+                                        ><b>{{ recientes[8].autor }},</b></a
                                     >
                                     {{ recientes[8].fecha }}
                                 </li>
@@ -267,14 +275,16 @@
                             />
                             <h4 class="pt-20">
                                 <a href="#"
-                                    ><b style="font-size: 72% !important"> <br />{{ recientes[9].titulo }}</b></a
+                                    ><b style="font-size: 72% !important">
+                                        <br />{{ recientes[9].titulo }}</b
+                                    ></a
                                 >
                             </h4>
                             <ul class="list-li-mr-20 pt-10 mb-30">
                                 <li class="color-lite-black">
                                     Por
                                     <a href="#" class="color-black"
-                                        ><b >{{ recientes[9].autor }},</b></a
+                                        ><b>{{ recientes[9].autor }},</b></a
                                     >
                                     {{ recientes[5].titulo }}
                                 </li>
@@ -292,9 +302,11 @@
                                 alt=""
                                 style="width: 100%;height: 300px; display: block;margin: 0 auto;"
                             />
-                            <h4 class="pt-20" >
+                            <h4 class="pt-20">
                                 <a href="#"
-                                    ><b style="font-size: 72% !important">{{ recientes[10].titulo }}</b></a
+                                    ><b style="font-size: 72% !important">{{
+                                        recientes[10].titulo
+                                    }}</b></a
                                 >
                             </h4>
                             <ul class="list-li-mr-20 pt-10 mb-30">
@@ -340,9 +352,7 @@
                                         <b>{{ noticias[0].titulo }}</b>
                                     </h5>
                                     <h6 class="color-lite-black pt-10">
-                                        <span
-                                            class="color-black"
-                                            >
+                                        <span class="color-black">
                                             Por
                                             <b>
                                                 {{ noticias[0].autor }},
@@ -369,8 +379,7 @@
                                         <b>{{ noticias[1].titulo }}</b>
                                     </h5>
                                     <h6 class="color-lite-black pt-10">
-                                        <span
-                                            class="color-black"
+                                        <span class="color-black"
                                             >Por
                                             <b
                                                 >{{ noticias[1].autor }},
@@ -397,8 +406,7 @@
                                         <b>{{ noticias[2].titulo }}</b>
                                     </h5>
                                     <h6 class="color-lite-black pt-10">
-                                        <span
-                                            class="color-black"
+                                        <span class="color-black"
                                             >Por
                                             <b
                                                 >{{ noticias[2].autor }},
@@ -425,8 +433,7 @@
                                         <b>{{ noticias[3].titulo }}</b>
                                     </h5>
                                     <h6 class="color-lite-black pt-10">
-                                        <span
-                                            class="color-black"
+                                        <span class="color-black"
                                             >Por
                                             <b
                                                 >{{ noticias[3].autor }},
@@ -438,7 +445,7 @@
                             ><!-- oflow-hidden -->
                             <a
                                 class="dplay-block btn-brdr-primary mt-20 mb-md-50"
-                                href="/search/get_all_news"
+                                @click="goToAllNews"
                                 ><b>Ver más noticias.</b></a
                             >
                         </div>
@@ -668,11 +675,6 @@
 </template>
 
 <script>
-import VueLoading from "vuejs-loading-plugin";
-Vue.use(VueLoading, {
-    text: "Cargando"
-});
-
 export default {
     name: "recentsection",
 
@@ -686,11 +688,15 @@ export default {
     },
     methods: {
         goToDocumentView(id) {
-            location.replace("/documentView/" + id);
+            this.$router.push({ name: "document", params: { id } });
+        },
+
+        goToAllNews() {
+            this.$router.push({ name: "todaslasnoticias" });
         },
 
         verMultimedia() {
-            location.replace("/multimedia/");
+            this.$router.push({ name: "multimedia" });
         },
         saveEmail() {
             axios
@@ -711,8 +717,6 @@ export default {
         }
     },
     mounted() {
-        this.$loading(true);
-
         axios({
             method: "post",
             url: "/recent"
@@ -724,7 +728,15 @@ export default {
                     url: "/getNewsHome"
                 }).then(resp => {
                     this.noticias = resp.data;
-                    this.$loading(false);
+                    this.noticias.forEach(element => {
+                        let datos = new Date(element.fecha);
+                        element.fecha =
+                            datos.getUTCDate() +
+                            "/" +
+                            (datos.getUTCMonth() + 1) +
+                            "/" +
+                            datos.getUTCFullYear();
+                    });
                 });
             })
             .catch(Error => console.log(Error));

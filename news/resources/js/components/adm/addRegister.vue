@@ -15,12 +15,19 @@
                             </ul>
                         </p>
                         <div class="row">
-                            <div class="col-md-4 pr-1">
+                            <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                     <label>Fecha</label>
-                                    <input type="date" style="font-size: 14px;" data-date-format="DD MMMM YYYY" class="form-control" placeholder="Company" v-model="registro.fecha">
+                                    <datepicker :bootstrap-styling="true" v-model="registro.fecha" :language="es">
+                                        <div class="form-control">
+                                        </div>
+                                    </datepicker>
+                                    <!-- <input type="date" style="font-size: 14px;" data-date-format="DD MMMM YYYY" class="form-control" placeholder="Company" v-model="registro.fecha"> -->
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-4 pr-1">
                                 <div class="form-group">
                                     <label>Importancia</label>
@@ -32,10 +39,10 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4 pr-1">
+                            <div class="col-md-8 pr-1">
                                 <div class="form-group">
-                                    <label>Categoria {{registro.idcategoria}}</label>
-                                    <select class="form-control" v-model="registro.idcategoria" style="width: 72%;     display: inline-block;">
+                                    <label>Categoria {{registro.idcategoria}}</label><br>
+                                    <select class="form-control" v-model="registro.idcategoria" style="width: 60%;     display: inline-block;">
 
                                         <option v-for="item in categoriasDta" :value="item.id" :key="item.id">
                                             {{ item.descripcion }}
@@ -74,6 +81,7 @@
                                 </div>
 
                             </div>
+
                         </div>
 
                         <div class="row">
@@ -170,11 +178,19 @@ import Vue from 'vue';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(VueSweetalert2);
+import Datepicker from 'vuejs-datepicker';
+import { es } from 'vuejs-datepicker/dist/locale'
+
+import VueLoading from "vuejs-loading-plugin";
+Vue.use(VueLoading, {
+    text: "Cargando"
+});
 
 export default {
 
     data() {
         return {
+            es: es,
             registros: [],
             errors: [],
             categoria: '',
@@ -238,6 +254,8 @@ export default {
 
             if (this.registro.titulo && this.registro.fecha && this.registro.autor && this.registro.importancia && this.registro.idcategoria &&
                 this.registro.informacionArt && this.registro.imgdesmostrativa) {
+                this.$loading(true);
+
                 axios.post('/notas', this.registro)
                     .then(resp => {
                         this.errors = [];
@@ -254,7 +272,10 @@ export default {
                             'success'
                         )
                         document.getElementById("imgdata").value = "";
+                        this.$loading(false);
+
                     }).catch(error => {
+                        this.$loading(false);
                         console.log(error);
                     });
 
@@ -270,7 +291,6 @@ export default {
         },
         guardarCategoria() {
             this.categoriasDta = [];
-            console.log(this.categoria);
             if (this.categoria != '') {
                 this.categorias.descripcion = this.categoria;
                 axios.post('/categorias', this.categorias)
@@ -303,6 +323,7 @@ export default {
     },
     components: {
         'editor': Editor,
+        Datepicker
     }
 }
 </script>

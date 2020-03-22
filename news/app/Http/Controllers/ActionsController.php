@@ -117,4 +117,19 @@ class actionsController extends Controller
         $accion = Action::find($request->id);
         $accion->delete();
     }
+
+    public function todaslasacciones(){
+        $todas_acciones = Action::orderBy('fecha', 'DESC')->paginate(9);
+        return [
+            'pagination' =>[
+                'total'         => $todas_acciones->total(),
+                'current_page'  => $todas_acciones->currentPage(),
+                'per_page'      => $todas_acciones->perPage(),
+                'last_page'     => $todas_acciones->lastPage(),
+                'from'          => $todas_acciones->firstItem(),
+                'to'            => $todas_acciones->lastPage()
+            ],
+            'acciones'=> $todas_acciones
+        ];
+    }
 }

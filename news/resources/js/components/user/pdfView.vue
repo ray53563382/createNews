@@ -89,7 +89,7 @@ export default {
     name: "pdfview",
     props: {
         myid: {
-            required: true
+            required: false
         }
     },
     components: {
@@ -108,7 +108,6 @@ export default {
             docTheme: null,
             docImage: null,
             docTextBody: null,
-            // logito: logito,
             dataID: "hey",
             pdfdown: null,
             categorias: [
@@ -137,32 +136,20 @@ export default {
     },
 
     created() {
-        // this.dataID = this.myid;
-        // console.log(this.myid);
-        console.log(this.myid);
-
         axios({
             method: "post",
             url: "/getpdf",
             data: {
-                id: this.myid
+                id: this.$route.params.id
             }
         })
             .then(resp => {
-                console.log(resp.data);
-
-                // console.log(resp.data[0].titulo);
                 this.docId = resp.data[0].id;
                 this.docTitle = resp.data[0].nombre;
                 this.docDate = resp.data[0].fecha;
                 this.docDescarga = resp.data[0].descarga;
-                // this.docAutor = resp.data[0].autor;
-                // this.docTheme = this.categorias[resp.data[0].idcategoria];
                 this.docImage = resp.data[0].imgdesmostrativa;
                 this.docTextBody = resp.data[0].informacion;
-                // this.pdfdown = URL.createObjectURL(resp.data[0].pdf);
-                // console.log(this.$refs.downloadpdf);
-                // this.binaryConversion = atob(resp.data[0].pdf);
                 this.$refs.downloadpdf.download = "documento.pdf";
                 this.$refs.downloadpdf.href = resp.data[0].pdf;
             })

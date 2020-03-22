@@ -1,10 +1,5 @@
 <template>
     <div>
-        <div class="row">
-            <div class="col-12">
-                <Header></Header>
-            </div>
-        </div>
         <div class="container my-4">
             <div class="row">
                 <div class="col-md-12 col-lg-8">
@@ -185,12 +180,6 @@
                 </div>
             </div>
         </div>
-        <!-- row -->
-        <div class="row" style="margin-top:3%">
-            <div class="col-12">
-                <Footer></Footer>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -198,6 +187,7 @@
 import logito from "../media/home.png";
 import Header from "./header";
 import Footer from "./footer";
+import Vue from "vue";
 import VueLoading from "vuejs-loading-plugin";
 Vue.use(VueLoading, {
     text: "Cargando"
@@ -208,7 +198,7 @@ export default {
     // props: ["sendData"],
     props: {
         myid: {
-            required: true
+            required: false
         }
     },
 
@@ -248,7 +238,11 @@ export default {
     },
     methods: {
         goToDocumentView(id) {
-            location.replace("/documentView/" + id);
+            const path = "/documentView/" + id;
+            if (this.$route.path !== path) {
+                this.$router.push(path);
+            }
+            // location.replace("/documentView/" + id);
         },
         searchtheme(id) {
             location.replace("/searchbytheme/" + id);
@@ -271,7 +265,7 @@ export default {
             method: "post",
             url: "/getAction",
             data: {
-                id: this.myid
+                id: this.$route.params.id
             }
         })
             .then(resp => {

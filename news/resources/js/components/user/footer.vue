@@ -1,4 +1,5 @@
 <template>
+<div id="app">
     <footer class="bg-191 color-ccc">
         <div class="container">
             <div class="pt-50 pb-20 pos-relative">
@@ -114,6 +115,8 @@
         </div>
         <!-- container -->
     </footer>
+
+    </div>
 </template>
 
 <script>

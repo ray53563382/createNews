@@ -9,9 +9,7 @@
                         class="float-left float-sm-none list-a-plr-10 list-a-plr-sm-5 list-a-ptb-15 list-a-ptb-sm-10"
                     >
                         <li>
-                            <a
-                                href="sobreNosotrosContacto"
-                                class="pl-0 pl-sm-10"
+                            <a @click="goToNosotros" class="pl-0 pl-sm-10"
                                 >Sobre nosotros</a
                             >
                         </li>
@@ -48,14 +46,14 @@
         </div>
 
         <div class="container">
-            <a href="/" class="logo"><img :src="logo" alt="Logo"/></a>
+            <a @click="gohome" class="logo"><img :src="logo" alt="Logo"/></a>
 
             <a class="right-area src-btn">
                 <i class="active src-icn ion-search"></i>
                 <i class="close-icn ion-close"></i>
             </a>
             <div class="src-form myform">
-                <form>
+                <form v-on:submit.prevent>
                     <input
                         v-on:keyup.enter="search"
                         v-model.lazy="searchString"
@@ -100,31 +98,6 @@
                                     Noticias</a
                                 >
                             </li>
-                            <!-- <li>
-                                <a href="#greather_than">
-                                    <span
-                                        class="glyphicon glyphicon-user text-success"
-                                    ></span>
-                                    Users</a
-                                >
-                            </li>
-                            <li>
-                                <a href="#less_than"
-                                    ><span
-                                        class="glyphicon glyphicon-book text-primary"
-                                    ></span>
-                                    Books
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#all">
-                                    <span
-                                        class="glyphicon glyphicon-picture text-info"
-                                    ></span>
-                                    Pictures</a
-                                >
-                            </li> -->
                         </ul>
                     </div>
                 </form>
@@ -137,7 +110,9 @@
             <ul class="main-menu" id="main-menu">
                 <li><a @click="fetch_all_docs">PUBLICACIONES</a></li>
                 <li class="drop-down">
-                    <a>TEMAS<i class="ion-arrow-down-b"></i></a>
+                    <a @click="getCategorias"
+                        >TEMAS<i class="ion-arrow-down-b"></i
+                    ></a>
                     <ul class="drop-down-menu drop-down-inner">
                         <li v-for="(item, index) in categorias" :key="index">
                             <a @click="search_theme(item.id)">{{
@@ -148,9 +123,6 @@
                 </li>
                 <li class="drop-down">
                     <a @click="all_actions">DECLARACIONES</a>
-                    <!-- <ul class="drop-down-menu drop-down-inner">
-                        <li><a @click="all_actions">Acciones</a></li>
-                    </ul> -->
                 </li>
 
                 <li><a @click="all_authors">AUTORES</a></li>
@@ -166,6 +138,7 @@ import JQuery from "jquery";
 let $ = JQuery;
 import logo from "../media/LogoCeccam.png";
 import home from "../media/home.png";
+import VueRouter from "vue-router";
 
 $(document).ready(function(e) {
     $(".search-panel .dropdown-menu")
@@ -207,29 +180,61 @@ export default {
         search() {
             // console.log(this.searchString);
             if (this.typeOfSearch == null) {
-                location.replace("/search/" + this.searchString);
+                this.$router.push({
+                    name: "publicacionportema",
+                    params: { tema: this.searchString }
+                });
             } else {
-                location.replace(
-                    "/search/" + this.typeOfSearch + "/" + this.searchString
-                );
+                this.$router.push({
+                    name: "noticiaportema",
+                    params: { tema: this.searchString }
+                });
             }
         },
 
+        gohome() {
+            this.$router.push({
+                name: "home"
+            });
+        },
+
+        goToNosotros() {
+            this.$router.push({
+                name: "nosotros"
+            });
+        },
+
+        getCategorias() {
+            console.log("getcategoriasss");
+
+            axios({
+                url: "/categorias"
+            }).then(resp => {
+                console.log(resp.data);
+                this.categorias = resp.data;
+            });
+        },
+
+        //publicaciones
         fetch_all_docs() {
-            location.replace("/search/get_all_docs");
+            this.$router.push({ name: "todaspublicaciones" });
         },
 
         all_authors() {
-            this.searchString = "all";
-            location.replace("/search/" + this.searchString);
+            // this.searchString = "all";
+            //this.$router.push({name: 'document',params: {id}})
+            this.$router.push({ name: "todosautores" });
+            // location.replace("/search/" + this.searchString);
         },
         all_documents() {
-            this.searchString = "allDocuments";
-            location.replace("/search/" + this.searchString);
+            // this.searchString = "allDocuments";
+            this.$router.push({ name: "todosdocumentos" });
+            // location.replace("/search/" + this.searchString);
         },
         all_actions() {
-            this.searchString = "get_all_acciones";
-            location.replace("/search/" + this.searchString);
+            // this.searchString = "get_all_acciones";
+            this.$router.push({ name: "todasacciones" });
+            // location.replace("/search/" + this.searchString);
         },
         display_menu() {
             this.$refs.menubtn.classList.add("show");
@@ -240,8 +245,18 @@ export default {
         },
 
         search_theme(theme) {
-            location.replace("/searchbytheme/" + theme);
+            // let tema = parseInt(theme);
+            // this.$router.push({
+            //     name: "publicacionportema",
+            //     params: { tema: tema }
+            // });
+            // let tema = parseInt(theme);
+            this.$router.push({
+                name: "temasnoticiaspublicaciones",
+                params: { tema: theme }
+            });
         },
+
         changeString(value) {
             value == "noticias"
                 ? (this.typeOfSearch = "noticias")
@@ -304,6 +319,7 @@ html {
     li {
         font-size: 0.7em !important;
     }
+
     .myinput {
         margin-left: 4em;
         width: 90% !important;

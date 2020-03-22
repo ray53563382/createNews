@@ -247,12 +247,10 @@ export default {
 
     methods: {
         goToDocumentView(id) {
-            location.replace("/documentView/" + id);
+            this.$router.push({ name: "document", params: { id } });
         },
 
         notesCarousel() {
-            // console.log(this.carousel_index);
-
             this.carousel_index >= this.extra.length
                 ? (this.carousel_index = 0)
                 : (this.carousel_index = this.carousel_index++);
@@ -282,8 +280,6 @@ export default {
                 // this.extra = resp.data.slice(6);
                 this.extra = resp.data;
             });
-            // console.log(resp.data);
-            // console.log(this.extra);
         });
 
         setInterval(function() {

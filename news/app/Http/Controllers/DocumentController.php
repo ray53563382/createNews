@@ -107,4 +107,19 @@ class DocumentController extends Controller
         $doc = Document::find($id);
         $doc->delete();
     }
+
+    public function todospdfs(){
+        $todospds = Document::orderBy("fecha", "DESC")->paginate(9);
+        return [
+            'pagination' =>[
+                'total'         => $todospds->total(),
+                'current_page'  => $todospds->currentPage(),
+                'per_page'      => $todospds->perPage(),
+                'last_page'     => $todospds->lastPage(),
+                'from'          => $todospds->firstItem(),
+                'to'            => $todospds->lastPage()
+            ],
+            'pdfs'=> $todospds
+        ];
+    }
 }

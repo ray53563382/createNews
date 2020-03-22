@@ -17,12 +17,23 @@ Route::get('/', function () {
 
 });
 
+//Nuevs rutas
+Route::post('/todaslaspublicaciones', 'publicacionController@todaslaspublicaciones');
+Route::post('/buscapublicaciones', 'publicacionController@buscapublicaciones');
+Route::post('/todaslasacciones', 'ActionsController@todaslasacciones');
+Route::post('/publicacionesdelautor', 'publicacionController@publicacionesdelautor');
+Route::post('/publicacionesportema','publicacionController@publicacionesportema');
+Route::post('/publicacionesporpalabras','publicacionController@publicacionesporpalabras');
+Route::post('/allnews', 'NoticiasController@allnews');
+Route::post('/noticiasportema', 'NoticiasController@noticiasportema');
+Route::post('/noticiasporpalabras', 'NoticiasController@noticiasporpalabras');
+Route::post('/allAuthors', 'publicacionController@getAllAuthors');
+Route::post('/todospdfs', 'DocumentController@todospdfs');
+
 // HERE
 Route::get('searchbytheme/{theme}','DocumentsViewController@searchbytheme');
 Route::post('temaNoticias','NoticiasController@obtentema');
 Route::post('temaPublicaciones','publicacionController@obtentema');
-
-
 
 // Ruta para decidir el tipo de búsqueda.
 Route::get('search/{typeofsearch}/{querystring}', 'DocumentsViewController@searchIn');
@@ -49,7 +60,6 @@ Route::get('sobreNosotrosContacto','DocumentsViewController@about');
 
 Route::post('/recentdata', 'publicacionController@recentdata');
 // Route::post('/allnews', 'publicacionController@allnews');
-Route::post('/allnews', 'NoticiasController@allnews');
 
 
 Route::post('/relevant', 'publicacionController@relevant');
@@ -61,8 +71,7 @@ Route::post('/deleteNew', 'NoticiasController@destroy');
 
 Route::post('/getDocument', 'publicacionController@getdoc');
 Route::post('/getsearch', 'publicacionController@getsearch');
-Route::post('/allAuthors', 'publicacionController@getAllAuthors');
-Route::post('/allfromAuthor', 'publicacionController@getAllFromAuthor');
+// Route::post('/allfromAuthor', 'publicacionController@getAllFromAuthor');
 Route::post('/allrecent', 'publicacionController@allrecent');
 Route::post('/getpdf', 'publicacionController@getpdf');
 Route::post('/gettheme', 'publicacionController@getheme');
@@ -72,7 +81,7 @@ Route::post('/colocarSuperImportante', 'publicacionController@colocarSuperImport
 
 // Acciones
 Route::post('/actionRegister', 'ActionsController@store');
-Route::post('/getAllActions', 'ActionsController@index');
+// Route::post('/getAllActions', 'ActionsController@index');
 Route::post('/getAction', 'ActionsController@show');
 Route::post('/updateAction', 'ActionsController@update');
 Route::post('/deleteAction', 'ActionsController@destroy');
@@ -96,12 +105,9 @@ Route::resource('/multimedia', 'MultimediaController');
 
 
 Auth::routes();
-
 Route::resource('/notas', 'NotaController')->middleware('auth');
 Route::resource('/guardarNoticia', 'NoticiasController')->middleware('auth');
-
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/homeData', 'HomeController@index')->name('homeData');
 Route::resource('/document', 'DocumentController')->middleware('auth');
 
 

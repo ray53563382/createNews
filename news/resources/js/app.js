@@ -6,61 +6,50 @@
 
 require("./bootstrap");
 
+
+// import router from './router'
+
 window.Vue = require("vue");
-// window.Vue = require("vue");
 window.EventBus = new Vue();
 
-// window.EventBus = new Vue();
-// export const EventBus = new Vue();
+import Vue from "vue";
+import App from "./components/App.vue";
+import router from "./router";
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+Vue.config.productionTip = false;
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
+Vue.component("header", require("./components/user/header.vue").default); //component name should be in camel-case
 Vue.component(
-    "multimediadata",
-    require("./components/user/multimedia.vue").default
+    "Mostrelevantsection",
+    require("./components/user/mostrelevantsection.vue").default
 ); //component name should be in camel-case
+Vue.component(
+    "Recentsection",
+    require("./components/user/recentsection.vue").default
+); //component name should be in camel-case
+Vue.component("Footer", require("./components/user/footer.vue").default); //component name should be in camel-case
 
 Vue.component(
     "about-component",
     require("./components/user/about.vue").default
 );
-
 Vue.component("addMulti", require("./components/adm/addMulti.vue").default);
-
 Vue.component(
     "editnoticia",
     require("./components/adm/editnoticia.vue").default
 );
-
 Vue.component(
     "editAcciones",
     require("./components/adm/editAcciones.vue").default
 );
-
 Vue.component(
     "mostrelevantsection-component",
     require("./components/user/recentsection.vue").default
 );
-
-Vue.component(
-    "mostrelevantsection-component",
-    require("./components/user/mostrelevantsection.vue").default
-);
-
 Vue.component(
     "pdfview-component",
     require("./components/user/pdfView.vue").default
 );
-
 Vue.component(
     "newview-component",
     require("./components/user/newView.vue").default
@@ -74,6 +63,10 @@ Vue.component(
 Vue.component(
     "searchview-component",
     require("./components/user/searchComponent.vue").default
+);
+Vue.component(
+    "searchcard",
+    require("./components/user/searchcard.vue").default
 );
 
 Vue.component(
@@ -89,9 +82,7 @@ Vue.component(
     "addDocument",
     require("./components/adm/addDocument.vue").default
 );
-
 Vue.component("addAction", require("./components/adm/addAction.vue").default);
-
 Vue.component("addNoticia", require("./components/adm/addNoticia.vue").default);
 
 Vue.component(
@@ -116,12 +107,32 @@ Vue.component(
     require("./components/user/documentView.vue").default
 );
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+Vue.component(
+    "busquedaTodo",
+    require("./components/user/todosautores.vue").default
+);
+
+Vue.component(
+    "busquedaTodo",
+    require("./components/user/todosdocumentos.vue").default
+);
+
+Vue.component(
+    "publicacionportema",
+    require("./components/user/buscapublicaciontema.vue").default
+);
+
+Vue.component(
+    "noticiasportema",
+    require("./components/user/noticiasportema.vue").default
+);
+
+// new Vue({
+//     router,
+//     render: h => h(App)
+// }).$mount("#app");
 
 const app = new Vue({
-    el: "#app"
-});
+    router,
+    render: h => h(App),
+}).$mount("#app");
